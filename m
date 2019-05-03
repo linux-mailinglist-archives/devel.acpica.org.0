@@ -1,52 +1,59 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8FDB6105F9
-	for <lists+devel-acpica@lfdr.de>; Wed,  1 May 2019 09:59:40 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [198.145.21.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9452A13431
+	for <lists+devel-acpica@lfdr.de>; Fri,  3 May 2019 21:55:02 +0200 (CEST)
 Received: from [127.0.0.1] (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 141D92122C2FD;
-	Wed,  1 May 2019 00:59:39 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTP id 3C58E2124B927;
+	Fri,  3 May 2019 12:55:01 -0700 (PDT)
 X-Original-To: devel@acpica.org
 Delivered-To: devel@acpica.org
 Received-SPF: Pass (sender SPF authorized) identity=mailfrom;
- client-ip=209.85.167.194; helo=mail-oi1-f194.google.com;
- envelope-from=rjwysocki@gmail.com; receiver=devel@acpica.org 
-Received: from mail-oi1-f194.google.com (mail-oi1-f194.google.com
- [209.85.167.194])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ client-ip=192.55.52.120; helo=mga04.intel.com;
+ envelope-from=robert.moore@intel.com; receiver=devel@acpica.org 
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ml01.01.org (Postfix) with ESMTPS id DB0C82121AA06
- for <devel@acpica.org>; Wed,  1 May 2019 00:59:37 -0700 (PDT)
-Received: by mail-oi1-f194.google.com with SMTP id y64so7799882oia.7
- for <devel@acpica.org>; Wed, 01 May 2019 00:59:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=zxgDmRsn1/IVmGuf5U9azTe0s7v3EA8DrDT/1fTHG9Q=;
- b=JEUtwEnWUQZbY34Q+nBbNzqrEbpu0lzOox5Np6XhyIrjw0vT8pwL3F0+gvsDj/TyEx
- hvgFdUMEMvIdomx7k3DEasxsHi3C32jWbuQ7eH0nmp2IekrzltCJZF/Mz/evmfaotmyC
- /fzkxJeYcLbHXyzgGvuAZOreTor0ys85hogohp8heiD73cAeRXt0xWFrM92+2LkDvI0a
- qvtKQMTuan7jAb7m9p8I0VkQNd3u8C7tCDKbM2Rfk0I6hTnA2iiGGjO4f5oHwTvhuXC7
- Cseg+f/FayxB2cDUk1FhfO9AxJD7xlYpmh8KG17ng2ELkgAWn34Z53uGfU0jL7VozY9c
- 5m2A==
-X-Gm-Message-State: APjAAAVJlTh3T64Dlq93TBgLQc7YCIMOTrC+TlWO+EibY0MTl4qHkAx9
- dqP7VqRu4eyQmOdFuN3/En3zMrQaln1c8w2r+UY=
-X-Google-Smtp-Source: APXvYqwRucsn2ORnmZzJM80aybzIMoVJlKVHwZ0llOPopwmEQAxBSBA2QxPX+O9LwH4uQ12+7ADgZSOR7ZOcJJsf2+o=
-X-Received: by 2002:aca:ba82:: with SMTP id k124mr6169480oif.110.1556697576304; 
- Wed, 01 May 2019 00:59:36 -0700 (PDT)
+ by ml01.01.org (Postfix) with ESMTPS id C8AFB2194EB76
+ for <devel@acpica.org>; Fri,  3 May 2019 12:54:59 -0700 (PDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+ by fmsmga104.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 03 May 2019 12:54:59 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.60,427,1549958400"; d="scan'208";a="343204990"
+Received: from orsmsx110.amr.corp.intel.com ([10.22.240.8])
+ by fmsmga005.fm.intel.com with ESMTP; 03 May 2019 12:54:58 -0700
+Received: from orsmsx122.amr.corp.intel.com (10.22.225.227) by
+ ORSMSX110.amr.corp.intel.com (10.22.240.8) with Microsoft SMTP Server (TLS)
+ id 14.3.408.0; Fri, 3 May 2019 12:54:58 -0700
+Received: from orsmsx110.amr.corp.intel.com ([169.254.10.28]) by
+ ORSMSX122.amr.corp.intel.com ([169.254.11.68]) with mapi id 14.03.0415.000;
+ Fri, 3 May 2019 12:54:58 -0700
+From: "Moore, Robert" <robert.moore@intel.com>
+To: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+ "alsa-devel@alsa-project.org" <alsa-devel@alsa-project.org>
+Thread-Topic: [PATCH v2] ACPI / device_sysfs: change _ADR representation to
+ 64 bits
+Thread-Index: AQHVABzpPFu1CoIi4kGbA9d0A2PiXaZZ03bg
+Date: Fri, 3 May 2019 19:54:57 +0000
+Message-ID: <94F2FBAB4432B54E8AACC7DFDE6C92E3B958C7AE@ORSMSX110.amr.corp.intel.com>
+References: <20190501125322.23791-1-pierre-louis.bossart@linux.intel.com>
+In-Reply-To: <20190501125322.23791-1-pierre-louis.bossart@linux.intel.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiMzI4NDBhMDUtN2FiMC00Y2Q1LTljZGItY2VmYTE0MDQ1Yjg3IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiTWNnRytaTnE2b3A3b2pvMEVmQWlmWUgwVWtZbVE0MzEwc3MxSEpZVWNqVTQ0eGx5U0I2Rm1BS0ZmQjBtNEtoeCJ9
+x-ctpclassification: CTP_NT
+dlp-product: dlpe-windows
+dlp-version: 11.0.600.7
+dlp-reaction: no-action
+x-originating-ip: [10.22.254.139]
 MIME-Version: 1.0
-References: <20190415151857.25531-1-pierre-louis.bossart@linux.intel.com>
- <20190416032923.GQ28103@vkoul-mobl>
- <CAJZ5v0jOkQ7aWn6B_yVTYd7y+78mpGSzBoGuWe3uCdzDRNE94Q@mail.gmail.com>
- <eda0ed4e-fc36-a53a-225f-e7d54bb73413@linux.intel.com>
-In-Reply-To: <eda0ed4e-fc36-a53a-225f-e7d54bb73413@linux.intel.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Wed, 1 May 2019 09:59:25 +0200
-Message-ID: <CAJZ5v0iwm5tLRy2mLX6_uTk2wh+1Y4VaEcqDx5Z1WDLZHMnpEg@mail.gmail.com>
-To: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Subject: Re: [Devel] [alsa-devel] [PATCH] ACPI / device_sysfs: change _ADR
+Subject: Re: [Devel] [PATCH v2] ACPI / device_sysfs: change _ADR
  representation to 64 bits
 X-BeenThere: devel@acpica.org
 X-Mailman-Version: 2.1.29
@@ -59,67 +66,110 @@ List-Post: <mailto:devel@acpica.org>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Subscribe: <https://lists.acpica.org/mailman/listinfo/devel>,
  <mailto:devel-request@acpica.org?subject=subscribe>
-Cc: "moderated list:SOUND - SOC LAYER / DYNAMIC AUDIO POWER MANAGEM..."
- <alsa-devel@alsa-project.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
- Takashi Iwai <tiwai@suse.de>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: "tiwai@suse.de" <tiwai@suse.de>,
+ "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
  "Rafael J. Wysocki" <rjw@rjwysocki.net>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Liam Girdwood <liam.r.girdwood@linux.intel.com>,
- "open list:ACPI" <linux-acpi@vger.kernel.org>, Vinod Koul <vkoul@kernel.org>,
- Mark Brown <broonie@kernel.org>,
- Srini Kandagatla <srinivas.kandagatla@linaro.org>, jank@cadence.com,
- Joe Perches <joe@perches.com>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "liam.r.girdwood@linux.intel.com" <liam.r.girdwood@linux.intel.com>,
+ "open list:ACPI" <linux-acpi@vger.kernel.org>,
+ "vkoul@kernel.org" <vkoul@kernel.org>,
+ "broonie@kernel.org" <broonie@kernel.org>,
+ "srinivas.kandagatla@linaro.org" <srinivas.kandagatla@linaro.org>,
+ "jank@cadence.com" <jank@cadence.com>, "joe@perches.com" <joe@perches.com>,
  "open list:ACPI COMPONENT ARCHITECTURE \(ACPICA\)" <devel@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Errors-To: devel-bounces@acpica.org
 Sender: "Devel" <devel-bounces@acpica.org>
 
-On Tue, Apr 30, 2019 at 8:23 PM Pierre-Louis Bossart
-<pierre-louis.bossart@linux.intel.com> wrote:
->
->
->
-> On 4/16/19 3:09 AM, Rafael J. Wysocki wrote:
-> > On Tue, Apr 16, 2019 at 5:29 AM Vinod Koul <vkoul@kernel.org> wrote:
-> >>
-> >> On 15-04-19, 10:18, Pierre-Louis Bossart wrote:
-> >>> Standards such as the MIPI DisCo for SoundWire 1.0 specification
-> >>> assume the _ADR field is 64 bits.
-> >>>
-> >>> _ADR is defined as an "Integer" represented as 64 bits since ACPI 2.0
-> >>> released in 2002. The low levels already use _ADR as 64 bits, e.g. in
-> >>> struct acpi_device_info.
-> >>>
-> >>> This patch bumps the representation used for sysfs to 64 bits.
-> >>>
-> >>> Example with a SoundWire device, the results show the complete
-> >>> vendorID and linkID which were omitted before:
-> >>>
-> >>> Before:
-> >>> $ more /sys/bus/acpi/devices/device\:38/adr
-> >>> 0x5d070000
-> >>> After:
-> >>> $ more /sys/bus/acpi/devices/device\:38/adr
-> >>> 0x000010025d070000
-> >>
-> >> This looks fine but the sysfs file is an ABI. Not sure if we can modify
-> >> the value returned this way.. Though it should not cause userspace
-> >> reading 32bits to break...
-> >
-> > Well, IIRC using "08" instead of "016" in the format field would
-> > preserve the existing behavior for 32-bit values, wouldn't it?
->
-> yes, but it makes the 64-bit address not aligned depending on the number
-> of leading zeroes, see below. I get a migraine just looking at the results.
 
-Well, scripts reading them won't get that, but fair enough.
 
-> Maybe add a test to use 08 for values that are below 0xFFFFFFFF and 16
-> for addresses who really need the full range, typically because of an
-> encoding?
+> -----Original Message-----
+> From: Pierre-Louis Bossart [mailto:pierre-louis.bossart@linux.intel.com]
+> Sent: Wednesday, May 1, 2019 5:53 AM
+> To: alsa-devel@alsa-project.org
+> Cc: linux-kernel@vger.kernel.org; tiwai@suse.de; broonie@kernel.org;
+> vkoul@kernel.org; gregkh@linuxfoundation.org;
+> liam.r.girdwood@linux.intel.com; jank@cadence.com; joe@perches.com;
+> srinivas.kandagatla@linaro.org; Pierre-Louis Bossart <pierre-
+> louis.bossart@linux.intel.com>; Rafael J. Wysocki <rjw@rjwysocki.net>;
+> Len Brown <lenb@kernel.org>; Moore, Robert <robert.moore@intel.com>;
+> Schmauss, Erik <erik.schmauss@intel.com>; open list:ACPI <linux-
+> acpi@vger.kernel.org>; open list:ACPI COMPONENT ARCHITECTURE (ACPICA)
+> <devel@acpica.org>
+> Subject: [PATCH v2] ACPI / device_sysfs: change _ADR representation to
+> 64 bits
+> 
+> Standards such as the MIPI DisCo for SoundWire 1.0 specification assume
+> the _ADR field is 64 bits.
+> 
+> _ADR is defined as an "Integer" represented as 64 bits since ACPI 2.0
+> released in 2002. The low levels already use _ADR as 64 bits, e.g. in
+> struct acpi_device_info.
+> 
+[Moore, Robert] 
 
-That would be fine by me.
+Just to be precise: since acpi 2.0 the integer width is either 32 bits or 64 bits, depending on the version number of the DSDT (1-->32, 2 or greater --> 64).
+
+
+> This patch bumps the representation used for sysfs to 64 bits. To avoid
+> any compatibility/ABI issues, the printf format is only extended to 16
+> characters when the actual _ADR value exceeds the 32 bit maximum.
+> 
+> Example with a SoundWire device, the results show the complete vendorID
+> and linkID which were omitted before:
+> 
+> Before:
+> $ more /sys/bus/acpi/devices/device\:38/adr
+> 0x5d070000
+> After:
+> $ more /sys/bus/acpi/devices/device\:38/adr
+> 0x000010025d070000
+> 
+> Signed-off-by: Pierre-Louis Bossart <pierre-
+> louis.bossart@linux.intel.com>
+> ---
+> v2: only use 64 bits when required to avoid compatibility issues
+> (feedback from Vinod and Rafael)
+> 
+>  drivers/acpi/device_sysfs.c | 6 ++++--
+>  include/acpi/acpi_bus.h     | 2 +-
+>  2 files changed, 5 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/acpi/device_sysfs.c b/drivers/acpi/device_sysfs.c
+> index 8940054d6250..7dda0ee05cd1 100644
+> --- a/drivers/acpi/device_sysfs.c
+> +++ b/drivers/acpi/device_sysfs.c
+> @@ -428,8 +428,10 @@ static ssize_t acpi_device_adr_show(struct device
+> *dev,  {
+>  	struct acpi_device *acpi_dev = to_acpi_device(dev);
+> 
+> -	return sprintf(buf, "0x%08x\n",
+> -		       (unsigned int)(acpi_dev->pnp.bus_address));
+> +	if (acpi_dev->pnp.bus_address > 0xFFFFFFFF)
+> +		return sprintf(buf, "0x%016llx\n", acpi_dev-
+> >pnp.bus_address);
+> +	else
+> +		return sprintf(buf, "0x%08llx\n", acpi_dev->pnp.bus_address);
+>  }
+>  static DEVICE_ATTR(adr, 0444, acpi_device_adr_show, NULL);
+> 
+> diff --git a/include/acpi/acpi_bus.h b/include/acpi/acpi_bus.h index
+> f7981751ac77..9075e28ea60a 100644
+> --- a/include/acpi/acpi_bus.h
+> +++ b/include/acpi/acpi_bus.h
+> @@ -230,7 +230,7 @@ struct acpi_device_dir {
+>  /* Plug and Play */
+> 
+>  typedef char acpi_bus_id[8];
+> -typedef unsigned long acpi_bus_address;
+> +typedef u64 acpi_bus_address;
+>  typedef char acpi_device_name[40];
+>  typedef char acpi_device_class[20];
+> 
+> --
+> 2.17.1
+
 _______________________________________________
 Devel mailing list
 Devel@acpica.org
