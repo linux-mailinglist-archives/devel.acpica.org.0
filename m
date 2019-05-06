@@ -2,58 +2,56 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A358514B19
-	for <lists+devel-acpica@lfdr.de>; Mon,  6 May 2019 15:45:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 642A015359
+	for <lists+devel-acpica@lfdr.de>; Mon,  6 May 2019 20:04:01 +0200 (CEST)
 Received: from [127.0.0.1] (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id E8F9C21250C80;
-	Mon,  6 May 2019 06:45:32 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTP id D9A212122B97D;
+	Mon,  6 May 2019 11:03:59 -0700 (PDT)
 X-Original-To: Devel@acpica.org
 Delivered-To: Devel@acpica.org
 Received-SPF: Pass (sender SPF authorized) identity=mailfrom;
- client-ip=66.163.185.31; helo=sonic313-56.consmr.mail.ne1.yahoo.com;
- envelope-from=scoobi_doo@yahoo.com; receiver=devel@acpica.org 
-Received: from sonic313-56.consmr.mail.ne1.yahoo.com
- (sonic313-56.consmr.mail.ne1.yahoo.com [66.163.185.31])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ client-ip=192.55.52.93; helo=mga11.intel.com;
+ envelope-from=erik.schmauss@intel.com; receiver=devel@acpica.org 
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ml01.01.org (Postfix) with ESMTPS id 624FD21237813
- for <Devel@acpica.org>; Mon,  6 May 2019 06:45:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1557150329; bh=U82iVBMhTcODQ/WGIh2Jw+Plkz5XEfXsYqkv6oeFpVM=;
- h=To:From:Subject:Date:From:Subject;
- b=bfmGFPtRuGIPhFkFZOwS8Cs2Y/K0tAOXU1BA2qNY73mGxz/jl33G/8iWmdFmcHVA8sHKSZftYiEj1lg9/jXLOrF+/HcNP1vPKHefgAxczC2iJME2OfZUu+DPIIM96q2IS2gxt36dcjLIEjWSUImgrizf0ChX9OnEvqSOI3fHzvlpk6eBkXK/sHwAmt/dVYXSevFlU0+XyBwPLkRvGblo1r+n3WvZ+xY02g6gLcEJQwI2OrZVTTtW/5N8l0EZfgEJRHzL+V23RYE+2qF8caE5B9+iTfJAlGA3rLxNBRIIuEh0+xRq/n1bpKHl09lydTizjBbpFwI4A7u4qkNkGbwmEw==
-X-YMail-OSG: X6BEyowVM1lo3c4X.WyqP3V48WTV6qYbhuCL7B2NIi_AWWLUj8RxXNgbB0vWfMK
- ZtPXH_egYayBkKHh_gW5JWh9ZtW8A0TEIyUQ4zUeHaxyah3u5xBeR0OxRXpiHrJ5MvlxuHzzvZ8L
- X8swl0BKNNAPSN85GnEKfVduGwmBbbY6JNN22I_WjdEcYSkhkEStmR26fHxH0VIKXDF4jdISAmeo
- 9U.GTN9emSzdbEsuUpTv1bBmY5AqIKxogYB4NPfqCFtpAC3wngQKRUEmLpVk4AkngoaHS5IaA.jJ
- QwalAxGThFuac9ChTlPtpHX9D_UcluR0mxP6peOVAHURJI8WV0_.pFb2tN1xG8W2RcCcr5kJtKzL
- O.YiHKAYSlDLr4cm18NxBXAi50xVkX65D2OEVLp1crhNb7G4V6morC.IPJCTwpQ7lhYz9kGGUEdo
- LUHcmqttimI6sCLJL9HG7MwD_TyM1zXTe5R9EMZyHAmaISPEQLAPQMM072GWRECkLV2Txd.I0_Zj
- 7GVakOO6o4gepP8jZoaS08EU27F.zfKFEsHSQTvscpvwcK0hI0DDpvoZ6QseD9met9oSKvBf48w2
- RZPgX5yD5BHCqj7oGOM86MwTaid.OdQT2h6EIPsFA1YCnntOIYqM6hi08VRRFM5JFYvRYxBDy8Wt
- asMpFYhBkrx29wDZM6XaNJIvJxCEVyS9rS4i7bO0Ij9jT0QbfjkAcbE77XAvvNbwshrB.iRelcc_
- KB3Gqo4u80pN1j5rPoOAQ1pvDTsgbGaFoQaG1A4U62uL_K4YxUD3Stj0c595cyZ9.qUXPbm4CjOr
- o3StkK4MOAPBpCbzm9xrngu_Y3YVfIeU36AQNIMTNAmX2aeer8lwQ5rdTQTaDJ0pIrzHm6Ujj3nW
- wH1bBqO6jujnH8aWbnjc31ck6VUSXyMJYHlbPetTyFAdoRB0.hUsBKFFy8ZDlw_6mbASXE0viY.Q
- qXuLpRN4mVfdWO32J7DHSYvOC_M9njhEJ7zOYwFRYbqOb5pYwP8fOvRn9wMis8sZegDD4KohUBcc
- 8tg3HUWXljuRp9nuTBkbLGZbV3N73HjVNHHc2JNCQuf8P6KeveoovweCZjEcoo5tgudErz.OFxpx
- WPyeiVKZs6T7r1sFl2KmjoDUEALZe4SbtQ5R9WQpNClmlibsA8pJVZjgATpywyCH2YI7a1gti0HJ
- oGS8s
-Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic313.consmr.mail.ne1.yahoo.com with HTTP; Mon, 6 May 2019 13:45:29 +0000
-Received: from 192.34.49.8 (EHLO [10.228.144.26]) ([192.34.49.8])
- by smtp409.mail.ne1.yahoo.com (Oath Hermes SMTP Server) with ESMTPA ID
- 1e094a13b55bb5fb8f927d68fc976983; 
- Mon, 06 May 2019 13:45:29 +0000 (UTC)
-To: freebsd-acpi@FreeBSD.org, Devel@acpica.org
-From: Anthony Jenkins <Scoobi_doo@yahoo.com>
-Message-ID: <1e3328ab-0b00-7abf-7182-b4291f18f197@yahoo.com>
-Date: Mon, 6 May 2019 09:45:28 -0400
-User-Agent: Mozilla/5.0 (X11; FreeBSD amd64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.3
-MIME-Version: 1.0
+ by ml01.01.org (Postfix) with ESMTPS id 8F6DB2121AA3A
+ for <Devel@acpica.org>; Mon,  6 May 2019 11:03:58 -0700 (PDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+ by fmsmga102.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 06 May 2019 11:03:56 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.60,438,1549958400"; d="scan'208";a="141897026"
+Received: from orsmsx106.amr.corp.intel.com ([10.22.225.133])
+ by orsmga006.jf.intel.com with ESMTP; 06 May 2019 11:03:57 -0700
+Received: from orsmsx122.amr.corp.intel.com ([169.254.11.68]) by
+ ORSMSX106.amr.corp.intel.com ([169.254.1.121]) with mapi id 14.03.0415.000;
+ Mon, 6 May 2019 11:03:56 -0700
+From: "Schmauss, Erik" <erik.schmauss@intel.com>
+To: Anthony Jenkins <Scoobi_doo@yahoo.com>, "freebsd-acpi@FreeBSD.org"
+ <freebsd-acpi@FreeBSD.org>, "Devel@acpica.org" <Devel@acpica.org>, "Moore,
+ Robert" <robert.moore@intel.com>, Jung-uk Kim <jkim@FreeBSD.org>
+Thread-Topic: [Devel] iasl -d and duplicate symbols (ACPI Error:
+ AE_ALREADY_EXISTS)
+Thread-Index: AQHVBBIGUWvmOe/ji0KlLczOxNUn7aZeXybw
+Date: Mon, 6 May 2019 18:03:56 +0000
+Message-ID: <CF6A88132359CE47947DB4C6E1709ED53C5A994E@ORSMSX122.amr.corp.intel.com>
+References: <1e3328ab-0b00-7abf-7182-b4291f18f197@yahoo.com>
+In-Reply-To: <1e3328ab-0b00-7abf-7182-b4291f18f197@yahoo.com>
+Accept-Language: en-US
 Content-Language: en-US
-Subject: [Devel] iasl -d and duplicate symbols (ACPI Error:
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiZDJjMjg2OTUtMzQyNy00MWYwLWEzZTItYmFkZjI2YTkyNmE1IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiZVNqXC8yVGRZKzFXSEVoR2xrYUNocGtNK0MyTTk3dWp6Rzc1VzFMaE5aN3BRU29nNUFzRk8wN0RoQXRpd2JDeWEifQ==
+x-ctpclassification: CTP_NT
+dlp-product: dlpe-windows
+dlp-version: 11.0.600.7
+dlp-reaction: no-action
+x-originating-ip: [10.22.254.139]
+MIME-Version: 1.0
+Subject: Re: [Devel] iasl -d and duplicate symbols (ACPI Error:
  AE_ALREADY_EXISTS)
 X-BeenThere: devel@acpica.org
 X-Mailman-Version: 2.1.29
@@ -66,52 +64,89 @@ List-Post: <mailto:devel@acpica.org>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Subscribe: <https://lists.acpica.org/mailman/listinfo/devel>,
  <mailto:devel-request@acpica.org?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: devel-bounces@acpica.org
 Sender: "Devel" <devel-bounces@acpica.org>
 
-Hi all,
 
-I am trying to patch the ACPI tables on my Dell XPS 15 9570 running 
-FreeBSD 13.0-CURRENT @ git commit 68c8581f772. 'acpidump -d -t' gives 
-error AE_ALREADY_EXISTS when trying to add symbol 
-\_SB.PCI0.XHC.RHUB.HS01._UPC.?? Google says this is because my BIOS' set 
-of ACPI tables contains two duplicate tables, and it fails to add 
-symbols from the 2nd table because they already exist from the 1st.
 
-Q: By "duplicate table", does this mean the entire body of the table 
-(excluding its header) is duplicated?
+> -----Original Message-----
+> From: Devel [mailto:devel-bounces@acpica.org] On Behalf Of Anthony
+> Jenkins
+> Sent: Monday, May 6, 2019 6:45 AM
+> To: freebsd-acpi@FreeBSD.org; Devel@acpica.org
+> Subject: [Devel] iasl -d and duplicate symbols (ACPI Error:
+> AE_ALREADY_EXISTS)
+> 
+> Hi all,
+> 
+> I am trying to patch the ACPI tables on my Dell XPS 15 9570 running FreeBSD
+> 13.0-CURRENT @ git commit 68c8581f772. 'acpidump -d -t' gives error
+> AE_ALREADY_EXISTS when trying to add symbol
+> \_SB.PCI0.XHC.RHUB.HS01._UPC.?? Google says this is because my BIOS' set
+> of ACPI tables contains two duplicate tables, and it fails to add symbols from
+> the 2nd table because they already exist from the 1st.
+> 
+[Schmauss, Erik] 
++JK
+Hi,
 
-What's the standard practice for handling this error? I assume I have to:
+> Q: By "duplicate table", does this mean the entire body of the table
+> (excluding its header) is duplicated?
 
- 1. Identify the two duplicate tables
- 2. Tell 'iasl -d' (which is what 'acpidump' calls to do the
-    disassembly) to exclude one of the two tables
+It depends. A single table can declare multiple named objects. This message indicates that these symbols have been declared in multiple tables. If the entire body of the table is duplicated you should get a lot of these errors. However, it does not necessarily mean that there are duplicate tables. Some content may be different.
 
-I have no idea how to do either of these two tasks with the set of 
-acpica tools I have (iasl version 20190108)...anyone have any pointers?
+> 
+> What's the standard practice for handling this error? I assume I have to:
+> 
+In order to solve this issue, it must be done in the firmware. Please make sure that you have the latest firmware from dell.
 
-Is there a way to extract (using acpica tools) the body of a single 
-named ACPI table?
+Once you do, please attach a dmesg of free BSD booting with the latest firmware. The dmesg should also contain these ACPI errors.
 
-I have some ideas for patches to acpica to help with this increasingly 
-common issue:
+There are similar issues with Linux that I've been seeing but I would like to make sure that you have their latest firmware before involving dell...
 
-  * Patch iasl(1) to emit more information about the origins of the
-    symbols it parses, such that an AE_ALREADY_EXISTS error would also
-    emit the origin (table name) of the existing symbol and that of the
-    current table it's trying to add.
-  * Patch iasl(1) to add a user option (flag) to ignore tables with
-    duplicate symbols, possibly adding a parameter indicating number of
-    duplicates or percentage of duplication before dropping that table.
+>  1. Identify the two duplicate tables
+>  2. Tell 'iasl -d' (which is what 'acpidump' calls to do the
+>     disassembly) to exclude one of the two tables
+> 
+> I have no idea how to do either of these two tasks with the set of acpica tools
+> I have (iasl version 20190108)...anyone have any pointers?
+> 
+> Is there a way to extract (using acpica tools) the body of a single named ACPI
+> table?
 
-Would any/all of these patches be useful/considered for acceptance into 
-acpica?
+No
+> 
+> I have some ideas for patches to acpica to help with this increasingly common
+> issue:
+> 
+>   * Patch iasl(1) to emit more information about the origins of the
+>     symbols it parses, such that an AE_ALREADY_EXISTS error would also
+>     emit the origin (table name) of the existing symbol and that of the
+>     current table it's trying to add.
+>   * Patch iasl(1) to add a user option (flag) to ignore tables with
+>     duplicate symbols, possibly adding a parameter indicating number of
+>     duplicates or percentage of duplication before dropping that table.
+> 
+> Would any/all of these patches be useful/considered for acceptance into
+> acpica?
 
-Thanks in advance,
-Anthony Jenkins
+Possibly, I think the second option hides things from the user which can be even more confusing.
+First option seems better but it might be non-trivial. I'll bring it up with Bob.
 
+I hope this helps. Let me know if you have any other questions
+
+Erik
+
+> 
+> Thanks in advance,
+> Anthony Jenkins
+> 
+> _______________________________________________
+> Devel mailing list
+> Devel@acpica.org
+> https://lists.acpica.org/mailman/listinfo/devel
 _______________________________________________
 Devel mailing list
 Devel@acpica.org
