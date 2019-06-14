@@ -2,49 +2,57 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7CBD345855
-	for <lists+devel-acpica@lfdr.de>; Fri, 14 Jun 2019 11:13:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D880C462F8
+	for <lists+devel-acpica@lfdr.de>; Fri, 14 Jun 2019 17:35:44 +0200 (CEST)
 Received: from [127.0.0.1] (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 33E832129DBAF;
-	Fri, 14 Jun 2019 02:13:06 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTP id 5145A2129EBA8;
+	Fri, 14 Jun 2019 08:35:41 -0700 (PDT)
 X-Original-To: devel@acpica.org
 Delivered-To: devel@acpica.org
 Received-SPF: Pass (sender SPF authorized) identity=mailfrom;
- client-ip=209.85.210.66; helo=mail-ot1-f66.google.com;
- envelope-from=rjwysocki@gmail.com; receiver=devel@acpica.org 
-Received: from mail-ot1-f66.google.com (mail-ot1-f66.google.com
- [209.85.210.66])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ client-ip=192.55.52.151; helo=mga17.intel.com;
+ envelope-from=robert.moore@intel.com; receiver=devel@acpica.org 
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ml01.01.org (Postfix) with ESMTPS id E24E42194D3B3
- for <devel@acpica.org>; Fri, 14 Jun 2019 02:13:04 -0700 (PDT)
-Received: by mail-ot1-f66.google.com with SMTP id j19so2003427otq.2
- for <devel@acpica.org>; Fri, 14 Jun 2019 02:13:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=iQKOlho3IePwEIN90jAdwdDwovI9WsnmIGTODVgkjRA=;
- b=jA3Ln0+xXgvnVMiv1LXMILGnKoxrOrWnWzbYOR0fZS2oKw2eHoqCY592ogvx5HRypI
- U7hLiK86LKdV3qyL4G1Deat6JUKjkTju2cULWFcdfaRA0R/tEgTskBarruocLOePBk86
- Z7M7gBHAb5dkKqHcQky3+5oXJ6eQJogj7y+KO6LTloMxxX7WUQmGQt97h55I2algNuXX
- gzMrRWHeRNRTDIaX9dofdidR5VqUL6x7AXmnxdnwy3WlKQPec1u0WqzXS34OmjtYzOUZ
- 21ZcXxUTQ1fOSDhyeY+fR6oX2G1YONH2lxJaF11zXnMrcu2/UUaNHPTog19JnUXKKtw5
- q7MA==
-X-Gm-Message-State: APjAAAV3ISd/XiU4I9LyBczimgEQxVhq9byVrzyEfZn3nqrxm9HiMmN2
- BA3fcJgfGijhOZuUei8nHidKCW7mcsC1eXM8Psw=
-X-Google-Smtp-Source: APXvYqwmdZTMd2v6GPlEy1a/TL7qrJsrqpXKgBAz63iJnH2gtW407SGicB8TN5jAyyOvInGV4i/vIKKPF+eAlUMk8A4=
-X-Received: by 2002:a05:6830:1516:: with SMTP id
- k22mr2077918otp.189.1560503583969; 
- Fri, 14 Jun 2019 02:13:03 -0700 (PDT)
-MIME-Version: 1.0
+ by ml01.01.org (Postfix) with ESMTPS id 1731821297045
+ for <devel@acpica.org>; Fri, 14 Jun 2019 08:35:39 -0700 (PDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+ by fmsmga107.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 14 Jun 2019 08:35:38 -0700
+X-ExtLoop1: 1
+Received: from orsmsx109.amr.corp.intel.com ([10.22.240.7])
+ by fmsmga004.fm.intel.com with ESMTP; 14 Jun 2019 08:35:38 -0700
+Received: from orsmsx116.amr.corp.intel.com (10.22.240.14) by
+ ORSMSX109.amr.corp.intel.com (10.22.240.7) with Microsoft SMTP Server (TLS)
+ id 14.3.408.0; Fri, 14 Jun 2019 08:35:38 -0700
+Received: from orsmsx110.amr.corp.intel.com ([169.254.10.60]) by
+ ORSMSX116.amr.corp.intel.com ([169.254.7.166]) with mapi id 14.03.0415.000;
+ Fri, 14 Jun 2019 08:35:37 -0700
+From: "Moore, Robert" <robert.moore@intel.com>
+To: Nikolaus Voss <nv@vosn.de>, "Rafael J. Wysocki" <rafael@kernel.org>
+Thread-Topic: [PATCH v2 1/3] ACPI: Resolve objects on host-directed table loads
+Thread-Index: AQHVIPn/qqDB5Bv4z0aSsleXlAnDw6abVhaAgAADpwD///G0sA==
+Date: Fri, 14 Jun 2019 15:35:36 +0000
+Message-ID: <94F2FBAB4432B54E8AACC7DFDE6C92E3B95EFB26@ORSMSX110.amr.corp.intel.com>
 References: <cover.1560327219.git.nikolaus.voss@loewensteinmedical.de>
  <e2a4ddfd93a904b50b7ccc074e00e14dc4661963.1560327219.git.nikolaus.voss@loewensteinmedical.de>
-In-Reply-To: <e2a4ddfd93a904b50b7ccc074e00e14dc4661963.1560327219.git.nikolaus.voss@loewensteinmedical.de>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Fri, 14 Jun 2019 11:12:53 +0200
-Message-ID: <CAJZ5v0jqxWs=PPik-TCDqQiyxCSyRP7HTue1WsdWP9e-nik2eA@mail.gmail.com>
-To: Nikolaus Voss <nikolaus.voss@loewensteinmedical.de>
+ <CAJZ5v0jqxWs=PPik-TCDqQiyxCSyRP7HTue1WsdWP9e-nik2eA@mail.gmail.com>
+ <alpine.DEB.2.20.1906141114490.6579@fox.voss.local>
+In-Reply-To: <alpine.DEB.2.20.1906141114490.6579@fox.voss.local>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiMjNjOGUyNzEtODllMy00MDgxLWE0MmYtZTE5ZDRlOTBjZDFmIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoieHMzbXMwTW5xdTg0dUJueHJ5aWNNR0dQTDNaSWk1T0FNYlRldUk0TW0wMUlzWnp6cFwvN0dqNlAraXlyaTVweG0ifQ==
+x-ctpclassification: CTP_NT
+dlp-product: dlpe-windows
+dlp-version: 11.2.0.6
+dlp-reaction: no-action
+x-originating-ip: [10.22.254.138]
+MIME-Version: 1.0
 Subject: Re: [Devel] [PATCH v2 1/3] ACPI: Resolve objects on host-directed
  table loads
 X-BeenThere: devel@acpica.org
@@ -58,91 +66,61 @@ List-Post: <mailto:devel@acpica.org>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Subscribe: <https://lists.acpica.org/mailman/listinfo/devel>,
  <mailto:devel-request@acpica.org?subject=subscribe>
-Cc: Linux PWM List <linux-pwm@vger.kernel.org>,
+Cc: Linux PWM List <linux-pwm@vger.kernel.org>, "open list:ACPI COMPONENT
+ ARCHITECTURE \(ACPICA\)" <devel@acpica.org>,
  "Rafael J. Wysocki" <rjw@rjwysocki.net>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
- Thierry Reding <thierry.reding@gmail.com>,
- Jacek Anaszewski <jacek.anaszewski@gmail.com>, Pavel Machek <pavel@ucw.cz>,
- nv@vosn.de,
- "open list:ACPI COMPONENT ARCHITECTURE \(ACPICA\)" <devel@acpica.org>,
- linux-leds@vger.kernel.org, Dan Murphy <dmurphy@ti.com>
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel
+ Maling List <linux-acpi@vger.kernel.org>,
+ Thierry Reding <thierry.reding@gmail.com>, Dan Murphy <dmurphy@ti.com>,
+ Pavel Machek <pavel@ucw.cz>,
+ "linux-leds@vger.kernel.org" <linux-leds@vger.kernel.org>,
+ Jacek Anaszewski <jacek.anaszewski@gmail.com>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Errors-To: devel-bounces@acpica.org
 Sender: "Devel" <devel-bounces@acpica.org>
 
-On Wed, Jun 12, 2019 at 10:36 AM Nikolaus Voss
-<nikolaus.voss@loewensteinmedical.de> wrote:
->
-> If an ACPI SSDT overlay is loaded after built-in tables
-> have been loaded e.g. via configfs or efivar_ssdt_load()
-> it is necessary to rewalk the namespace to resolve
-> references. Without this, relative and absolute paths
-> like ^PCI0.SBUS or \_SB.PCI0.SBUS are not resolved
-> correctly.
->
-> Make configfs load use the same method as efivar_ssdt_load().
->
-> Signed-off-by: Nikolaus Voss <nikolaus.voss@loewensteinmedical.de>
 
-This is fine by me, so
 
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+-----Original Message-----
+From: Nikolaus Voss [mailto:nv@vosn.de] 
+Sent: Friday, June 14, 2019 2:26 AM
+To: Rafael J. Wysocki <rafael@kernel.org>
+Cc: Rafael J. Wysocki <rjw@rjwysocki.net>; Len Brown <lenb@kernel.org>; Moore, Robert <robert.moore@intel.com>; Schmauss, Erik <erik.schmauss@intel.com>; Jacek Anaszewski <jacek.anaszewski@gmail.com>; Pavel Machek <pavel@ucw.cz>; Dan Murphy <dmurphy@ti.com>; Thierry Reding <thierry.reding@gmail.com>; ACPI Devel Maling List <linux-acpi@vger.kernel.org>; open list:ACPI COMPONENT ARCHITECTURE (ACPICA) <devel@acpica.org>; linux-leds@vger.kernel.org; Linux PWM List <linux-pwm@vger.kernel.org>; Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 1/3] ACPI: Resolve objects on host-directed table loads
 
-Or if you want me to take this patch (without the other two in the
-series), please let me know.
+Hi Rafael,
 
-As for the other two patches, someone else needs to review them for
-you as I'm not particularly familiar with the PWM subsystem.
+On Fri, 14 Jun 2019, Rafael J. Wysocki wrote:
+> On Wed, Jun 12, 2019 at 10:36 AM Nikolaus Voss 
+> <nikolaus.voss@loewensteinmedical.de> wrote:
+>>
+>> If an ACPI SSDT overlay is loaded after built-in tables have been 
+>> loaded e.g. via configfs or efivar_ssdt_load() it is necessary to 
+>> rewalk the namespace to resolve references. Without this, relative 
+>> and absolute paths like ^PCI0.SBUS or \_SB.PCI0.SBUS are not resolved 
+>> correctly.
+>>
+>> Make configfs load use the same method as efivar_ssdt_load().
+>>
+>> Signed-off-by: Nikolaus Voss <nikolaus.voss@loewensteinmedical.de>
+>
+> This is fine by me, so
+>
+> Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+>
+> Or if you want me to take this patch (without the other two in the 
+> series), please let me know.
 
-> ---
->  drivers/acpi/acpi_configfs.c   |  6 +-----
->  drivers/acpi/acpica/tbxfload.c | 11 +++++++++++
->  2 files changed, 12 insertions(+), 5 deletions(-)
->
-> diff --git a/drivers/acpi/acpi_configfs.c b/drivers/acpi/acpi_configfs.c
-> index f92033661239..663f0d88f912 100644
-> --- a/drivers/acpi/acpi_configfs.c
-> +++ b/drivers/acpi/acpi_configfs.c
-> @@ -56,11 +56,7 @@ static ssize_t acpi_table_aml_write(struct config_item *cfg,
->         if (!table->header)
->                 return -ENOMEM;
->
-> -       ACPI_INFO(("Host-directed Dynamic ACPI Table Load:"));
-> -       ret = acpi_tb_install_and_load_table(
-> -                       ACPI_PTR_TO_PHYSADDR(table->header),
-> -                       ACPI_TABLE_ORIGIN_EXTERNAL_VIRTUAL, FALSE,
-> -                       &table->index);
-> +       ret = acpi_load_table(table->header);
->         if (ret) {
->                 kfree(table->header);
->                 table->header = NULL;
-> diff --git a/drivers/acpi/acpica/tbxfload.c b/drivers/acpi/acpica/tbxfload.c
-> index 4f30f06a6f78..ef8f8a9f3c9c 100644
-> --- a/drivers/acpi/acpica/tbxfload.c
-> +++ b/drivers/acpi/acpica/tbxfload.c
-> @@ -297,6 +297,17 @@ acpi_status acpi_load_table(struct acpi_table_header *table)
->         status = acpi_tb_install_and_load_table(ACPI_PTR_TO_PHYSADDR(table),
->                                                 ACPI_TABLE_ORIGIN_EXTERNAL_VIRTUAL,
->                                                 FALSE, &table_index);
-> +
-> +       if (ACPI_SUCCESS(status)) {
-> +               /* Complete the initialization/resolution of package objects */
-> +
-> +               status = acpi_ns_walk_namespace(ACPI_TYPE_PACKAGE,
-> +                                               ACPI_ROOT_OBJECT,
-> +                                               ACPI_UINT32_MAX, 0,
-> +                                               acpi_ns_init_one_package,
-> +                                               NULL, NULL, NULL);
-> +       }
-> +
->         return_ACPI_STATUS(status);
->  }
->
-> --
-> 2.17.1
->
+thanks. I think it would be the best if you take up this patch as it is an independent topic. In retrospect it wasn't a good idea to put it into this series.
+
+Kind regards,
+Niko
+
+I would have to ask, why is additional code needed for package initialization/resolution? It already happens elsewhere in acpica.
+Bob
+
+[...]
 _______________________________________________
 Devel mailing list
 Devel@acpica.org
