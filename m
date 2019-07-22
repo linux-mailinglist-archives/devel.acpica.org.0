@@ -1,53 +1,66 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2FB46A681
-	for <lists+devel-acpica@lfdr.de>; Tue, 16 Jul 2019 12:28:01 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C22C070CEA
+	for <lists+devel-acpica@lfdr.de>; Tue, 23 Jul 2019 01:02:06 +0200 (CEST)
 Received: from [127.0.0.1] (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 673C1212BC468;
-	Tue, 16 Jul 2019 03:30:28 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTP id 19141212CFEC6;
+	Mon, 22 Jul 2019 16:04:32 -0700 (PDT)
 X-Original-To: devel@acpica.org
 Delivered-To: devel@acpica.org
 Received-SPF: Pass (sender SPF authorized) identity=mailfrom;
- client-ip=209.85.210.66; helo=mail-ot1-f66.google.com;
- envelope-from=rjwysocki@gmail.com; receiver=devel@acpica.org 
-Received: from mail-ot1-f66.google.com (mail-ot1-f66.google.com
- [209.85.210.66])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ client-ip=134.134.136.31; helo=mga06.intel.com;
+ envelope-from=erik.schmauss@intel.com; receiver=devel@acpica.org 
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ml01.01.org (Postfix) with ESMTPS id D87C1212B5EF4
- for <devel@acpica.org>; Tue, 16 Jul 2019 03:30:26 -0700 (PDT)
-Received: by mail-ot1-f66.google.com with SMTP id o101so20481207ota.8
- for <devel@acpica.org>; Tue, 16 Jul 2019 03:27:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=InV49k/g4n8kkX89qOOPmJMNqj/Q2fuW/aBD6hhUrXA=;
- b=KbJNTiR3obwzzYq0aSVd+InxVYRHkC0J5kvDdWZavEzsK2Z2cec8psYRArlnBUJzyQ
- eA8zYQah6NGT2HXuMgeZxJGdV3BjEA94EjSHTJlbdsqO2tru5KqGZOB9sM4C70oqHz5u
- VEwvVA/b03zMyCWSA9aTg9OeFHI2jmRy+ASmvNxFAfbnuMOLnEnDRhFvLLSqhNpNo3Ai
- UDLd4p/4Nl5CG1QdwnE8c1cEwhzkVrxhi/wG0l01+HSa7Vamh0gwyKCtVXNwi118MQac
- Xo0GyDzOUZXyW4/uQ2zpjxe8UPDBVXhU3zTRjkMAl0hJadtSrg5x6QC/H1LC7Bm35ZtE
- oQ+w==
-X-Gm-Message-State: APjAAAX5vimnoHBRFtAkcIQ29uNO3Drq93n6MGRnqulgFXFXTyk4IdbQ
- eWzFaYvLnhFOipibcNqqp1XjJrh/0N+6BDjDOfA=
-X-Google-Smtp-Source: APXvYqwNxa4ESy69KwPnztnMj6Vvcz27ajFqshxcVQs8WVfJTe1ykblJ31kt949Zta05jFdEjaTLyPSqql/gvXR4C4Y=
-X-Received: by 2002:a05:6830:8a:: with SMTP id
- a10mr18446800oto.167.1563272877613; 
- Tue, 16 Jul 2019 03:27:57 -0700 (PDT)
+ by ml01.01.org (Postfix) with ESMTPS id EBFE9212B204A
+ for <devel@acpica.org>; Mon, 22 Jul 2019 16:04:29 -0700 (PDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+ by orsmga104.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 22 Jul 2019 16:01:20 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.64,296,1559545200"; d="scan'208";a="368676008"
+Received: from orsmsx108.amr.corp.intel.com ([10.22.240.6])
+ by fmsmga006.fm.intel.com with ESMTP; 22 Jul 2019 16:01:19 -0700
+Received: from orsmsx114.amr.corp.intel.com (10.22.240.10) by
+ ORSMSX108.amr.corp.intel.com (10.22.240.6) with Microsoft SMTP Server (TLS)
+ id 14.3.439.0; Mon, 22 Jul 2019 16:01:19 -0700
+Received: from orsmsx122.amr.corp.intel.com ([169.254.11.68]) by
+ ORSMSX114.amr.corp.intel.com ([169.254.8.237]) with mapi id 14.03.0439.000;
+ Mon, 22 Jul 2019 16:01:19 -0700
+From: "Schmauss, Erik" <erik.schmauss@intel.com>
+To: Maximilian Luz <luzmaximilian@gmail.com>, "Moore, Robert"
+ <robert.moore@intel.com>, "Wysocki, Rafael J" <rafael.j.wysocki@intel.com>
+Thread-Topic: PROBLEM: Calling ObjectType on buffer field reports type integer
+Thread-Index: AQHU2nGbL6Z+rOUTjEmNgKjiKxQRHaYLXjCwgAaMyoCAAbd1AP//x1cAgAU5pID//5K0EIC9Al0AgALU3XA=
+Date: Mon, 22 Jul 2019 23:01:19 +0000
+Message-ID: <CF6A88132359CE47947DB4C6E1709ED53C614AA8@ORSMSX122.amr.corp.intel.com>
+References: <3ef42aa1-196d-f3db-0e5d-2fd84c198242@gmail.com>
+ <CF6A88132359CE47947DB4C6E1709ED53C592D47@ORSMSX122.amr.corp.intel.com>
+ <CF6A88132359CE47947DB4C6E1709ED53C59405C@ORSMSX122.amr.corp.intel.com>
+ <fe4bcc1c-5c15-caa6-ce01-a5df962ff008@gmail.com>
+ <CF6A88132359CE47947DB4C6E1709ED53C5942CA@ORSMSX122.amr.corp.intel.com>
+ <51e156ec-c2ed-84be-13c0-99a213e1d4b7@gmail.com>
+ <CF6A88132359CE47947DB4C6E1709ED53C595C50@ORSMSX122.amr.corp.intel.com>
+ <88077d9c-b2b7-5fc6-37e9-fa12d6aebe73@gmail.com>
+In-Reply-To: <88077d9c-b2b7-5fc6-37e9-fa12d6aebe73@gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiMDhlZmQzNWMtNmMxYi00MWExLWI0MWEtYWM2ODMzNDRkNzcxIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiSkl0Wmk2Q3k5NGpLWHR0VnBTRWNtcFF3T2dqb2hoSXVZVndYYXRwS1MyemR2Q2RReXpjK1RwVHZoQkthamNtSiJ9
+x-ctpclassification: CTP_NT
+dlp-product: dlpe-windows
+dlp-version: 11.0.600.7
+dlp-reaction: no-action
+x-originating-ip: [10.22.254.140]
 MIME-Version: 1.0
-References: <cover.1563269894.git.viresh.kumar@linaro.org>
- <CAJZ5v0iqYHNt6NQy3Fi1B=XtjNOm2x0mX3+7eWBREgFZRpUS+w@mail.gmail.com>
- <20190716101416.ntk353cfnrcykoek@vireshk-i7>
-In-Reply-To: <20190716101416.ntk353cfnrcykoek@vireshk-i7>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Tue, 16 Jul 2019 12:27:46 +0200
-Message-ID: <CAJZ5v0jZfmXN=juHX11vmSFj=vxS2Mu_b-OZprB9S+3LJjDb+g@mail.gmail.com>
-To: Viresh Kumar <viresh.kumar@linaro.org>
-Subject: Re: [Devel] [PATCH 00/10] cpufreq: Migrate users of policy
- notifiers to QoS requests
+Subject: Re: [Devel] PROBLEM: Calling ObjectType on buffer field reports
+ type integer
 X-BeenThere: devel@acpica.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -59,70 +72,46 @@ List-Post: <mailto:devel@acpica.org>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Subscribe: <https://lists.acpica.org/mailman/listinfo/devel>,
  <mailto:devel-request@acpica.org?subject=subscribe>
-Cc: "open list:ACPI COMPONENT ARCHITECTURE \(ACPICA\)" <devel@acpica.org>,
- linuxppc-dev <linuxppc-dev@lists.ozlabs.org>,
- Vincent Guittot <vincent.guittot@linaro.org>,
- "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
- "Rafael J. Wysocki" <rafael@kernel.org>,
- Benjamin Herrenschmidt <benh@kernel.crashing.org>,
- Amit Daniel Kachhap <amit.kachhap@gmail.com>,
- Daniel Lezcano <daniel.lezcano@linaro.org>, Rafael Wysocki <rjw@rjwysocki.net>,
- dri-devel <dri-devel@lists.freedesktop.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Eduardo Valentin <edubezval@gmail.com>,
- ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
- "open list:FRAMEBUFFER LAYER" <linux-fbdev@vger.kernel.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Linux PM <linux-pm@vger.kernel.org>, Javi Merino <javi.merino@kernel.org>
+Cc: "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>,
+ "devel@acpica.org" <devel@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Errors-To: devel-bounces@acpica.org
 Sender: "Devel" <devel-bounces@acpica.org>
 
-On Tue, Jul 16, 2019 at 12:14 PM Viresh Kumar <viresh.kumar@linaro.org> wrote:
->
-> On 16-07-19, 12:06, Rafael J. Wysocki wrote:
-> > On Tue, Jul 16, 2019 at 11:49 AM Viresh Kumar <viresh.kumar@linaro.org> wrote:
-> > >
-> > > Hello,
-> > >
-> > > Now that cpufreq core supports taking QoS requests for min/max cpu
-> > > frequencies, lets migrate rest of the users to using them instead of the
-> > > policy notifiers.
-> >
-> > Technically, this still is linux-next only. :-)
->
-> True :)
->
-> > > The CPUFREQ_NOTIFY and CPUFREQ_ADJUST events of the policy notifiers are
-> > > removed as a result, but we have to add CPUFREQ_CREATE_POLICY and
-> > > CPUFREQ_REMOVE_POLICY events to it for the acpi stuff specifically. So
-> > > the policy notifiers aren't completely removed.
-> >
-> > That's not entirely accurate, because arch_topology is going to use
-> > CPUFREQ_CREATE_POLICY now too.
->
-> Yeah, I thought about that while writing this patchset and
-> coverletter. But had it not been required for ACPI, I would have done
-> it differently for the arch-topology code. Maybe direct calling of
-> arch-topology routine from cpufreq core. I wanted to get rid of the
-> policy notifiers completely but I couldn't find a better way of doing
-> it for ACPI stuff.
->
-> > > Boot tested on my x86 PC and ARM hikey board. Nothing looked broken :)
-> > >
-> > > This has already gone through build bot for a few days now.
-> >
-> > So I'd prefer patches [5-8] to go right after the first one and then
-> > do the cleanups on top of that, as somebody may want to backport the
-> > essential changes without the cleanups.
->
-> In the exceptional case where nobody finds anything wrong with the
-> patches (highly unlikely), do you want me to resend with reordering or
-> you can reorder them while applying? There are no dependencies between
-> those patches anyway.
 
-Please resend the reordered set when the merge window closes.
+
+> -----Original Message-----
+> From: Maximilian Luz [mailto:luzmaximilian@gmail.com]
+> Sent: Saturday, July 20, 2019 1:45 PM
+> To: Schmauss, Erik <erik.schmauss@intel.com>; Moore, Robert
+> <robert.moore@intel.com>; Wysocki, Rafael J <rafael.j.wysocki@intel.com>
+> Cc: linux-acpi@vger.kernel.org; devel@acpica.org
+> Subject: Re: PROBLEM: Calling ObjectType on buffer field reports type integer
+> 
+> On 3/22/19 10:28 PM, Schmauss, Erik wrote:
+> > I've been discussing this with Bob. I've decided to file a bug against
+> > Microsoft internally. I would like to wait and see what they say...
+> > I've never done such things so I don't know how long the process takes to get
+> a response form them.
+> >
+> > I'll post updates when I get them but feel free to ping us again in a
+> > few weeks if you don't hear back. We're still investigating their
+> > operation region behavior as well...
+> >
+> > Erik
+> 
+> Hi,
+> 
+> I assume there hasn't been any response from Microsoft?
+
+Sorry about the late response. This slipped through the cracks.
+I've sent them an email just now and I'll keep you informed
+
+Thanks,
+Erik
+> 
+> Maximilian
 _______________________________________________
 Devel mailing list
 Devel@acpica.org
