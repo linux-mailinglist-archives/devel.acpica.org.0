@@ -2,54 +2,57 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B6197723E
-	for <lists+devel-acpica@lfdr.de>; Fri, 26 Jul 2019 21:35:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D2937E3D5
+	for <lists+devel-acpica@lfdr.de>; Thu,  1 Aug 2019 22:17:59 +0200 (CEST)
 Received: from [127.0.0.1] (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id B609F212E1588;
-	Fri, 26 Jul 2019 12:38:19 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTP id 4AB50212FE886;
+	Thu,  1 Aug 2019 13:20:28 -0700 (PDT)
 X-Original-To: devel@acpica.org
 Delivered-To: devel@acpica.org
 Received-SPF: Pass (sender SPF authorized) identity=mailfrom;
- client-ip=192.55.52.120; helo=mga04.intel.com;
- envelope-from=robert.moore@intel.com; receiver=devel@acpica.org 
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+ client-ip=134.134.136.126; helo=mga18.intel.com;
+ envelope-from=erik.schmauss@intel.com; receiver=devel@acpica.org 
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ml01.01.org (Postfix) with ESMTPS id 882EB212C01E3
- for <devel@acpica.org>; Fri, 26 Jul 2019 12:38:18 -0700 (PDT)
+ by ml01.01.org (Postfix) with ESMTPS id 75754212E13A5
+ for <devel@acpica.org>; Thu,  1 Aug 2019 13:20:27 -0700 (PDT)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
- by fmsmga104.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 26 Jul 2019 12:35:50 -0700
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+ by orsmga106.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 01 Aug 2019 13:17:56 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.64,312,1559545200"; d="scan'208";a="181973736"
-Received: from orsmsx108.amr.corp.intel.com ([10.22.240.6])
- by orsmga002.jf.intel.com with ESMTP; 26 Jul 2019 12:35:50 -0700
-Received: from orsmsx161.amr.corp.intel.com (10.22.240.84) by
- ORSMSX108.amr.corp.intel.com (10.22.240.6) with Microsoft SMTP Server (TLS)
- id 14.3.439.0; Fri, 26 Jul 2019 12:35:50 -0700
-Received: from orsmsx110.amr.corp.intel.com ([169.254.10.211]) by
- ORSMSX161.amr.corp.intel.com ([169.254.4.246]) with mapi id 14.03.0439.000;
- Fri, 26 Jul 2019 12:35:50 -0700
-From: "Moore, Robert" <robert.moore@intel.com>
-To: Qian Cai <cai@lca.pw>, "Wysocki, Rafael J" <rafael.j.wysocki@intel.com>
+X-IronPort-AV: E=Sophos;i="5.64,335,1559545200"; d="scan'208";a="372728424"
+Received: from orsmsx103.amr.corp.intel.com ([10.22.225.130])
+ by fmsmga006.fm.intel.com with ESMTP; 01 Aug 2019 13:17:55 -0700
+Received: from orsmsx160.amr.corp.intel.com (10.22.226.43) by
+ ORSMSX103.amr.corp.intel.com (10.22.225.130) with Microsoft SMTP Server (TLS)
+ id 14.3.439.0; Thu, 1 Aug 2019 13:17:55 -0700
+Received: from orsmsx122.amr.corp.intel.com ([169.254.11.68]) by
+ ORSMSX160.amr.corp.intel.com ([169.254.13.251]) with mapi id 14.03.0439.000;
+ Thu, 1 Aug 2019 13:17:54 -0700
+From: "Schmauss, Erik" <erik.schmauss@intel.com>
+To: Qian Cai <cai@lca.pw>, "Moore, Robert" <robert.moore@intel.com>,
+ "Wysocki, Rafael J" <rafael.j.wysocki@intel.com>
 Thread-Topic: [PATCH v2] acpica: fix -Wnull-pointer-arithmetic warnings
-Thread-Index: AQHVPaHylXmfzBauvEybJLDaugeeCqbdV0WA
-Date: Fri, 26 Jul 2019 19:35:49 +0000
-Message-ID: <94F2FBAB4432B54E8AACC7DFDE6C92E3B9661CBD@ORSMSX110.amr.corp.intel.com>
+Thread-Index: AQHVPaHqe/gnJU6NbEKNryIU7CFGuabdzLyAgAloioD//5trIA==
+Date: Thu, 1 Aug 2019 20:17:55 +0000
+Message-ID: <CF6A88132359CE47947DB4C6E1709ED53C618109@ORSMSX122.amr.corp.intel.com>
 References: <20190718194846.1880-1-cai@lca.pw>
-In-Reply-To: <20190718194846.1880-1-cai@lca.pw>
+ <94F2FBAB4432B54E8AACC7DFDE6C92E3B9661CBD@ORSMSX110.amr.corp.intel.com>
+ <1564686979.11067.48.camel@lca.pw>
+In-Reply-To: <1564686979.11067.48.camel@lca.pw>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiNjJiMzAxZTctOWE5ZS00MjJhLWE4NDAtYzI2NzI2OWNkNGNjIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiRWo5bWtmaEIrbVlsZUZ3SVNjVVwvR3dsRGdcL2RCa0tId2VMSUZBYndYXC9SdGNzbk1hdTQ2QkFaWHZvV3NocGlhWCJ9
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiODI2ZGY1OTItNDEyMS00ZGYzLWFiYjgtOTUzMDk4MzM4OWY5IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiakVRcDFSYXhteXJsblwvTnFwZ3ZPcVwvQkJvQjh6bVZSRXBnTmt6dkhsbkViTU11SEl0SkZCY2NpZVU1MWdNbElkIn0=
 x-ctpclassification: CTP_NT
 dlp-product: dlpe-windows
-dlp-version: 11.2.0.6
+dlp-version: 11.0.600.7
 dlp-reaction: no-action
-x-originating-ip: [10.22.254.139]
+x-originating-ip: [10.22.254.140]
 MIME-Version: 1.0
 Subject: Re: [Devel] [PATCH v2] acpica: fix -Wnull-pointer-arithmetic
  warnings
@@ -69,74 +72,91 @@ Cc: "clang-built-linux@googlegroups.com" <clang-built-linux@googlegroups.com>,
  "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
  "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>,
  "devel@acpica.org" <devel@acpica.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: devel-bounces@acpica.org
 Sender: "Devel" <devel-bounces@acpica.org>
 
-We've taken the change to ACPI_TO_POINTER.
-Thanks,
-Bob
-
-
------Original Message-----
-From: Qian Cai [mailto:cai@lca.pw] 
-Sent: Thursday, July 18, 2019 12:49 PM
-To: Wysocki, Rafael J <rafael.j.wysocki@intel.com>
-Cc: Moore, Robert <robert.moore@intel.com>; Schmauss, Erik <erik.schmauss@intel.com>; jkim@FreeBSD.org; lenb@kernel.org; ndesaulniers@google.com; linux-acpi@vger.kernel.org; devel@acpica.org; clang-built-linux@googlegroups.com; linux-kernel@vger.kernel.org; Qian Cai <cai@lca.pw>
-Subject: [PATCH v2] acpica: fix -Wnull-pointer-arithmetic warnings
-
-Clang generate quite a few of those warnings.
-
-drivers/acpi/scan.c:759:28: warning: arithmetic on a null pointer treated as a cast from integer to pointer is a GNU extension [-Wnull-pointer-arithmetic]
-		status = acpi_get_handle(ACPI_ROOT_OBJECT,
-obj->string.pointer,
-                                         ^~~~~~~~~~~~~~~~
-./include/acpi/actypes.h:458:56: note: expanded from macro 'ACPI_ROOT_OBJECT'
- #define ACPI_ROOT_OBJECT                ((acpi_handle) ACPI_TO_POINTER
-(ACPI_MAX_PTR))
-							^~~~~~~~~~~~~~~
-./include/acpi/actypes.h:509:41: note: expanded from macro 'ACPI_TO_POINTER'
- #define ACPI_TO_POINTER(i)              ACPI_ADD_PTR (void, (void *) 0,
-(acpi_size) (i))
-                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-./include/acpi/actypes.h:503:84: note: expanded from macro 'ACPI_ADD_PTR'
- #define ACPI_ADD_PTR(t, a, b)           ACPI_CAST_PTR (t,
-(ACPI_CAST_PTR (u8, (a)) + (acpi_size)(b)))
-                                         ^~~~~~~~~~~~~~~~~
-./include/acpi/actypes.h:501:66: note: expanded from macro 'ACPI_CAST_PTR'
- #define ACPI_CAST_PTR(t, p)             ((t *) (acpi_uintptr_t) (p))
-                                                                 ^ This is because pointer arithmetic on a pointer not pointing to an array is an undefined behavior (C11 6.5.6, constraint 8). Fix it by just casting the corresponding pointers using ACPI_CAST_PTR() and skip the arithmetic. Also, fix a checkpatch warning together.
-
-ERROR: Macros with complex values should be enclosed in parentheses
- #45: FILE: include/acpi/actypes.h:509:
-+#define ACPI_TO_POINTER(i)              ACPI_CAST_PTR (void, i)
-
-Signed-off-by: Qian Cai <cai@lca.pw>
----
-
-v2: Use ACPI_CAST_PTR() in ACPI_TO_POINTER() directly without
-    arithmetic.
-
- include/acpi/actypes.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/include/acpi/actypes.h b/include/acpi/actypes.h index ad6892a24015..163181e2d884 100644
---- a/include/acpi/actypes.h
-+++ b/include/acpi/actypes.h
-@@ -506,7 +506,7 @@ typedef u64 acpi_integer;
- 
- /* Pointer/Integer type conversions */
- 
--#define ACPI_TO_POINTER(i)              ACPI_ADD_PTR (void, (void *) 0, (acpi_size) (i))
-+#define ACPI_TO_POINTER(i)              (ACPI_CAST_PTR (void, i))
- #define ACPI_TO_INTEGER(p)              ACPI_PTR_DIFF (p, (void *) 0)
- #define ACPI_OFFSET(d, f)               ACPI_PTR_DIFF (&(((d *) 0)->f), (void *) 0)
- #define ACPI_PHYSADDR_TO_PTR(i)         ACPI_TO_POINTER(i)
---
-2.20.1 (Apple Git-117)
-
-_______________________________________________
-Devel mailing list
-Devel@acpica.org
-https://lists.acpica.org/mailman/listinfo/devel
+DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogUWlhbiBDYWkgW21haWx0
+bzpjYWlAbGNhLnB3XQ0KPiBTZW50OiBUaHVyc2RheSwgQXVndXN0IDEsIDIwMTkgMTI6MTYgUE0N
+Cj4gVG86IE1vb3JlLCBSb2JlcnQgPHJvYmVydC5tb29yZUBpbnRlbC5jb20+OyBXeXNvY2tpLCBS
+YWZhZWwgSg0KPiA8cmFmYWVsLmoud3lzb2NraUBpbnRlbC5jb20+DQo+IENjOiBTY2htYXVzcywg
+RXJpayA8ZXJpay5zY2htYXVzc0BpbnRlbC5jb20+OyBqa2ltQEZyZWVCU0Qub3JnOw0KPiBsZW5i
+QGtlcm5lbC5vcmc7IG5kZXNhdWxuaWVyc0Bnb29nbGUuY29tOyBsaW51eC1hY3BpQHZnZXIua2Vy
+bmVsLm9yZzsNCj4gZGV2ZWxAYWNwaWNhLm9yZzsgY2xhbmctYnVpbHQtbGludXhAZ29vZ2xlZ3Jv
+dXBzLmNvbTsgbGludXgtDQo+IGtlcm5lbEB2Z2VyLmtlcm5lbC5vcmcNCj4gU3ViamVjdDogUmU6
+IFtQQVRDSCB2Ml0gYWNwaWNhOiBmaXggLVdudWxsLXBvaW50ZXItYXJpdGhtZXRpYyB3YXJuaW5n
+cw0KPiANCj4gT24gRnJpLCAyMDE5LTA3LTI2IGF0IDE5OjM1ICswMDAwLCBNb29yZSwgUm9iZXJ0
+IHdyb3RlOg0KPiA+IFdlJ3ZlIHRha2VuIHRoZSBjaGFuZ2UgdG8gQUNQSV9UT19QT0lOVEVSLg0K
+PiANCj4gSSBhbSBhIGJpdCBjb25mdXNlZCBoZXJlLiBJIHNhdyB0aGUgY29tbWl0IGluIHRoZSBh
+Y3BpYSByZXBvLg0KPiANCj4gaHR0cHM6Ly9naXRodWIuY29tL2FjcGljYS9hY3BpY2EvY29tbWl0
+LzAyYmJjYTUwNzBlNDJkMjk4YzliODI0MzAwYWEwDQo+IGViOGEwODJkNzk3DQo+IA0KPiBidXQg
+aG93IGRvZXMgdGhhdCBjaGFuZ2Ugd2lsbCBnbyBpbnRvIHRoZSBsaW51eCBrZXJuZWw/IFN1cHBv
+c2UgUmFmYWVsIHdpbGwNCj4gbmVlZCB0byBwaWNrIGl0IHVwIG1hbnVhbGx5Pw0KDQpJIGRvIHRo
+YXQgYWZ0ZXIgZXZlcnkgQUNQSUNBIHJlbGVhc2UNCg0KRXJpaw0KPiANCj4gPg0KPiA+DQo+ID4g
+LS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gPiBGcm9tOiBRaWFuIENhaSBbbWFpbHRvOmNh
+aUBsY2EucHddDQo+ID4gU2VudDogVGh1cnNkYXksIEp1bHkgMTgsIDIwMTkgMTI6NDkgUE0NCj4g
+PiBUbzogV3lzb2NraSwgUmFmYWVsIEogPHJhZmFlbC5qLnd5c29ja2lAaW50ZWwuY29tPg0KPiA+
+IENjOiBNb29yZSwgUm9iZXJ0IDxyb2JlcnQubW9vcmVAaW50ZWwuY29tPjsgU2NobWF1c3MsIEVy
+aWsNCj4gPiA8ZXJpay5zY2htYXVzc0BpbnRlIGwuY29tPjsgamtpbUBGcmVlQlNELm9yZzsgbGVu
+YkBrZXJuZWwub3JnOw0KPiA+IG5kZXNhdWxuaWVyc0Bnb29nbGUuY29tOyBsaW51eC1hY3BpIEB2
+Z2VyLmtlcm5lbC5vcmc7DQo+ID4gZGV2ZWxAYWNwaWNhLm9yZzsgY2xhbmctYnVpbHQtbGludXhA
+Z29vZ2xlZ3JvdXBzLmNvbTsgbGludXgtDQo+ID4ga2VybmVsQHZnZXIua2VybmVsLm9yZzsgUWlh
+biBDYWkgPGNhaUBsY2EucHc+DQo+ID4gU3ViamVjdDogW1BBVENIIHYyXSBhY3BpY2E6IGZpeCAt
+V251bGwtcG9pbnRlci1hcml0aG1ldGljIHdhcm5pbmdzDQo+ID4NCj4gPiBDbGFuZyBnZW5lcmF0
+ZSBxdWl0ZSBhIGZldyBvZiB0aG9zZSB3YXJuaW5ncy4NCj4gPg0KPiA+IGRyaXZlcnMvYWNwaS9z
+Y2FuLmM6NzU5OjI4OiB3YXJuaW5nOiBhcml0aG1ldGljIG9uIGEgbnVsbCBwb2ludGVyDQo+ID4g
+dHJlYXRlZCBhcyBhIGNhc3QgZnJvbSBpbnRlZ2VyIHRvIHBvaW50ZXIgaXMgYSBHTlUgZXh0ZW5z
+aW9uIFstV251bGwtcG9pbnRlci0NCj4gYXJpdGhtZXRpY10NCj4gPiAJCXN0YXR1cyA9IGFjcGlf
+Z2V0X2hhbmRsZShBQ1BJX1JPT1RfT0JKRUNULA0KPiA+IG9iai0+c3RyaW5nLnBvaW50ZXIsDQo+
+ID4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoF5+fn5+fn5+fn5+fn5+fn4NCj4gPiAuL2luY2x1
+ZGUvYWNwaS9hY3R5cGVzLmg6NDU4OjU2OiBub3RlOiBleHBhbmRlZCBmcm9tIG1hY3JvDQo+ICdB
+Q1BJX1JPT1RfT0JKRUNUJw0KPiA+IMKgI2RlZmluZSBBQ1BJX1JPT1RfT0JKRUNUwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAoKGFjcGlfaGFuZGxlKQ0KPiA+IEFDUElfVE9fUE9JTlRF
+Ug0KPiA+IChBQ1BJX01BWF9QVFIpKQ0KPiA+IAkJCQkJCQlefn5+fn5+fn5+fn5+fn4NCj4gPiAu
+L2luY2x1ZGUvYWNwaS9hY3R5cGVzLmg6NTA5OjQxOiBub3RlOiBleHBhbmRlZCBmcm9tIG1hY3Jv
+DQo+ICdBQ1BJX1RPX1BPSU5URVInDQo+ID4gwqAjZGVmaW5lIEFDUElfVE9fUE9JTlRFUihpKcKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBBQ1BJX0FERF9QVFIgKHZvaWQsICh2b2lkICopDQo+
+ID4gMCwNCj4gPiAoYWNwaV9zaXplKSAoaSkpDQo+ID4NCj4gPiBefn5+fn5+fn5+fn5+fn5+fn5+
+fn5+fn5+fn5+fn5+DQo+ID4gLi9pbmNsdWRlL2FjcGkvYWN0eXBlcy5oOjUwMzo4NDogbm90ZTog
+ZXhwYW5kZWQgZnJvbSBtYWNybyAnQUNQSV9BRERfUFRSJw0KPiA+IMKgI2RlZmluZSBBQ1BJX0FE
+RF9QVFIodCwgYSwgYinCoMKgwqDCoMKgwqDCoMKgwqDCoMKgQUNQSV9DQVNUX1BUUiAodCwNCj4g
+PiAoQUNQSV9DQVNUX1BUUiAodTgsIChhKSkgKyAoYWNwaV9zaXplKShiKSkpDQo+ID4gwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoF5+fn5+fn5+fn5+fn5+fn5+DQo+ID4gLi9pbmNsdWRlL2FjcGkv
+YWN0eXBlcy5oOjUwMTo2Njogbm90ZTogZXhwYW5kZWQgZnJvbSBtYWNybw0KPiAnQUNQSV9DQVNU
+X1BUUicNCj4gPiDCoCNkZWZpbmUgQUNQSV9DQVNUX1BUUih0LCBwKcKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgKCh0ICopIChhY3BpX3VpbnRwdHJfdCkgKHApKQ0KPiA+IMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqBeDQo+ID4gVGhpcyBpcyBiZWNhdXNlIHBvaW50ZXIgYXJpdGhtZXRpYyBvbiBhIHBvaW50ZXIg
+bm90IHBvaW50aW5nIHRvIGFuDQo+ID4gYXJyYXkgaXMgYW4gdW5kZWZpbmVkIGJlaGF2aW9yIChD
+MTEgNi41LjYsIGNvbnN0cmFpbnQgOCkuIEZpeCBpdCBieQ0KPiA+IGp1c3QgY2FzdGluZyB0aGUg
+Y29ycmVzcG9uZGluZyBwb2ludGVycyB1c2luZyBBQ1BJX0NBU1RfUFRSKCkgYW5kIHNraXANCj4g
+PiB0aGUgYXJpdGhtZXRpYy4gQWxzbywgZml4IGEgY2hlY2twYXRjaCB3YXJuaW5nIHRvZ2V0aGVy
+Lg0KPiA+DQo+ID4gRVJST1I6IE1hY3JvcyB3aXRoIGNvbXBsZXggdmFsdWVzIHNob3VsZCBiZSBl
+bmNsb3NlZCBpbiBwYXJlbnRoZXNlcw0KPiA+IMKgIzQ1OiBGSUxFOiBpbmNsdWRlL2FjcGkvYWN0
+eXBlcy5oOjUwOToNCj4gPiArI2RlZmluZSBBQ1BJX1RPX1BPSU5URVIoaSnCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgQUNQSV9DQVNUX1BUUiAodm9pZCwgaSkNCj4gPg0KPiA+IFNpZ25lZC1v
+ZmYtYnk6IFFpYW4gQ2FpIDxjYWlAbGNhLnB3Pg0KPiA+IC0tLQ0KPiA+DQo+ID4gdjI6IFVzZSBB
+Q1BJX0NBU1RfUFRSKCkgaW4gQUNQSV9UT19QT0lOVEVSKCkgZGlyZWN0bHkgd2l0aG91dA0KPiA+
+IMKgwqDCoMKgYXJpdGhtZXRpYy4NCj4gPg0KPiA+IMKgaW5jbHVkZS9hY3BpL2FjdHlwZXMuaCB8
+IDIgKy0NCj4gPiDCoDEgZmlsZSBjaGFuZ2VkLCAxIGluc2VydGlvbigrKSwgMSBkZWxldGlvbigt
+KQ0KPiA+DQo+ID4gZGlmZiAtLWdpdCBhL2luY2x1ZGUvYWNwaS9hY3R5cGVzLmggYi9pbmNsdWRl
+L2FjcGkvYWN0eXBlcy5oIGluZGV4DQo+ID4gYWQ2ODkyYTI0MDE1Li4xNjMxODFlMmQ4ODQgMTAw
+NjQ0DQo+ID4gLS0tIGEvaW5jbHVkZS9hY3BpL2FjdHlwZXMuaA0KPiA+ICsrKyBiL2luY2x1ZGUv
+YWNwaS9hY3R5cGVzLmgNCj4gPiBAQCAtNTA2LDcgKzUwNiw3IEBAIHR5cGVkZWYgdTY0IGFjcGlf
+aW50ZWdlcjsNCj4gPg0KPiA+IMKgLyogUG9pbnRlci9JbnRlZ2VyIHR5cGUgY29udmVyc2lvbnMg
+Ki8NCj4gPg0KPiA+IC0jZGVmaW5lIEFDUElfVE9fUE9JTlRFUihpKcKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqBBQ1BJX0FERF9QVFIgKHZvaWQsICh2b2lkICopDQo+ID4gMCwNCj4gPiAoYWNw
+aV9zaXplKSAoaSkpDQo+ID4gKyNkZWZpbmUgQUNQSV9UT19QT0lOVEVSKGkpwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoChBQ1BJX0NBU1RfUFRSICh2b2lkLCBpKSkNCj4gPiDCoCNkZWZpbmUg
+QUNQSV9UT19JTlRFR0VSKHApwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoEFDUElfUFRSX0RJ
+RkYgKHAsICh2b2lkICopIDApDQo+ID4gwqAjZGVmaW5lIEFDUElfT0ZGU0VUKGQsIGYpwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgQUNQSV9QVFJfRElGRiAoJigoKGQgKikNCj4gPiAwKS0+
+ZiksICh2b2lkDQo+ID4gKikgMCkNCj4gPiDCoCNkZWZpbmUgQUNQSV9QSFlTQUREUl9UT19QVFIo
+aSnCoMKgwqDCoMKgwqDCoMKgwqBBQ1BJX1RPX1BPSU5URVIoaSkNCj4gPiAtLQ0KPiA+IDIuMjAu
+MSAoQXBwbGUgR2l0LTExNykNCj4gPg0KX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX18KRGV2ZWwgbWFpbGluZyBsaXN0CkRldmVsQGFjcGljYS5vcmcKaHR0cHM6
+Ly9saXN0cy5hY3BpY2Eub3JnL21haWxtYW4vbGlzdGluZm8vZGV2ZWwK
