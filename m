@@ -1,62 +1,56 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 43B50BD2E5
-	for <lists+devel-acpica@lfdr.de>; Tue, 24 Sep 2019 21:41:41 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03EFFBE466
+	for <lists+devel-acpica@lfdr.de>; Wed, 25 Sep 2019 20:13:39 +0200 (CEST)
 Received: from [127.0.0.1] (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id B57FB202F73C4;
-	Tue, 24 Sep 2019 12:43:59 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTP id 73A17202F8BAD;
+	Wed, 25 Sep 2019 11:15:50 -0700 (PDT)
 X-Original-To: devel@acpica.org
 Delivered-To: devel@acpica.org
 Received-SPF: Pass (sender SPF authorized) identity=mailfrom;
- client-ip=134.134.136.65; helo=mga03.intel.com;
- envelope-from=robert.moore@intel.com; receiver=devel@acpica.org 
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+ client-ip=134.134.136.126; helo=mga18.intel.com;
+ envelope-from=erik.schmauss@intel.com; receiver=devel@acpica.org 
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ml01.01.org (Postfix) with ESMTPS id 1EDD1202EBEAD
- for <devel@acpica.org>; Tue, 24 Sep 2019 12:43:58 -0700 (PDT)
+ by ml01.01.org (Postfix) with ESMTPS id 0211D202ECFA6
+ for <devel@acpica.org>; Wed, 25 Sep 2019 11:15:48 -0700 (PDT)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
- by orsmga103.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 24 Sep 2019 12:41:28 -0700
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+ by orsmga106.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 25 Sep 2019 11:13:35 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.64,545,1559545200"; d="scan'208";a="195795063"
+X-IronPort-AV: E=Sophos;i="5.64,548,1559545200"; d="scan'208";a="364404539"
 Received: from orsmsx103.amr.corp.intel.com ([10.22.225.130])
- by FMSMGA003.fm.intel.com with ESMTP; 24 Sep 2019 12:41:28 -0700
-Received: from orsmsx152.amr.corp.intel.com (10.22.226.39) by
+ by orsmga005.jf.intel.com with ESMTP; 25 Sep 2019 11:13:35 -0700
+Received: from orsmsx123.amr.corp.intel.com (10.22.240.116) by
  ORSMSX103.amr.corp.intel.com (10.22.225.130) with Microsoft SMTP Server (TLS)
- id 14.3.439.0; Tue, 24 Sep 2019 12:41:27 -0700
-Received: from orsmsx110.amr.corp.intel.com ([169.254.10.139]) by
- ORSMSX152.amr.corp.intel.com ([169.254.8.93]) with mapi id 14.03.0439.000;
- Tue, 24 Sep 2019 12:41:27 -0700
-From: "Moore, Robert" <robert.moore@intel.com>
-To: Nikolaus Voss <nv@vosn.de>
+ id 14.3.439.0; Wed, 25 Sep 2019 11:13:35 -0700
+Received: from orsmsx122.amr.corp.intel.com ([169.254.11.236]) by
+ ORSMSX123.amr.corp.intel.com ([169.254.1.226]) with mapi id 14.03.0439.000;
+ Wed, 25 Sep 2019 11:13:34 -0700
+From: "Schmauss, Erik" <erik.schmauss@intel.com>
+To: "Moore, Robert" <robert.moore@intel.com>, Nikolaus Voss
+ <nikolaus.voss@loewensteinmedical.de>, "Shevchenko, Andriy"
+ <andriy.shevchenko@intel.com>, "Rafael J. Wysocki" <rjw@rjwysocki.net>, Ferry
+ Toth <fntoth@gmail.com>
 Thread-Topic: [PATCH] ACPICA: make acpi_load_table() return table index
-Thread-Index: AQHVaUE6M44QnoJV0UqVXW85SrAmnKcoFnTQgAGaZwD///c2gIAAhhUAgAAa0gD//5ht0IAEqKwAgAL5tVCAAHqlgIABR7TAgAY4uACAAc1PMA==
-Date: Tue, 24 Sep 2019 19:41:26 +0000
-Message-ID: <94F2FBAB4432B54E8AACC7DFDE6C92E3B968B639@ORSMSX110.amr.corp.intel.com>
+Thread-Index: AQHVaUE6PwWyj3qAlUyiJ16YhgOwE6cojRAAgABYowCAE+EegA==
+Date: Wed, 25 Sep 2019 18:13:34 +0000
+Message-ID: <CF6A88132359CE47947DB4C6E1709ED53C646E97@ORSMSX122.amr.corp.intel.com>
 References: <20190906174605.GY2680@smile.fi.intel.com>
  <20190912080742.24642-1-nikolaus.voss@loewensteinmedical.de>
  <94F2FBAB4432B54E8AACC7DFDE6C92E3B9679CE8@ORSMSX110.amr.corp.intel.com>
- <alpine.DEB.2.20.1909130911180.20316@fox.voss.local>
- <94F2FBAB4432B54E8AACC7DFDE6C92E3B967ADF6@ORSMSX110.amr.corp.intel.com>
- <20190913151228.GT2680@smile.fi.intel.com>
- <7625fe37-1710-056d-fb9e-39c33fd962a1@gmail.com>
- <94F2FBAB4432B54E8AACC7DFDE6C92E3B967AEC9@ORSMSX110.amr.corp.intel.com>
- <alpine.DEB.2.20.1909161134070.2910@fox.voss.local>
- <94F2FBAB4432B54E8AACC7DFDE6C92E3B968327D@ORSMSX110.amr.corp.intel.com>
- <alpine.DEB.2.20.1909181624550.3925@fox.voss.local>
- <94F2FBAB4432B54E8AACC7DFDE6C92E3B9686438@ORSMSX110.amr.corp.intel.com>
- <alpine.DEB.2.20.1909231100190.16390@fox.voss.local>
-In-Reply-To: <alpine.DEB.2.20.1909231100190.16390@fox.voss.local>
+ <4929b1d2-c2a7-4efd-89e4-f02205e79c01@telfort.nl>
+In-Reply-To: <4929b1d2-c2a7-4efd-89e4-f02205e79c01@telfort.nl>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiMGY3NjQyMzAtY2EwOS00OTYyLWFkZjEtNDY1MzNlN2ZkODk0IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiTWI4NEZ1YWJTblNJRllLN2o2UVJQNU92NDUwUEVyMVJYRUdtVFpwNXVTVzdsbzVQa1djeWZRVUhLeG9sZ2laOCJ9
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiYWU1OGVmOGItZjZjYi00MzM1LTlkYjQtMzg5ZGQ5MWZlNzAzIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoibGF4NVNjVkF5aXgrZ2cyblwvZmt1eU5DY01YOHNtTFVQaDNuWUtMc01Bc0ExS2VDVTIzanR5XC95KzZCbnVJY2ZIIn0=
 x-ctpclassification: CTP_NT
 dlp-product: dlpe-windows
 dlp-version: 11.2.0.6
@@ -76,189 +70,197 @@ List-Post: <mailto:devel@acpica.org>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Subscribe: <https://lists.acpica.org/mailman/listinfo/devel>,
  <mailto:devel-request@acpica.org?subject=subscribe>
-Cc: "Shevchenko, Andriy" <andriy.shevchenko@intel.com>,
- "Rafael J. Wysocki" <rjw@rjwysocki.net>, Ferry Toth <fntoth@gmail.com>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>, Jacek
- Anaszewski <jacek.anaszewski@gmail.com>, Pavel Machek <pavel@ucw.cz>,
- Jan Kiszka <jan.kiszka@siemens.com>, "devel@acpica.org" <devel@acpica.org>,
- Dan Murphy <dmurphy@ti.com>
+Cc: "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>,
+ Jacek Anaszewski <jacek.anaszewski@gmail.com>, Dan Murphy <dmurphy@ti.com>,
+ Pavel Machek <pavel@ucw.cz>, "nv@vosn.de" <nv@vosn.de>,
+ "devel@acpica.org" <devel@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Errors-To: devel-bounces@acpica.org
 Sender: "Devel" <devel-bounces@acpica.org>
 
-How about this:
-Go back to using acpi_tb_install_and_load_table(), but then call acpi_ns_initialize_objects afterwards This is what acpi_load_table does.
 
 
-    ACPI_INFO (("Host-directed Dynamic ACPI Table Load:"));
-    Status = AcpiTbInstallAndLoadTable (ACPI_PTR_TO_PHYSADDR (Table),
-        ACPI_TABLE_ORIGIN_EXTERNAL_VIRTUAL, FALSE, &TableIndex);
-    if (ACPI_SUCCESS (Status))
-    {
-        /* Complete the initialization/resolution of new objects */
-
-        AcpiNsInitializeObjects ();
-    }
-
-
------Original Message-----
-From: Nikolaus Voss <nv@vosn.de> 
-Sent: Monday, September 23, 2019 2:05 AM
-To: Moore, Robert <robert.moore@intel.com>
-Cc: Ferry Toth <fntoth@gmail.com>; Shevchenko, Andriy <andriy.shevchenko@intel.com>; Schmauss, Erik <erik.schmauss@intel.com>; Rafael J. Wysocki <rjw@rjwysocki.net>; Len Brown <lenb@kernel.org>; Jacek Anaszewski <jacek.anaszewski@gmail.com>; Pavel Machek <pavel@ucw.cz>; Dan Murphy <dmurphy@ti.com>; linux-acpi@vger.kernel.org; devel@acpica.org; linux-kernel@vger.kernel.org; Jan Kiszka <jan.kiszka@siemens.com>
-Subject: RE: [PATCH] ACPICA: make acpi_load_table() return table index
-
-On Thu, 19 Sep 2019, Moore, Robert wrote:
->
->
 > -----Original Message-----
-> From: Nikolaus Voss [mailto:nv@vosn.de]
-> Sent: Wednesday, September 18, 2019 7:32 AM
-> To: Moore, Robert <robert.moore@intel.com>
-> Cc: Ferry Toth <fntoth@gmail.com>; Shevchenko, Andriy 
-> <andriy.shevchenko@intel.com>; Schmauss, Erik 
-> <erik.schmauss@intel.com>; Rafael J. Wysocki <rjw@rjwysocki.net>; Len 
-> Brown <lenb@kernel.org>; Jacek Anaszewski 
-> <jacek.anaszewski@gmail.com>; Pavel Machek <pavel@ucw.cz>; Dan Murphy 
-> <dmurphy@ti.com>; linux-acpi@vger.kernel.org; devel@acpica.org; 
-> linux-kernel@vger.kernel.org; Jan Kiszka <jan.kiszka@siemens.com>
-> Subject: RE: [PATCH] ACPICA: make acpi_load_table() return table index
->
-> On Wed, 18 Sep 2019, Moore, Robert wrote:
->>
->>
->> -----Original Message-----
->> From: Nikolaus Voss [mailto:nv@vosn.de]
->> Sent: Monday, September 16, 2019 2:47 AM
->> To: Moore, Robert <robert.moore@intel.com>
->> Cc: Ferry Toth <fntoth@gmail.com>; Shevchenko, Andriy 
->> <andriy.shevchenko@intel.com>; Schmauss, Erik 
->> <erik.schmauss@intel.com>; Rafael J. Wysocki <rjw@rjwysocki.net>; Len 
->> Brown <lenb@kernel.org>; Jacek Anaszewski 
->> <jacek.anaszewski@gmail.com>; Pavel Machek <pavel@ucw.cz>; Dan Murphy 
->> <dmurphy@ti.com>; linux-acpi@vger.kernel.org; devel@acpica.org; 
->> linux-kernel@vger.kernel.org; Jan Kiszka <jan.kiszka@siemens.com>
->> Subject: RE: [PATCH] ACPICA: make acpi_load_table() return table 
->> index
->>
->> On Fri, 13 Sep 2019, Moore, Robert wrote:
->>>
->>>
->>> -----Original Message-----
->>> From: Ferry Toth [mailto:fntoth@gmail.com]
->>> Sent: Friday, September 13, 2019 9:48 AM
->>> To: Shevchenko, Andriy <andriy.shevchenko@intel.com>; Moore, Robert 
->>> <robert.moore@intel.com>
->>> Cc: Nikolaus Voss <nv@vosn.de>; Schmauss, Erik 
->>> <erik.schmauss@intel.com>; Rafael J. Wysocki <rjw@rjwysocki.net>; 
->>> Len Brown <lenb@kernel.org>; Jacek Anaszewski 
->>> <jacek.anaszewski@gmail.com>; Pavel Machek <pavel@ucw.cz>; Dan 
->>> Murphy <dmurphy@ti.com>; linux-acpi@vger.kernel.org; 
->>> devel@acpica.org; linux-kernel@vger.kernel.org; 
->>> nikolaus.voss@loewensteinmedical.de;
->>> Jan Kiszka <jan.kiszka@siemens.com>
->>> Subject: Re: [PATCH] ACPICA: make acpi_load_table() return table 
->>> index
->>>
->>> Hello all,
->>>
->>> Sorry to have sent our message with cancelled e-mail address. I have correct this now.
->>>
->>> Op 13-09-19 om 17:12 schreef Shevchenko, Andriy:
->>>> On Fri, Sep 13, 2019 at 05:20:21PM +0300, Moore, Robert wrote:
->>>>> -----Original Message-----
->>>>> From: Nikolaus Voss [mailto:nv@vosn.de]
->>>>> Sent: Friday, September 13, 2019 12:44 AM
->>>>> To: Moore, Robert <robert.moore@intel.com>
->>>>> Cc: Shevchenko, Andriy <andriy.shevchenko@intel.com>; Schmauss, 
->>>>> Erik <erik.schmauss@intel.com>; Rafael J. Wysocki 
->>>>> <rjw@rjwysocki.net>; Len Brown <lenb@kernel.org>; Jacek Anaszewski 
->>>>> <jacek.anaszewski@gmail.com>; Pavel Machek <pavel@ucw.cz>; Dan 
->>>>> Murphy <dmurphy@ti.com>; linux-acpi@vger.kernel.org; 
->>>>> devel@acpica.org; linux-kernel@vger.kernel.org; Ferry Toth 
->>>>> <ftoth@telfort.nl>; nikolaus.voss@loewensteinmedical.de
->>>>> Subject: RE: [PATCH] ACPICA: make acpi_load_table() return table 
->>>>> index
->>>>>
->>>>> Bob,
->>>>>
->>>>> On Thu, 12 Sep 2019, Moore, Robert wrote:
->>>>>> The ability to unload an ACPI table (especially AML tables such 
->>>>>> as
->>>>>> SSDTs) is in the process of being deprecated in ACPICA -- since 
->>>>>> it is also deprecated in the current ACPI specification. This is 
->>>>>> being done because of the difficulty of deleting the namespace 
->>>>>> entries for the table.  FYI, Windows does not properly support this function either.
->>>>>
->>>>> ok, I see it can be a problem to unload an AML table with all it's 
->>>>> consequences e.g. with respect to driver unregistering in setups 
->>>>> with complex dependencies. It will only work properly under 
->>>>> certain conditions
->>>>> - nevertheless acpi_tb_unload_table() is still exported in ACPICA and we should get this working as it worked before.
->>>>>
->>>>> AcpiTbUnloadTable is not exported, it is an internal interface 
->>>>> only
->>>>> -- as recognized by the "AcpiTb".
->>>>
->>>> In Linux it became a part of ABI when the
->>>>
->>>> commit 772bf1e2878ecfca0d1f332071c83e021dd9cf01
->>>> Author: Jan Kiszka <jan.kiszka@siemens.com>
->>>> Date:   Fri Jun 9 20:36:31 2017 +0200
->>>>
->>>>      ACPI: configfs: Unload SSDT on configfs entry removal
->>>>
->>>> appeared in the kernel.
->>>
->>> And the commit message explains quite well why it is an important feature:
->>>
->>> "This allows to change SSDTs without rebooting the system.
->>> It also allows to destroy devices again that a dynamically loaded SSDT created.
->>>
->>> The biggest problem AFAIK is that under linux, many drivers cannot be unloaded. Also, there are many race conditions as the namespace entries "owned" by an SSDT being unloaded are deleted (out from underneath a driver).
->>>
->>> This is widely similar to the DT overlay behavior."
->>>
->>>>> I'm not sure that I want to change the interface to AcpiLoadTable 
->>>>> just for something that is being deprecated. Already, we throw an 
->>>>> ACPI_EXCEPTION if the Unload operator is encountered in the AML 
->>>>> byte stream. The same thing with AcpiUnloadParentTable - it is being deprecated.
->>>>>
->>>>>      ACPI_EXCEPTION ((AE_INFO, AE_NOT_IMPLEMENTED,
->>>>>          "AML Unload operator is not supported"));
->>
->> Bob, what is your suggestion to fix the regression then?
->>
->> We could revert acpi_configfs.c to use
->> acpi_tb_install_and_load_table() instead of acpi_load_table(), 
->> leaving loaded APCI objects uninitalized, but at least, unloading will work again.
->>
->> I guess my next question is: why do you want to unload a table in the 
->> first place?
->
-> Because it worked before and there are people who rely on it. If it's 
-> deprecated there should be a user notification and a reasonable 
-> end-of-life timeline to give these users a chance to develop an 
-> alternative solution.
->
-> So, I still don't understand why this no longer works. We did not make 
-> any purposeful changes in this area - AFAIK. Bob
+> From: Ferry Toth <ftoth@telfort.nl>
+> Sent: Thursday, September 12, 2019 12:37 PM
+> To: Moore, Robert <robert.moore@intel.com>; Nikolaus Voss
+> <nikolaus.voss@loewensteinmedical.de>; Shevchenko, Andriy
+> <andriy.shevchenko@intel.com>; Schmauss, Erik <erik.schmauss@intel.com>;
+> Rafael J. Wysocki <rjw@rjwysocki.net>
+> Cc: Len Brown <lenb@kernel.org>; Jacek Anaszewski
+> <jacek.anaszewski@gmail.com>; Pavel Machek <pavel@ucw.cz>; Dan Murphy
+> <dmurphy@ti.com>; linux-acpi@vger.kernel.org; devel@acpica.org; linux-
+> kernel@vger.kernel.org; nv@vosn.de
+> Subject: Re: [PATCH] ACPICA: make acpi_load_table() return table index
+> 
+> Op 12-09-19 om 16:19 schreef Moore, Robert:
+> > Nikolaus,
+> > The ability to unload an ACPI table (especially AML tables such as SSDTs) is in
+> the process of being deprecated in ACPICA -- since it is also deprecated in the
+> current ACPI specification. This is being done because of the difficulty of
+> deleting the namespace entries for the table.  FYI, Windows does not properly
+> support this function either.
+> 
+> I really hope this is not the case. On x86 loading/unloading SSDTs has proven to
+> be a powerful way to handle reconfigurable hardware without rebooting and
+> without requiring dedicated platform drivers. Same for user plugable hardware
+> on i2c/spi busses.
+> 
+> This has worked before and will violate the "don't break user space" rule.
 
-It's because the acpi_configfs driver formerly used
-acpi_tb_install_and_load_table() which returns the table index, but doesn't resolve the references. It now uses acpi_load_table() which resolves the references, but doesn't return the table index, so unloading doesn't work any more.
+If the table index wasn't being used, how did this work before?
+Which commit broke this?
 
->
-> Niko
->
->>
->>
->> Do we have any other options?
->>
->> Niko
->>
->
+Bob and I are trying to understand if this is a regression or a new feature request...
+
+Thanks,
+Erik
+> 
+> I don't see why Windows is an example to follow. On Windows platform drivers
+> don't get compiled into the kernel and don't need to be upstreamed.
+> 
+> > Bob
+> >
+> >
+> > -----Original Message-----
+> > From: Nikolaus Voss [mailto:nikolaus.voss@loewensteinmedical.de]
+> > Sent: Thursday, September 12, 2019 1:08 AM
+> > To: Shevchenko, Andriy <andriy.shevchenko@intel.com>; Schmauss, Erik
+> > <erik.schmauss@intel.com>; Rafael J. Wysocki <rjw@rjwysocki.net>;
+> > Moore, Robert <robert.moore@intel.com>
+> > Cc: Len Brown <lenb@kernel.org>; Jacek Anaszewski
+> > <jacek.anaszewski@gmail.com>; Pavel Machek <pavel@ucw.cz>; Dan Murphy
+> > <dmurphy@ti.com>; linux-acpi@vger.kernel.org; devel@acpica.org;
+> > linux-kernel@vger.kernel.org; nv@vosn.de; Nikolaus Voss
+> > <nikolaus.voss@loewensteinmedical.de>
+> > Subject: [PATCH] ACPICA: make acpi_load_table() return table index
+> >
+> > For unloading an ACPI table, it is necessary to provide the index of the table.
+> The method intended for dynamically loading or hotplug addition of tables,
+> acpi_load_table(), should provide this information via an optional pointer to
+> the loaded table index.
+> >
+> > This patch fixes the table unload function of acpi_configfs.
+> >
+> > Reported-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> > Fixes: d06c47e3dd07f ("ACPI: configfs: Resolve objects on
+> > host-directed table loads")
+> > Signed-off-by: Nikolaus Voss <nikolaus.voss@loewensteinmedical.de>
+> > ---
+> >   drivers/acpi/acpi_configfs.c   | 2 +-
+> >   drivers/acpi/acpica/dbfileio.c | 2 +-
+> >   drivers/acpi/acpica/tbxfload.c | 8 ++++++--
+> >   drivers/firmware/efi/efi.c     | 2 +-
+> >   include/acpi/acpixf.h          | 3 ++-
+> >   5 files changed, 11 insertions(+), 6 deletions(-)
+> >
+> > diff --git a/drivers/acpi/acpi_configfs.c
+> > b/drivers/acpi/acpi_configfs.c index 57d9d574d4dde..77f81242a28e6
+> > 100644
+> > --- a/drivers/acpi/acpi_configfs.c
+> > +++ b/drivers/acpi/acpi_configfs.c
+> > @@ -53,7 +53,7 @@ static ssize_t acpi_table_aml_write(struct config_item
+> *cfg,
+> >   	if (!table->header)
+> >   		return -ENOMEM;
+> >
+> > -	ret = acpi_load_table(table->header);
+> > +	ret = acpi_load_table(table->header, &table->index);
+> >   	if (ret) {
+> >   		kfree(table->header);
+> >   		table->header = NULL;
+> > diff --git a/drivers/acpi/acpica/dbfileio.c
+> > b/drivers/acpi/acpica/dbfileio.c index c6e25734dc5cd..e1b6e54a96ac1
+> > 100644
+> > --- a/drivers/acpi/acpica/dbfileio.c
+> > +++ b/drivers/acpi/acpica/dbfileio.c
+> > @@ -93,7 +93,7 @@ acpi_status acpi_db_load_tables(struct
+> acpi_new_table_desc *list_head)
+> >   	while (table_list_head) {
+> >   		table = table_list_head->table;
+> >
+> > -		status = acpi_load_table(table);
+> > +		status = acpi_load_table(table, NULL);
+> >   		if (ACPI_FAILURE(status)) {
+> >   			if (status == AE_ALREADY_EXISTS) {
+> >   				acpi_os_printf
+> > diff --git a/drivers/acpi/acpica/tbxfload.c
+> > b/drivers/acpi/acpica/tbxfload.c index 86f1693f6d29a..d08cd8ffcbdb6
+> > 100644
+> > --- a/drivers/acpi/acpica/tbxfload.c
+> > +++ b/drivers/acpi/acpica/tbxfload.c
+> > @@ -268,7 +268,8 @@ ACPI_EXPORT_SYMBOL_INIT(acpi_install_table)
+> >    *
+> >    * PARAMETERS:  table               - Pointer to a buffer containing the ACPI
+> >    *                                    table to be loaded.
+> > - *
+> > + *              table_idx           - Pointer to a u32 for storing the table
+> > + *                                    index, might be NULL
+> >    * RETURN:      Status
+> >    *
+> >    * DESCRIPTION: Dynamically load an ACPI table from the caller's buffer.
+> Must @@ -278,7 +279,7 @@ ACPI_EXPORT_SYMBOL_INIT(acpi_install_table)
+> >    *              to ensure that the table is not deleted or unmapped.
+> >    *
+> >
+> >
+> *******************************************************************
+> ***
+> > ********/ -acpi_status acpi_load_table(struct acpi_table_header
+> > *table)
+> > +acpi_status acpi_load_table(struct acpi_table_header *table, u32
+> > +*table_idx)
+> >   {
+> >   	acpi_status status;
+> >   	u32 table_index;
+> > @@ -297,6 +298,9 @@ acpi_status acpi_load_table(struct acpi_table_header
+> *table)
+> >   	status =
+> acpi_tb_install_and_load_table(ACPI_PTR_TO_PHYSADDR(table),
+> >
+> 	ACPI_TABLE_ORIGIN_EXTERNAL_VIRTUAL,
+> >   						FALSE, &table_index);
+> > +	if (table_idx)
+> > +		*table_idx = table_index;
+> > +
+> >   	if (ACPI_SUCCESS(status)) {
+> >
+> >   		/* Complete the initialization/resolution of new objects */ diff
+> > --git a/drivers/firmware/efi/efi.c b/drivers/firmware/efi/efi.c index
+> > ad3b1f4866b35..9773e4212baef 100644
+> > --- a/drivers/firmware/efi/efi.c
+> > +++ b/drivers/firmware/efi/efi.c
+> > @@ -308,7 +308,7 @@ static __init int efivar_ssdt_load(void)
+> >   			goto free_data;
+> >   		}
+> >
+> > -		ret = acpi_load_table(data);
+> > +		ret = acpi_load_table(data, NULL);
+> >   		if (ret) {
+> >   			pr_err("failed to load table: %d\n", ret);
+> >   			goto free_data;
+> > diff --git a/include/acpi/acpixf.h b/include/acpi/acpixf.h index
+> > 3845c8fcc94e5..c90bbdc4146a6 100644
+> > --- a/include/acpi/acpixf.h
+> > +++ b/include/acpi/acpixf.h
+> > @@ -452,7 +452,8 @@ ACPI_EXTERNAL_RETURN_STATUS(acpi_status
+> ACPI_INIT_FUNCTION
+> >   					       u8 physical))
+> >
+> >   ACPI_EXTERNAL_RETURN_STATUS(acpi_status
+> > -			    acpi_load_table(struct acpi_table_header *table))
+> > +			    acpi_load_table(struct acpi_table_header *table,
+> > +					    u32 *table_idx))
+> >
+> >   ACPI_EXTERNAL_RETURN_STATUS(acpi_status
+> >   			    acpi_unload_parent_table(acpi_handle object))
+> > --
+> > 2.17.1
+> >
+> >
+
 _______________________________________________
 Devel mailing list
 Devel@acpica.org
