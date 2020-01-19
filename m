@@ -2,54 +2,46 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9060C13D716
-	for <lists+devel-acpica@lfdr.de>; Thu, 16 Jan 2020 10:40:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4336B141E7A
+	for <lists+devel-acpica@lfdr.de>; Sun, 19 Jan 2020 15:19:11 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 3705A10096C96;
-	Thu, 16 Jan 2020 01:43:43 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.167.193; helo=mail-oi1-f193.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-oi1-f193.google.com (mail-oi1-f193.google.com [209.85.167.193])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	by ml01.01.org (Postfix) with ESMTP id 225FF10097E02;
+	Sun, 19 Jan 2020 06:22:27 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.88; helo=mga01.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 0D44610096C92
-	for <devel@acpica.org>; Thu, 16 Jan 2020 01:43:40 -0800 (PST)
-Received: by mail-oi1-f193.google.com with SMTP id 18so18326614oin.9
-        for <devel@acpica.org>; Thu, 16 Jan 2020 01:40:22 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ehZVRRgGA6K7LYKERYT9m9Kqby1XUIRO5leJf884LQg=;
-        b=PA4QRC9n5xXY6b/jZGWCeGwcxWDPDsXHkVIDIuDVAFfnEnC2li9Cvv8hKjzU+eUVd/
-         J3NXhleSjy9scaCwiLU+/E3EKNp2jLdbvXyBfNmkjMRfvNH2f3iwryVoFlqp4ZxaqYE9
-         jhERjbRR482j+bGbKzWJ2FWU0rO4ZaLPrywo45Fqgyao5vKknQyFFWNCCjXXd5vSJawp
-         7nOgMh93HqbeUyYgeRtPDUNSrfIadGZV94PWboHom2KI2BRMn/UgHBP0A24ODG1nIf6Q
-         VAXk9KcKXr8g7b5IORazzYHedVyDc1roqc+a9mxkyvRHFWk2ypbwwY3M+lxbRWJszQH6
-         QKOA==
-X-Gm-Message-State: APjAAAUPOg86sk6LDeX3OpYp2C8LrDNV36HJiqPPilZKRRdAcE2lkNgC
-	bJZghZZqauGSyjyF+onq+P1BTgOq+528tgwx0fw=
-X-Google-Smtp-Source: APXvYqycvvoo15q+FPGQpz1gedkk2HzrTF+WByd8rPEEEg6NgUkf5VAlB3qg+1sxI+fx5OiEllxn+V4E7zXAb2JHu2Y=
-X-Received: by 2002:aca:cd92:: with SMTP id d140mr3388803oig.68.1579167621279;
- Thu, 16 Jan 2020 01:40:21 -0800 (PST)
+	by ml01.01.org (Postfix) with ESMTPS id AB04D10097DFF
+	for <devel@acpica.org>; Sun, 19 Jan 2020 06:22:23 -0800 (PST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 19 Jan 2020 06:19:04 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.70,338,1574150400";
+   d="scan'208";a="426499868"
+Received: from lkp-server01.sh.intel.com (HELO lkp-server01) ([10.239.97.150])
+  by fmsmga006.fm.intel.com with ESMTP; 19 Jan 2020 06:19:03 -0800
+Received: from kbuild by lkp-server01 with local (Exim 4.89)
+	(envelope-from <lkp@intel.com>)
+	id 1itBPr-000Ao2-3A; Sun, 19 Jan 2020 22:19:03 +0800
+Date: Sun, 19 Jan 2020 22:18:44 +0800
+From: kbuild test robot <lkp@intel.com>
+To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Message-ID: <5e246544.SWpo1wlxetD90lo8%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-References: <20200115232629.GA9231@dev-dsk-anchalag-2a-9c2d1d96.us-west-2.amazon.com>
-In-Reply-To: <20200115232629.GA9231@dev-dsk-anchalag-2a-9c2d1d96.us-west-2.amazon.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Thu, 16 Jan 2020 10:40:08 +0100
-Message-ID: <CAJZ5v0iHVzDzS5zZSTWOdy2CCSkyW74+p2-Et0+EcysOvL2CDg@mail.gmail.com>
-To: Anchal Agarwal <anchalag@amazon.com>, Erik Kaneda <erik.kaneda@intel.com>,
-	Robert Moore <robert.moore@intel.com>
-Message-ID-Hash: CNETZAGAGFCTDWTW4VUFMXEVNKU24UF7
-X-Message-ID-Hash: CNETZAGAGFCTDWTW4VUFMXEVNKU24UF7
-X-MailFrom: rjwysocki@gmail.com
+Message-ID-Hash: EO6CY7DXPJZBZ5GE2BI2WSQE3ENWFC5F
+X-Message-ID-Hash: EO6CY7DXPJZBZ5GE2BI2WSQE3ENWFC5F
+X-MailFrom: lkp@intel.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: Rafael Wysocki <rafael.j.wysocki@intel.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, "Singh, Balbir" <sblbir@amazon.com>, fllinden@amazon.com
+CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [RESEND PATCH] ACPICA: Enable sleep button on ACPI legacy wake
+Subject: [Devel] [pm:bleeding-edge] BUILD INCOMPLETE 9b06ed497be3dc27f0d78dab0643f4cdb059577b
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/CNETZAGAGFCTDWTW4VUFMXEVNKU24UF7/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/EO6CY7DXPJZBZ5GE2BI2WSQE3ENWFC5F/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -58,49 +50,146 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Thu, Jan 16, 2020 at 12:26 AM Anchal Agarwal <anchalag@amazon.com> wrote:
->
-> Currently we do not see sleep_enable bit set after guest resumes
-> from hibernation. Hibernation is triggered in guest on receiving
-> a sleep trigger from the hypervisor(S4 state). We see that power
-> button is enabled on wake up from S4 state however sleep button
-> isn't. This causes subsequent invocation of sleep state to fail
-> in the guest. Any environment  going through acpi_hw_legacy_wake()
-> won't have sleep button enabled.
->
-> Signed-off-by: Anchal Agarwal <anchalag@amazon.com>
-> Reviewed-by: Balbir Singh <sblbir@amazon.com>
-> Reviewed-by: Frank van der Linden <fllinden@amazon.com>
-> ---
->  drivers/acpi/acpica/hwsleep.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
->
-> diff --git a/drivers/acpi/acpica/hwsleep.c b/drivers/acpi/acpica/hwsleep.c
-> index b62db8ec446f..a176c7802760 100644
-> --- a/drivers/acpi/acpica/hwsleep.c
-> +++ b/drivers/acpi/acpica/hwsleep.c
-> @@ -300,6 +300,17 @@ acpi_status acpi_hw_legacy_wake(u8 sleep_state)
->                                     [ACPI_EVENT_POWER_BUTTON].
->                                     status_register_id, ACPI_CLEAR_STATUS);
->
-> +       /* Enable sleep button */
-> +       (void)
-> +             acpi_write_bit_register(acpi_gbl_fixed_event_info
-> +                                     [ACPI_EVENT_SLEEP_BUTTON].
-> +                                     enable_register_id, ACPI_ENABLE_EVENT);
-> +
-> +       (void)
-> +             acpi_write_bit_register(acpi_gbl_fixed_event_info
-> +                                     [ACPI_EVENT_SLEEP_BUTTON].
-> +                                     status_register_id, ACPI_CLEAR_STATUS);
-> +
->         acpi_hw_execute_sleep_method(METHOD_PATHNAME__SST, ACPI_SST_WORKING);
->         return_ACPI_STATUS(status);
->  }
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git  bleeding-edge
+branch HEAD: 9b06ed497be3dc27f0d78dab0643f4cdb059577b  Merge branch 'pm-cpuidle-next' into bleeding-edge
 
-Erik, Bob, please pick this up if you don't have specific objections against it.
+TIMEOUT after 2880m
 
-I'll wait for it to show up in an upstream release.
+
+Sorry we cannot finish the testset for your branch within a reasonable time.
+It's our fault -- either some build server is down or some build worker is busy
+doing bisects for _other_ trees. The branch will get more complete coverage and
+possible error reports when our build infrastructure is restored or catches up.
+There will be no more build success notification for this branch head, but you
+can expect reasonably good test coverage after waiting for 1 day.
+
+configs timed out: 28
+
+arm                              allmodconfig
+arm                              allyesconfig
+arm64                            allmodconfig
+arm64                            allyesconfig
+i386                             alldefconfig
+i386                              allnoconfig
+i386                             allyesconfig
+i386                                defconfig
+ia64                             alldefconfig
+ia64                             allmodconfig
+ia64                              allnoconfig
+ia64                             allyesconfig
+ia64                                defconfig
+mips                         64r6el_defconfig
+mips                             allmodconfig
+mips                             allyesconfig
+mips                      fuloong2e_defconfig
+mips                      malta_kvm_defconfig
+riscv                            allmodconfig
+riscv                             allnoconfig
+riscv                            allyesconfig
+riscv                               defconfig
+riscv                    nommu_virt_defconfig
+riscv                          rv32_defconfig
+sparc64                          allmodconfig
+sparc64                           allnoconfig
+sparc64                          allyesconfig
+sparc64                             defconfig
+
+configs tested: 89
+configs skipped: 1
+
+sh                               allmodconfig
+sh                          rsk7269_defconfig
+sh                  sh7785lcr_32bit_defconfig
+sh                                allnoconfig
+sh                            titan_defconfig
+sparc                randconfig-a001-20200118
+arm                  randconfig-a001-20200118
+arm64                randconfig-a001-20200118
+ia64                 randconfig-a001-20200118
+arc                  randconfig-a001-20200118
+m68k                          multi_defconfig
+m68k                       m5475evb_defconfig
+h8300                    h8300h-sim_defconfig
+h8300                     edosk2674_defconfig
+m68k                           sun3_defconfig
+h8300                       h8s-sim_defconfig
+m68k                             allmodconfig
+s390                 randconfig-a001-20200118
+sh                   randconfig-a001-20200118
+csky                 randconfig-a001-20200118
+xtensa               randconfig-a001-20200118
+openrisc             randconfig-a001-20200118
+parisc               randconfig-a001-20200118
+riscv                randconfig-a001-20200118
+alpha                randconfig-a001-20200118
+m68k                 randconfig-a001-20200118
+nds32                randconfig-a001-20200118
+xtensa                       common_defconfig
+openrisc                    or1ksim_defconfig
+nios2                         3c120_defconfig
+xtensa                          iss_defconfig
+c6x                        evmc6678_defconfig
+c6x                              allyesconfig
+nios2                         10m50_defconfig
+openrisc                 simple_smp_defconfig
+um                           x86_64_defconfig
+um                             i386_defconfig
+um                                  defconfig
+arm                         at91_dt_defconfig
+arm64                               defconfig
+arm                        multi_v5_defconfig
+arm                               allnoconfig
+arm                           efm32_defconfig
+arm                           sunxi_defconfig
+arm64                             allnoconfig
+arm                          exynos_defconfig
+arm                        shmobile_defconfig
+arm                        multi_v7_defconfig
+i386                 randconfig-d002-20200118
+x86_64               randconfig-d002-20200118
+x86_64               randconfig-d003-20200118
+i386                 randconfig-d003-20200118
+i386                 randconfig-d001-20200118
+x86_64               randconfig-d001-20200118
+s390                              allnoconfig
+s390                             alldefconfig
+s390                          debug_defconfig
+s390                             allmodconfig
+s390                                defconfig
+s390                       zfcpdump_defconfig
+s390                             allyesconfig
+nds32                               defconfig
+alpha                               defconfig
+csky                                defconfig
+nds32                             allnoconfig
+sparc64              randconfig-a001-20200118
+microblaze           randconfig-a001-20200118
+nios2                randconfig-a001-20200118
+h8300                randconfig-a001-20200118
+c6x                  randconfig-a001-20200118
+x86_64                                    lkp
+x86_64                                   rhel
+x86_64                               rhel-7.6
+x86_64                              fedora-25
+x86_64                                  kexec
+mips                           32r2_defconfig
+mips                              allnoconfig
+parisc                        c3000_defconfig
+parisc                         b180_defconfig
+parisc                              defconfig
+parisc                            allnoconfig
+arc                              allyesconfig
+powerpc                             defconfig
+microblaze                    nommu_defconfig
+powerpc                       ppc64_defconfig
+powerpc                          rhel-kconfig
+microblaze                      mmu_defconfig
+arc                                 defconfig
+powerpc                           allnoconfig
+
+---
+0-DAY kernel test infrastructure                 Open Source Technology Center
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org Intel Corporation
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
