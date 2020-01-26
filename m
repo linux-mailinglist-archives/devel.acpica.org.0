@@ -2,68 +2,46 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44339145A9A
-	for <lists+devel-acpica@lfdr.de>; Wed, 22 Jan 2020 18:07:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 63E05149B67
+	for <lists+devel-acpica@lfdr.de>; Sun, 26 Jan 2020 16:30:27 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 980031007B8F0;
-	Wed, 22 Jan 2020 09:10:53 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.31; helo=mga06.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
-Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+	by ml01.01.org (Postfix) with ESMTP id E255110097DCA;
+	Sun, 26 Jan 2020 07:33:43 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.93; helo=mga11.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id CA85E1007B8EE
-	for <devel@acpica.org>; Wed, 22 Jan 2020 09:10:51 -0800 (PST)
+	by ml01.01.org (Postfix) with ESMTPS id 61D6A10113666
+	for <devel@acpica.org>; Sun, 26 Jan 2020 07:33:41 -0800 (PST)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by orsmga104.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 22 Jan 2020 09:07:22 -0800
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 26 Jan 2020 07:30:22 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.70,350,1574150400";
-   d="scan'208";a="427470870"
-Received: from orsmsx103.amr.corp.intel.com ([10.22.225.130])
-  by fmsmga006.fm.intel.com with ESMTP; 22 Jan 2020 09:07:22 -0800
-Received: from orsmsx125.amr.corp.intel.com (10.22.240.125) by
- ORSMSX103.amr.corp.intel.com (10.22.225.130) with Microsoft SMTP Server (TLS)
- id 14.3.439.0; Wed, 22 Jan 2020 09:07:21 -0800
-Received: from orsmsx110.amr.corp.intel.com ([169.254.10.111]) by
- ORSMSX125.amr.corp.intel.com ([169.254.3.145]) with mapi id 14.03.0439.000;
- Wed, 22 Jan 2020 09:07:21 -0800
-From: "Moore, Robert" <robert.moore@intel.com>
-To: "Kaneda, Erik" <erik.kaneda@intel.com>, Laster K.
-	<officiallazerl0rd@gmail.com>
-Thread-Topic: [Devel] Re: [PATCH] ACPICA: Fix compilation with bare-metal
- toolchian
-Thread-Index: AQHVKT4R6lPuaJozWEa32QMz8NUStKa8TxoAgAYhEDCA91DwgIAHiLQggDYyG4CAAL1aEA==
-Date: Wed, 22 Jan 2020 17:07:21 +0000
-Message-ID: <94F2FBAB4432B54E8AACC7DFDE6C92E3B96D2270@ORSMSX110.amr.corp.intel.com>
-References: <CAMhj-NcA8J8rD1PC6mH+HAjBdv2H532UB5aB5-0Y6VWtUh=8-g@mail.gmail.com>
- <2847939.QcJ3fIVZhg@kreacher>
- <94F2FBAB4432B54E8AACC7DFDE6C92E3B96BFE2C@ORSMSX110.amr.corp.intel.com>
- <8ee4ecbe-f451-112e-677a-87a4d73ccdfc@FreeBSD.org>
- <94F2FBAB4432B54E8AACC7DFDE6C92E3B96C2505@ORSMSX110.amr.corp.intel.com>
- <MWHPR11MB1984CF11768CEF6C90C6516DF00D0@MWHPR11MB1984.namprd11.prod.outlook.com>
-In-Reply-To: <MWHPR11MB1984CF11768CEF6C90C6516DF00D0@MWHPR11MB1984.namprd11.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiZTA4NjRkMTMtNjU2Yy00MzBjLWFjOTYtZmE1ZjVhNDdlYWE4IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiSWErbENoc3hRUlJ4dkJiVDNyN3laRjRkMlhnc1hwelc1Q1wvU2ZVNjN3andZTXhWcmZhamdISUxBSkRIdlh0cTEifQ==
-x-ctpclassification: CTP_NT
-dlp-product: dlpe-windows
-dlp-version: 11.2.0.6
-dlp-reaction: no-action
-x-originating-ip: [10.22.254.140]
+X-IronPort-AV: E=Sophos;i="5.70,366,1574150400";
+   d="scan'208";a="308565152"
+Received: from lkp-server01.sh.intel.com (HELO lkp-server01) ([10.239.97.150])
+  by orsmga001.jf.intel.com with ESMTP; 26 Jan 2020 07:30:21 -0800
+Received: from kbuild by lkp-server01 with local (Exim 4.89)
+	(envelope-from <lkp@intel.com>)
+	id 1ivjrg-000Fpp-MO; Sun, 26 Jan 2020 23:30:20 +0800
+Date: Sun, 26 Jan 2020 23:30:04 +0800
+From: kbuild test robot <lkp@intel.com>
+To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Message-ID: <5e2db07c.aJhkabFbzNwKacLE%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-Message-ID-Hash: XKTYV6YI3TKGL5K25LUJVMZB3KSOV2RA
-X-Message-ID-Hash: XKTYV6YI3TKGL5K25LUJVMZB3KSOV2RA
-X-MailFrom: robert.moore@intel.com
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
-CC: "jkim@FreeBSD.org" <jkim@FreeBSD.org>, "Wysocki, Rafael J" <rafael.j.wysocki@intel.com>, "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>, "devel@acpica.org" <devel@acpica.org>
+Message-ID-Hash: BOYZJVPHH475K3DP57VYPAVBVHJZVMNE
+X-Message-ID-Hash: BOYZJVPHH475K3DP57VYPAVBVHJZVMNE
+X-MailFrom: lkp@intel.com
+X-Mailman-Rule-Hits: nonmember-moderation
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
+CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH] ACPICA: Fix compilation with bare-metal toolchian
+Subject: [Devel] [pm:bleeding-edge] BUILD INCOMPLETE 5fe5946b2ebcf750cfd4847550fa96eb1f03c870
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/XKTYV6YI3TKGL5K25LUJVMZB3KSOV2RA/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/BOYZJVPHH475K3DP57VYPAVBVHJZVMNE/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -72,120 +50,145 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git  bleeding-edge
+branch HEAD: 5fe5946b2ebcf750cfd4847550fa96eb1f03c870  Merge branch 'pm-core-next' into bleeding-edge
+
+TIMEOUT after 2896m
 
 
------Original Message-----
-From: Kaneda, Erik <erik.kaneda@intel.com> 
-Sent: Tuesday, January 21, 2020 1:46 PM
-To: Moore, Robert <robert.moore@intel.com>
-Subject: FW: [Devel] Re: [PATCH] ACPICA: Fix compilation with bare-metal toolchian
+Sorry we cannot finish the testset for your branch within a reasonable time.
+It's our fault -- either some build server is down or some build worker is busy
+doing bisects for _other_ trees. The branch will get more complete coverage and
+possible error reports when our build infrastructure is restored or catches up.
+There will be no more build success notification for this branch head, but you
+can expect reasonably good test coverage after waiting for 1 day.
 
+configs timed out: 19
 
+alpha                               defconfig
+mips                           32r2_defconfig
+mips                         64r6el_defconfig
+mips                             allmodconfig
+mips                              allnoconfig
+mips                             allyesconfig
+mips                      fuloong2e_defconfig
+mips                      malta_kvm_defconfig
+nds32                               defconfig
+powerpc                           allnoconfig
+powerpc                             defconfig
+powerpc                       ppc64_defconfig
+s390                             alldefconfig
+s390                             allmodconfig
+s390                              allnoconfig
+s390                             allyesconfig
+s390                          debug_defconfig
+s390                                defconfig
+s390                       zfcpdump_defconfig
 
-> -----Original Message-----
-> From: Moore, Robert <robert.moore@intel.com>
-> Sent: Wednesday, December 18, 2019 10:10 AM
-> To: Jung-uk Kim <jkim@FreeBSD.org>; Rafael J. Wysocki 
-> <rjw@rjwysocki.net>; Kaneda, Erik <erik.kaneda@intel.com>
-> Cc: Laster K. <officiallazerl0rd@gmail.com>; Wysocki, Rafael J 
-> <rafael.j.wysocki@intel.com>; linux-acpi@vger.kernel.org; 
-> devel@acpica.org
-> Subject: RE: [Devel] Re: [PATCH] ACPICA: Fix compilation with 
-> bare-metal toolchian
-> 
-> 
-> 
-> -----Original Message-----
-> From: Jung-uk Kim <jkim@FreeBSD.org>
-> Sent: Friday, December 13, 2019 7:05 AM
-> To: Moore, Robert <robert.moore@intel.com>; Rafael J. Wysocki 
-> <rjw@rjwysocki.net>; Kaneda, Erik <erik.kaneda@intel.com>
-> Cc: Laster K. <officiallazerl0rd@gmail.com>; Wysocki, Rafael J 
-> <rafael.j.wysocki@intel.com>; linux-acpi@vger.kernel.org; 
-> devel@acpica.org
-> Subject: Re: [Devel] Re: [PATCH] ACPICA: Fix compilation with 
-> bare-metal toolchian
-> 
-> On 19. 12. 12., Moore, Robert wrote:
-> >> -----Original Message-----
-> >> From: Rafael J. Wysocki [mailto:rjw@rjwysocki.net]
-> >> Sent: Friday, July 5, 2019 2:44 AM
-> >> To: Moore, Robert <robert.moore@intel.com>; Schmauss, Erik 
-> >> <erik.schmauss@intel.com>
-> >> Cc: Laster K. <officiallazerl0rd@gmail.com>; Wysocki, Rafael J 
-> >> <rafael.j.wysocki@intel.com>; lenb@kernel.org; linux- 
-> >> acpi@vger.kernel.org; devel@acpica.org
-> >> Subject: Re: [PATCH] ACPICA: Fix compilation with bare-metal 
-> >> toolchian
-> >>
-> >> On Saturday, June 22, 2019 11:03:54 PM CEST Laster K. wrote:
-> >>> An ifdef expects to be compiled with full-fledged Linux toolchain, 
-> >>> but it's common to compile kernel with just bare-metal toolchain 
-> >>> which doesn't define __linux__. So, also add __KERNEL__ check.
-> >>>
-> > [Moore, Robert]
-> > This sounds OK, as long as no other supported hosts define __KERNEL__.
-> 
-> FreeBSD defines _KERNEL for kernel source.
-> 
-> I'd have to say that this sounds a bit dangerous. Is there another 
-> symbol that we can AND into an expression?
-> 
-> JK
-> 
-I agree, this sounds dangerous due to other hosts possibly using __KERNEL__. If __KERNEL__ is defined as well as _LINUX or __linux__, this would eliminate the danger.
+configs tested: 97
+configs skipped: 1
 
-Bob
+arm                              allmodconfig
+arm                         at91_dt_defconfig
+arm64                               defconfig
+arm                        multi_v5_defconfig
+arm                              allyesconfig
+arm64                            allyesconfig
+arm                               allnoconfig
+arm                           efm32_defconfig
+arm                           sunxi_defconfig
+arm64                             allnoconfig
+arm64                            allmodconfig
+arm                          exynos_defconfig
+arm                        shmobile_defconfig
+arm                        multi_v7_defconfig
+riscv                          rv32_defconfig
+riscv                             allnoconfig
+riscv                               defconfig
+riscv                            allmodconfig
+riscv                    nommu_virt_defconfig
+riscv                            allyesconfig
+m68k                          multi_defconfig
+m68k                       m5475evb_defconfig
+h8300                    h8300h-sim_defconfig
+h8300                     edosk2674_defconfig
+m68k                           sun3_defconfig
+h8300                       h8s-sim_defconfig
+m68k                             allmodconfig
+ia64                             allmodconfig
+ia64                              allnoconfig
+ia64                             allyesconfig
+ia64                                defconfig
+ia64                             alldefconfig
+xtensa                       common_defconfig
+openrisc                    or1ksim_defconfig
+nios2                         3c120_defconfig
+xtensa                          iss_defconfig
+c6x                        evmc6678_defconfig
+c6x                              allyesconfig
+nios2                         10m50_defconfig
+openrisc                 simple_smp_defconfig
+um                           x86_64_defconfig
+um                             i386_defconfig
+um                                  defconfig
+i386                              allnoconfig
+i386                                defconfig
+i386                             allyesconfig
+i386                             alldefconfig
+sh                               allmodconfig
+sh                          rsk7269_defconfig
+sh                  sh7785lcr_32bit_defconfig
+sh                                allnoconfig
+sh                            titan_defconfig
+x86_64               randconfig-c003-20200126
+i386                 randconfig-c003-20200126
+x86_64               randconfig-c002-20200126
+x86_64               randconfig-c001-20200126
+i386                 randconfig-c001-20200126
+i386                 randconfig-c002-20200126
+parisc                        c3000_defconfig
+parisc                         b180_defconfig
+parisc                              defconfig
+parisc                            allnoconfig
+sparc64                          allmodconfig
+sparc                            allyesconfig
+sparc64                          allyesconfig
+sparc                               defconfig
+sparc64                           allnoconfig
+sparc64                             defconfig
+arm64                randconfig-a001-20200125
+ia64                 randconfig-a001-20200125
+arm                  randconfig-a001-20200125
+arc                  randconfig-a001-20200125
+sparc                randconfig-a001-20200125
+x86_64               randconfig-f003-20200126
+x86_64               randconfig-f001-20200126
+x86_64               randconfig-f002-20200126
+i386                 randconfig-f002-20200126
+i386                 randconfig-f003-20200126
+i386                 randconfig-f001-20200126
+arc                              allyesconfig
+microblaze                    nommu_defconfig
+powerpc                          rhel-kconfig
+microblaze                      mmu_defconfig
+arc                                 defconfig
+csky                                defconfig
+nds32                             allnoconfig
+x86_64                                    lkp
+x86_64                                   rhel
+x86_64                               rhel-7.6
+x86_64                              fedora-25
+x86_64                                  kexec
+x86_64                         rhel-7.2-clear
+h8300                randconfig-a001-20200125
+nios2                randconfig-a001-20200125
+c6x                  randconfig-a001-20200125
+sparc64              randconfig-a001-20200125
+microblaze           randconfig-a001-20200125
 
-
-> >>> Signed-off-by: Laster K. (lazerl0rd) <officiallazerl0rd@gmail.com>
-> >>> ---
-> >>> Apologies for the multiple/spammed e-mails, I was having mail 
-> >>> client
-> >> issues.
-> >>>
-> >>>  include/acpi/platform/acenv.h   | 2 +-
-> >>>  include/acpi/platform/acenvex.h | 2 +-
-> >>>  2 files changed, 2 insertions(+), 2 deletions(-)
-> >>>
-> >>> diff --git a/include/acpi/platform/acenv.h 
-> >>> b/include/acpi/platform/acenv.h index 35ab3f87cc29..b69319198cb8
-> >>> 100644
-> >>> --- a/include/acpi/platform/acenv.h
-> >>> +++ b/include/acpi/platform/acenv.h
-> >>> @@ -148,7 +148,7 @@
-> >>>
-> >>>  #endif
-> >>>
-> >>> -#if defined(_LINUX) || defined(__linux__)
-> >>> +#if defined(_LINUX) || defined(__KERNEL__) || defined(__linux__)
-> >>>  #include <acpi/platform/aclinux.h>
-> >>>
-> >>>  #elif defined(_APPLE) || defined(__APPLE__) diff --git 
-> >>> a/include/acpi/platform/acenvex.h 
-> >>> b/include/acpi/platform/acenvex.h index 2e36c8344897..c7697a47e33f 
-> >>> 100644
-> >>> --- a/include/acpi/platform/acenvex.h
-> >>> +++ b/include/acpi/platform/acenvex.h
-> >>> @@ -19,7 +19,7 @@
-> >>>   *
-> >>>
-> >>>
-> **********************************************************
-> **********
-> >>> **
-> >>> *******/
-> >>>
-> >>> -#if defined(_LINUX) || defined(__linux__)
-> >>> +#if defined(_LINUX) || defined(__KERNEL__) || defined(__linux__)
-> >>>  #include <acpi/platform/aclinuxex.h>
-> >>>
-> >>>  #elif defined(__DragonFly__)
-> >>>
-> >>
-> >> Erik, Bob, any input here?
-
-
+---
+0-DAY kernel test infrastructure                 Open Source Technology Center
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org Intel Corporation
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
