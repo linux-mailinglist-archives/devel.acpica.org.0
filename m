@@ -2,155 +2,233 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9FCFF19498C
-	for <lists+devel-acpica@lfdr.de>; Thu, 26 Mar 2020 21:50:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 490E6194FB4
+	for <lists+devel-acpica@lfdr.de>; Fri, 27 Mar 2020 04:35:10 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id C8A0E10FC3BA6;
-	Thu, 26 Mar 2020 13:51:36 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.43; helo=mga05.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+	by ml01.01.org (Postfix) with ESMTP id 659C810FC33EF;
+	Thu, 26 Mar 2020 20:35:58 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.31; helo=mga06.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id C87BF10FC341D
-	for <devel@acpica.org>; Thu, 26 Mar 2020 13:51:34 -0700 (PDT)
-IronPort-SDR: Pyyt8f2EMc+U2UjhVr6vVnu6ZLZgmFjv0I3SXaj6eqn2LWePkr/04fVXkTE7v+WkmZfDleIuA7
- CDAbfTP8Gmew==
+	by ml01.01.org (Postfix) with ESMTPS id 868C91007B1F6
+	for <devel@acpica.org>; Thu, 26 Mar 2020 20:35:56 -0700 (PDT)
+IronPort-SDR: kCeYNcLTctOxrtKPlsoLL+A0tAOvlvkyNpvEMoZ4pWSB4Z7YMMNzP10xldregN/bJ58hzzBzZV
+ zyBw+OesWqiQ==
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Mar 2020 13:50:43 -0700
-IronPort-SDR: 6wrJ0EhDPoVA43xiS1V1Hi/b3XZj5s/Xc46OtYmokheV0w1/pUA5UVIiuWoWGD2K9e1uZr6hvb
- hag7rksJo6Gw==
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Mar 2020 20:35:05 -0700
+IronPort-SDR: yCn3c6bYy1wdSvKqPIMDG0VQSiVlROkaKo4N5mjFK3PDtIuc6MMmxZBN2MeDGbtC+mglnLA8pp
+ yKAt5461cDng==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.72,309,1580803200";
-   d="scan'208";a="247673558"
-Received: from orsmsx105.amr.corp.intel.com ([10.22.225.132])
-  by orsmga003.jf.intel.com with ESMTP; 26 Mar 2020 13:50:43 -0700
-Received: from orsmsx110.amr.corp.intel.com ([169.254.10.144]) by
- ORSMSX105.amr.corp.intel.com ([169.254.2.72]) with mapi id 14.03.0439.000;
- Thu, 26 Mar 2020 13:50:43 -0700
-From: "Moore, Robert" <robert.moore@intel.com>
-To: acpica.org list <devel@acpica.org>
-Thread-Topic: ACPICA version 20200326 released
-Thread-Index: AdYDsBR4Wj3YOPWbSfOb6xDPU4svVg==
-Date: Thu, 26 Mar 2020 20:50:41 +0000
-Message-ID: <94F2FBAB4432B54E8AACC7DFDE6C92E3B96FCF7E@ORSMSX110.amr.corp.intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-dlp-product: dlpe-windows
-dlp-version: 11.2.0.6
-dlp-reaction: no-action
-x-originating-ip: [10.22.254.140]
-Content-Type: text/plain; charset="iso-8859-2"
+X-IronPort-AV: E=Sophos;i="5.72,310,1580803200";
+   d="scan'208";a="236502940"
+Received: from lkp-server01.sh.intel.com (HELO lkp-server01) ([10.239.97.150])
+  by orsmga007.jf.intel.com with ESMTP; 26 Mar 2020 20:35:00 -0700
+Received: from kbuild by lkp-server01 with local (Exim 4.89)
+	(envelope-from <lkp@intel.com>)
+	id 1jHflr-00084o-Vv; Fri, 27 Mar 2020 11:34:59 +0800
+Date: Fri, 27 Mar 2020 11:34:54 +0800
+From: kbuild test robot <lkp@intel.com>
+To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Message-ID: <5e7d745e.1x6kDbrVmUlVWP5G%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-Message-ID-Hash: BDLNZMTZ5R32EY7UQPXFY6CBKH5OKBSJ
-X-Message-ID-Hash: BDLNZMTZ5R32EY7UQPXFY6CBKH5OKBSJ
-X-MailFrom: robert.moore@intel.com
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
+Message-ID-Hash: AI6ZWU7XGGKUFU4IDWQJNGMSA2PZ7ZRJ
+X-Message-ID-Hash: AI6ZWU7XGGKUFU4IDWQJNGMSA2PZ7ZRJ
+X-MailFrom: lkp@intel.com
+X-Mailman-Rule-Hits: nonmember-moderation
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
+CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] ACPICA version 20200326 released
+Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS 8b4ddf47b7b4dd54539f1821c95a8dee3295fb0b
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/BDLNZMTZ5R32EY7UQPXFY6CBKH5OKBSJ/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/AI6ZWU7XGGKUFU4IDWQJNGMSA2PZ7ZRJ/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 
-26 March 2020. Summary of changes for version 20200326:
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git  bleeding-edge
+branch HEAD: 8b4ddf47b7b4dd54539f1821c95a8dee3295fb0b  Merge branch 'pm-cpufreq' into linux-next
 
-This release is available at https://acpica.org/downloads
+elapsed time: 481m
 
+configs tested: 160
+configs skipped: 0
 
-1) ACPICA kernel-resident subsystem:
+The following configs have been built successfully.
+More configs may be tested in the coming days.
 
-Performed a code clean-up to prevent build errors on early versions of GCC-=
-10.
+arm                              allmodconfig
+arm                               allnoconfig
+arm                              allyesconfig
+arm64                            allmodconfig
+arm64                             allnoconfig
+arm64                            allyesconfig
+arm                         at91_dt_defconfig
+arm                           efm32_defconfig
+arm                          exynos_defconfig
+arm                        multi_v5_defconfig
+arm                        multi_v7_defconfig
+arm                        shmobile_defconfig
+arm                           sunxi_defconfig
+arm64                               defconfig
+sparc                            allyesconfig
+m68k                           sun3_defconfig
+s390                             allyesconfig
+i386                              allnoconfig
+i386                             alldefconfig
+i386                             allyesconfig
+i386                                defconfig
+ia64                             alldefconfig
+ia64                             allmodconfig
+ia64                              allnoconfig
+ia64                             allyesconfig
+ia64                                defconfig
+c6x                              allyesconfig
+c6x                        evmc6678_defconfig
+nios2                         10m50_defconfig
+nios2                         3c120_defconfig
+openrisc                    or1ksim_defconfig
+openrisc                 simple_smp_defconfig
+xtensa                       common_defconfig
+xtensa                          iss_defconfig
+alpha                               defconfig
+csky                                defconfig
+nds32                             allnoconfig
+nds32                               defconfig
+h8300                     edosk2674_defconfig
+h8300                    h8300h-sim_defconfig
+h8300                       h8s-sim_defconfig
+m68k                             allmodconfig
+m68k                       m5475evb_defconfig
+m68k                          multi_defconfig
+arc                              allyesconfig
+arc                                 defconfig
+microblaze                      mmu_defconfig
+microblaze                    nommu_defconfig
+powerpc                           allnoconfig
+powerpc                             defconfig
+powerpc                       ppc64_defconfig
+powerpc                          rhel-kconfig
+mips                      fuloong2e_defconfig
+mips                      malta_kvm_defconfig
+mips                             allyesconfig
+mips                         64r6el_defconfig
+mips                              allnoconfig
+mips                           32r2_defconfig
+mips                             allmodconfig
+parisc                            allnoconfig
+parisc                generic-64bit_defconfig
+parisc                generic-32bit_defconfig
+parisc                           allyesconfig
+x86_64               randconfig-a001-20200326
+x86_64               randconfig-a002-20200326
+x86_64               randconfig-a003-20200326
+i386                 randconfig-a001-20200326
+i386                 randconfig-a002-20200326
+i386                 randconfig-a003-20200326
+alpha                randconfig-a001-20200326
+m68k                 randconfig-a001-20200326
+mips                 randconfig-a001-20200326
+nds32                randconfig-a001-20200326
+parisc               randconfig-a001-20200326
+riscv                randconfig-a001-20200326
+h8300                randconfig-a001-20200326
+microblaze           randconfig-a001-20200326
+nios2                randconfig-a001-20200326
+c6x                  randconfig-a001-20200326
+sparc64              randconfig-a001-20200326
+c6x                  randconfig-a001-20200327
+h8300                randconfig-a001-20200327
+microblaze           randconfig-a001-20200327
+nios2                randconfig-a001-20200327
+sparc64              randconfig-a001-20200327
+s390                 randconfig-a001-20200326
+csky                 randconfig-a001-20200326
+xtensa               randconfig-a001-20200326
+openrisc             randconfig-a001-20200326
+sh                   randconfig-a001-20200326
+x86_64               randconfig-c003-20200326
+x86_64               randconfig-c001-20200326
+x86_64               randconfig-c002-20200326
+i386                 randconfig-c001-20200326
+i386                 randconfig-c002-20200326
+i386                 randconfig-c003-20200326
+i386                 randconfig-d003-20200326
+i386                 randconfig-d001-20200326
+i386                 randconfig-d002-20200326
+x86_64               randconfig-e001-20200326
+x86_64               randconfig-e002-20200326
+x86_64               randconfig-e003-20200326
+i386                 randconfig-e001-20200326
+i386                 randconfig-e002-20200326
+i386                 randconfig-e003-20200326
+x86_64               randconfig-f001-20200326
+x86_64               randconfig-f002-20200326
+x86_64               randconfig-f003-20200326
+i386                 randconfig-f001-20200326
+i386                 randconfig-f002-20200326
+i386                 randconfig-f003-20200326
+x86_64               randconfig-g001-20200326
+x86_64               randconfig-g002-20200326
+x86_64               randconfig-g003-20200326
+i386                 randconfig-g001-20200326
+i386                 randconfig-g002-20200326
+i386                 randconfig-g003-20200326
+x86_64               randconfig-h001-20200326
+x86_64               randconfig-h002-20200326
+x86_64               randconfig-h003-20200326
+i386                 randconfig-h001-20200326
+i386                 randconfig-h002-20200326
+i386                 randconfig-h003-20200326
+arc                  randconfig-a001-20200326
+arm                  randconfig-a001-20200326
+arm64                randconfig-a001-20200326
+ia64                 randconfig-a001-20200326
+powerpc              randconfig-a001-20200326
+sparc                randconfig-a001-20200326
+riscv                            allmodconfig
+riscv                             allnoconfig
+riscv                            allyesconfig
+riscv                               defconfig
+riscv                    nommu_virt_defconfig
+riscv                          rv32_defconfig
+s390                             alldefconfig
+s390                             allmodconfig
+s390                              allnoconfig
+s390                          debug_defconfig
+s390                                defconfig
+s390                       zfcpdump_defconfig
+sh                               allmodconfig
+sh                                allnoconfig
+sh                          rsk7269_defconfig
+sh                  sh7785lcr_32bit_defconfig
+sh                            titan_defconfig
+sparc                               defconfig
+sparc64                             defconfig
+sparc64                           allnoconfig
+sparc64                          allyesconfig
+sparc64                          allmodconfig
+um                                  defconfig
+um                             i386_defconfig
+um                           x86_64_defconfig
+x86_64                              fedora-25
+x86_64                                  kexec
+x86_64                                    lkp
+x86_64                                   rhel
+x86_64                         rhel-7.2-clear
+x86_64                               rhel-7.6
 
-Added the NHLT table signature. iASL data table compiler/disassembler suppo=
-rt for this table is coming soon.
-
-
-2) iASL Compiler/Disassembler and ACPICA tools:=20
-
-AcpiExec: Fixed several problems with the namespace initialization file (-f=
-i<filename> option). Includes fixes to prevent AE_ALREADY_EXISTS errors, se=
-veral seg faults, and enhancements to line parsing within the init file. In=
- addition, each object found in the init file and it's new value is display=
-ed, as well as any such entries that do not have a corresponding name in th=
-e namespace. For reference, the syntax for the various supported data types=
- are presented below
-	PCHG 0x777788889999BBBB	// Integer
-	\DEV1.STR1 "XYZ"		// String
-	BUF1 (88 99 AA)		// Buffer
-	PKG1 [0x1111 0x2222]		// Package
-	\BF1 0x7980			// BufferField
-	RCRV 0x0123456789ABCDEF	// Field Unit
-
-iASL: Added a custom iASL macro __EXPECT__(iASL-Error-Code). This macro can=
- be used anywhere in a given ASL file to configure iASL to expect an iASL c=
-ompiler error code on the line where this macro was placed. If the error co=
-de does not exist, an error is generated. This is intended to be used for A=
-CPICA's ASL test suite, but can be used by ASL developers as well.
-
-iASL: table compiler: Implemented IVRS IVHD type 11h parsing. The AMD IVRS =
-table parsing supported only IVHD type 10h structures. Parsing an IVHD type=
- 11h caused the iasl to report unknown subtable type. Add necessary structu=
-re definition for IVHD type 11h and apply correct parsing method based on s=
-ubtable type. Micha=B3 =AFygowski.
-
-iASL: table compiler: Fixed IVRS table IVHD type 10h reserved field name Ac=
-cording to AMD IOMMU Specification Revision 3.05 the reserved field should =
-be IOMMU Feature Reporting. Change the name of the field to the correct one=
-. Micha=B3 =AFygowski.
-
-acpiexec: removed redeclaration of AcpiGbl_DbOpt_NoRegionSupport. Patch bas=
-ed on suggestions by David Seifert and Benjamin Berg.
-
-iASL: table compiler: removed unused variable (DtCompilerParserResult) caus=
-ing linking errors. Patch based on suggestions by David Seifert and Benjami=
-n Berg.
-
-iASL: table compiler: make LexBuffer static to avoid linking errors in newe=
-r compilers. Patch based on suggestions by David Seifert and Benjamin Berg.
-
-iASL: fixed type matching between External and Named objects. External obje=
-ct types can only be expressed with ACPI object type values that are define=
-d in the ACPI spec. However, iASL uses ACPI object type values that are loc=
-al to ACPICA in addition to the values defined in the ACPI spec. This chang=
-e implements type matching to map some object type values specific to ACPIC=
-A to ones that are defined in the ACPI spec.
-
-iASL: Droped the type mismatch compiler error that can arise from External =
-declarations to a warning. This warning can occur when there is a type diff=
-erence between the external declaration and the actual object declaration (=
-when compiling multiple files/modules simultaneously).
-
-iASL: removed an incorrect error message regarding externals. This change r=
-emoves an incorrect error that is emitted when a duplicate external declara=
-tion does not contain a type that opens a scope. This is incorrect because =
-the duplicate external with conflicting types are already caught by iASL an=
-d it doesn't make any sense to enforce what this conflicting type should be.
-
-AcpiXtract: fix AX_IS_TABLE_BLOCK_HEADER macro. This macro needs to be surr=
-ounded by parens. Otherwise, a logical statement that applies a logical not=
- operator to this macros could result in a computation that applies the ope=
-rator to the left side of the logical and but not the right. Reported-by: J=
-ohn Levon <john.levon@joyent.com>
-
-Fixed a problem with the local version of sprint(): On 32-bit, the provided=
- sprintf() is non-functional: with a size of ACPI_UINT32_MAX, String + Size=
- will wrap, meaning End < Start, and AcpiUtBoundStringOutput() will never o=
-utput anything as a result. The symptom seen of this was acpixtract failing=
- to output anything -- with a custom build that included utprint.c. Signed-=
-off-by: John Levon <john.levon@joyent.com>
-
-iASL: Changed the "PlatformCommChannel" ASL keyword to "PCC", as per the AC=
-PI specification.
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
