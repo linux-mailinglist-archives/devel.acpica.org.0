@@ -1,51 +1,55 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9FBFB1960F0
-	for <lists+devel-acpica@lfdr.de>; Fri, 27 Mar 2020 23:17:51 +0100 (CET)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 440051964B4
+	for <lists+devel-acpica@lfdr.de>; Sat, 28 Mar 2020 10:14:18 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 3956B10FC35A0;
-	Fri, 27 Mar 2020 15:18:40 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.115; helo=mga14.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	by ml01.01.org (Postfix) with ESMTP id 1AD5010FC36F9;
+	Sat, 28 Mar 2020 02:15:06 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.167.195; helo=mail-oi1-f195.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-oi1-f195.google.com (mail-oi1-f195.google.com [209.85.167.195])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id C845B1007B1C2
-	for <devel@acpica.org>; Fri, 27 Mar 2020 15:18:37 -0700 (PDT)
-IronPort-SDR: HA9kX8c9D8eb0XYpEnPij0OtjOllVA18mfvOpvnEYnlDG/vgiIRrL/06StDteg6KSnVYjdkMcy
- jT6xWgvIut4Q==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Mar 2020 15:17:47 -0700
-IronPort-SDR: KFxo7lkyO+Orq/gXt8O9gV+xVXTclzAzgzNwhAfUMRcFzo+Fd9u5d0zV2eoY/n+yV1VqnQK85h
- V6xf8ycMoQcg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.72,314,1580803200";
-   d="scan'208";a="239219460"
-Received: from lkp-server01.sh.intel.com (HELO lkp-server01) ([10.239.97.150])
-  by fmsmga007.fm.intel.com with ESMTP; 27 Mar 2020 15:17:45 -0700
-Received: from kbuild by lkp-server01 with local (Exim 4.89)
-	(envelope-from <lkp@intel.com>)
-	id 1jHxIO-000GkC-T8; Sat, 28 Mar 2020 06:17:44 +0800
-Date: Sat, 28 Mar 2020 06:17:38 +0800
-From: kbuild test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <5e7e7b82.CkEU9Tt+ALrc52uM%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTPS id A46BA10FC3605
+	for <devel@acpica.org>; Sat, 28 Mar 2020 02:15:03 -0700 (PDT)
+Received: by mail-oi1-f195.google.com with SMTP id y71so11054890oia.7
+        for <devel@acpica.org>; Sat, 28 Mar 2020 02:14:13 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=pKuq7d8jIrlk/0WIZMtVXkIzDVpSUtAwY67akVyTnGQ=;
+        b=K2fo8xwH4G+Jyfg27pTs3AJRIrl+4fERIJpDKdki/bWheVnBFdxKWifMPiEC2y6Do6
+         qtsbZsXggKxRk6jVHJ09+xDhL0MURv9rW6bD7o7rprj+lo5p4Xo6soHL526ctVVghrdZ
+         YRmDgdA5F+duG1NCdBydLrReuqj61crbkbFRGeiNDEoZjvfwiEItI4srUkofh6qRSmq9
+         Vhw6aQyDOGGCcMLeVbb1MGikUaJVSv6Mx9nUopkE2joIY6u2BR/cndC08yU15B89e7l1
+         DZpCm2nCSYmIjkb9MYEHc4eEnfexjxA7zRizHdiddkaKR36cfnpAq4JTt9GQAp8+5AZR
+         hrNw==
+X-Gm-Message-State: ANhLgQ3KX9zAmTHdhz9RyXNC4A8o1451/C+6TNgU462FP06WBYSXGrUE
+	xCYzL6c2+pDc0AZz/YYwBRT+8JUK4KUSTkfw3A4=
+X-Google-Smtp-Source: ADFU+vsfJR2e/2aZ0DaWjMu+tQUrurQ6g1o3VVqYm7WMOdLXNBdUKFaJxhA5WPw5Gut1INgv2J6DN7h1qQGSWlRPcTw=
+X-Received: by 2002:aca:f07:: with SMTP id 7mr1821111oip.68.1585386852511;
+ Sat, 28 Mar 2020 02:14:12 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID-Hash: L6GXARBZOJIFIBPPLLHB5ZAJUSRL5MSI
-X-Message-ID-Hash: L6GXARBZOJIFIBPPLLHB5ZAJUSRL5MSI
-X-MailFrom: lkp@intel.com
+References: <20200328034706.17840-1-yuehaibing@huawei.com>
+In-Reply-To: <20200328034706.17840-1-yuehaibing@huawei.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Sat, 28 Mar 2020 10:14:01 +0100
+Message-ID: <CAJZ5v0ikZoo5bgrfUsGic7FTCZQu7m_EYLDH1LMcMGNwNjtvqw@mail.gmail.com>
+To: YueHaibing <yuehaibing@huawei.com>, Robert Moore <robert.moore@intel.com>,
+	Erik Kaneda <erik.kaneda@intel.com>
+Message-ID-Hash: TCDUPLNBZ6G3DRLWLI6S4BDMFLI4NKW4
+X-Message-ID-Hash: TCDUPLNBZ6G3DRLWLI6S4BDMFLI4NKW4
+X-MailFrom: rjwysocki@gmail.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+CC: Rafael Wysocki <rafael.j.wysocki@intel.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS 19b2b1eeb3782fd90bcd2600672b8079fbab94d1
+Subject: [Devel] Re: [PATCH -next] ACPICA: Make acpi_protocol_lengths static
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/L6GXARBZOJIFIBPPLLHB5ZAJUSRL5MSI/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/TCDUPLNBZ6G3DRLWLI6S4BDMFLI4NKW4/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -54,173 +58,38 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git  bleeding-edge
-branch HEAD: 19b2b1eeb3782fd90bcd2600672b8079fbab94d1  Merge branch 'intel_pstate-passive' into bleeding-edge
+On Sat, Mar 28, 2020 at 4:47 AM YueHaibing <yuehaibing@huawei.com> wrote:
+>
+> Fix sparse warning:
+>
+> drivers/acpi/acpica/exfield.c:25:10: warning:
+>  symbol 'acpi_protocol_lengths' was not declared. Should it be static?
+>
+> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
 
-elapsed time: 591m
+Bob, Erik, I'm leaving this one to you.
 
-configs tested: 152
-configs skipped: 0
-
-The following configs have been built successfully.
-More configs may be tested in the coming days.
-
-arm64                             allnoconfig
-arm                               allnoconfig
-arm                           efm32_defconfig
-arm                         at91_dt_defconfig
-arm                        shmobile_defconfig
-arm64                               defconfig
-arm                          exynos_defconfig
-arm                        multi_v5_defconfig
-arm                           sunxi_defconfig
-arm                        multi_v7_defconfig
-sparc                            allyesconfig
-i386                              allnoconfig
-i386                             allyesconfig
-i386                             alldefconfig
-i386                                defconfig
-ia64                             allmodconfig
-ia64                                defconfig
-ia64                              allnoconfig
-ia64                             allyesconfig
-ia64                             alldefconfig
-nios2                         3c120_defconfig
-nios2                         10m50_defconfig
-c6x                        evmc6678_defconfig
-xtensa                          iss_defconfig
-c6x                              allyesconfig
-xtensa                       common_defconfig
-openrisc                 simple_smp_defconfig
-openrisc                    or1ksim_defconfig
-nds32                               defconfig
-nds32                             allnoconfig
-csky                                defconfig
-alpha                               defconfig
-h8300                       h8s-sim_defconfig
-h8300                     edosk2674_defconfig
-m68k                       m5475evb_defconfig
-m68k                             allmodconfig
-h8300                    h8300h-sim_defconfig
-m68k                           sun3_defconfig
-m68k                          multi_defconfig
-arc                                 defconfig
-arc                              allyesconfig
-microblaze                      mmu_defconfig
-microblaze                    nommu_defconfig
-powerpc                           allnoconfig
-mips                      fuloong2e_defconfig
-mips                      malta_kvm_defconfig
-mips                             allyesconfig
-mips                         64r6el_defconfig
-mips                              allnoconfig
-mips                           32r2_defconfig
-mips                             allmodconfig
-parisc                            allnoconfig
-parisc                generic-64bit_defconfig
-parisc                generic-32bit_defconfig
-parisc                           allyesconfig
-i386                 randconfig-a002-20200327
-i386                 randconfig-a001-20200327
-x86_64               randconfig-a002-20200327
-x86_64               randconfig-a001-20200327
-i386                 randconfig-a003-20200327
-x86_64               randconfig-a003-20200327
-nds32                randconfig-a001-20200327
-m68k                 randconfig-a001-20200327
-parisc               randconfig-a001-20200327
-alpha                randconfig-a001-20200327
-riscv                randconfig-a001-20200327
-h8300                randconfig-a001-20200327
-microblaze           randconfig-a001-20200327
-nios2                randconfig-a001-20200327
-c6x                  randconfig-a001-20200327
-sparc64              randconfig-a001-20200327
-s390                 randconfig-a001-20200327
-xtensa               randconfig-a001-20200327
-csky                 randconfig-a001-20200327
-openrisc             randconfig-a001-20200327
-sh                   randconfig-a001-20200327
-i386                 randconfig-b003-20200327
-i386                 randconfig-b001-20200327
-x86_64               randconfig-b003-20200327
-i386                 randconfig-b002-20200327
-x86_64               randconfig-b002-20200327
-x86_64               randconfig-b001-20200327
-x86_64               randconfig-c003-20200327
-x86_64               randconfig-c001-20200327
-i386                 randconfig-c002-20200327
-x86_64               randconfig-c002-20200327
-i386                 randconfig-c003-20200327
-i386                 randconfig-c001-20200327
-i386                 randconfig-d003-20200327
-i386                 randconfig-d001-20200327
-x86_64               randconfig-d002-20200327
-x86_64               randconfig-d001-20200327
-i386                 randconfig-d002-20200327
-x86_64               randconfig-d003-20200327
-x86_64               randconfig-e001-20200327
-x86_64               randconfig-e003-20200327
-i386                 randconfig-e002-20200327
-i386                 randconfig-e003-20200327
-i386                 randconfig-e001-20200327
-x86_64               randconfig-e002-20200327
-i386                 randconfig-f001-20200327
-i386                 randconfig-f003-20200327
-i386                 randconfig-f002-20200327
-x86_64               randconfig-f002-20200327
-x86_64               randconfig-f001-20200327
-i386                 randconfig-g003-20200327
-x86_64               randconfig-g002-20200327
-i386                 randconfig-g001-20200327
-i386                 randconfig-g002-20200327
-x86_64               randconfig-g001-20200327
-x86_64               randconfig-g003-20200327
-x86_64               randconfig-h003-20200327
-i386                 randconfig-h003-20200327
-i386                 randconfig-h001-20200327
-x86_64               randconfig-h001-20200327
-i386                 randconfig-h002-20200327
-arm                  randconfig-a001-20200327
-ia64                 randconfig-a001-20200327
-sparc                randconfig-a001-20200327
-arc                  randconfig-a001-20200327
-riscv                            allyesconfig
-riscv                    nommu_virt_defconfig
-riscv                             allnoconfig
-riscv                               defconfig
-riscv                          rv32_defconfig
-riscv                            allmodconfig
-s390                       zfcpdump_defconfig
-s390                          debug_defconfig
-s390                             allyesconfig
-s390                              allnoconfig
-s390                             allmodconfig
-s390                             alldefconfig
-s390                                defconfig
-sh                          rsk7269_defconfig
-sh                               allmodconfig
-sh                            titan_defconfig
-sh                  sh7785lcr_32bit_defconfig
-sh                                allnoconfig
-sparc                               defconfig
-sparc64                             defconfig
-sparc64                           allnoconfig
-sparc64                          allyesconfig
-sparc64                          allmodconfig
-um                           x86_64_defconfig
-um                             i386_defconfig
-um                                  defconfig
-x86_64                                   rhel
-x86_64                               rhel-7.6
-x86_64                         rhel-7.2-clear
-x86_64                                    lkp
-x86_64                              fedora-25
-x86_64                                  kexec
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+> ---
+>  drivers/acpi/acpica/exfield.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/acpi/acpica/exfield.c b/drivers/acpi/acpica/exfield.c
+> index e85eb31e5075..3323a2ba6a31 100644
+> --- a/drivers/acpi/acpica/exfield.c
+> +++ b/drivers/acpi/acpica/exfield.c
+> @@ -22,7 +22,7 @@ ACPI_MODULE_NAME("exfield")
+>   */
+>  #define ACPI_INVALID_PROTOCOL_ID        0x80
+>  #define ACPI_MAX_PROTOCOL_ID            0x0F
+> -const u8 acpi_protocol_lengths[] = {
+> +static const u8 acpi_protocol_lengths[] = {
+>         ACPI_INVALID_PROTOCOL_ID,       /* 0 - reserved */
+>         ACPI_INVALID_PROTOCOL_ID,       /* 1 - reserved */
+>         0x00,                   /* 2 - ATTRIB_QUICK */
+> --
+> 2.17.1
+>
+>
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
