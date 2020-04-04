@@ -1,55 +1,51 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 48C6719D377
-	for <lists+devel-acpica@lfdr.de>; Fri,  3 Apr 2020 11:24:36 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [198.145.21.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 227AD19E371
+	for <lists+devel-acpica@lfdr.de>; Sat,  4 Apr 2020 10:26:50 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 1ABC1100EA2A1;
-	Fri,  3 Apr 2020 02:25:24 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.210.67; helo=mail-ot1-f67.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-ot1-f67.google.com (mail-ot1-f67.google.com [209.85.210.67])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	by ml01.01.org (Postfix) with ESMTP id 1C00210FC7289;
+	Sat,  4 Apr 2020 01:27:38 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.88; helo=mga01.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id B136510FCD5C4
-	for <devel@acpica.org>; Fri,  3 Apr 2020 02:25:21 -0700 (PDT)
-Received: by mail-ot1-f67.google.com with SMTP id 22so6645187otf.0
-        for <devel@acpica.org>; Fri, 03 Apr 2020 02:24:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=QdFApNje4dVg6X1gfPZZooLWocDLTTaIU6KupyCadzc=;
-        b=OGb13EsGbFYFb1/gJwOQCqr6Rwk35yoTSJyXw+xxSZcPPF9ILcjU2Bh1C53cMp7t4F
-         DPh593aEJ9j6UL97xe7tyzVXvRc2JkhbW5oHkMhzLTe5CmXhr8IHJq7SMLQu/BH//odD
-         u2jfrTtlpECToesP91VFyJxRXpk2aUR9YyElzR+GBBXIGiEJAztbuYId/3Y2dtMJJfQg
-         eofrJnyePvYfYE/C76zUVR6g/21c7JleSjKROEoVa2grtrRw+NcrAOgY9NWetGCTKkJp
-         CQ6YF/9nhqXDsLjwTplq9irA55E7oFO2Ksj3bssV1GpPHbY2E8UH7HnEl9N7k6XwkA1V
-         IHBw==
-X-Gm-Message-State: AGi0PuY+bSSQ8DER6jEd7iIEpdyNostPN9xv+IXVmoshq1AFg/UkOSts
-	UENVUWKhIj6xZGR25Z4lQ0vaPeVwX5b6/Ju0cyo=
-X-Google-Smtp-Source: APiQypJuXn7s2GqX4r3fjosMCpppzhRJ0zVb9uZF/5UUFNv03mouaz5qndIrJwVA2p47c5q5t3D5YwS1ivj/dDGXal8=
-X-Received: by 2002:a9d:750a:: with SMTP id r10mr5371551otk.118.1585905870777;
- Fri, 03 Apr 2020 02:24:30 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTPS id B13D310FC7287
+	for <devel@acpica.org>; Sat,  4 Apr 2020 01:27:35 -0700 (PDT)
+IronPort-SDR: nIXBT0nw15tK3glZ0JeVumaK3/EAfynXdEdKwQE6/1HlP89ygpm6pAWMx4E99Amopxlo9RIx3T
+ 9o3J3zhMjVEg==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Apr 2020 01:26:45 -0700
+IronPort-SDR: wyZvYV/McKS3Lqmlf/DuTEqK8YI9Ej0TcDYL43Yh478CV1Nc3J4miouwZmDK0NzBBeiH8n8bPJ
+ m9kBRDecEH3Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.72,343,1580803200";
+   d="scan'208";a="250394652"
+Received: from lkp-server01.sh.intel.com (HELO lkp-server01) ([10.239.97.150])
+  by orsmga003.jf.intel.com with ESMTP; 04 Apr 2020 01:26:43 -0700
+Received: from kbuild by lkp-server01 with local (Exim 4.89)
+	(envelope-from <lkp@intel.com>)
+	id 1jKe8Y-00019x-Lo; Sat, 04 Apr 2020 16:26:42 +0800
+Date: Sat, 04 Apr 2020 16:25:50 +0800
+From: kbuild test robot <lkp@intel.com>
+To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Message-ID: <5e88448e.Rv0Nqa6k3U2fl3Kn%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-References: <20200403064712.26746-1-yanaijie@huawei.com>
-In-Reply-To: <20200403064712.26746-1-yanaijie@huawei.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Fri, 3 Apr 2020 11:24:19 +0200
-Message-ID: <CAJZ5v0gHsUMS+LciZnzC12=QO+hsVkeQWHDR1LC8PMCxoWvtAQ@mail.gmail.com>
-To: Jason Yan <yanaijie@huawei.com>, Robert Moore <robert.moore@intel.com>,
-	Erik Kaneda <erik.kaneda@intel.com>
-Message-ID-Hash: J4YI3QMDIDETRN3BJRLKEJV53L2GFLK4
-X-Message-ID-Hash: J4YI3QMDIDETRN3BJRLKEJV53L2GFLK4
-X-MailFrom: rjwysocki@gmail.com
+Message-ID-Hash: HB4QQRLMYGEGN5E6G66ISDY7FOLUDHK7
+X-Message-ID-Hash: HB4QQRLMYGEGN5E6G66ISDY7FOLUDHK7
+X-MailFrom: lkp@intel.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: Rafael Wysocki <rafael.j.wysocki@intel.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>
+CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH] ACPICA: make acpi_gbl_next_cmd_num static
+Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS 3c55e7bed1061c07f3678df7889e35719349dd22
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/J4YI3QMDIDETRN3BJRLKEJV53L2GFLK4/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/HB4QQRLMYGEGN5E6G66ISDY7FOLUDHK7/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -58,38 +54,166 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Fri, Apr 3, 2020 at 8:48 AM Jason Yan <yanaijie@huawei.com> wrote:
->
-> Fix the following sparse warning:
->
-> drivers/acpi/acpica/dbhistry.c:30:5: warning: symbol
-> 'acpi_gbl_next_cmd_num' was not declared. Should it be static?
->
-> Reported-by: Hulk Robot <hulkci@huawei.com>
-> Signed-off-by: Jason Yan <yanaijie@huawei.com>
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git  bleeding-edge
+branch HEAD: 3c55e7bed1061c07f3678df7889e35719349dd22  Merge branch 'pm-sleep' into bleeding-edge
 
-Bob, Erik, I'm leaving this one to you.
+elapsed time: 1358m
 
-> ---
->  drivers/acpi/acpica/dbhistry.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/acpi/acpica/dbhistry.c b/drivers/acpi/acpica/dbhistry.c
-> index bb9600b867ee..801b35a08174 100644
-> --- a/drivers/acpi/acpica/dbhistry.c
-> +++ b/drivers/acpi/acpica/dbhistry.c
-> @@ -27,7 +27,7 @@ static HISTORY_INFO acpi_gbl_history_buffer[HISTORY_SIZE];
->  static u16 acpi_gbl_lo_history = 0;
->  static u16 acpi_gbl_num_history = 0;
->  static u16 acpi_gbl_next_history_index = 0;
-> -u32 acpi_gbl_next_cmd_num = 1;
-> +static u32 acpi_gbl_next_cmd_num = 1;
->
->  /*******************************************************************************
->   *
-> --
-> 2.17.2
->
+configs tested: 145
+configs skipped: 0
+
+The following configs have been built successfully.
+More configs may be tested in the coming days.
+
+arm64                            allyesconfig
+arm64                             allnoconfig
+arm                               allnoconfig
+arm                           efm32_defconfig
+arm                         at91_dt_defconfig
+arm                        shmobile_defconfig
+arm64                               defconfig
+arm                          exynos_defconfig
+arm                        multi_v5_defconfig
+arm                           sunxi_defconfig
+arm                        multi_v7_defconfig
+sparc                            allyesconfig
+i386                              allnoconfig
+i386                             allyesconfig
+i386                             alldefconfig
+i386                                defconfig
+ia64                             allmodconfig
+ia64                                defconfig
+ia64                              allnoconfig
+ia64                             allyesconfig
+ia64                             alldefconfig
+nios2                         3c120_defconfig
+nios2                         10m50_defconfig
+c6x                        evmc6678_defconfig
+xtensa                          iss_defconfig
+c6x                              allyesconfig
+xtensa                       common_defconfig
+openrisc                 simple_smp_defconfig
+openrisc                    or1ksim_defconfig
+nds32                               defconfig
+nds32                             allnoconfig
+csky                                defconfig
+alpha                               defconfig
+h8300                       h8s-sim_defconfig
+h8300                     edosk2674_defconfig
+m68k                       m5475evb_defconfig
+m68k                             allmodconfig
+h8300                    h8300h-sim_defconfig
+m68k                           sun3_defconfig
+m68k                          multi_defconfig
+arc                                 defconfig
+arc                              allyesconfig
+microblaze                      mmu_defconfig
+microblaze                    nommu_defconfig
+powerpc                           allnoconfig
+mips                      fuloong2e_defconfig
+mips                      malta_kvm_defconfig
+mips                             allyesconfig
+mips                         64r6el_defconfig
+mips                              allnoconfig
+mips                           32r2_defconfig
+mips                             allmodconfig
+parisc                            allnoconfig
+parisc                generic-64bit_defconfig
+parisc                generic-32bit_defconfig
+parisc                           allyesconfig
+x86_64               randconfig-a003-20200403
+i386                 randconfig-a002-20200403
+x86_64               randconfig-a002-20200403
+x86_64               randconfig-a001-20200403
+i386                 randconfig-a003-20200403
+i386                 randconfig-a001-20200403
+nds32                randconfig-a001-20200403
+m68k                 randconfig-a001-20200403
+alpha                randconfig-a001-20200403
+parisc               randconfig-a001-20200403
+riscv                randconfig-a001-20200403
+sparc64              randconfig-a001-20200403
+h8300                randconfig-a001-20200403
+nios2                randconfig-a001-20200403
+microblaze           randconfig-a001-20200403
+c6x                  randconfig-a001-20200403
+s390                 randconfig-a001-20200403
+xtensa               randconfig-a001-20200403
+csky                 randconfig-a001-20200403
+openrisc             randconfig-a001-20200403
+sh                   randconfig-a001-20200403
+i386                 randconfig-b003-20200403
+x86_64               randconfig-b001-20200403
+i386                 randconfig-b001-20200403
+i386                 randconfig-b002-20200403
+i386                 randconfig-c001-20200403
+i386                 randconfig-c003-20200403
+x86_64               randconfig-c002-20200403
+i386                 randconfig-c002-20200403
+x86_64               randconfig-c001-20200403
+x86_64               randconfig-d001-20200403
+i386                 randconfig-d003-20200403
+i386                 randconfig-d001-20200403
+i386                 randconfig-d002-20200403
+i386                 randconfig-e001-20200403
+x86_64               randconfig-e002-20200403
+i386                 randconfig-e003-20200403
+x86_64               randconfig-e003-20200403
+i386                 randconfig-e002-20200403
+i386                 randconfig-f001-20200403
+i386                 randconfig-f003-20200403
+x86_64               randconfig-f003-20200403
+x86_64               randconfig-f001-20200403
+i386                 randconfig-f002-20200403
+x86_64               randconfig-f002-20200403
+x86_64               randconfig-g003-20200403
+i386                 randconfig-g003-20200403
+x86_64               randconfig-g002-20200403
+i386                 randconfig-g001-20200403
+i386                 randconfig-g002-20200403
+x86_64               randconfig-g001-20200403
+arm64                randconfig-a001-20200403
+sparc                randconfig-a001-20200403
+ia64                 randconfig-a001-20200403
+arc                  randconfig-a001-20200403
+arm                  randconfig-a001-20200403
+powerpc              randconfig-a001-20200403
+riscv                            allyesconfig
+riscv                    nommu_virt_defconfig
+riscv                             allnoconfig
+riscv                               defconfig
+riscv                          rv32_defconfig
+riscv                            allmodconfig
+s390                       zfcpdump_defconfig
+s390                          debug_defconfig
+s390                             allyesconfig
+s390                              allnoconfig
+s390                             allmodconfig
+s390                             alldefconfig
+s390                                defconfig
+sh                          rsk7269_defconfig
+sh                               allmodconfig
+sh                            titan_defconfig
+sh                  sh7785lcr_32bit_defconfig
+sh                                allnoconfig
+sparc                               defconfig
+sparc64                             defconfig
+sparc64                           allnoconfig
+sparc64                          allyesconfig
+sparc64                          allmodconfig
+um                           x86_64_defconfig
+um                             i386_defconfig
+um                                  defconfig
+x86_64                                   rhel
+x86_64                               rhel-7.6
+x86_64                         rhel-7.2-clear
+x86_64                                    lkp
+x86_64                              fedora-25
+x86_64                                  kexec
+
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
