@@ -1,124 +1,95 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 404B51A8C46
-	for <lists+devel-acpica@lfdr.de>; Tue, 14 Apr 2020 22:22:48 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [198.145.21.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id E1C111A989B
+	for <lists+devel-acpica@lfdr.de>; Wed, 15 Apr 2020 11:24:24 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id A1F1110FD1F6B;
-	Tue, 14 Apr 2020 13:23:20 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.93; helo=mga11.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	by ml01.01.org (Postfix) with ESMTP id CAA8F1010630A;
+	Wed, 15 Apr 2020 02:24:53 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.167.194; helo=mail-oi1-f194.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-oi1-f194.google.com (mail-oi1-f194.google.com [209.85.167.194])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id D559510FC546A
-	for <devel@acpica.org>; Tue, 14 Apr 2020 13:23:17 -0700 (PDT)
-IronPort-SDR: vVLWy/7c5NBTbkDa9ph2xfPfLA29bWqSyEPF9rwRkyKREZePVnke2thQQkuiUvU6DF8L5ynPNv
- LCd9BD4cxr1A==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Apr 2020 13:22:41 -0700
-IronPort-SDR: V0+HOszgHeIq+0rekuUIV0Y5Q1Ykf6UNOYs4D2TW1H2VxAUm2gYsw9HXh0Xx3tblx45u/ZzrI5
- 5d9Vclu4QyOA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.72,384,1580803200";
-   d="scan'208";a="245510622"
-Received: from orsmsx102.amr.corp.intel.com ([10.22.225.129])
-  by fmsmga008.fm.intel.com with ESMTP; 14 Apr 2020 13:22:42 -0700
-Received: from orsmsx158.amr.corp.intel.com (10.22.240.20) by
- ORSMSX102.amr.corp.intel.com (10.22.225.129) with Microsoft SMTP Server (TLS)
- id 14.3.439.0; Tue, 14 Apr 2020 13:22:41 -0700
-Received: from orsmsx108.amr.corp.intel.com ([169.254.2.172]) by
- ORSMSX158.amr.corp.intel.com ([169.254.10.99]) with mapi id 14.03.0439.000;
- Tue, 14 Apr 2020 13:22:41 -0700
-From: "Moore, Robert" <robert.moore@intel.com>
-To: Jason Yan <yanaijie@huawei.com>, "Kaneda, Erik" <erik.kaneda@intel.com>,
-	"Wysocki, Rafael J" <rafael.j.wysocki@intel.com>, "lenb@kernel.org"
-	<lenb@kernel.org>, "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>,
-	"devel@acpica.org" <devel@acpica.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>
-Thread-Topic: [PATCH] ACPICA: Use ARRAY_SIZE instead of hardcoded siz
-Thread-Index: AQHWEZysu7u4opIOMUyKgwd1vmqkR6h5D5pA
-Date: Tue, 14 Apr 2020 20:22:40 +0000
-Message-ID: <94F2FBAB4432B54E8AACC7DFDE6C92E3C68A849E@ORSMSX108.amr.corp.intel.com>
-References: <20200413143156.22633-1-yanaijie@huawei.com>
-In-Reply-To: <20200413143156.22633-1-yanaijie@huawei.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-dlp-product: dlpe-windows
-dlp-version: 11.2.0.6
-dlp-reaction: no-action
-x-originating-ip: [10.22.254.140]
-Content-Type: text/plain; charset="us-ascii"
+	by ml01.01.org (Postfix) with ESMTPS id E94EF10106308
+	for <devel@acpica.org>; Wed, 15 Apr 2020 02:24:51 -0700 (PDT)
+Received: by mail-oi1-f194.google.com with SMTP id b7so10351665oic.2
+        for <devel@acpica.org>; Wed, 15 Apr 2020 02:24:21 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=PeBwwUHexbq/B0mllpXl205PmqHG/3tGbcfB95WXpZk=;
+        b=ubp0Pt7vORkOQqLo8wNCfXUcRYdr72JarWsURKR5O+j1JwgCJZCNkKBdDCz6s4dNYl
+         cJec5D6Grbh+RSoQSYCPcFEW4P92skk5FD1iF7wm3dSvhIM4o4WVOHGE4zmXAFiRxR/c
+         mmqZx4ZUcoY3QcMEkqTc65LKB+g5pt1rqGvsckIEv7UXNa00Y8bQpIer579SIWq7QYWz
+         +kHGL+8POj9bAVSgRLI6gyiC9Rb+t2pvuSdVnn6KvNBuX0x3f2QGyGzEP3811i7TbwlE
+         +6dTPL5NmbpQG6R3RTtf1uk9W1tMPxJizEh1nNc0fK8buKrM39/+elV4tojwWang0AtF
+         Lqaw==
+X-Gm-Message-State: AGi0PubIjQrTVlM9QUHEyhtYcqaMtvkY56c+XRhAhFAfFmdoHT3UjX56
+	5ErP0El7MbvBi7NQBoT7/OqdfoTV78erwPvRPN8=
+X-Google-Smtp-Source: APiQypJZrPtk9CTp5eBsivxylrSi0zfKsT9ogsSyvEIjXIEYZWQOgAkgP4CZqwUp9bBm3A0h4TeoQrnfXPtaDIa1khU=
+X-Received: by 2002:a05:6808:81:: with SMTP id s1mr559297oic.68.1586942660307;
+ Wed, 15 Apr 2020 02:24:20 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID-Hash: JODBHUS3PDPNAZR5AEXPMRXED4RL3AUA
-X-Message-ID-Hash: JODBHUS3PDPNAZR5AEXPMRXED4RL3AUA
-X-MailFrom: robert.moore@intel.com
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
+References: <20200415084933.6251-1-yanaijie@huawei.com>
+In-Reply-To: <20200415084933.6251-1-yanaijie@huawei.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Wed, 15 Apr 2020 11:24:09 +0200
+Message-ID: <CAJZ5v0ie67VHR40GjHnnAmW3fnO0V3ypLvsy9HSnq9_zR1bEMA@mail.gmail.com>
+To: Jason Yan <yanaijie@huawei.com>, Robert Moore <robert.moore@intel.com>,
+	Erik Kaneda <erik.kaneda@intel.com>
+Message-ID-Hash: FVVCCOVONGLFSR27I3RHFORIDCI5ANVN
+X-Message-ID-Hash: FVVCCOVONGLFSR27I3RHFORIDCI5ANVN
+X-MailFrom: rjwysocki@gmail.com
+X-Mailman-Rule-Hits: nonmember-moderation
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
+CC: Rafael Wysocki <rafael.j.wysocki@intel.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Hulk Robot <hulkci@huawei.com>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH] ACPICA: Use ARRAY_SIZE instead of hardcoded siz
+Subject: [Devel] Re: [PATCH] ACPICA: make acpi_protocol_lengths static
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/JODBHUS3PDPNAZR5AEXPMRXED4RL3AUA/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/FVVCCOVONGLFSR27I3RHFORIDCI5ANVN/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-I think we've discussed this in the past. ARRAY_SIZE is not standard, and will get in the way of portability:
+On Wed, Apr 15, 2020 at 10:23 AM Jason Yan <yanaijie@huawei.com> wrote:
+>
+> Fix the following sparse warning:
+>
+> drivers/acpi/acpica/exfield.c:25:10: warning: symbol
+> 'acpi_protocol_lengths' was not declared. Should it be static?
+>
+> Reported-by: Hulk Robot <hulkci@huawei.com>
+> Signed-off-by: Jason Yan <yanaijie@huawei.com>
 
-On gcc v7.4.0:
-../../../source/components/resources/rsdumpinfo.c:335:25: note: in expansion of macro 'ACPI_RSD_TABLE_SIZE'
-     {ACPI_RSD_TITLE,    ACPI_RSD_TABLE_SIZE (AcpiRsDumpGenericReg),         "Generic Register",         NULL},
+Erik, Bob, this one is yours. :-)
 
-../../../source/components/resources/rsdumpinfo.c:166:37: error: initializer element is not constant
- #define ACPI_RSD_TABLE_SIZE(name)   ARRAY_SIZE (name)
-
-
-And, on MSVC 2017:
-Severity	Code	Description	Project	File	Line	Suppression State
-Warning	C4013	'ARRAY_SIZE' undefined; assuming extern returning int	AcpiExec	c:\acpica\source\components\resources\rsdumpinfo.c	179	
------Original Message-----
-From: Jason Yan <yanaijie@huawei.com> 
-Sent: Monday, April 13, 2020 7:32 AM
-To: Moore, Robert <robert.moore@intel.com>; Kaneda, Erik <erik.kaneda@intel.com>; Wysocki, Rafael J <rafael.j.wysocki@intel.com>; lenb@kernel.org; linux-acpi@vger.kernel.org; devel@acpica.org; linux-kernel@vger.kernel.org
-Cc: Jason Yan <yanaijie@huawei.com>
-Subject: [PATCH] ACPICA: Use ARRAY_SIZE instead of hardcoded siz
-
-Fix the following coccicheck warning:
-
-./drivers/acpi/acpica/rsdumpinfo.c:18:48-49: WARNING: Use ARRAY_SIZE
-./drivers/acpi/acpica/rsdumpinfo.c:18:48-49: WARNING: Use ARRAY_SIZE
-./drivers/acpi/acpica/rsdumpinfo.c:18:48-49: WARNING: Use ARRAY_SIZE
-./drivers/acpi/acpica/rsdumpinfo.c:18:48-49: WARNING: Use ARRAY_SIZE
-./drivers/acpi/acpica/rsdumpinfo.c:18:48-49: WARNING: Use ARRAY_SIZE
-./drivers/acpi/acpica/rsdumpinfo.c:18:48-49: WARNING: Use ARRAY_SIZE
-./drivers/acpi/acpica/rsdumpinfo.c:18:48-49: WARNING: Use ARRAY_SIZE
-
-Signed-off-by: Jason Yan <yanaijie@huawei.com>
----
- drivers/acpi/acpica/rsdumpinfo.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/acpi/acpica/rsdumpinfo.c b/drivers/acpi/acpica/rsdumpinfo.c
-index cafa8134b4c6..f1ba4cd8080f 100644
---- a/drivers/acpi/acpica/rsdumpinfo.c
-+++ b/drivers/acpi/acpica/rsdumpinfo.c
-@@ -15,7 +15,7 @@ ACPI_MODULE_NAME("rsdumpinfo")  #if defined(ACPI_DEBUG_OUTPUT) || defined(ACPI_DISASSEMBLER) || defined(ACPI_DEBUGGER)
- #define ACPI_RSD_OFFSET(f)          (u8) ACPI_OFFSET (union acpi_resource_data,f)
- #define ACPI_PRT_OFFSET(f)          (u8) ACPI_OFFSET (struct acpi_pci_routing_table,f)
--#define ACPI_RSD_TABLE_SIZE(name)   (sizeof(name) / sizeof (struct acpi_rsdump_info))
-+#define ACPI_RSD_TABLE_SIZE(name)   ARRAY_SIZE(name)
- /*******************************************************************************
-  *
-  * Resource Descriptor info tables
---
-2.21.1
+> ---
+>  drivers/acpi/acpica/exfield.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/acpi/acpica/exfield.c b/drivers/acpi/acpica/exfield.c
+> index e85eb31e5075..3323a2ba6a31 100644
+> --- a/drivers/acpi/acpica/exfield.c
+> +++ b/drivers/acpi/acpica/exfield.c
+> @@ -22,7 +22,7 @@ ACPI_MODULE_NAME("exfield")
+>   */
+>  #define ACPI_INVALID_PROTOCOL_ID        0x80
+>  #define ACPI_MAX_PROTOCOL_ID            0x0F
+> -const u8 acpi_protocol_lengths[] = {
+> +static const u8 acpi_protocol_lengths[] = {
+>         ACPI_INVALID_PROTOCOL_ID,       /* 0 - reserved */
+>         ACPI_INVALID_PROTOCOL_ID,       /* 1 - reserved */
+>         0x00,                   /* 2 - ATTRIB_QUICK */
+> --
+> 2.21.1
+>
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
