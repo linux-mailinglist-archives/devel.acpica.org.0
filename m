@@ -2,50 +2,53 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 324941D888B
-	for <lists+devel-acpica@lfdr.de>; Mon, 18 May 2020 21:56:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id ADA7C1D944C
+	for <lists+devel-acpica@lfdr.de>; Tue, 19 May 2020 12:25:29 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id BE20F11D51F72;
-	Mon, 18 May 2020 12:52:49 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.43; helo=mga05.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	by ml01.01.org (Postfix) with ESMTP id 3FA1C11EC9661;
+	Tue, 19 May 2020 03:22:11 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.210.65; helo=mail-ot1-f65.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-ot1-f65.google.com (mail-ot1-f65.google.com [209.85.210.65])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id C3AF011D51F70
-	for <devel@acpica.org>; Mon, 18 May 2020 12:52:46 -0700 (PDT)
-IronPort-SDR: tj1dmBUWhauEl9Fv8sOaTnnBWpAC8tnCm7x1Mnd1+0s1UXsLEdqWozxnQxciNdnfbCk4APGXKH
- 2xef9nAgDChg==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 May 2020 12:55:58 -0700
-IronPort-SDR: pS1ePkmo+FQeU5Nb9ddkZ3vUqdn/wx31m7W6rvZwl7KFhZm/P+4fJJpJ+nRpptDMWb+EMi+B9l
- VpzrAvfurJFg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.73,407,1583222400";
-   d="scan'208";a="253006253"
-Received: from lkp-server01.sh.intel.com (HELO lkp-server01) ([10.239.97.150])
-  by orsmga007.jf.intel.com with ESMTP; 18 May 2020 12:55:56 -0700
-Received: from kbuild by lkp-server01 with local (Exim 4.89)
-	(envelope-from <lkp@intel.com>)
-	id 1jalrf-000AhL-UL; Tue, 19 May 2020 03:55:55 +0800
-Date: Tue, 19 May 2020 03:55:39 +0800
-From: kbuild test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <5ec2e83b.FIdYw1WRguiceYx+%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTPS id 851AA11EC965F
+	for <devel@acpica.org>; Tue, 19 May 2020 03:22:09 -0700 (PDT)
+Received: by mail-ot1-f65.google.com with SMTP id 63so10678422oto.8
+        for <devel@acpica.org>; Tue, 19 May 2020 03:25:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=eV7W0QRQXtndP6jkP/fVWb+3f6ZswnL5HLdjdhMzchY=;
+        b=GBsPVuf08fzEbHuO7ymoYxIwPf6Qa/9Xcb6klnvaIKjr6iwRqhvtJ24RCQQ5jqhTic
+         3aVxSazPMqMwXvWpeIk/GfQOk1kEgug3UZPlBvh6ouL7+LuaP2IJgpT+X+Ib55o0PzBv
+         dIDu6sS32HuBLi9QtLe3OixAJZ0FQdkynDXVDJDPzWoaG5ihw1ebTqqJHfFRpEqboLmR
+         i4xRgL6Ykhge8XuHnN7J0vJBA94aMxCJtM9/wxOmVJvlTMV7yjW3zPghRE3mls0/BR25
+         UmRDeGewe3G4Sx1fIBfSqZ7SI5sSBEKDmI3uX3d1lcRt4RxTPM8/cbeQJQW6m3KbWPJR
+         s3Kg==
+X-Gm-Message-State: AOAM5316yYy+NK7tvAOHjO6v1DuwBo8c+G6+JsHmB+gme/DLVRFc4qTq
+	Q+FX/wY6xVYLjnpqQ2eox/J7mHtUNxGcvqvyDWM=
+X-Google-Smtp-Source: ABdhPJxsHZmJ0GxGhgBhGR2E78WtzR03gWHvv1HislPOLfyFU37t73pV2JWpfKyHtneguOkz8Su1AOTRYH864ZCfDwc=
+X-Received: by 2002:a9d:3d05:: with SMTP id a5mr4477701otc.262.1589883925192;
+ Tue, 19 May 2020 03:25:25 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID-Hash: OG4DTXFZ4LKDPGQDQFMP7FY5DB4WSKHO
-X-Message-ID-Hash: OG4DTXFZ4LKDPGQDQFMP7FY5DB4WSKHO
-X-MailFrom: lkp@intel.com
+References: <20200518222722.GA7791@embeddedor>
+In-Reply-To: <20200518222722.GA7791@embeddedor>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Tue, 19 May 2020 12:25:13 +0200
+Message-ID: <CAJZ5v0goZpvRQ6du214FqvFNQnqZHR9-kz=WhEgRsMJ3Zx0WiQ@mail.gmail.com>
+To: "Gustavo A. R. Silva" <gustavoars@kernel.org>
+Message-ID-Hash: CRVWMFNYPHMRSRUCEQK64XTRCTE4VCJ2
+X-Message-ID-Hash: CRVWMFNYPHMRSRUCEQK64XTRCTE4VCJ2
+X-MailFrom: rjwysocki@gmail.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+CC: Erik Kaneda <erik.kaneda@intel.com>, "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, "Gustavo A. R. Silva" <gustavo@embeddedor.com>, Kees Cook <keescook@chromium.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS c28a27fcb43003e1f9b9e12e7e2cdb9678f0d3be
+Subject: [Devel] Re: [PATCH] ACPICA: Replace one-element array and use struct_size() helper
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/OG4DTXFZ4LKDPGQDQFMP7FY5DB4WSKHO/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/CRVWMFNYPHMRSRUCEQK64XTRCTE4VCJ2/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -54,125 +57,89 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git  bleeding-edge
-branch HEAD: c28a27fcb43003e1f9b9e12e7e2cdb9678f0d3be  Merge branch 'acpi-pmic' into bleeding-edge
+On Tue, May 19, 2020 at 12:22 AM Gustavo A. R. Silva
+<gustavoars@kernel.org> wrote:
+>
+> The current codebase makes use of one-element arrays in the following
+> form:
+>
+> struct something {
+>     int length;
+>     u8 data[1];
+> };
+>
+> struct something *instance;
+>
+> instance = kmalloc(sizeof(*instance) + size, GFP_KERNEL);
+> instance->length = size;
+> memcpy(instance->data, source, size);
+>
+> but the preferred mechanism to declare variable-length types such as
+> these ones is a flexible array member[1][2], introduced in C99:
+>
+> struct foo {
+>         int stuff;
+>         struct boo array[];
+> };
+>
+> By making use of the mechanism above, we will get a compiler warning
+> in case the flexible array does not occur last in the structure, which
+> will help us prevent some kind of undefined behavior bugs from being
+> inadvertently introduced[3] to the codebase from now on.
 
-elapsed time: 512m
+However, the ACPICA code in the kernel comes from an external project
+and changes of this type are generally not applicable to it unless
+accepted upstream.
 
-configs tested: 104
-configs skipped: 1
+I'll let Erik and Bob take over.
 
-The following configs have been built successfully.
-More configs may be tested in the coming days.
-
-arm64                            allyesconfig
-arm64                               defconfig
-arm64                            allmodconfig
-arm64                             allnoconfig
-arm                                 defconfig
-arm                              allyesconfig
-arm                              allmodconfig
-arm                               allnoconfig
-sparc                            allyesconfig
-mips                             allyesconfig
-sh                   secureedge5410_defconfig
-sh                        apsh4ad0a_defconfig
-sh                                  defconfig
-mips                          rm200_defconfig
-mips                     loongson1c_defconfig
-alpha                               defconfig
-arm                          imote2_defconfig
-i386                             allyesconfig
-i386                                defconfig
-i386                              debian-10.3
-i386                              allnoconfig
-ia64                             allmodconfig
-ia64                                defconfig
-ia64                              allnoconfig
-ia64                             allyesconfig
-m68k                             allmodconfig
-m68k                              allnoconfig
-m68k                           sun3_defconfig
-m68k                                defconfig
-m68k                             allyesconfig
-nds32                               defconfig
-nds32                             allnoconfig
-csky                             allyesconfig
-csky                                defconfig
-alpha                            allyesconfig
-xtensa                           allyesconfig
-h8300                            allyesconfig
-h8300                            allmodconfig
-xtensa                              defconfig
-arc                                 defconfig
-arc                              allyesconfig
-sh                               allmodconfig
-sh                                allnoconfig
-microblaze                        allnoconfig
-nios2                               defconfig
-nios2                            allyesconfig
-openrisc                            defconfig
-c6x                              allyesconfig
-c6x                               allnoconfig
-openrisc                         allyesconfig
-mips                              allnoconfig
-mips                             allmodconfig
-parisc                            allnoconfig
-parisc                              defconfig
-parisc                           allyesconfig
-parisc                           allmodconfig
-powerpc                             defconfig
-powerpc                          allyesconfig
-powerpc                          rhel-kconfig
-powerpc                          allmodconfig
-powerpc                           allnoconfig
-i386                 randconfig-a006-20200518
-i386                 randconfig-a005-20200518
-i386                 randconfig-a001-20200518
-i386                 randconfig-a003-20200518
-i386                 randconfig-a004-20200518
-i386                 randconfig-a002-20200518
-x86_64               randconfig-a016-20200518
-x86_64               randconfig-a012-20200518
-x86_64               randconfig-a015-20200518
-x86_64               randconfig-a013-20200518
-x86_64               randconfig-a011-20200518
-x86_64               randconfig-a014-20200518
-i386                 randconfig-a012-20200518
-i386                 randconfig-a014-20200518
-i386                 randconfig-a016-20200518
-i386                 randconfig-a011-20200518
-i386                 randconfig-a015-20200518
-i386                 randconfig-a013-20200518
-riscv                            allyesconfig
-riscv                             allnoconfig
-riscv                               defconfig
-riscv                            allmodconfig
-s390                             allyesconfig
-s390                              allnoconfig
-s390                             allmodconfig
-s390                                defconfig
-x86_64                              defconfig
-sparc                               defconfig
-sparc64                             defconfig
-sparc64                           allnoconfig
-sparc64                          allyesconfig
-sparc64                          allmodconfig
-um                               allmodconfig
-um                                allnoconfig
-um                               allyesconfig
-um                                  defconfig
-x86_64                                   rhel
-x86_64                               rhel-7.6
-x86_64                    rhel-7.6-kselftests
-x86_64                         rhel-7.2-clear
-x86_64                                    lkp
-x86_64                              fedora-25
-x86_64                                  kexec
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+> Also, make use of the new struct_size() helper to properly calculate the
+> size of struct acpi_pnp_device_id_list.
+>
+> This issue was found with the help of Coccinellea and, audited and
+> fixed _manually_.
+>
+> [1] https://gcc.gnu.org/onlinedocs/gcc/Zero-Length.html
+> [2] https://github.com/KSPP/linux/issues/21
+> [3] commit 76497732932f ("cxgb3/l2t: Fix undefined behaviour")
+>
+> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+> ---
+>  drivers/acpi/acpica/utids.c | 4 +---
+>  include/acpi/actypes.h      | 2 +-
+>  2 files changed, 2 insertions(+), 4 deletions(-)
+>
+> diff --git a/drivers/acpi/acpica/utids.c b/drivers/acpi/acpica/utids.c
+> index 3bb06935a2ad3..c2f819a39424a 100644
+> --- a/drivers/acpi/acpica/utids.c
+> +++ b/drivers/acpi/acpica/utids.c
+> @@ -262,9 +262,7 @@ acpi_ut_execute_CID(struct acpi_namespace_node *device_node,
+>          * 2) Size of the CID PNP_DEVICE_ID array +
+>          * 3) Size of the actual CID strings
+>          */
+> -       cid_list_size = sizeof(struct acpi_pnp_device_id_list) +
+> -           ((count - 1) * sizeof(struct acpi_pnp_device_id)) +
+> -           string_area_size;
+> +       cid_list_size = struct_size(cid_list, ids, count) + string_area_size;
+>
+>         cid_list = ACPI_ALLOCATE_ZEROED(cid_list_size);
+>         if (!cid_list) {
+> diff --git a/include/acpi/actypes.h b/include/acpi/actypes.h
+> index 4defed58ea338..c7bcda0ad366a 100644
+> --- a/include/acpi/actypes.h
+> +++ b/include/acpi/actypes.h
+> @@ -1145,7 +1145,7 @@ struct acpi_pnp_device_id {
+>  struct acpi_pnp_device_id_list {
+>         u32 count;              /* Number of IDs in Ids array */
+>         u32 list_size;          /* Size of list, including ID strings */
+> -       struct acpi_pnp_device_id ids[1];       /* ID array */
+> +       struct acpi_pnp_device_id ids[];        /* ID array */
+>  };
+>
+>  /*
+> --
+> 2.26.2
+>
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
