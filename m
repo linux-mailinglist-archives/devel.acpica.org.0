@@ -1,54 +1,54 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 063C120ABDB
-	for <lists+devel-acpica@lfdr.de>; Fri, 26 Jun 2020 07:32:10 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [198.145.21.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id E88B520C0DA
+	for <lists+devel-acpica@lfdr.de>; Sat, 27 Jun 2020 12:53:13 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 85D4E1103E37D;
-	Thu, 25 Jun 2020 22:32:08 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.100; helo=mga07.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+	by ml01.01.org (Postfix) with ESMTP id 7FDAD11043C26;
+	Sat, 27 Jun 2020 03:53:12 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.136; helo=mga12.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id C2AB911022326
-	for <devel@acpica.org>; Thu, 25 Jun 2020 22:32:05 -0700 (PDT)
-IronPort-SDR: quI6yzDHs/maWNMt4JLQ2mJ8EAEV5IPDusPMsNSNGvJXFK2ORPp7eh8870l+O2svHEjIqW9zqw
- 8/HJl5C+q08Q==
-X-IronPort-AV: E=McAfee;i="6000,8403,9663"; a="210281003"
-X-IronPort-AV: E=Sophos;i="5.75,282,1589266800";
-   d="scan'208";a="210281003"
+	by ml01.01.org (Postfix) with ESMTPS id 5F61B11022297
+	for <devel@acpica.org>; Sat, 27 Jun 2020 03:53:08 -0700 (PDT)
+IronPort-SDR: 3HC7/+B+7xojl5V+6e9CbzfqgWC5MAe+g+5YDifuZse2dMQyuEw3RfdtUxWZqsBlhQqm3ZpgYV
+ CF3aJ+jDCIjQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9664"; a="125288428"
+X-IronPort-AV: E=Sophos;i="5.75,287,1589266800";
+   d="scan'208";a="125288428"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jun 2020 22:32:05 -0700
-IronPort-SDR: D2oUEQTjKhFXqepQrh2ZwwWJ6JzrUV9y2dS2QLAWsHpg1ClBuTOROWL8ZzWIyFZJcSx1FdZPvw
- MZHacCPimoHg==
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2020 03:53:08 -0700
+IronPort-SDR: LRH24RGf0IvBIgxxvIRd47KLMWG8nNiDgNSktN67AIyc+A9iz2vfzpWL6JgOCqf9O2418vabXP
+ WQozxuo+35Yw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.75,282,1589266800";
-   d="scan'208";a="319928074"
+X-IronPort-AV: E=Sophos;i="5.75,287,1589266800";
+   d="scan'208";a="320222964"
 Received: from lkp-server01.sh.intel.com (HELO 538b5e3c8319) ([10.239.97.150])
-  by FMSMGA003.fm.intel.com with ESMTP; 25 Jun 2020 22:32:03 -0700
+  by FMSMGA003.fm.intel.com with ESMTP; 27 Jun 2020 03:53:06 -0700
 Received: from kbuild by 538b5e3c8319 with local (Exim 4.92)
 	(envelope-from <lkp@intel.com>)
-	id 1jogy2-00021C-Kf; Fri, 26 Jun 2020 05:32:02 +0000
-Date: Fri, 26 Jun 2020 13:31:20 +0800
+	id 1jp8SI-0002lV-9j; Sat, 27 Jun 2020 10:53:06 +0000
+Date: Sat, 27 Jun 2020 18:52:40 +0800
 From: kernel test robot <lkp@intel.com>
 To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <5ef58828.3ocdG/pko47b5Xk2%lkp@intel.com>
+Message-ID: <5ef724f8.RWOtu3miOLos04MU%lkp@intel.com>
 User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-Message-ID-Hash: WHPLVY345XAWY34GY7FSOXFIULVYBQWO
-X-Message-ID-Hash: WHPLVY345XAWY34GY7FSOXFIULVYBQWO
+Message-ID-Hash: T2P35FYKFLUFA4SFZ32M34R7D3I4ODE3
+X-Message-ID-Hash: T2P35FYKFLUFA4SFZ32M34R7D3I4ODE3
 X-MailFrom: lkp@intel.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
 CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS b3cad17e9253db657cacf38bedf70bbac8b542c3
+Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS ab41a33191ea4f1ce5834f2b776988867dfad807
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/WHPLVY345XAWY34GY7FSOXFIULVYBQWO/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/T2P35FYKFLUFA4SFZ32M34R7D3I4ODE3/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -58,36 +58,35 @@ Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
 tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git  bleeding-edge
-branch HEAD: b3cad17e9253db657cacf38bedf70bbac8b542c3  Merge branch 'acpi-dptf' into bleeding-edge
+branch HEAD: ab41a33191ea4f1ce5834f2b776988867dfad807  Merge branch 'acpi-pci' into bleeding-edge
 
-elapsed time: 723m
+elapsed time: 722m
 
-configs tested: 109
-configs skipped: 1
+configs tested: 108
+configs skipped: 3
 
 The following configs have been built successfully.
 More configs may be tested in the coming days.
 
-arm                                 defconfig
-arm                              allyesconfig
-arm                              allmodconfig
-arm                               allnoconfig
 arm64                            allyesconfig
 arm64                               defconfig
 arm64                            allmodconfig
 arm64                             allnoconfig
-arm                       mainstone_defconfig
-arm                          moxart_defconfig
-m68k                            q40_defconfig
-sh                          sdk7786_defconfig
-s390                              allnoconfig
-arm                            mps2_defconfig
-powerpc                  mpc885_ads_defconfig
-sh                        sh7763rdp_defconfig
-c6x                        evmc6472_defconfig
-riscv                          rv32_defconfig
-arm                            lart_defconfig
+arm                                 defconfig
+arm                              allyesconfig
+arm                              allmodconfig
+arm                               allnoconfig
+sh                           se7751_defconfig
+arm                       imx_v6_v7_defconfig
+arm                            xcep_defconfig
+arm                      pxa255-idp_defconfig
+arm                          tango4_defconfig
+arm                             pxa_defconfig
+arm                         lpc18xx_defconfig
+mips                           ip27_defconfig
+arm                     eseries_pxa_defconfig
 mips                      loongson3_defconfig
+arm                            lart_defconfig
 i386                             allyesconfig
 i386                                defconfig
 i386                              debian-10.3
@@ -101,12 +100,6 @@ m68k                              allnoconfig
 m68k                           sun3_defconfig
 m68k                                defconfig
 m68k                             allyesconfig
-nios2                               defconfig
-nios2                            allyesconfig
-openrisc                            defconfig
-c6x                              allyesconfig
-c6x                               allnoconfig
-openrisc                         allyesconfig
 nds32                               defconfig
 nds32                             allnoconfig
 csky                             allyesconfig
@@ -122,6 +115,12 @@ arc                              allyesconfig
 sh                               allmodconfig
 sh                                allnoconfig
 microblaze                        allnoconfig
+nios2                               defconfig
+nios2                            allyesconfig
+openrisc                            defconfig
+c6x                              allyesconfig
+c6x                               allnoconfig
+openrisc                         allyesconfig
 mips                             allyesconfig
 mips                              allnoconfig
 mips                             allmodconfig
@@ -143,7 +142,6 @@ i386                 randconfig-a004-20200624
 i386                 randconfig-a013-20200624
 i386                 randconfig-a016-20200624
 i386                 randconfig-a012-20200624
-i386                 randconfig-a014-20200624
 i386                 randconfig-a011-20200624
 i386                 randconfig-a015-20200624
 x86_64               randconfig-a004-20200624
@@ -157,6 +155,7 @@ riscv                             allnoconfig
 riscv                               defconfig
 riscv                            allmodconfig
 s390                             allyesconfig
+s390                              allnoconfig
 s390                             allmodconfig
 s390                                defconfig
 sparc                            allyesconfig
