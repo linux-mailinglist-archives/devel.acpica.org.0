@@ -2,53 +2,53 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9CB3C2164EA
-	for <lists+devel-acpica@lfdr.de>; Tue,  7 Jul 2020 05:52:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0BD9921855A
+	for <lists+devel-acpica@lfdr.de>; Wed,  8 Jul 2020 12:59:01 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 3225011075BCD;
-	Mon,  6 Jul 2020 20:52:46 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.93; helo=mga11.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	by ml01.01.org (Postfix) with ESMTP id 9C649110F2E12;
+	Wed,  8 Jul 2020 03:58:59 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.167.195; helo=mail-oi1-f195.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-oi1-f195.google.com (mail-oi1-f195.google.com [209.85.167.195])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id E94D611075BCD
-	for <devel@acpica.org>; Mon,  6 Jul 2020 20:52:41 -0700 (PDT)
-IronPort-SDR: JxQHQP5vkAtT8MgD2nZ8q6HNMO6EqSnERrCHNQHprAZhZSoaslux6noE9aBoW5zMvWIzxadgn7
- 6V24DLQqvX6A==
-X-IronPort-AV: E=McAfee;i="6000,8403,9674"; a="145634794"
-X-IronPort-AV: E=Sophos;i="5.75,321,1589266800";
-   d="scan'208";a="145634794"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2020 20:52:41 -0700
-IronPort-SDR: OFKdln15oOCzq8KH+ug3baIAxqPziyNLGyQztjAU1JsF8jqfHiyC4mKCMArRvzwGjeGO67pQtZ
- y2rf5PaY5Hxw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.75,321,1589266800";
-   d="scan'208";a="315383285"
-Received: from lkp-server01.sh.intel.com (HELO f2047cb89c8e) ([10.239.97.150])
-  by fmsmga002.fm.intel.com with ESMTP; 06 Jul 2020 20:52:39 -0700
-Received: from kbuild by f2047cb89c8e with local (Exim 4.92)
-	(envelope-from <lkp@intel.com>)
-	id 1jseet-00003p-0T; Tue, 07 Jul 2020 03:52:39 +0000
-Date: Tue, 07 Jul 2020 11:52:23 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <5f03f177.LV42zFZYK5Z+70po%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTPS id 02088110E5FDC
+	for <devel@acpica.org>; Wed,  8 Jul 2020 03:58:57 -0700 (PDT)
+Received: by mail-oi1-f195.google.com with SMTP id k22so26114090oib.0
+        for <devel@acpica.org>; Wed, 08 Jul 2020 03:58:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Ma9ZJcX3rCASQ1Yers2il4SNeWPyd7g9t6DtIKiBr1U=;
+        b=SUcBQMaZSYPKlOV1eVcwHRIL2MmsFFPa16DdAPUA7O0k67YtMgqGBUWOUHW/SB7rgy
+         m5i9b3in9h5RwKPVdvlZT//7krGKwNWv+WAKk6mVRnlWUocZQHGyVBwSViUU8pZRaza8
+         ApCrUhohm5MOseUYtuATy4pJ0mURJPg2C6W29VyRcfGGeSW1VnxgAv6Ytoax9IbECXsI
+         o8lxs3ur3KBfsIwO5xX2DSEV45HtVDk7BrRlGPPNldiIgVZHG9sijTNAiW7vUy2Dq/tZ
+         N5ddBZXRUHTB0OMsLSUhsi5Kmdap2EmNgAw6HwhjSt6NHXEhIwaOsqsxDzY7nOmtrYuT
+         x3wA==
+X-Gm-Message-State: AOAM531u5ROP7Tc2VT3+mo2vVmTIbFHpnbixttKu9LQ/YpnSH7HDOXJt
+	Pt8v/9A2tbv52fBaAm0fzF3R8voP50cA+yBqfgs=
+X-Google-Smtp-Source: ABdhPJwEGUtyHaA88w/taqZov0miWMOkIlHqWfppH2+c5Ch8dK/EmDEKEBRA2C7pZBmW1k372KAZdtwcc6/iforzXjA=
+X-Received: by 2002:aca:f58a:: with SMTP id t132mr6405827oih.68.1594205936617;
+ Wed, 08 Jul 2020 03:58:56 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID-Hash: ZQWWXOL2UWKIJFYITJQ52RP6BIKJSZLH
-X-Message-ID-Hash: ZQWWXOL2UWKIJFYITJQ52RP6BIKJSZLH
-X-MailFrom: lkp@intel.com
+References: <20200707200716.GA4920@embeddedor>
+In-Reply-To: <20200707200716.GA4920@embeddedor>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Wed, 8 Jul 2020 12:58:44 +0200
+Message-ID: <CAJZ5v0iDz_EsrpdMQQDfaVC2orMQkEcubmR6-J6mvtrXmKXbRg@mail.gmail.com>
+To: "Gustavo A. R. Silva" <gustavoars@kernel.org>
+Message-ID-Hash: SQL7UWJXCADCUJ6JIZBHYLHLUN4FEECB
+X-Message-ID-Hash: SQL7UWJXCADCUJ6JIZBHYLHLUN4FEECB
+X-MailFrom: rjwysocki@gmail.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+CC: Erik Kaneda <erik.kaneda@intel.com>, "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS 676d4e00924541f08e01c361b75d67d5d8de01cd
+Subject: [Devel] Re: [PATCH][next] ACPICA: Use fallthrough pseudo-keyword
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/ZQWWXOL2UWKIJFYITJQ52RP6BIKJSZLH/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/SQL7UWJXCADCUJ6JIZBHYLHLUN4FEECB/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -57,133 +57,186 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git  bleeding-edge
-branch HEAD: 676d4e00924541f08e01c361b75d67d5d8de01cd  Merge branch 'acpi-mm' into bleeding-edge
+On Tue, Jul 7, 2020 at 10:01 PM Gustavo A. R. Silva
+<gustavoars@kernel.org> wrote:
+>
+> Replace the existing /* fall through */ comments and its variants with
+> the new pseudo-keyword macro fallthrough[1]. Also, remove unnecessary
+> fall-through markings when it is the case.
+>
+> [1] https://www.kernel.org/doc/html/latest/process/deprecated.html?highlight=fallthrough#implicit-switch-case-fall-through
+>
+> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-elapsed time: 725m
+I need to talk to Erik and Bob about this one.
 
-configs tested: 112
-configs skipped: 3
-
-The following configs have been built successfully.
-More configs may be tested in the coming days.
-
-arm                                 defconfig
-arm                              allyesconfig
-arm                              allmodconfig
-arm                               allnoconfig
-arm64                            allyesconfig
-arm64                               defconfig
-arm64                            allmodconfig
-arm64                             allnoconfig
-sh                                  defconfig
-arm                      tct_hammer_defconfig
-powerpc64                           defconfig
-sh                        dreamcast_defconfig
-arm                         orion5x_defconfig
-mips                           ip22_defconfig
-s390                          debug_defconfig
-c6x                        evmc6457_defconfig
-arm                          gemini_defconfig
-arm                         bcm2835_defconfig
-mips                          ath79_defconfig
-mips                 decstation_r4k_defconfig
-sh                           se7705_defconfig
-xtensa                          iss_defconfig
-i386                             allyesconfig
-i386                                defconfig
-i386                              debian-10.3
-i386                              allnoconfig
-ia64                             allmodconfig
-ia64                                defconfig
-ia64                              allnoconfig
-ia64                             allyesconfig
-m68k                             allmodconfig
-m68k                              allnoconfig
-m68k                           sun3_defconfig
-m68k                                defconfig
-m68k                             allyesconfig
-nds32                               defconfig
-nds32                             allnoconfig
-csky                             allyesconfig
-csky                                defconfig
-alpha                               defconfig
-alpha                            allyesconfig
-xtensa                           allyesconfig
-h8300                            allyesconfig
-h8300                            allmodconfig
-xtensa                              defconfig
-nios2                               defconfig
-nios2                            allyesconfig
-openrisc                            defconfig
-c6x                              allyesconfig
-c6x                               allnoconfig
-openrisc                         allyesconfig
-arc                                 defconfig
-arc                              allyesconfig
-sh                               allmodconfig
-sh                                allnoconfig
-microblaze                        allnoconfig
-mips                             allyesconfig
-mips                              allnoconfig
-mips                             allmodconfig
-parisc                            allnoconfig
-parisc                              defconfig
-parisc                           allyesconfig
-parisc                           allmodconfig
-powerpc                             defconfig
-powerpc                          allyesconfig
-powerpc                          rhel-kconfig
-powerpc                          allmodconfig
-powerpc                           allnoconfig
-i386                 randconfig-a001-20200706
-i386                 randconfig-a002-20200706
-i386                 randconfig-a006-20200706
-i386                 randconfig-a004-20200706
-i386                 randconfig-a005-20200706
-i386                 randconfig-a003-20200706
-i386                 randconfig-a011-20200707
-i386                 randconfig-a014-20200707
-i386                 randconfig-a015-20200707
-i386                 randconfig-a016-20200707
-i386                 randconfig-a012-20200707
-i386                 randconfig-a013-20200707
-x86_64               randconfig-a001-20200706
-x86_64               randconfig-a006-20200706
-x86_64               randconfig-a002-20200706
-x86_64               randconfig-a003-20200706
-x86_64               randconfig-a004-20200706
-x86_64               randconfig-a005-20200706
-riscv                            allyesconfig
-riscv                             allnoconfig
-riscv                               defconfig
-riscv                            allmodconfig
-s390                             allyesconfig
-s390                              allnoconfig
-s390                             allmodconfig
-s390                                defconfig
-sparc                            allyesconfig
-sparc                               defconfig
-sparc64                             defconfig
-sparc64                           allnoconfig
-sparc64                          allyesconfig
-sparc64                          allmodconfig
-um                               allmodconfig
-um                                allnoconfig
-um                               allyesconfig
-um                                  defconfig
-x86_64                               rhel-7.6
-x86_64                    rhel-7.6-kselftests
-x86_64                               rhel-8.3
-x86_64                                  kexec
-x86_64                                   rhel
-x86_64                         rhel-7.2-clear
-x86_64                                    lkp
-x86_64                              fedora-25
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+> ---
+>  drivers/acpi/acpica/dscontrol.c |    2 +-
+>  drivers/acpi/acpica/dswexec.c   |    3 +--
+>  drivers/acpi/acpica/dswload.c   |    2 +-
+>  drivers/acpi/acpica/dswload2.c  |    4 +---
+>  drivers/acpi/acpica/exfldio.c   |    2 +-
+>  drivers/acpi/acpica/exresop.c   |    4 ++--
+>  drivers/acpi/acpica/exstore.c   |    4 ++--
+>  drivers/acpi/acpica/hwgpe.c     |    3 +--
+>  drivers/acpi/acpica/utdelete.c  |    3 +--
+>  drivers/acpi/acpica/utprint.c   |    2 +-
+>  10 files changed, 12 insertions(+), 17 deletions(-)
+>
+> diff --git a/drivers/acpi/acpica/dscontrol.c b/drivers/acpi/acpica/dscontrol.c
+> index 4b5b6e859f62..134d53380663 100644
+> --- a/drivers/acpi/acpica/dscontrol.c
+> +++ b/drivers/acpi/acpica/dscontrol.c
+> @@ -62,7 +62,7 @@ acpi_ds_exec_begin_control_op(struct acpi_walk_state *walk_state,
+>                         }
+>                 }
+>
+> -               /*lint -fallthrough */
+> +               fallthrough;
+>
+>         case AML_IF_OP:
+>                 /*
+> diff --git a/drivers/acpi/acpica/dswexec.c b/drivers/acpi/acpica/dswexec.c
+> index 1d4f8c81028c..41f6cb61778a 100644
+> --- a/drivers/acpi/acpica/dswexec.c
+> +++ b/drivers/acpi/acpica/dswexec.c
+> @@ -598,8 +598,7 @@ acpi_status acpi_ds_exec_end_op(struct acpi_walk_state *walk_state)
+>                                         break;
+>                                 }
+>
+> -                               /* Fall through */
+> -                               /*lint -fallthrough */
+> +                               fallthrough;
+>
+>                         case AML_INT_EVAL_SUBTREE_OP:
+>
+> diff --git a/drivers/acpi/acpica/dswload.c b/drivers/acpi/acpica/dswload.c
+> index 27069325b6de..1d8789869dda 100644
+> --- a/drivers/acpi/acpica/dswload.c
+> +++ b/drivers/acpi/acpica/dswload.c
+> @@ -224,7 +224,7 @@ acpi_ds_load1_begin_op(struct acpi_walk_state *walk_state,
+>                                 break;
+>                         }
+>
+> -                       /*lint -fallthrough */
+> +                       fallthrough;
+>
+>                 default:
+>
+> diff --git a/drivers/acpi/acpica/dswload2.c b/drivers/acpi/acpica/dswload2.c
+> index edadbe146506..de367e8e4cf4 100644
+> --- a/drivers/acpi/acpica/dswload2.c
+> +++ b/drivers/acpi/acpica/dswload2.c
+> @@ -213,9 +213,7 @@ acpi_ds_load2_begin_op(struct acpi_walk_state *walk_state,
+>                              parse_flags & ACPI_PARSE_MODULE_LEVEL)) {
+>                                 break;
+>                         }
+> -
+> -                       /*lint -fallthrough */
+> -
+> +                       fallthrough;
+>                 default:
+>
+>                         /* All other types are an error */
+> diff --git a/drivers/acpi/acpica/exfldio.c b/drivers/acpi/acpica/exfldio.c
+> index ade35ff1c7ba..677ba3ab1482 100644
+> --- a/drivers/acpi/acpica/exfldio.c
+> +++ b/drivers/acpi/acpica/exfldio.c
+> @@ -434,7 +434,7 @@ acpi_ex_field_datum_io(union acpi_operand_object *obj_desc,
+>                  * region_field case and write the datum to the Operation Region
+>                  */
+>
+> -               /*lint -fallthrough */
+> +               fallthrough;
+>
+>         case ACPI_TYPE_LOCAL_REGION_FIELD:
+>                 /*
+> diff --git a/drivers/acpi/acpica/exresop.c b/drivers/acpi/acpica/exresop.c
+> index 4d1b22971d58..7c8676adcf43 100644
+> --- a/drivers/acpi/acpica/exresop.c
+> +++ b/drivers/acpi/acpica/exresop.c
+> @@ -198,7 +198,7 @@ acpi_ex_resolve_operands(u16 opcode,
+>
+>                                         target_op = AML_DEBUG_OP;
+>
+> -                                       /*lint -fallthrough */
+> +                                       fallthrough;
+>
+>                                 case ACPI_REFCLASS_ARG:
+>                                 case ACPI_REFCLASS_LOCAL:
+> @@ -264,7 +264,7 @@ acpi_ex_resolve_operands(u16 opcode,
+>                          * Else not a string - fall through to the normal Reference
+>                          * case below
+>                          */
+> -                       /*lint -fallthrough */
+> +                       fallthrough;
+>
+>                 case ARGI_REFERENCE:    /* References: */
+>                 case ARGI_INTEGER_REF:
+> diff --git a/drivers/acpi/acpica/exstore.c b/drivers/acpi/acpica/exstore.c
+> index 3adc0a29d890..fcf8dff56c5b 100644
+> --- a/drivers/acpi/acpica/exstore.c
+> +++ b/drivers/acpi/acpica/exstore.c
+> @@ -96,7 +96,7 @@ acpi_ex_store(union acpi_operand_object *source_desc,
+>                         return_ACPI_STATUS(AE_OK);
+>                 }
+>
+> -               /*lint -fallthrough */
+> +               fallthrough;
+>
+>         default:
+>
+> @@ -422,7 +422,7 @@ acpi_ex_store_object_to_node(union acpi_operand_object *source_desc,
+>                                 break;
+>                         }
+>
+> -                       /* Fallthrough */
+> +                       fallthrough;
+>
+>                 case ACPI_TYPE_DEVICE:
+>                 case ACPI_TYPE_EVENT:
+> diff --git a/drivers/acpi/acpica/hwgpe.c b/drivers/acpi/acpica/hwgpe.c
+> index 49c46d4dd070..19d574f64c78 100644
+> --- a/drivers/acpi/acpica/hwgpe.c
+> +++ b/drivers/acpi/acpica/hwgpe.c
+> @@ -95,8 +95,7 @@ acpi_hw_low_set_gpe(struct acpi_gpe_event_info *gpe_event_info, u32 action)
+>                 if (!(register_bit & gpe_register_info->enable_mask)) {
+>                         return (AE_BAD_PARAMETER);
+>                 }
+> -
+> -               /*lint -fallthrough */
+> +               fallthrough;
+>
+>         case ACPI_GPE_ENABLE:
+>
+> diff --git a/drivers/acpi/acpica/utdelete.c b/drivers/acpi/acpica/utdelete.c
+> index c365faf4e6cd..6db09eb9d257 100644
+> --- a/drivers/acpi/acpica/utdelete.c
+> +++ b/drivers/acpi/acpica/utdelete.c
+> @@ -111,8 +111,7 @@ static void acpi_ut_delete_internal_obj(union acpi_operand_object *object)
+>                         (void)acpi_ev_delete_gpe_block(object->device.
+>                                                        gpe_block);
+>                 }
+> -
+> -               /*lint -fallthrough */
+> +               fallthrough;
+>
+>         case ACPI_TYPE_PROCESSOR:
+>         case ACPI_TYPE_THERMAL:
+> diff --git a/drivers/acpi/acpica/utprint.c b/drivers/acpi/acpica/utprint.c
+> index 681c11f4af4e..f7e43baf5ff2 100644
+> --- a/drivers/acpi/acpica/utprint.c
+> +++ b/drivers/acpi/acpica/utprint.c
+> @@ -475,7 +475,7 @@ int vsnprintf(char *string, acpi_size size, const char *format, va_list args)
+>                 case 'X':
+>
+>                         type |= ACPI_FORMAT_UPPER;
+> -                       /* FALLTHROUGH */
+> +                       fallthrough;
+>
+>                 case 'x':
+>
+>
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
