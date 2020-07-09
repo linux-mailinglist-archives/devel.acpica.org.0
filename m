@@ -1,242 +1,175 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0BD9921855A
-	for <lists+devel-acpica@lfdr.de>; Wed,  8 Jul 2020 12:59:01 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A75D221A271
+	for <lists+devel-acpica@lfdr.de>; Thu,  9 Jul 2020 16:49:27 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 9C649110F2E12;
-	Wed,  8 Jul 2020 03:58:59 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.167.195; helo=mail-oi1-f195.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-oi1-f195.google.com (mail-oi1-f195.google.com [209.85.167.195])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	by ml01.01.org (Postfix) with ESMTP id 39EAE11202ACA;
+	Thu,  9 Jul 2020 07:49:26 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.43; helo=mga05.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 02088110E5FDC
-	for <devel@acpica.org>; Wed,  8 Jul 2020 03:58:57 -0700 (PDT)
-Received: by mail-oi1-f195.google.com with SMTP id k22so26114090oib.0
-        for <devel@acpica.org>; Wed, 08 Jul 2020 03:58:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Ma9ZJcX3rCASQ1Yers2il4SNeWPyd7g9t6DtIKiBr1U=;
-        b=SUcBQMaZSYPKlOV1eVcwHRIL2MmsFFPa16DdAPUA7O0k67YtMgqGBUWOUHW/SB7rgy
-         m5i9b3in9h5RwKPVdvlZT//7krGKwNWv+WAKk6mVRnlWUocZQHGyVBwSViUU8pZRaza8
-         ApCrUhohm5MOseUYtuATy4pJ0mURJPg2C6W29VyRcfGGeSW1VnxgAv6Ytoax9IbECXsI
-         o8lxs3ur3KBfsIwO5xX2DSEV45HtVDk7BrRlGPPNldiIgVZHG9sijTNAiW7vUy2Dq/tZ
-         N5ddBZXRUHTB0OMsLSUhsi5Kmdap2EmNgAw6HwhjSt6NHXEhIwaOsqsxDzY7nOmtrYuT
-         x3wA==
-X-Gm-Message-State: AOAM531u5ROP7Tc2VT3+mo2vVmTIbFHpnbixttKu9LQ/YpnSH7HDOXJt
-	Pt8v/9A2tbv52fBaAm0fzF3R8voP50cA+yBqfgs=
-X-Google-Smtp-Source: ABdhPJwEGUtyHaA88w/taqZov0miWMOkIlHqWfppH2+c5Ch8dK/EmDEKEBRA2C7pZBmW1k372KAZdtwcc6/iforzXjA=
-X-Received: by 2002:aca:f58a:: with SMTP id t132mr6405827oih.68.1594205936617;
- Wed, 08 Jul 2020 03:58:56 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTPS id A4058111F370F
+	for <devel@acpica.org>; Thu,  9 Jul 2020 07:49:23 -0700 (PDT)
+IronPort-SDR: 7Aw0v2M8uZ7GkwVG3UjVzNBr14yNQuR9yBFdMn5VDVFjXRCDrEudAqkcZqyKu4pMPZQbTWU4AI
+ CP7aSybGoFAA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9677"; a="232881396"
+X-IronPort-AV: E=Sophos;i="5.75,331,1589266800";
+   d="scan'208";a="232881396"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jul 2020 07:49:22 -0700
+IronPort-SDR: lxdIzXj9YnhWi3X5lr9/yNT/LdwZHedoQWVxV5oF67eZ6OIUwOXCQaYZFDYwcPvtFpcFhRkYTV
+ bJveNgpJdykQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.75,331,1589266800";
+   d="scan'208";a="324243209"
+Received: from fmsmsx105.amr.corp.intel.com ([10.18.124.203])
+  by orsmga007.jf.intel.com with ESMTP; 09 Jul 2020 07:49:21 -0700
+Received: from fmsmsx112.amr.corp.intel.com (10.18.116.6) by
+ FMSMSX105.amr.corp.intel.com (10.18.124.203) with Microsoft SMTP Server (TLS)
+ id 14.3.439.0; Thu, 9 Jul 2020 07:49:21 -0700
+Received: from FMSEDG002.ED.cps.intel.com (10.1.192.134) by
+ FMSMSX112.amr.corp.intel.com (10.18.116.6) with Microsoft SMTP Server (TLS)
+ id 14.3.439.0; Thu, 9 Jul 2020 07:49:21 -0700
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (104.47.70.109)
+ by edgegateway.intel.com (192.55.55.69) with Microsoft SMTP Server (TLS) id
+ 14.3.439.0; Thu, 9 Jul 2020 07:49:21 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=jHWqk1CWflXmbM3XkubB1C5cRopgJEdGNu8O+s/V1KTOvA5S8ayH5NUpnIkhUUd9FKL9YhppIKm9E6GtSkuK9qahPX+cUljSciOVSeVYv0p+TnGYXFD4ET904mnwbLWwEO7ABc1NGyAzbbP8XM3anOWqks2QFEHw1k18RGBBc/PVCAfSF+Fs1LDDJAcqqh36d+EKHQWMBHOTRQ7yafgSlidU7+FWPKxBw45/5ccDlj5n1fn3mEnOG4y3tXDZSU7kJ/jxUSmcfYsPtR7Z7N2y1LG5LickBmRsMY8Zu2vbalMVKoiUOb0mpaUy0GpIRDDCMLCNw1kmN8ngZ+7b9juHRQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=3olccjvRSAKD60SinJG/NJIaLCxpIzptIzOcaRIBwL4=;
+ b=dRZyNiXVr1160QDkQZXvr0KMh7XF64XZVF8yHbBsfaiftdLRjQSiWFn+juASqaBCmeKVwJlPEszKoSDDllgZKEarSjGRTlM7jaG+eClHuFqoC6FVgwbsW3+IfzleqDf8MLr7J1PviwrxMUxQ1omP4p9WTnD5/qEjfeyWr4oJFe8r70CtYzLeSEGBgfyWooKk7zqOBtuYbSBZjydvt0nIvuvTP+JGsQUgl7lDP0I3toZ5KlVTdblSTosJYaZ6zlJbESUXC0CMIdJHUiULowTbVhQDkmHEOTt/NN54rMhh2LhcVMmY9OJqLZH0Qdk0h8Vc0grofC/SP8O8WjAMkXJMzQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
+ s=selector2-intel-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=3olccjvRSAKD60SinJG/NJIaLCxpIzptIzOcaRIBwL4=;
+ b=zx/RNYiRqTzICUJ9yiDz22/mEuVxL2txZZAkfeZuP9IVw9dgg6UbjvFOVL5Zz2GPa1A/DjHwKqdLNr8qFe67rWUnlWxSRaLsGvmo9XKoHugf/p31BAqLDKMsYPHEEHTGQ0OoTytVBovNmMpSw734bx1wjqf1xW+rmjbtVcC5Ip8=
+Received: from BYAPR11MB3256.namprd11.prod.outlook.com (2603:10b6:a03:76::19)
+ by BY5PR11MB4226.namprd11.prod.outlook.com (2603:10b6:a03:1bf::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3174.20; Thu, 9 Jul
+ 2020 14:49:18 +0000
+Received: from BYAPR11MB3256.namprd11.prod.outlook.com
+ ([fe80::4ca7:fbfa:78bf:173c]) by BYAPR11MB3256.namprd11.prod.outlook.com
+ ([fe80::4ca7:fbfa:78bf:173c%4]) with mapi id 15.20.3174.021; Thu, 9 Jul 2020
+ 14:49:18 +0000
+From: "Moore, Robert" <robert.moore@intel.com>
+To: Xu Wang <vulab@iscas.ac.cn>, "Kaneda, Erik" <erik.kaneda@intel.com>,
+	"Wysocki, Rafael J" <rafael.j.wysocki@intel.com>, "lenb@kernel.org"
+	<lenb@kernel.org>, "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>,
+	"devel@acpica.org" <devel@acpica.org>
+Thread-Topic: [PATCH] service_layers: osunixmap: Remove unnecessary brackets
+ in acpi_os_map_memory()
+Thread-Index: AQHWVcgik7eppFgSsk2P33P93bkikKj/VH9g
+Date: Thu, 9 Jul 2020 14:49:17 +0000
+Message-ID: <BYAPR11MB3256999B714C7F5598E3213687640@BYAPR11MB3256.namprd11.prod.outlook.com>
+References: <20200709080806.14328-1-vulab@iscas.ac.cn>
+In-Reply-To: <20200709080806.14328-1-vulab@iscas.ac.cn>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+dlp-version: 11.2.0.6
+dlp-product: dlpe-windows
+dlp-reaction: no-action
+authentication-results: iscas.ac.cn; dkim=none (message not signed)
+ header.d=none;iscas.ac.cn; dmarc=none action=none header.from=intel.com;
+x-originating-ip: [134.134.136.194]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 1a90b89b-2804-463a-e887-08d8241741e0
+x-ms-traffictypediagnostic: BY5PR11MB4226:
+x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <BY5PR11MB422603A578C748BE8A494FE887640@BY5PR11MB4226.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:226;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: cnkkquuKdL2DidiZNAKx6SfiVtolNIYTO+nBjWHS65tfL0PzCJQGC8lffz6mZdp/0L6+3KbjnmmXoqnDzpR62z0D6r2weHXeuYzFO2C6i+tbWcA8w/+pA4wdmjdvpSs2xu/GM4VtX7SgMXaCOmdLQ9hJxe8m7+P3aHUiXaWROuR4GeRHu8RetW59bVw2g+yzIFQz9MGpm4WnD4a4t6N4APkLLI5BLRt/V9hcNq0HbWNNc1qtLuBTTR5X6gz1sSGSkbEVpv+gwLl0DlPLwiSfa/V0zy0y0wU1w0QbRXytPXt6/TpH9TDwpjpMWP0lEuK7FgkfWF/ciUQbYww1eRQPVA==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:(4636009)(376002)(396003)(39860400002)(346002)(366004)(136003)(66556008)(7696005)(55016002)(53546011)(6506007)(83380400001)(71200400001)(76116006)(66946007)(8936002)(66476007)(66446008)(64756008)(52536014)(186003)(9686003)(26005)(86362001)(316002)(8676002)(110136005)(5660300002)(4326008)(33656002)(478600001)(2906002);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata: pEFN4lx0BHc6r8UnsXZCn7BC03Wo4LIM3cd5q/JE9J3fL6TAVJytHX+yhKJJPgaDSewbfxOKaMfhWhMm9CplXSALeCMtwzfTXwSrLNBZHvATC8z9T9inNQ8W2fbSteU5KZMqHG0G+BQnk4PeKLjY1Oui4D6Ne7ODRM0shDGN6ngy2t0Fs/NV6MTlMDLG5Unb/z9jqVtcAACAxNdDeA94kqpZuU/buu6rRuu0VLcrplQ6lfRdBLMSKCQU2SHGFgSCxxBs4obPIkINnBjPH2AhOf1aUA+DFPs5RoyD0cJTszB6MUdZ0mS0awBr2t5Dt4aNGVdQ0Xcwq0Vp4LaqhFvkKSK9uHA0Neibz2Q6zmvDrkLj8x9rY2iqjRo0eSnywXgD23N4hgfKZVvHxyEq8hSWdOUJFHj9TKewTpmg2ma24m6vqhugng42neTC62WXw1SZUUOlsFN1RXhLBAtpVmXJoAbQuLSruGBI5rTP09jDC9qbyLV0P4LnYXNYJhppbDBZ
+Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
-References: <20200707200716.GA4920@embeddedor>
-In-Reply-To: <20200707200716.GA4920@embeddedor>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Wed, 8 Jul 2020 12:58:44 +0200
-Message-ID: <CAJZ5v0iDz_EsrpdMQQDfaVC2orMQkEcubmR6-J6mvtrXmKXbRg@mail.gmail.com>
-To: "Gustavo A. R. Silva" <gustavoars@kernel.org>
-Message-ID-Hash: SQL7UWJXCADCUJ6JIZBHYLHLUN4FEECB
-X-Message-ID-Hash: SQL7UWJXCADCUJ6JIZBHYLHLUN4FEECB
-X-MailFrom: rjwysocki@gmail.com
-X-Mailman-Rule-Hits: nonmember-moderation
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: Erik Kaneda <erik.kaneda@intel.com>, "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3256.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1a90b89b-2804-463a-e887-08d8241741e0
+X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Jul 2020 14:49:17.9150
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: /P2XI8ZSd8eJwQ6jOikF1ACRzSEjy9ceIh/scGWvJ8yIy6CZGaFUWpOvIgsZLa9ljjIl9WuVqA7i5e6E6xTaCQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR11MB4226
+X-OriginatorOrg: intel.com
+Message-ID-Hash: UEJJHI26ZPEPMEYRKZMEZOBN74V7763S
+X-Message-ID-Hash: UEJJHI26ZPEPMEYRKZMEZOBN74V7763S
+X-MailFrom: robert.moore@intel.com
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
+CC: "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH][next] ACPICA: Use fallthrough pseudo-keyword
+Subject: [Devel] Re: [PATCH] service_layers: osunixmap: Remove unnecessary brackets in acpi_os_map_memory()
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/SQL7UWJXCADCUJ6JIZBHYLHLUN4FEECB/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/UEJJHI26ZPEPMEYRKZMEZOBN74V7763S/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Tue, Jul 7, 2020 at 10:01 PM Gustavo A. R. Silva
-<gustavoars@kernel.org> wrote:
->
-> Replace the existing /* fall through */ comments and its variants with
-> the new pseudo-keyword macro fallthrough[1]. Also, remove unnecessary
-> fall-through markings when it is the case.
->
-> [1] https://www.kernel.org/doc/html/latest/process/deprecated.html?highlight=fallthrough#implicit-switch-case-fall-through
->
-> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+-		return (NULL);
++		return NULL;
 
-I need to talk to Erik and Bob about this one.
+This is the ACPICA coding standard, and it does not affect anything.
+Bob
 
-> ---
->  drivers/acpi/acpica/dscontrol.c |    2 +-
->  drivers/acpi/acpica/dswexec.c   |    3 +--
->  drivers/acpi/acpica/dswload.c   |    2 +-
->  drivers/acpi/acpica/dswload2.c  |    4 +---
->  drivers/acpi/acpica/exfldio.c   |    2 +-
->  drivers/acpi/acpica/exresop.c   |    4 ++--
->  drivers/acpi/acpica/exstore.c   |    4 ++--
->  drivers/acpi/acpica/hwgpe.c     |    3 +--
->  drivers/acpi/acpica/utdelete.c  |    3 +--
->  drivers/acpi/acpica/utprint.c   |    2 +-
->  10 files changed, 12 insertions(+), 17 deletions(-)
->
-> diff --git a/drivers/acpi/acpica/dscontrol.c b/drivers/acpi/acpica/dscontrol.c
-> index 4b5b6e859f62..134d53380663 100644
-> --- a/drivers/acpi/acpica/dscontrol.c
-> +++ b/drivers/acpi/acpica/dscontrol.c
-> @@ -62,7 +62,7 @@ acpi_ds_exec_begin_control_op(struct acpi_walk_state *walk_state,
->                         }
->                 }
->
-> -               /*lint -fallthrough */
-> +               fallthrough;
->
->         case AML_IF_OP:
->                 /*
-> diff --git a/drivers/acpi/acpica/dswexec.c b/drivers/acpi/acpica/dswexec.c
-> index 1d4f8c81028c..41f6cb61778a 100644
-> --- a/drivers/acpi/acpica/dswexec.c
-> +++ b/drivers/acpi/acpica/dswexec.c
-> @@ -598,8 +598,7 @@ acpi_status acpi_ds_exec_end_op(struct acpi_walk_state *walk_state)
->                                         break;
->                                 }
->
-> -                               /* Fall through */
-> -                               /*lint -fallthrough */
-> +                               fallthrough;
->
->                         case AML_INT_EVAL_SUBTREE_OP:
->
-> diff --git a/drivers/acpi/acpica/dswload.c b/drivers/acpi/acpica/dswload.c
-> index 27069325b6de..1d8789869dda 100644
-> --- a/drivers/acpi/acpica/dswload.c
-> +++ b/drivers/acpi/acpica/dswload.c
-> @@ -224,7 +224,7 @@ acpi_ds_load1_begin_op(struct acpi_walk_state *walk_state,
->                                 break;
->                         }
->
-> -                       /*lint -fallthrough */
-> +                       fallthrough;
->
->                 default:
->
-> diff --git a/drivers/acpi/acpica/dswload2.c b/drivers/acpi/acpica/dswload2.c
-> index edadbe146506..de367e8e4cf4 100644
-> --- a/drivers/acpi/acpica/dswload2.c
-> +++ b/drivers/acpi/acpica/dswload2.c
-> @@ -213,9 +213,7 @@ acpi_ds_load2_begin_op(struct acpi_walk_state *walk_state,
->                              parse_flags & ACPI_PARSE_MODULE_LEVEL)) {
->                                 break;
->                         }
-> -
-> -                       /*lint -fallthrough */
-> -
-> +                       fallthrough;
->                 default:
->
->                         /* All other types are an error */
-> diff --git a/drivers/acpi/acpica/exfldio.c b/drivers/acpi/acpica/exfldio.c
-> index ade35ff1c7ba..677ba3ab1482 100644
-> --- a/drivers/acpi/acpica/exfldio.c
-> +++ b/drivers/acpi/acpica/exfldio.c
-> @@ -434,7 +434,7 @@ acpi_ex_field_datum_io(union acpi_operand_object *obj_desc,
->                  * region_field case and write the datum to the Operation Region
->                  */
->
-> -               /*lint -fallthrough */
-> +               fallthrough;
->
->         case ACPI_TYPE_LOCAL_REGION_FIELD:
->                 /*
-> diff --git a/drivers/acpi/acpica/exresop.c b/drivers/acpi/acpica/exresop.c
-> index 4d1b22971d58..7c8676adcf43 100644
-> --- a/drivers/acpi/acpica/exresop.c
-> +++ b/drivers/acpi/acpica/exresop.c
-> @@ -198,7 +198,7 @@ acpi_ex_resolve_operands(u16 opcode,
->
->                                         target_op = AML_DEBUG_OP;
->
-> -                                       /*lint -fallthrough */
-> +                                       fallthrough;
->
->                                 case ACPI_REFCLASS_ARG:
->                                 case ACPI_REFCLASS_LOCAL:
-> @@ -264,7 +264,7 @@ acpi_ex_resolve_operands(u16 opcode,
->                          * Else not a string - fall through to the normal Reference
->                          * case below
->                          */
-> -                       /*lint -fallthrough */
-> +                       fallthrough;
->
->                 case ARGI_REFERENCE:    /* References: */
->                 case ARGI_INTEGER_REF:
-> diff --git a/drivers/acpi/acpica/exstore.c b/drivers/acpi/acpica/exstore.c
-> index 3adc0a29d890..fcf8dff56c5b 100644
-> --- a/drivers/acpi/acpica/exstore.c
-> +++ b/drivers/acpi/acpica/exstore.c
-> @@ -96,7 +96,7 @@ acpi_ex_store(union acpi_operand_object *source_desc,
->                         return_ACPI_STATUS(AE_OK);
->                 }
->
-> -               /*lint -fallthrough */
-> +               fallthrough;
->
->         default:
->
-> @@ -422,7 +422,7 @@ acpi_ex_store_object_to_node(union acpi_operand_object *source_desc,
->                                 break;
->                         }
->
-> -                       /* Fallthrough */
-> +                       fallthrough;
->
->                 case ACPI_TYPE_DEVICE:
->                 case ACPI_TYPE_EVENT:
-> diff --git a/drivers/acpi/acpica/hwgpe.c b/drivers/acpi/acpica/hwgpe.c
-> index 49c46d4dd070..19d574f64c78 100644
-> --- a/drivers/acpi/acpica/hwgpe.c
-> +++ b/drivers/acpi/acpica/hwgpe.c
-> @@ -95,8 +95,7 @@ acpi_hw_low_set_gpe(struct acpi_gpe_event_info *gpe_event_info, u32 action)
->                 if (!(register_bit & gpe_register_info->enable_mask)) {
->                         return (AE_BAD_PARAMETER);
->                 }
-> -
-> -               /*lint -fallthrough */
-> +               fallthrough;
->
->         case ACPI_GPE_ENABLE:
->
-> diff --git a/drivers/acpi/acpica/utdelete.c b/drivers/acpi/acpica/utdelete.c
-> index c365faf4e6cd..6db09eb9d257 100644
-> --- a/drivers/acpi/acpica/utdelete.c
-> +++ b/drivers/acpi/acpica/utdelete.c
-> @@ -111,8 +111,7 @@ static void acpi_ut_delete_internal_obj(union acpi_operand_object *object)
->                         (void)acpi_ev_delete_gpe_block(object->device.
->                                                        gpe_block);
->                 }
-> -
-> -               /*lint -fallthrough */
-> +               fallthrough;
->
->         case ACPI_TYPE_PROCESSOR:
->         case ACPI_TYPE_THERMAL:
-> diff --git a/drivers/acpi/acpica/utprint.c b/drivers/acpi/acpica/utprint.c
-> index 681c11f4af4e..f7e43baf5ff2 100644
-> --- a/drivers/acpi/acpica/utprint.c
-> +++ b/drivers/acpi/acpica/utprint.c
-> @@ -475,7 +475,7 @@ int vsnprintf(char *string, acpi_size size, const char *format, va_list args)
->                 case 'X':
->
->                         type |= ACPI_FORMAT_UPPER;
-> -                       /* FALLTHROUGH */
-> +                       fallthrough;
->
->                 case 'x':
->
->
+-----Original Message-----
+From: Xu Wang <vulab@iscas.ac.cn> 
+Sent: Thursday, July 09, 2020 1:08 AM
+To: Moore, Robert <robert.moore@intel.com>; Kaneda, Erik <erik.kaneda@intel.com>; Wysocki, Rafael J <rafael.j.wysocki@intel.com>; lenb@kernel.org; vulab@iscas.ac.cn; linux-acpi@vger.kernel.org; devel@acpica.org
+Cc: linux-kernel@vger.kernel.org
+Subject: [PATCH] service_layers: osunixmap: Remove unnecessary brackets in acpi_os_map_memory()
+
+Remove extra brackets.
+
+Signed-off-by: Xu Wang <vulab@iscas.ac.cn>
+---
+ tools/power/acpi/os_specific/service_layers/osunixmap.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/tools/power/acpi/os_specific/service_layers/osunixmap.c b/tools/power/acpi/os_specific/service_layers/osunixmap.c
+index c565546e85bc..52f3e70b5c81 100644
+--- a/tools/power/acpi/os_specific/service_layers/osunixmap.c
++++ b/tools/power/acpi/os_specific/service_layers/osunixmap.c
+@@ -70,7 +70,7 @@ void *acpi_os_map_memory(acpi_physical_address where, acpi_size length)
+ 	fd = open(SYSTEM_MEMORY, O_RDONLY | O_BINARY);
+ 	if (fd < 0) {
+ 		fprintf(stderr, "Cannot open %s\n", SYSTEM_MEMORY);
+-		return (NULL);
++		return NULL;
+ 	}
+ 
+ 	/* Align the offset to use mmap */
+@@ -85,7 +85,7 @@ void *acpi_os_map_memory(acpi_physical_address where, acpi_size length)
+ 	if (mapped_memory == MAP_FAILED) {
+ 		fprintf(stderr, "Cannot map %s\n", SYSTEM_MEMORY);
+ 		close(fd);
+-		return (NULL);
++		return NULL;
+ 	}
+ 
+ 	close(fd);
+-- 
+2.17.1
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
