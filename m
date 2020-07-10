@@ -2,174 +2,183 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A75D221A271
-	for <lists+devel-acpica@lfdr.de>; Thu,  9 Jul 2020 16:49:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 59DD021ACD7
+	for <lists+devel-acpica@lfdr.de>; Fri, 10 Jul 2020 04:03:57 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 39EAE11202ACA;
-	Thu,  9 Jul 2020 07:49:26 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.43; helo=mga05.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+	by ml01.01.org (Postfix) with ESMTP id 234DA11B4C833;
+	Thu,  9 Jul 2020 19:03:55 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.31; helo=mga06.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id A4058111F370F
-	for <devel@acpica.org>; Thu,  9 Jul 2020 07:49:23 -0700 (PDT)
-IronPort-SDR: 7Aw0v2M8uZ7GkwVG3UjVzNBr14yNQuR9yBFdMn5VDVFjXRCDrEudAqkcZqyKu4pMPZQbTWU4AI
- CP7aSybGoFAA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9677"; a="232881396"
-X-IronPort-AV: E=Sophos;i="5.75,331,1589266800";
-   d="scan'208";a="232881396"
+	by ml01.01.org (Postfix) with ESMTPS id 71EA411B4C830
+	for <devel@acpica.org>; Thu,  9 Jul 2020 19:03:52 -0700 (PDT)
+IronPort-SDR: 1Ehhp3l/soPxBBiIPRlFcHAsHtz5CgeSBQF0F51xFxnaSg4KI55ahhs57Cz2PGvJw7dlhviuw3
+ lS4ULDRrtryg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9677"; a="209668046"
+X-IronPort-AV: E=Sophos;i="5.75,334,1589266800";
+   d="scan'208";a="209668046"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jul 2020 07:49:22 -0700
-IronPort-SDR: lxdIzXj9YnhWi3X5lr9/yNT/LdwZHedoQWVxV5oF67eZ6OIUwOXCQaYZFDYwcPvtFpcFhRkYTV
- bJveNgpJdykQ==
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jul 2020 19:03:51 -0700
+IronPort-SDR: 77DD6ETSzlocT+oir0d+ZxMHRXyysrjp2hkL4nyOVg/ig8ToH9aGwYGF3KbSw7vecdbap4poVy
+ K1cRIVtJvPDg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.75,331,1589266800";
-   d="scan'208";a="324243209"
-Received: from fmsmsx105.amr.corp.intel.com ([10.18.124.203])
-  by orsmga007.jf.intel.com with ESMTP; 09 Jul 2020 07:49:21 -0700
-Received: from fmsmsx112.amr.corp.intel.com (10.18.116.6) by
- FMSMSX105.amr.corp.intel.com (10.18.124.203) with Microsoft SMTP Server (TLS)
- id 14.3.439.0; Thu, 9 Jul 2020 07:49:21 -0700
-Received: from FMSEDG002.ED.cps.intel.com (10.1.192.134) by
- FMSMSX112.amr.corp.intel.com (10.18.116.6) with Microsoft SMTP Server (TLS)
- id 14.3.439.0; Thu, 9 Jul 2020 07:49:21 -0700
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (104.47.70.109)
- by edgegateway.intel.com (192.55.55.69) with Microsoft SMTP Server (TLS) id
- 14.3.439.0; Thu, 9 Jul 2020 07:49:21 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=jHWqk1CWflXmbM3XkubB1C5cRopgJEdGNu8O+s/V1KTOvA5S8ayH5NUpnIkhUUd9FKL9YhppIKm9E6GtSkuK9qahPX+cUljSciOVSeVYv0p+TnGYXFD4ET904mnwbLWwEO7ABc1NGyAzbbP8XM3anOWqks2QFEHw1k18RGBBc/PVCAfSF+Fs1LDDJAcqqh36d+EKHQWMBHOTRQ7yafgSlidU7+FWPKxBw45/5ccDlj5n1fn3mEnOG4y3tXDZSU7kJ/jxUSmcfYsPtR7Z7N2y1LG5LickBmRsMY8Zu2vbalMVKoiUOb0mpaUy0GpIRDDCMLCNw1kmN8ngZ+7b9juHRQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3olccjvRSAKD60SinJG/NJIaLCxpIzptIzOcaRIBwL4=;
- b=dRZyNiXVr1160QDkQZXvr0KMh7XF64XZVF8yHbBsfaiftdLRjQSiWFn+juASqaBCmeKVwJlPEszKoSDDllgZKEarSjGRTlM7jaG+eClHuFqoC6FVgwbsW3+IfzleqDf8MLr7J1PviwrxMUxQ1omP4p9WTnD5/qEjfeyWr4oJFe8r70CtYzLeSEGBgfyWooKk7zqOBtuYbSBZjydvt0nIvuvTP+JGsQUgl7lDP0I3toZ5KlVTdblSTosJYaZ6zlJbESUXC0CMIdJHUiULowTbVhQDkmHEOTt/NN54rMhh2LhcVMmY9OJqLZH0Qdk0h8Vc0grofC/SP8O8WjAMkXJMzQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
- s=selector2-intel-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3olccjvRSAKD60SinJG/NJIaLCxpIzptIzOcaRIBwL4=;
- b=zx/RNYiRqTzICUJ9yiDz22/mEuVxL2txZZAkfeZuP9IVw9dgg6UbjvFOVL5Zz2GPa1A/DjHwKqdLNr8qFe67rWUnlWxSRaLsGvmo9XKoHugf/p31BAqLDKMsYPHEEHTGQ0OoTytVBovNmMpSw734bx1wjqf1xW+rmjbtVcC5Ip8=
-Received: from BYAPR11MB3256.namprd11.prod.outlook.com (2603:10b6:a03:76::19)
- by BY5PR11MB4226.namprd11.prod.outlook.com (2603:10b6:a03:1bf::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3174.20; Thu, 9 Jul
- 2020 14:49:18 +0000
-Received: from BYAPR11MB3256.namprd11.prod.outlook.com
- ([fe80::4ca7:fbfa:78bf:173c]) by BYAPR11MB3256.namprd11.prod.outlook.com
- ([fe80::4ca7:fbfa:78bf:173c%4]) with mapi id 15.20.3174.021; Thu, 9 Jul 2020
- 14:49:18 +0000
-From: "Moore, Robert" <robert.moore@intel.com>
-To: Xu Wang <vulab@iscas.ac.cn>, "Kaneda, Erik" <erik.kaneda@intel.com>,
-	"Wysocki, Rafael J" <rafael.j.wysocki@intel.com>, "lenb@kernel.org"
-	<lenb@kernel.org>, "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>,
-	"devel@acpica.org" <devel@acpica.org>
-Thread-Topic: [PATCH] service_layers: osunixmap: Remove unnecessary brackets
- in acpi_os_map_memory()
-Thread-Index: AQHWVcgik7eppFgSsk2P33P93bkikKj/VH9g
-Date: Thu, 9 Jul 2020 14:49:17 +0000
-Message-ID: <BYAPR11MB3256999B714C7F5598E3213687640@BYAPR11MB3256.namprd11.prod.outlook.com>
-References: <20200709080806.14328-1-vulab@iscas.ac.cn>
-In-Reply-To: <20200709080806.14328-1-vulab@iscas.ac.cn>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-dlp-version: 11.2.0.6
-dlp-product: dlpe-windows
-dlp-reaction: no-action
-authentication-results: iscas.ac.cn; dkim=none (message not signed)
- header.d=none;iscas.ac.cn; dmarc=none action=none header.from=intel.com;
-x-originating-ip: [134.134.136.194]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 1a90b89b-2804-463a-e887-08d8241741e0
-x-ms-traffictypediagnostic: BY5PR11MB4226:
-x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <BY5PR11MB422603A578C748BE8A494FE887640@BY5PR11MB4226.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:226;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: cnkkquuKdL2DidiZNAKx6SfiVtolNIYTO+nBjWHS65tfL0PzCJQGC8lffz6mZdp/0L6+3KbjnmmXoqnDzpR62z0D6r2weHXeuYzFO2C6i+tbWcA8w/+pA4wdmjdvpSs2xu/GM4VtX7SgMXaCOmdLQ9hJxe8m7+P3aHUiXaWROuR4GeRHu8RetW59bVw2g+yzIFQz9MGpm4WnD4a4t6N4APkLLI5BLRt/V9hcNq0HbWNNc1qtLuBTTR5X6gz1sSGSkbEVpv+gwLl0DlPLwiSfa/V0zy0y0wU1w0QbRXytPXt6/TpH9TDwpjpMWP0lEuK7FgkfWF/ciUQbYww1eRQPVA==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:(4636009)(376002)(396003)(39860400002)(346002)(366004)(136003)(66556008)(7696005)(55016002)(53546011)(6506007)(83380400001)(71200400001)(76116006)(66946007)(8936002)(66476007)(66446008)(64756008)(52536014)(186003)(9686003)(26005)(86362001)(316002)(8676002)(110136005)(5660300002)(4326008)(33656002)(478600001)(2906002);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata: pEFN4lx0BHc6r8UnsXZCn7BC03Wo4LIM3cd5q/JE9J3fL6TAVJytHX+yhKJJPgaDSewbfxOKaMfhWhMm9CplXSALeCMtwzfTXwSrLNBZHvATC8z9T9inNQ8W2fbSteU5KZMqHG0G+BQnk4PeKLjY1Oui4D6Ne7ODRM0shDGN6ngy2t0Fs/NV6MTlMDLG5Unb/z9jqVtcAACAxNdDeA94kqpZuU/buu6rRuu0VLcrplQ6lfRdBLMSKCQU2SHGFgSCxxBs4obPIkINnBjPH2AhOf1aUA+DFPs5RoyD0cJTszB6MUdZ0mS0awBr2t5Dt4aNGVdQ0Xcwq0Vp4LaqhFvkKSK9uHA0Neibz2Q6zmvDrkLj8x9rY2iqjRo0eSnywXgD23N4hgfKZVvHxyEq8hSWdOUJFHj9TKewTpmg2ma24m6vqhugng42neTC62WXw1SZUUOlsFN1RXhLBAtpVmXJoAbQuLSruGBI5rTP09jDC9qbyLV0P4LnYXNYJhppbDBZ
-Content-Type: text/plain; charset="us-ascii"
+X-IronPort-AV: E=Sophos;i="5.75,334,1589266800";
+   d="scan'208";a="389328611"
+Received: from lkp-server02.sh.intel.com (HELO d197edaadf32) ([10.239.97.151])
+  by fmsmga001.fm.intel.com with ESMTP; 09 Jul 2020 19:03:48 -0700
+Received: from kbuild by d197edaadf32 with local (Exim 4.92)
+	(envelope-from <lkp@intel.com>)
+	id 1jtiOB-00000n-CL; Fri, 10 Jul 2020 02:03:47 +0000
+Date: Fri, 10 Jul 2020 10:03:23 +0800
+From: kernel test robot <lkp@intel.com>
+To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Message-ID: <5f07cc6b.kX/LcFO0yrxzk81m%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3256.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1a90b89b-2804-463a-e887-08d8241741e0
-X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Jul 2020 14:49:17.9150
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: /P2XI8ZSd8eJwQ6jOikF1ACRzSEjy9ceIh/scGWvJ8yIy6CZGaFUWpOvIgsZLa9ljjIl9WuVqA7i5e6E6xTaCQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR11MB4226
-X-OriginatorOrg: intel.com
-Message-ID-Hash: UEJJHI26ZPEPMEYRKZMEZOBN74V7763S
-X-Message-ID-Hash: UEJJHI26ZPEPMEYRKZMEZOBN74V7763S
-X-MailFrom: robert.moore@intel.com
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
-CC: "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Message-ID-Hash: WM2JSVW5VDHOR62FB5XNUVQEBFNLK7EK
+X-Message-ID-Hash: WM2JSVW5VDHOR62FB5XNUVQEBFNLK7EK
+X-MailFrom: lkp@intel.com
+X-Mailman-Rule-Hits: nonmember-moderation
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
+CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH] service_layers: osunixmap: Remove unnecessary brackets in acpi_os_map_memory()
+Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS 9d981feccfcf0782dbb65652bab5c757dd562dc6
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/UEJJHI26ZPEPMEYRKZMEZOBN74V7763S/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/WM2JSVW5VDHOR62FB5XNUVQEBFNLK7EK/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
--		return (NULL);
-+		return NULL;
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git  bleeding-edge
+branch HEAD: 9d981feccfcf0782dbb65652bab5c757dd562dc6  Merge branch 'powercap' into bleeding-edge
 
-This is the ACPICA coding standard, and it does not affect anything.
-Bob
+elapsed time: 741m
 
------Original Message-----
-From: Xu Wang <vulab@iscas.ac.cn> 
-Sent: Thursday, July 09, 2020 1:08 AM
-To: Moore, Robert <robert.moore@intel.com>; Kaneda, Erik <erik.kaneda@intel.com>; Wysocki, Rafael J <rafael.j.wysocki@intel.com>; lenb@kernel.org; vulab@iscas.ac.cn; linux-acpi@vger.kernel.org; devel@acpica.org
-Cc: linux-kernel@vger.kernel.org
-Subject: [PATCH] service_layers: osunixmap: Remove unnecessary brackets in acpi_os_map_memory()
+configs tested: 107
+configs skipped: 1
 
-Remove extra brackets.
+The following configs have been built successfully.
+More configs may be tested in the coming days.
 
-Signed-off-by: Xu Wang <vulab@iscas.ac.cn>
+arm                                 defconfig
+arm                              allyesconfig
+arm                              allmodconfig
+arm                               allnoconfig
+arm64                            allyesconfig
+arm64                               defconfig
+arm64                            allmodconfig
+arm64                             allnoconfig
+parisc                generic-64bit_defconfig
+arm                      footbridge_defconfig
+mips                    maltaup_xpa_defconfig
+powerpc                    gamecube_defconfig
+m68k                          hp300_defconfig
+powerpc                  mpc866_ads_defconfig
+powerpc64                           defconfig
+um                             i386_defconfig
+openrisc                         allyesconfig
+sh                        edosk7705_defconfig
+i386                              allnoconfig
+i386                             allyesconfig
+i386                                defconfig
+i386                              debian-10.3
+ia64                             allmodconfig
+ia64                                defconfig
+ia64                              allnoconfig
+ia64                             allyesconfig
+m68k                             allmodconfig
+m68k                              allnoconfig
+m68k                           sun3_defconfig
+m68k                                defconfig
+m68k                             allyesconfig
+nios2                               defconfig
+nios2                            allyesconfig
+openrisc                            defconfig
+c6x                              allyesconfig
+c6x                               allnoconfig
+nds32                               defconfig
+nds32                             allnoconfig
+csky                             allyesconfig
+csky                                defconfig
+alpha                               defconfig
+alpha                            allyesconfig
+xtensa                           allyesconfig
+h8300                            allyesconfig
+h8300                            allmodconfig
+xtensa                              defconfig
+arc                                 defconfig
+arc                              allyesconfig
+sh                               allmodconfig
+sh                                allnoconfig
+microblaze                        allnoconfig
+mips                             allyesconfig
+mips                              allnoconfig
+mips                             allmodconfig
+parisc                            allnoconfig
+parisc                              defconfig
+parisc                           allyesconfig
+parisc                           allmodconfig
+powerpc                             defconfig
+powerpc                          allyesconfig
+powerpc                          rhel-kconfig
+powerpc                          allmodconfig
+powerpc                           allnoconfig
+i386                 randconfig-a002-20200709
+i386                 randconfig-a001-20200709
+i386                 randconfig-a006-20200709
+i386                 randconfig-a005-20200709
+i386                 randconfig-a004-20200709
+i386                 randconfig-a003-20200709
+x86_64               randconfig-a012-20200709
+x86_64               randconfig-a016-20200709
+x86_64               randconfig-a011-20200709
+x86_64               randconfig-a014-20200709
+x86_64               randconfig-a013-20200709
+x86_64               randconfig-a015-20200709
+i386                 randconfig-a011-20200709
+i386                 randconfig-a015-20200709
+i386                 randconfig-a014-20200709
+i386                 randconfig-a016-20200709
+i386                 randconfig-a012-20200709
+i386                 randconfig-a013-20200709
+riscv                            allyesconfig
+riscv                             allnoconfig
+riscv                               defconfig
+riscv                            allmodconfig
+s390                             allyesconfig
+s390                              allnoconfig
+s390                             allmodconfig
+s390                                defconfig
+sparc                            allyesconfig
+sparc                               defconfig
+sparc64                             defconfig
+sparc64                           allnoconfig
+sparc64                          allyesconfig
+sparc64                          allmodconfig
+um                               allmodconfig
+um                                allnoconfig
+um                               allyesconfig
+um                                  defconfig
+x86_64                               rhel-7.6
+x86_64                    rhel-7.6-kselftests
+x86_64                               rhel-8.3
+x86_64                                  kexec
+x86_64                                   rhel
+x86_64                         rhel-7.2-clear
+x86_64                                    lkp
+x86_64                              fedora-25
+
 ---
- tools/power/acpi/os_specific/service_layers/osunixmap.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/tools/power/acpi/os_specific/service_layers/osunixmap.c b/tools/power/acpi/os_specific/service_layers/osunixmap.c
-index c565546e85bc..52f3e70b5c81 100644
---- a/tools/power/acpi/os_specific/service_layers/osunixmap.c
-+++ b/tools/power/acpi/os_specific/service_layers/osunixmap.c
-@@ -70,7 +70,7 @@ void *acpi_os_map_memory(acpi_physical_address where, acpi_size length)
- 	fd = open(SYSTEM_MEMORY, O_RDONLY | O_BINARY);
- 	if (fd < 0) {
- 		fprintf(stderr, "Cannot open %s\n", SYSTEM_MEMORY);
--		return (NULL);
-+		return NULL;
- 	}
- 
- 	/* Align the offset to use mmap */
-@@ -85,7 +85,7 @@ void *acpi_os_map_memory(acpi_physical_address where, acpi_size length)
- 	if (mapped_memory == MAP_FAILED) {
- 		fprintf(stderr, "Cannot map %s\n", SYSTEM_MEMORY);
- 		close(fd);
--		return (NULL);
-+		return NULL;
- 	}
- 
- 	close(fd);
--- 
-2.17.1
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
