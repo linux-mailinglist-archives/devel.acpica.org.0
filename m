@@ -2,58 +2,53 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A71F721F684
-	for <lists+devel-acpica@lfdr.de>; Tue, 14 Jul 2020 17:53:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DD2E4221BE5
+	for <lists+devel-acpica@lfdr.de>; Thu, 16 Jul 2020 07:18:08 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 2911C1162E35D;
-	Tue, 14 Jul 2020 08:53:29 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.167.194; helo=mail-oi1-f194.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-oi1-f194.google.com (mail-oi1-f194.google.com [209.85.167.194])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	by ml01.01.org (Postfix) with ESMTP id 45C8811B3FFE1;
+	Wed, 15 Jul 2020 22:18:07 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.31; helo=mga06.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 6D07E11202ACA
-	for <devel@acpica.org>; Tue, 14 Jul 2020 08:53:27 -0700 (PDT)
-Received: by mail-oi1-f194.google.com with SMTP id l63so14261266oih.13
-        for <devel@acpica.org>; Tue, 14 Jul 2020 08:53:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ZsghvSlXCqKA5TycPVdHieRffX+h0fMKm3ZWSRwaSJk=;
-        b=im0RTiAfEnk1ChYzyGvp5bRgQhA7zVrMYmQZmPD8R4ems3KImSVnaPKr52wjvBzW/a
-         oFzSvlNHi5n9Tnmg1+YfpUvku2LcOVEivIY0OrfMeaLI2VNGif4RUJNlKTygkDo/X56h
-         W9f/imxuY1/uCsnRnr6ADbTivKHCLf7w/hh8FfVC5nV2LoOZBq8O9bkTYZ57wiXaFZT1
-         mUgwBgNZhYdfPHNDdv6YaayFmfZgbi8KSeZfFYM6FZqMbQDJKdjxz3p+zUuemMcawaq+
-         Cl9RC2FR7YLT0LZh/4xwTekC0VWF3ku6VlVaxVll2zSkDryv39v3BM3MJ90ncibaS31a
-         G2Jw==
-X-Gm-Message-State: AOAM531Xc7X0uD4uV/yd60sXPTeFv8P/YkFH195ipUS6KUfdPzXH/Gox
-	XaVdhH3GumfJybfIFmvNdHc833peXI+XBV7eP38=
-X-Google-Smtp-Source: ABdhPJw9BaF0Zl8Hh2Y+DeuKLc3Omx2W+DkTyhLmTA9kzPXC1FceBizx/dz72dgTlAWyYI35nOkUk+YfKG0ktjpTRiY=
-X-Received: by 2002:aca:f58a:: with SMTP id t132mr4103301oih.68.1594742006593;
- Tue, 14 Jul 2020 08:53:26 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTPS id 3225A11B18684
+	for <devel@acpica.org>; Wed, 15 Jul 2020 22:18:05 -0700 (PDT)
+IronPort-SDR: Lt7g/L5eKOcaEx5PJhn4kAAiwHZDRKNqiEwdQLEmOyvDCjep/ylQ5px5AqLlJmOK3aB93fWppr
+ PRaxrR+qIh2g==
+X-IronPort-AV: E=McAfee;i="6000,8403,9683"; a="210853778"
+X-IronPort-AV: E=Sophos;i="5.75,358,1589266800";
+   d="scan'208";a="210853778"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jul 2020 22:18:04 -0700
+IronPort-SDR: BJFMBN/ZFlOKpjaIQm+vkaSNvYz1E/5pr/+xno5U+3mM+tL7wWtOdZxPhNCOoZz6f6IMKF1T8N
+ Zt+clLV3MJbA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.75,358,1589266800";
+   d="scan'208";a="270468354"
+Received: from lkp-server02.sh.intel.com (HELO 02dcbd16d3ea) ([10.239.97.151])
+  by fmsmga008.fm.intel.com with ESMTP; 15 Jul 2020 22:18:02 -0700
+Received: from kbuild by 02dcbd16d3ea with local (Exim 4.92)
+	(envelope-from <lkp@intel.com>)
+	id 1jvwHR-000031-Tz; Thu, 16 Jul 2020 05:18:01 +0000
+Date: Thu, 16 Jul 2020 13:17:05 +0800
+From: kernel test robot <lkp@intel.com>
+To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Message-ID: <5f0fe2d1.8uipoVa1w5uJvZLV%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-References: <20200616073827.vysntufld3ves666@linutronix.de>
- <87o8pjh1i0.fsf@gmx.net> <20200616155501.psduxnisltitodme@linutronix.de>
- <871rmesqkk.fsf@gmx.net> <20200617142734.mxwfoblufmo6li5e@linutronix.de>
- <87ftatqu07.fsf@gmx.net> <20200624201156.xu6hel3drnhno6c3@linutronix.de>
- <87ftak2kxr.fsf@rub.de> <20200714134410.3odqfvjq6rndjjf6@linutronix.de>
- <CAJZ5v0hZSUkEMCszDADGWk-v0xNEiDE45B3CHLi05BX6rPfm6g@mail.gmail.com> <20200714141135.47adndrsdgpiqfy4@linutronix.de>
-In-Reply-To: <20200714141135.47adndrsdgpiqfy4@linutronix.de>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Tue, 14 Jul 2020 17:53:15 +0200
-Message-ID: <CAJZ5v0iogereapmhcFi=iXHsjnzmC26mewUSTY3+5O3ei5kfDQ@mail.gmail.com>
-To: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Message-ID-Hash: OMAZ7S275OLUBDWP5QGTMWLKTVV7GOI6
-X-Message-ID-Hash: OMAZ7S275OLUBDWP5QGTMWLKTVV7GOI6
-X-MailFrom: rjwysocki@gmail.com
+Message-ID-Hash: BOZKTY7CZLNNO3L3XEHRZXMNX3DLJBFE
+X-Message-ID-Hash: BOZKTY7CZLNNO3L3XEHRZXMNX3DLJBFE
+X-MailFrom: lkp@intel.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: "Rafael J. Wysocki" <rafael@kernel.org>, Erik Kaneda <erik.kaneda@intel.com>, "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>, Thomas Gleixner <tglx@linutronix.de>, Peter Zijlstra <peterz@infradead.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, Stephen Berman <stephen.berman@gmx.net>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>
+CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: power-off delay/hang due to commit 6d25be57 (mainline)
+Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS 75322f96d2ba1936cd2409565f89ee9bdf58d01d
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/OMAZ7S275OLUBDWP5QGTMWLKTVV7GOI6/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/BOZKTY7CZLNNO3L3XEHRZXMNX3DLJBFE/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -62,61 +57,105 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Tue, Jul 14, 2020 at 4:11 PM Sebastian Andrzej Siewior
-<bigeasy@linutronix.de> wrote:
->
-> On 2020-07-14 15:54:57 [+0200], Rafael J. Wysocki wrote:
-> > On Tue, Jul 14, 2020 at 3:44 PM Sebastian Andrzej Siewior
-> > <bigeasy@linutronix.de> wrote:>
-> > > On 2020-06-24 23:49:52 [+0200], Stephen Berman wrote:
-> > >
-> > > Let me summarize the thread here:
-> > >
-> > > On Stephen's system, ACPI informs the thermal zone driver to poll the
-> > > temperature every second and the driver does so.
-> > > The driver queries the temperature by invoking acpi_evaluate_integer()
-> > > which invokes (at some point) acpi_ev_queue_notify_request().
-> >
-> > Well, I don't quite see how acpi_ev_queue_notify_request() can be
-> > invoked from the acpi_evaluate_integer() code path.
-> >
-> > Do you have a call trace showing that?
->
-> So the trace in
->      https://lore.kernel.org/linux-acpi/87o8pjh1i0.fsf@gmx.net/
->
-> shows the pattern and we nailed it down that it comes from
-> thermal_get_temp().
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git  bleeding-edge
+branch HEAD: 75322f96d2ba1936cd2409565f89ee9bdf58d01d  Merge branch 'pm-cpuidle' into bleeding-edge
 
-acpi_evaluate_integer() doesn't show up in the trace, though, AFAICS.
+elapsed time: 725m
 
-> I assumed acpi_ex_opcode_2A_0T_0R() since the other
-> candidate was acpi_ev_asynch_execute_gpe_method().
+configs tested: 84
+configs skipped: 2
 
-Which probably is the case.  Specifically
+The following configs have been built successfully.
+More configs may be tested in the coming days.
 
-acpi_ev_asynch_execute_gpe_method: Evaluate _L66
+arm64                            allyesconfig
+arm64                               defconfig
+arm64                            allmodconfig
+arm64                             allnoconfig
+arm                                 defconfig
+arm                              allyesconfig
+arm                              allmodconfig
+arm                               allnoconfig
+arm                             pxa_defconfig
+arm                         palmz72_defconfig
+arm                      integrator_defconfig
+arm                          imote2_defconfig
+i386                              allnoconfig
+i386                             allyesconfig
+i386                                defconfig
+i386                              debian-10.3
+ia64                             allmodconfig
+ia64                                defconfig
+ia64                              allnoconfig
+ia64                             allyesconfig
+m68k                             allmodconfig
+m68k                              allnoconfig
+m68k                           sun3_defconfig
+m68k                                defconfig
+m68k                             allyesconfig
+nios2                               defconfig
+nios2                            allyesconfig
+openrisc                            defconfig
+c6x                              allyesconfig
+c6x                               allnoconfig
+openrisc                         allyesconfig
+nds32                               defconfig
+nds32                             allnoconfig
+csky                             allyesconfig
+csky                                defconfig
+alpha                               defconfig
+alpha                            allyesconfig
+xtensa                           allyesconfig
+h8300                            allyesconfig
+h8300                            allmodconfig
+xtensa                              defconfig
+arc                                 defconfig
+arc                              allyesconfig
+sh                               allmodconfig
+sh                                allnoconfig
+microblaze                        allnoconfig
+mips                             allyesconfig
+mips                              allnoconfig
+mips                             allmodconfig
+parisc                            allnoconfig
+parisc                              defconfig
+parisc                           allyesconfig
+parisc                           allmodconfig
+powerpc                             defconfig
+powerpc                          allyesconfig
+powerpc                          rhel-kconfig
+powerpc                          allmodconfig
+powerpc                           allnoconfig
+i386                 randconfig-a016-20200715
+i386                 randconfig-a011-20200715
+i386                 randconfig-a015-20200715
+i386                 randconfig-a012-20200715
+i386                 randconfig-a013-20200715
+i386                 randconfig-a014-20200715
+riscv                            allyesconfig
+riscv                             allnoconfig
+riscv                               defconfig
+riscv                            allmodconfig
+s390                             allyesconfig
+s390                              allnoconfig
+s390                             allmodconfig
+s390                                defconfig
+sparc                            allyesconfig
+sparc                               defconfig
+sparc64                             defconfig
+sparc64                           allnoconfig
+sparc64                          allyesconfig
+sparc64                          allmodconfig
+x86_64                    rhel-7.6-kselftests
+x86_64                               rhel-8.3
+x86_64                                  kexec
+x86_64                                   rhel
+x86_64                                    lkp
+x86_64                              fedora-25
 
-is likely to cause the Notify() to be dispatched.
-
-> Stephen, the patch attached adds a WARN_ON() statement which will
-> produce a stack trace (4 or so). Could please run 'dmesg' after a while
-> and send it back. There should be a
->     "WARNING in drivers/acpi/acpica/evmisc.c"
->
-> statement or something along the lines.
->
-> Rafael, are you also interested in an ACPI dump?
-
-That might help a bit.
-
-So what probably happens is that poking at the TZ causes a GPE to
-trigger and a Notify() to be dispatched which then goes into the
-workqueue for execution.
-
-Now, I'm not sure what happens to those Notify() items, though.  They
-each should cause a handler (in the thermal driver) to be executed,
-but does that happen?
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
