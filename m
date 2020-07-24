@@ -1,191 +1,152 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id ACBF522CB3B
-	for <lists+devel-acpica@lfdr.de>; Fri, 24 Jul 2020 18:40:21 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65E8D22CB73
+	for <lists+devel-acpica@lfdr.de>; Fri, 24 Jul 2020 18:51:20 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 24E10124CD239;
-	Fri, 24 Jul 2020 09:40:20 -0700 (PDT)
-Received-SPF: None (mailfrom) identity=mailfrom; client-ip=91.189.89.112; helo=youngberry.canonical.com; envelope-from=colin.king@canonical.com; receiver=<UNKNOWN> 
-Received: from youngberry.canonical.com (youngberry.canonical.com [91.189.89.112])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA (128/128 bits))
+	by ml01.01.org (Postfix) with ESMTP id E6D43124D8C23;
+	Fri, 24 Jul 2020 09:51:18 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.151; helo=mga17.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 21A61124B6CDD
-	for <devel@acpica.org>; Fri, 24 Jul 2020 09:40:17 -0700 (PDT)
-Received: from 1.general.cking.uk.vpn ([10.172.193.212])
-	by youngberry.canonical.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-	(Exim 4.86_2)
-	(envelope-from <colin.king@canonical.com>)
-	id 1jz0k4-0008Vq-23; Fri, 24 Jul 2020 16:40:16 +0000
-To: "Moore, Robert" <robert.moore@intel.com>,
- Garrit Franke <garritfranke@gmail.com>,
- "Wysocki, Rafael J" <rafael.j.wysocki@intel.com>,
- "lenb@kernel.org" <lenb@kernel.org>, "trivial@kernel.org"
- <trivial@kernel.org>, "linux-acpi@vger.kernel.org"
- <linux-acpi@vger.kernel.org>, "devel@acpica.org" <devel@acpica.org>,
- "kernel-janitors@vger.kernel.org" <kernel-janitors@vger.kernel.org>
+	by ml01.01.org (Postfix) with ESMTPS id ED8D4124A92B5
+	for <devel@acpica.org>; Fri, 24 Jul 2020 09:51:14 -0700 (PDT)
+IronPort-SDR: i+BjBZ9WzwRfksxL8QLb/hBzXobFh7Izl+hIluWPdAe9jXO+BJuDTmYLR4QwzTax3TYd6CGB9Q
+ UNEywwsZdsRg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9692"; a="130813235"
+X-IronPort-AV: E=Sophos;i="5.75,391,1589266800";
+   d="scan'208";a="130813235"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jul 2020 09:50:58 -0700
+IronPort-SDR: qg7hBjCe6wCl9dlc0Yg+rb5I0+NHf0WRiK+Tn4Oyd5TFwDwe3bH0TtBoz16sRamvh7nUtlG88f
+ lrATqA1d5m2g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.75,391,1589266800";
+   d="scan'208";a="433134024"
+Received: from fmsmsx103.amr.corp.intel.com ([10.18.124.201])
+  by orsmga004.jf.intel.com with ESMTP; 24 Jul 2020 09:50:58 -0700
+Received: from fmsmsx126.amr.corp.intel.com (10.18.125.43) by
+ FMSMSX103.amr.corp.intel.com (10.18.124.201) with Microsoft SMTP Server (TLS)
+ id 14.3.439.0; Fri, 24 Jul 2020 09:50:58 -0700
+Received: from FMSEDG002.ED.cps.intel.com (10.1.192.134) by
+ FMSMSX126.amr.corp.intel.com (10.18.125.43) with Microsoft SMTP Server (TLS)
+ id 14.3.439.0; Fri, 24 Jul 2020 09:50:57 -0700
+Received: from NAM04-SN1-obe.outbound.protection.outlook.com (104.47.44.51) by
+ edgegateway.intel.com (192.55.55.69) with Microsoft SMTP Server (TLS) id
+ 14.3.439.0; Fri, 24 Jul 2020 09:50:57 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=flOVuuwKGo4O3e/vQYQc+jnwmRjCvfoo6SBSOw+FoF+592pkci+1mfvP4K6EHcI2RTJcyNhEmhr+UdO8j7AMUGvXj/2s6fyIcDGN2GL/Q53IVQy7u0UD8bkA2hvRfOCRoVppz81BKlqkzs+Ra49B2qbemoQtZ1e34IzTKGECsBLAq2DNZDOJ49EuUno+CE0kWY9+6T9PoVPwUim4a6RS3them3gY8NvxwQPNU473zM5DxIqH84OQ+T9DJJRp4oTJvWnaDVDIBXHqBJ2ScIYu42tAMtF/GWgdRYdeqRITSnaAL9EaJUxsE9W+C1AACAUBvH9eC11tm0tUlT0ABwmNCA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=d0mz/37UbTb40p+d+Ae/fF6NIP9C8MNFOVAWvIDz6w0=;
+ b=TOxDEJ/SYwKQLm0tNBZwXgRQe42A1r8XZprjt5vu7VFo2Km/5CuoQwN0Od5qmqhIctkHFDJvS7TLAe+ZxOy4+kEHWMvRwd597XyICJF2mUOnlR0HrNIc6ZAN+O53zyvvX32b++bLlloV0JGKc/IidADzMiSRCpqA3uV+1mALWSOhSUnCBWc2YReUNV3ckeg2PyD3uguCM9W5ynxn5NEwz4PmKNPxFgvAzt+QVbL0NRTh6QIUgf8j+3W56MgGraoJc8pH4hoHsA6kbYBWO/5DgDKV73H+O2zf0sp8qRVWK//0Vf/RjrzjfyqJ9gArrSIyEQWN+batA+OiRh26tSsKfA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
+ s=selector2-intel-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=d0mz/37UbTb40p+d+Ae/fF6NIP9C8MNFOVAWvIDz6w0=;
+ b=TIXm15o5vk5mLMguCbL4oBXb802RoSB3/75Tn+uKST1sm2FzGI+9szIf4VDq/7+eXEM+flPOGiRYOIZBgb0kj8oanI9NfbZEGt5zrkQIVKn/wk5oey/qJI5g5rxrxeiZdX7Y6joDNkCQM3ITev/QxsaM0h4jjYDiXK2HAADXr7o=
+Received: from BYAPR11MB3256.namprd11.prod.outlook.com (2603:10b6:a03:76::19)
+ by BY5PR11MB3975.namprd11.prod.outlook.com (2603:10b6:a03:184::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3216.20; Fri, 24 Jul
+ 2020 16:50:55 +0000
+Received: from BYAPR11MB3256.namprd11.prod.outlook.com
+ ([fe80::4ca7:fbfa:78bf:173c]) by BYAPR11MB3256.namprd11.prod.outlook.com
+ ([fe80::4ca7:fbfa:78bf:173c%4]) with mapi id 15.20.3216.023; Fri, 24 Jul 2020
+ 16:50:55 +0000
+From: "Moore, Robert" <robert.moore@intel.com>
+To: Garrit Franke <garritfranke@gmail.com>
+Thread-Topic: [PATCH] trivial: acpi: replace some bitshifts with BIT macro
+Thread-Index: AQHWYdZ+JdA88oPRJEuxGV8RX7TGgakW62CggAAFOQCAAACpEA==
+Date: Fri, 24 Jul 2020 16:50:55 +0000
+Message-ID: <BYAPR11MB32563CE55D8019DA86861A7387770@BYAPR11MB3256.namprd11.prod.outlook.com>
 References: <alpine.DEB.2.21.2007241814450.2834@hadrien>
- <20200724162050.18077-2-garritfranke@gmail.com>
- <BYAPR11MB325604ACC5F3BCCEB89A58AA87770@BYAPR11MB3256.namprd11.prod.outlook.com>
-From: Colin Ian King <colin.king@canonical.com>
-Autocrypt: addr=colin.king@canonical.com; prefer-encrypt=mutual; keydata=
- mQINBE6TJCgBEACo6nMNvy06zNKj5tiwDsXXS+LhT+LwtEsy9EnraKYXAf2xwazcICSjX06e
- fanlyhB0figzQO0n/tP7BcfMVNG7n1+DC71mSyRK1ZERcG1523ajvdZOxbBCTvTitYOy3bjs
- +LXKqeVMhK3mRvdTjjmVpWnWqJ1LL+Hn12ysDVVfkbtuIm2NoaSEC8Ae8LSSyCMecd22d9Pn
- LR4UeFgrWEkQsqROq6ZDJT9pBLGe1ZS0pVGhkRyBP9GP65oPev39SmfAx9R92SYJygCy0pPv
- BMWKvEZS/7bpetPNx6l2xu9UvwoeEbpzUvH26PHO3DDAv0ynJugPCoxlGPVf3zcfGQxy3oty
- dNTWkP6Wh3Q85m+AlifgKZudjZLrO6c+fAw/jFu1UMjNuyhgShtFU7NvEzL3RqzFf9O1qM2m
- uj83IeFQ1FZ65QAiCdTa3npz1vHc7N4uEQBUxyXgXfCI+A5yDnjHwzU0Y3RYS52TA3nfa08y
- LGPLTf5wyAREkFYou20vh5vRvPASoXx6auVf1MuxokDShVhxLpryBnlKCobs4voxN54BUO7m
- zuERXN8kadsxGFzItAyfKYzEiJrpUB1yhm78AecDyiPlMjl99xXk0zs9lcKriaByVUv/NsyJ
- FQj/kmdxox3XHi9K29kopFszm1tFiDwCFr/xumbZcMY17Yi2bQARAQABtCVDb2xpbiBLaW5n
- IDxjb2xpbi5raW5nQGNhbm9uaWNhbC5jb20+iQI2BBMBCAAhBQJOkyQoAhsDBQsJCAcDBRUK
- CQgLBRYCAwEAAh4BAheAAAoJEGjCh9/GqAImsBcP9i6C/qLewfi7iVcOwqF9avfGzOPf7CVr
- n8CayQnlWQPchmGKk6W2qgnWI2YLIkADh53TS0VeSQ7Tetj8f1gV75eP0Sr/oT/9ovn38QZ2
- vN8hpZp0GxOUrzkvvPjpH+zdmKSaUsHGp8idfPpZX7XeBO0yojAs669+3BrnBcU5wW45SjSV
- nfmVj1ZZj3/yBunb+hgNH1QRcm8ZPICpjvSsGFClTdB4xu2AR28eMiL/TTg9k8Gt72mOvhf0
- fS0/BUwcP8qp1TdgOFyiYpI8CGyzbfwwuGANPSupGaqtIRVf+/KaOdYUM3dx/wFozZb93Kws
- gXR4z6tyvYCkEg3x0Xl9BoUUyn9Jp5e6FOph2t7TgUvv9dgQOsZ+V9jFJplMhN1HPhuSnkvP
- 5/PrX8hNOIYuT/o1AC7K5KXQmr6hkkxasjx16PnCPLpbCF5pFwcXc907eQ4+b/42k+7E3fDA
- Erm9blEPINtt2yG2UeqEkL+qoebjFJxY9d4r8PFbEUWMT+t3+dmhr/62NfZxrB0nTHxDVIia
- u8xM+23iDRsymnI1w0R78yaa0Eea3+f79QsoRW27Kvu191cU7QdW1eZm05wO8QUvdFagVVdW
- Zg2DE63Fiin1AkGpaeZG9Dw8HL3pJAJiDe0KOpuq9lndHoGHs3MSa3iyQqpQKzxM6sBXWGfk
- EkK5Ag0ETpMkKAEQAMX6HP5zSoXRHnwPCIzwz8+inMW7mJ60GmXSNTOCVoqExkopbuUCvinN
- 4Tg+AnhnBB3R1KTHreFGoz3rcV7fmJeut6CWnBnGBtsaW5Emmh6gZbO5SlcTpl7QDacgIUuT
- v1pgewVHCcrKiX0zQDJkcK8FeLUcB2PXuJd6sJg39kgsPlI7R0OJCXnvT/VGnd3XPSXXoO4K
- cr5fcjsZPxn0HdYCvooJGI/Qau+imPHCSPhnX3WY/9q5/WqlY9cQA8tUC+7mgzt2VMjFft1h
- rp/CVybW6htm+a1d4MS4cndORsWBEetnC6HnQYwuC4bVCOEg9eXMTv88FCzOHnMbE+PxxHzW
- 3Gzor/QYZGcis+EIiU6hNTwv4F6fFkXfW6611JwfDUQCAHoCxF3B13xr0BH5d2EcbNB6XyQb
- IGngwDvnTyKHQv34wE+4KtKxxyPBX36Z+xOzOttmiwiFWkFp4c2tQymHAV70dsZTBB5Lq06v
- 6nJs601Qd6InlpTc2mjd5mRZUZ48/Y7i+vyuNVDXFkwhYDXzFRotO9VJqtXv8iqMtvS4xPPo
- 2DtJx6qOyDE7gnfmk84IbyDLzlOZ3k0p7jorXEaw0bbPN9dDpw2Sh9TJAUZVssK119DJZXv5
- 2BSc6c+GtMqkV8nmWdakunN7Qt/JbTcKlbH3HjIyXBy8gXDaEto5ABEBAAGJAh8EGAEIAAkF
- Ak6TJCgCGwwACgkQaMKH38aoAiZ4lg/+N2mkx5vsBmcsZVd3ys3sIsG18w6RcJZo5SGMxEBj
- t1UgyIXWI9lzpKCKIxKx0bskmEyMy4tPEDSRfZno/T7p1mU7hsM4owi/ic0aGBKP025Iok9G
- LKJcooP/A2c9dUV0FmygecRcbIAUaeJ27gotQkiJKbi0cl2gyTRlolKbC3R23K24LUhYfx4h
- pWj8CHoXEJrOdHO8Y0XH7059xzv5oxnXl2SD1dqA66INnX+vpW4TD2i+eQNPgfkECzKzGj+r
- KRfhdDZFBJj8/e131Y0t5cu+3Vok1FzBwgQqBnkA7dhBsQm3V0R8JTtMAqJGmyOcL+JCJAca
- 3Yi81yLyhmYzcRASLvJmoPTsDp2kZOdGr05Dt8aGPRJL33Jm+igfd8EgcDYtG6+F8MCBOult
- TTAu+QAijRPZv1KhEJXwUSke9HZvzo1tNTlY3h6plBsBufELu0mnqQvHZmfa5Ay99dF+dL1H
- WNp62+mTeHsX6v9EACH4S+Cw9Q1qJElFEu9/1vFNBmGY2vDv14gU2xEiS2eIvKiYl/b5Y85Q
- QLOHWV8up73KK5Qq/6bm4BqVd1rKGI9un8kezUQNGBKre2KKs6wquH8oynDP/baoYxEGMXBg
- GF/qjOC6OY+U7kNUW3N/A7J3M2VdOTLu3hVTzJMZdlMmmsg74azvZDV75dUigqXcwjE=
-Message-ID: <8fc15ffe-9df7-d1f2-2e6a-194f6e8368cc@canonical.com>
-Date: Fri, 24 Jul 2020 17:40:15 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-MIME-Version: 1.0
-In-Reply-To: <BYAPR11MB325604ACC5F3BCCEB89A58AA87770@BYAPR11MB3256.namprd11.prod.outlook.com>
+	<20200724162050.18077-2-garritfranke@gmail.com>
+	<BYAPR11MB325604ACC5F3BCCEB89A58AA87770@BYAPR11MB3256.namprd11.prod.outlook.com>
+ <20200724184738.ce10d8db0bbe138e2b24f7a6@gmail.com>
+In-Reply-To: <20200724184738.ce10d8db0bbe138e2b24f7a6@gmail.com>
+Accept-Language: en-US
 Content-Language: en-US
-Message-ID-Hash: OAON24XQPXWDGVNNACDIOCC2LNSBITXN
-X-Message-ID-Hash: OAON24XQPXWDGVNNACDIOCC2LNSBITXN
-X-MailFrom: colin.king@canonical.com
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+dlp-version: 11.2.0.6
+dlp-product: dlpe-windows
+dlp-reaction: no-action
+authentication-results: gmail.com; dkim=none (message not signed)
+ header.d=none;gmail.com; dmarc=none action=none header.from=intel.com;
+x-originating-ip: [134.134.136.194]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 6087cf14-b7c2-46bf-a930-08d82ff1bbe3
+x-ms-traffictypediagnostic: BY5PR11MB3975:
+x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <BY5PR11MB397588620989A11D815E782B87770@BY5PR11MB3975.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8273;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: ZMQobKmk5Au+1NchWau7Apcxzl+GrmcfKhmON8g2z9xjRUxE2SCt3rVFkME8u6ZE5Dm+Q8E1oqzyyWRDFV2DMFL2b0BUcOnxfA11qa44306oD206IE0XjSly3VypmSxWCmWXChjjByRtVsYXTJrlLbyql+2/e963vGFI2tz1iA2cRsccIjc2dotwls+iPIOeOhW53Pm57Y0v7bW5jT4FiomkbbzxM2ziT6CQI4583D097L63Mo457v0wcvTalqug1r///TrOkmpnVtIj/uoFEKHfii8vRm60p4hRSBbc+g89TcNHDb9JjEN/KniHTUCN/TWTdQ6sx99w+ScCIw1eZQ==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFTY:;SFS:(4636009)(39860400002)(366004)(396003)(136003)(346002)(376002)(4744005)(8936002)(478600001)(7696005)(8676002)(54906003)(83380400001)(6916009)(71200400001)(76116006)(2906002)(55016002)(316002)(66556008)(52536014)(66946007)(33656002)(66446008)(66476007)(5660300002)(9686003)(64756008)(86362001)(6506007)(53546011)(4326008)(186003)(26005);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata: P8b0ezLFiJhPtwHj7PBZZvbMXTvASlgwvjTF3chTqhVH6ybHnHABPzbXGGkgI1sn508jDwFDbxdjeDeOuNF/ESEJr+xzuBYpRTvcNFOzXei5vqxMZcAICLyK3eSg0HUZ9mW/RkI6pnvzHytGGGWSCf5jws3DwmNQst3H8BTbFJE25gZT0oM9znh6E6FUyfH2qOKmHu5siBr7MnqRzmo5GDh9d7IVZ2bnM426j3mI4fwO/fNuWFjxM4Q7TMzST2g+Bvs3MfSOnDYvLekb9BzpucgQObLRjQNOekiEXSA3whorwpeqmO9M+tKNlgg8Rwazw606vJVmjC3/JFiGmpOdBtR1Ky+ImnS1mIhq0frg6oMpsTYzZNyZR164DcX9vIoYU0OczZdhhOdSWkEKK5WMl43sA/0EP73zqzOENyMWJ9G2RqRbw8qw/74hoqYwsRRxhKmECZiJRYtZU45kGAD8cGB9G3WkZRibpdPu8yGED9naVd5cJRJsOqwBah6yXPEo
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3256.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6087cf14-b7c2-46bf-a930-08d82ff1bbe3
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Jul 2020 16:50:55.7778
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: xHP6SYujHf/Fa/5knbl+CS7likAW/Eg2fPVh7X+np+K2hnepUC9b97nWPx/bmmIZY6AO8xtDQ7F+P3OjhFChHA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR11MB3975
+X-OriginatorOrg: intel.com
+Message-ID-Hash: USEHVR5CCKOF52PY7EHMSLXSRZKSVR2F
+X-Message-ID-Hash: USEHVR5CCKOF52PY7EHMSLXSRZKSVR2F
+X-MailFrom: robert.moore@intel.com
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
+CC: "Wysocki, Rafael J" <rafael.j.wysocki@intel.com>, "trivial@kernel.org" <trivial@kernel.org>, "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>, "devel@acpica.org" <devel@acpica.org>, "kernel-janitors@vger.kernel.org" <kernel-janitors@vger.kernel.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
 Subject: [Devel] Re: [PATCH] trivial: acpi: replace some bitshifts with BIT macro
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/OAON24XQPXWDGVNNACDIOCC2LNSBITXN/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/USEHVR5CCKOF52PY7EHMSLXSRZKSVR2F/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On 24/07/2020 17:29, Moore, Robert wrote:
+Well, since BIT is a linux macro only, we can't use it in ACPICA, because the code is compiler/environment independent.
+Bob
+
+
+-----Original Message-----
+From: Garrit Franke <garritfranke@gmail.com> 
+Sent: Friday, July 24, 2020 9:48 AM
+To: Moore, Robert <robert.moore@intel.com>
+Cc: Wysocki, Rafael J <rafael.j.wysocki@intel.com>; lenb@kernel.org; trivial@kernel.org; linux-acpi@vger.kernel.org; devel@acpica.org; kernel-janitors@vger.kernel.org
+Subject: Re: [PATCH] trivial: acpi: replace some bitshifts with BIT macro
+
+On Fri, 24 Jul 2020 16:29:14 +0000
+"Moore, Robert" <robert.moore@intel.com> wrote:
+
 > Where is "BIT" defined?
 
-this is a linux macro, currently in include/vdso.bits.h, see also
-linux/bits.h for the BIT_ULL() unsigned long long variant too.
+It is defined in multiple places (see include/vdso/bits.h for example), therefore I blatently assumed that it would be defined. I'm quite new to kernel development, and I'm learning along the way. Thank you for pointing this out.
 
-> 
-> 
-> -----Original Message-----
-> From: Garrit Franke <garritfranke@gmail.com> 
-> Sent: Friday, July 24, 2020 9:21 AM
-> To: Moore, Robert <robert.moore@intel.com>; Wysocki, Rafael J <rafael.j.wysocki@intel.com>; lenb@kernel.org; trivial@kernel.org; linux-acpi@vger.kernel.org; devel@acpica.org; kernel-janitors@vger.kernel.org
-> Cc: Garrit Franke <garritfranke@gmail.com>
-> Subject: [PATCH] trivial: acpi: replace some bitshifts with BIT macro
-> 
-> Signed-off-by: Garrit Franke <garritfranke@gmail.com>
-> ---
->  drivers/acpi/acpica/exfldio.c   | 2 +-
->  drivers/acpi/acpica/utownerid.c | 6 +++---
->  drivers/acpi/bus.c              | 2 +-
->  drivers/acpi/sleep.c            | 2 +-
->  4 files changed, 6 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/acpi/acpica/exfldio.c b/drivers/acpi/acpica/exfldio.c index ade35ff1c7..92fc702456 100644
-> --- a/drivers/acpi/acpica/exfldio.c
-> +++ b/drivers/acpi/acpica/exfldio.c
-> @@ -298,7 +298,7 @@ acpi_ex_register_overflow(union acpi_operand_object *obj_desc, u64 value)
->  		return (FALSE);
->  	}
->  
-> -	if (value >= ((u64) 1 << obj_desc->common_field.bit_length)) {
-> +	if (value >= ((u64) BIT(obj_desc->common_field.bit_length))) {
->  		/*
->  		 * The Value is larger than the maximum value that can fit into
->  		 * the register.
-> diff --git a/drivers/acpi/acpica/utownerid.c b/drivers/acpi/acpica/utownerid.c index d3525ef8ed..c4e2db2f54 100644
-> --- a/drivers/acpi/acpica/utownerid.c
-> +++ b/drivers/acpi/acpica/utownerid.c
-> @@ -74,13 +74,13 @@ acpi_status acpi_ut_allocate_owner_id(acpi_owner_id *owner_id)
->  			 * int. Some compilers or runtime error detection may flag this as
->  			 * an error.
->  			 */
-> -			if (!(acpi_gbl_owner_id_mask[j] & ((u32)1 << k))) {
-> +			if (!(acpi_gbl_owner_id_mask[j] & (u32)BIT(k))) {
->  				/*
->  				 * Found a free ID. The actual ID is the bit index plus one,
->  				 * making zero an invalid Owner ID. Save this as the last ID
->  				 * allocated and update the global ID mask.
->  				 */
-> -				acpi_gbl_owner_id_mask[j] |= ((u32)1 << k);
-> +				acpi_gbl_owner_id_mask[j] |= (u32)BIT(k);
->  
->  				acpi_gbl_last_owner_id_index = (u8)j;
->  				acpi_gbl_next_owner_id_offset = (u8)(k + 1); @@ -171,7 +171,7 @@ void acpi_ut_release_owner_id(acpi_owner_id *owner_id_ptr)
->  	/* Decode ID to index/offset pair */
->  
->  	index = ACPI_DIV_32(owner_id);
-> -	bit = (u32)1 << ACPI_MOD_32(owner_id);
-> +	bit = (u32)BIT(ACPI_MOD_32(owner_id));
->  
->  	/* Free the owner ID only if it is valid */
->  
-> diff --git a/drivers/acpi/bus.c b/drivers/acpi/bus.c index 54002670cb..39ead80c45 100644
-> --- a/drivers/acpi/bus.c
-> +++ b/drivers/acpi/bus.c
-> @@ -233,7 +233,7 @@ acpi_status acpi_run_osc(acpi_handle handle, struct acpi_osc_context *context)
->  		goto out_kfree;
->  	}
->  	/* Need to ignore the bit0 in result code */
-> -	errors = *((u32 *)out_obj->buffer.pointer) & ~(1 << 0);
-> +	errors = *((u32 *)out_obj->buffer.pointer) & BIT(0);
->  	if (errors) {
->  		if (errors & OSC_REQUEST_ERROR)
->  			acpi_print_osc_error(handle, context, diff --git a/drivers/acpi/sleep.c b/drivers/acpi/sleep.c index aff13bf4d9..38f5210313 100644
-> --- a/drivers/acpi/sleep.c
-> +++ b/drivers/acpi/sleep.c
-> @@ -880,7 +880,7 @@ static void acpi_sleep_run_lps0_dsm(unsigned int func)  {
->  	union acpi_object *out_obj;
->  
-> -	if (!(lps0_dsm_func_mask & (1 << func)))
-> +	if (!(lps0_dsm_func_mask & BIT(func)))
->  		return;
->  
->  	out_obj = acpi_evaluate_dsm(lps0_device_handle, &lps0_dsm_guid, 1, func, NULL);
-> --
-> 2.25.1
-> _______________________________________________
-> Devel mailing list -- devel@acpica.org
-> To unsubscribe send an email to devel-leave@acpica.org
-> %(web_page_url)slistinfo%(cgiext)s/%(_internal_name)s
-> 
+Would it make sense to copy this file to this drivers root, or is it not worth the effort?
+
+Thanks for your time
+Garrit
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
