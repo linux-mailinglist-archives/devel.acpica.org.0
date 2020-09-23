@@ -1,83 +1,80 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42BE3275D97
-	for <lists+devel-acpica@lfdr.de>; Wed, 23 Sep 2020 18:38:19 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB298275E2A
+	for <lists+devel-acpica@lfdr.de>; Wed, 23 Sep 2020 19:04:08 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 960F615321F0A;
-	Wed, 23 Sep 2020 09:38:17 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.65; helo=mga03.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+	by ml01.01.org (Postfix) with ESMTP id 2ABFB151D3481;
+	Wed, 23 Sep 2020 10:04:07 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.126; helo=mga18.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 4E29215321F08
-	for <devel@acpica.org>; Wed, 23 Sep 2020 09:38:15 -0700 (PDT)
-IronPort-SDR: m65BmjAKhzkk+HyVBIuPD11Jyvh6Fo8+3GUkXJvLY34Ya+N4o2AbBnnL0wROIQyY0eYZSOxdEK
- kEqAowbBT3ag==
-X-IronPort-AV: E=McAfee;i="6000,8403,9753"; a="161020132"
+	by ml01.01.org (Postfix) with ESMTPS id 009BB151D3480
+	for <devel@acpica.org>; Wed, 23 Sep 2020 10:04:04 -0700 (PDT)
+IronPort-SDR: szxmnwed/J+k3HRVFuyK8+ZxdXRs3G8zNvkF2DLHcLyHd4rx3WObjBnTUb/nePxKW5NsGZr4fd
+ p8HZLCYpFTtQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9753"; a="148696893"
 X-IronPort-AV: E=Sophos;i="5.77,293,1596524400";
-   d="scan'208";a="161020132"
+   d="scan'208";a="148696893"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2020 09:38:14 -0700
-IronPort-SDR: BHIqiyKfTdLonNZABslhC8DieeDB9DSGEEfJ/3u4/LuU+DX2m+NB6MGInELcVApCKKyooSTa1G
- +vB8w2cmti6g==
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2020 10:03:52 -0700
+IronPort-SDR: CHyRcEqN40rh4xUQ929mk0trxvmXZd2/HLLfWOnff4nhSgnZxtCDvhg04MzcBVF/33rCLsAfOh
+ rJ7nm6JUdahA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.77,293,1596524400";
-   d="scan'208";a="382750764"
+   d="scan'208";a="454989069"
 Received: from fmsmsx604.amr.corp.intel.com ([10.18.126.84])
-  by orsmga001.jf.intel.com with ESMTP; 23 Sep 2020 09:38:14 -0700
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+  by orsmga004.jf.intel.com with ESMTP; 23 Sep 2020 10:03:51 -0700
+Received: from fmsmsx603.amr.corp.intel.com (10.18.126.83) by
  fmsmsx604.amr.corp.intel.com (10.18.126.84) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Wed, 23 Sep 2020 09:38:12 -0700
-Received: from fmsmsx603.amr.corp.intel.com (10.18.126.83) by
- fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Wed, 23 Sep 2020 09:38:12 -0700
-Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
+ 15.1.1713.5; Wed, 23 Sep 2020 10:03:48 -0700
+Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
  fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5
- via Frontend Transport; Wed, 23 Sep 2020 09:38:12 -0700
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.105)
- by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
+ via Frontend Transport; Wed, 23 Sep 2020 10:03:48 -0700
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (104.47.59.171)
+ by edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.1713.5; Wed, 23 Sep 2020 09:38:10 -0700
+ 15.1.1713.5; Wed, 23 Sep 2020 10:03:47 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=YqRjIDBbVuMJZf4ko7srWIK7aGN9GWp+ukd9xdZMEbzHwe2hQn9qJip7amwKxJweZFqetMIrDZBIadW3JQjI5AfI0S/QeiuliurbsjQoGI2O8fEZyu1pvM0tBJzb0H7W98rFmeQQKuW9PB8ArL6f9iOofAtfRVRjBHhzYCsi6kUiJ0GZArGqMTK6KeP+oACfWEDk9iY3ZpivVA8iJRi/7suQdb42vPDMG44y9XdN6j6V5lU1XbG+gOvszzJDIdI+HOFjOZed8kCFlbaEbb72ZkuDYrZx7dymByHCNB+Wusc5SBuv++kCd9+wpw2rFWucX8hk+GkKfpI8oOyrvX0nnw==
+ b=j6jsI12cWRd0HSPZOJ+H4nEunFGqyG9VZp+YhQVS3Arj6BDYOyQI2ld6KrpEWXiSsn5wHI7M0L5o4b58LwMn2g8VCYxCTsz27i7WMRiC5kL9MV+8afpxODxMRF5MSys0DalLURRrZq/m1XPExJtS1ZWm917kg9ZqnlCCIWC3+3yKk94DCcVdThjFlQAfHdolGFkej7Yooj88qYsiZHzn2UHa5L5NK+Zpe/+aS8B2CiQXnNUxWCPclRdpGfJhxXIOOeTNksRIq6mFczVrSK5BuSlQdcY1xUubTPtA5Lqp3rPeWzdzMkenr36qL/CrBTAoPQMhHGomYe3ugqCfahF1Qg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Mcszh3Ztla5Px0UqoRYpnA6j01b3B4Srzw9fV53Qkgk=;
- b=IVV4wGx06YksnCexk9jesTIGdcEIXyXZjqVY9R9NlXlYtgsLKDRv/ddASgMdRn6iEzm0v7ZhBLuQNSbyBFda2quxA//VG5FrEwKNldrD+1omjOJb4jayubr2BttcvmZgwjzYqVKisf1zMm/vs73Ifd/KVLhl9ePZ7MXOs0ilNze5kKsr/M+RH8q4rJ5vhaaFhYwDEc1WdMWHDTekMHyFNm/KpTNFe5EHkQPhOQcEkuoM/UvuWpQnzqbmhAbaI37hcces2lVkJmP2J6RMTL52c4od4XImC6bO6XRaQxxbxlIzDCIaOsH0Gmf0nSAiy52aK20p3Y7sg7DjLs7Ngdc4oA==
+ bh=Yy+U2Wjphltn3LI9M/4lfUPk7iAsYkN5XeyexXYkye0=;
+ b=BwWBhAKjFkNc4QU4fQyQPrxkhU4Y4tse77ALVknt/lJC4/PzKxTfqPxhT0w79BJRQ1wAlFU6wVK4YdFOjtzDnPXFOr1u59c8ZlMQt7R9hJKRxsWb6Yx1jAxMAJg2rk1ZXr7g6P3U4QITx9bwbWeFvMoIcEzsOhHwPZhT3nn/EApVwgteRAEAZ2rovSpBvtFxmIPf9swc6z6umQKDRsafPOOxZpoax4Z/vltajvwS7Q8tRtpoE1DgQ4X/7453LYVZchU5E68/O7hzw5w30+TH+DGgwJJ53yuOzTXx0KKr7MEJabGsHPOkIiD3PqT1RKqQxt2pjvvou9Ri0KCD1YetqQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
  s=selector2-intel-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Mcszh3Ztla5Px0UqoRYpnA6j01b3B4Srzw9fV53Qkgk=;
- b=gsnJOn8NYndBslMogGctQtcs/D7sD01cg9Zy2et58tYqWP9sASi2tKd0PYOlGaLVKnCTXn25fBxkDp8Z5vIZg3FES6v9dPx3XpWPV1EIefHOrSC90iOz+Xd6dm692EvFdR+5Eo4Oqufjopgfmzlkf6O/wtM8rRWLRFzBMmKIFGA=
+ bh=Yy+U2Wjphltn3LI9M/4lfUPk7iAsYkN5XeyexXYkye0=;
+ b=nKaz+TIQAWuLCTdJ9d3h4zyLqJEMpNBVFofNeqn4oovA7qOiEm/9yR2607Ml7PKfOij8sPCoZk4zgC051UcuBo5ytICtFxEuxTSbsLiRYJkN/rCRH+NWL066gRhZfrk5mWlR/IWPV0xik8UZrV3CxwEgwE4dGs61M1afkI/NS/Q=
 Received: from BYAPR11MB3256.namprd11.prod.outlook.com (2603:10b6:a03:76::19)
- by BYAPR11MB2917.namprd11.prod.outlook.com (2603:10b6:a03:89::24) with
+ by BY5PR11MB3975.namprd11.prod.outlook.com (2603:10b6:a03:184::17) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3412.20; Wed, 23 Sep
- 2020 16:38:08 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3391.11; Wed, 23 Sep
+ 2020 17:03:43 +0000
 Received: from BYAPR11MB3256.namprd11.prod.outlook.com
  ([fe80::996f:395:61c4:2f93]) by BYAPR11MB3256.namprd11.prod.outlook.com
  ([fe80::996f:395:61c4:2f93%7]) with mapi id 15.20.3348.019; Wed, 23 Sep 2020
- 16:38:08 +0000
+ 17:03:42 +0000
 From: "Moore, Robert" <robert.moore@intel.com>
-To: "dunkaist@gmail.com" <dunkaist@gmail.com>, "devel@acpica.org"
-	<devel@acpica.org>
-Thread-Topic: [Devel] Automatic dereference when reading from ArgX
-Thread-Index: AQHWkTJiI3qs7LwHakSNl/kA045GHal2bFzQ
-Date: Wed, 23 Sep 2020 16:38:08 +0000
-Message-ID: <BYAPR11MB3256F56601FD2F961B268C5F87380@BYAPR11MB3256.namprd11.prod.outlook.com>
-References: <20200922224728.2835.56590@ml01.vlan13.01.org>
-In-Reply-To: <20200922224728.2835.56590@ml01.vlan13.01.org>
+To: Zou Wei <zou_wei@huawei.com>, "Kaneda, Erik" <erik.kaneda@intel.com>,
+	"Wysocki, Rafael J" <rafael.j.wysocki@intel.com>, "lenb@kernel.org"
+	<lenb@kernel.org>
+Thread-Topic: [PATCH -next] ACPICA: Remove unneeded semicolon
+Thread-Index: AQHWkLPWBi7SYd1tMU+/dwp0RI0iQql2dYWA
+Date: Wed, 23 Sep 2020 17:03:42 +0000
+Message-ID: <BYAPR11MB325605CF9CC0C660510F0BE687380@BYAPR11MB3256.namprd11.prod.outlook.com>
+References: <1600760929-102547-1-git-send-email-zou_wei@huawei.com>
+In-Reply-To: <1600760929-102547-1-git-send-email-zou_wei@huawei.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -85,42 +82,44 @@ X-MS-TNEF-Correlator:
 dlp-version: 11.5.1.3
 dlp-product: dlpe-windows
 dlp-reaction: no-action
-authentication-results: gmail.com; dkim=none (message not signed)
- header.d=none;gmail.com; dmarc=none action=none header.from=intel.com;
+authentication-results: huawei.com; dkim=none (message not signed)
+ header.d=none;huawei.com; dmarc=none action=none header.from=intel.com;
 x-originating-ip: [134.134.136.194]
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 6ca31a7d-355a-4ba1-1e0d-08d85fdf0d89
-x-ms-traffictypediagnostic: BYAPR11MB2917:
-x-microsoft-antispam-prvs: <BYAPR11MB29177EF348FF69C2E491EB9387380@BYAPR11MB2917.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:5236;
+x-ms-office365-filtering-correlation-id: 5ccd7dfa-f7d4-430b-73fc-08d85fe2a051
+x-ms-traffictypediagnostic: BY5PR11MB3975:
+x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <BY5PR11MB39757899D42C26AA229A587487380@BY5PR11MB3975.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:173;
 x-ms-exchange-senderadcheck: 1
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 0bQFgQmDZkNVNixNq3pz2joW0oU50rPwn07CRcJJ2p6/ykEKTy0vNi+xhEaN+ELb51Do/Az3tXIw1XPa8v9kUDeEa6kaYe2C+eJUnsuo2iAIqXHlqHZM7EzQrsuBa3m6azfIYgBB1Id+8bKgP+Fxw8xFLcV7pjpqAWwtLIriwJ7FmDx7X7Se3Td1hDoxJA10zH7Zwj6OKcXxdaHLWa0KiRx6ky1fctrIkTjTKUCKVYnMiB9nuhezxvmmkC5XilgZu8M3n9csqYOtmbZWCznvEcL9ms49FJcSP1Ji6WkzxbWa9JH6csf70kSBdbgn8rbi
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(39860400002)(396003)(346002)(376002)(366004)(136003)(8936002)(8676002)(186003)(66476007)(66556008)(478600001)(26005)(55016002)(53546011)(2906002)(66946007)(64756008)(76116006)(110136005)(71200400001)(6506007)(66446008)(83380400001)(7696005)(86362001)(52536014)(316002)(9686003)(5660300002)(33656002);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata: UdTA+JvRI0gZeb31lY7cXapHbgwhnVXHT3zovfYm3WclPfjOH+XruXXkUJy0U4LeR8zsLE9is1Cbl/rWa7kAHc5klUCw+ND2xl4pqUZ+RDrTPWaKC6TBNZbDaz4oJ6n4E1Y4xD/ExOqI18xXdNmxFxI0mLgulnffO6KoEoQLLGSIiAVFU96YInSMheY8A+fywzKQGMBwC8mBmm6ELsZJEomKD1gznwR7Bq6GSUcKugWuAbVf8Lf9P+KwDWcvzgfx+RI6kE7MMUEMYGNSCdSjVyB7YnhJ7bC/6bfndI9SCbZYJW12hDYfyDPiumsyRvfo8Tcih+wf0nc1qZRgbtyOSg0lMWj9obgZ/wpXrt9KZa5Wzoxqb7I58uJc3d24fN84pY3oBqxTMtc+aogtdmyaWLjJxROhc877wCajsuMKdAR6sRgqzp1ram1G+wRnnyUMRez/uRrlyjHfM8DSPKcW9eCWpwMEUhPTH+psKEL/QqAKsyUglUQHgplTGqXYn6dW84P7rP7SQcjVnHOaHzRJpAvcA5dBzxoGgi4grX43goKsqM7O8ievfimKHGIa/Ja4BK1Lft1NHKete+5C+Oa//Xp4wTmT5pkMbv75/zJFNR/Iq0nBxQqEdl1U4RUSkMoHRx106gfqNBFnBdkHu0FRgg==
-x-ms-exchange-transport-forked: True
+x-microsoft-antispam-message-info: P8f+NK7dqDb0tJecn15g7C7GF5CjkB3YH3VfyjqJgfDby9FZe/LY03cUxZ+9hzfypNQ3UjNOG8OUaU83EtmQBh4Fn8tZnNR4oIN1PowrzpRKgR0EIwRajmF+HULhg2aKc1Geqc4giSWbufYHVAoWgMiYkg7PJJkOSGCmdC6mSDBzLywWy4lNQrMWSGT6+L5YzLE5biALDNU2amGW9+eiDL0/o57rcAhjSxwGbTnIqxjr018gIfTfJwGPmR0X4076kbXs99xXxBUsiBxBMXLH6UQO4yTgoSubZGaiJv9lHeapbCJJ5I6f2I8ZyBirFEh2hFjrRBLRWBtEGNgETePXefPebCJBoQZVgxgK9JX/1wIvdlzOO6akiIs6vM6iVTfN
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(346002)(136003)(376002)(396003)(366004)(39860400002)(54906003)(5660300002)(52536014)(71200400001)(2906002)(33656002)(86362001)(110136005)(55016002)(83380400001)(316002)(6506007)(64756008)(66556008)(66946007)(66476007)(66446008)(8936002)(76116006)(9686003)(478600001)(26005)(4326008)(186003)(8676002)(53546011)(4744005)(7696005);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata: K0KvpH+n60LpLDMvF3tu+O9L+sbm3opTcfvVGHtLKurKswDlXGT2DOld5HSHb9QaBQGngYfScAv8fjOVjdFLbEuSQ+Xj06OASxuRiPXV1nDcI4iOf/NQjvYP/kKhY3jNB3OxTYguVDQ1ulST6zwyYEaacDwosXaSAt7+ZVzjps5ggkbkJdBN5ALSgfjrZMQycpaFOeEEk9TZ0sTe5aeJNqEeRuDIe6cUKhh0Buz7GIbK3A5WW/fft/xaL/mvMwRqA9+vwEJrz4TvzUGi4oiIFvax1txi8fESkQW5BZQZpiMIeSBPSf+y1HgrxJ7V4bPGdJvQEMSsvmPoKzd4VUeN506aYdY6aAYd96zAaG4cuViOW9xJVpC9C82TXyvi7wildcEQ/4gzaH4cPCjoZed44HQELrpu+5G52VxHmRnm1j/He2Onip35kvbytULRxT65GWXIIsEg4s/6+YgDlApZq+/n6CfKs6bd2jjq74iV2qppZ0IruJw5sdrhYZXT7spZ8pZ4c5TT7umVw39Lp1LVYAcuL9fXKrNT9jgQvthcQ1f864SlDFDzqDVcwvR5evHMW2U4/UHi4uDE/pTNTrgsQTRRicitmUr43JVAolwHGz+M6GZKVtM5OoQ4AjYpq+lXHVJ7qit7EUIJCqmcDcMkVg==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3256.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6ca31a7d-355a-4ba1-1e0d-08d85fdf0d89
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Sep 2020 16:38:08.1301
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5ccd7dfa-f7d4-430b-73fc-08d85fe2a051
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Sep 2020 17:03:42.8716
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: b+95BtFY8R7Uv0ZYgXpOYB82p2OBMuAj/2ypxajsN3LivxAQA4BA5mdgQ+3Bs6SkO3XgiD3C5HgLl0MCzsjZdw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR11MB2917
+X-MS-Exchange-CrossTenant-userprincipalname: fDeEwQKLY/d4xMhbMAyIVEuIb8S1EZafW4MJVX4Lqsd/wgLAcXg8VBr0jzkh/rKSaU/aswy58oqVSo8BKwLWgQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR11MB3975
 X-OriginatorOrg: intel.com
-Message-ID-Hash: 5HABUGRLIQZP6NDOI2J5ZOGOSYWWCK6A
-X-Message-ID-Hash: 5HABUGRLIQZP6NDOI2J5ZOGOSYWWCK6A
+Message-ID-Hash: 54FLMFK3JJCSICC5IAK4PIKHJ52VMGRR
+X-Message-ID-Hash: 54FLMFK3JJCSICC5IAK4PIKHJ52VMGRR
 X-MailFrom: robert.moore@intel.com
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
+CC: "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>, "devel@acpica.org" <devel@acpica.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: Automatic dereference when reading from ArgX
+Subject: [Devel] Re: [PATCH -next] ACPICA: Remove unneeded semicolon
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/5HABUGRLIQZP6NDOI2J5ZOGOSYWWCK6A/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/54FLMFK3JJCSICC5IAK4PIKHJ52VMGRR/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -128,95 +127,40 @@ List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Transfer-Encoding: 7bit
 
-This seems to make things work (Because taking a DeRefOf on an Arg is the same as taking a DeRefOf on the base object (An integer in this case). Which causes an error.
-
-    Method (DRFA, 1) {
-        //printf("Arg0: %o", DeRefOf(Arg0))
-        printf("Arg0: %o", Arg0)
-        //Store (DeRefOf(Arg0), INTX)
-        Store (Arg0, INTX)       // <- line 10
-        Debug = INTX
-    }
-
-    Method (MAIN, 0)
-    {
-        DRFA(INT5) //RefOf(INT5))
-    }
-}
-
-- ev main
-Evaluating \MAIN
-ACPI Debug:  "Arg0: 0000000000000005"
-ACPI Debug:  0x0000000000000005
-No object was returned from evaluation of \MAIN
+Got it, thanks.
+Bob
 
 
 -----Original Message-----
-From: dunkaist@gmail.com <dunkaist@gmail.com> 
-Sent: Tuesday, September 22, 2020 3:47 PM
-To: devel@acpica.org
-Subject: [Devel] Automatic dereference when reading from ArgX
+From: Zou Wei <zou_wei@huawei.com> 
+Sent: Tuesday, September 22, 2020 12:49 AM
+To: Moore, Robert <robert.moore@intel.com>; Kaneda, Erik <erik.kaneda@intel.com>; Wysocki, Rafael J <rafael.j.wysocki@intel.com>; lenb@kernel.org
+Cc: linux-acpi@vger.kernel.org; devel@acpica.org; linux-kernel@vger.kernel.org; Zou Wei <zou_wei@huawei.com>
+Subject: [PATCH -next] ACPICA: Remove unneeded semicolon
 
-Hello,
+Fixes coccicheck warning:
 
-I've been struggling to find out how acpiexec behavior corresponds to what ACPI spec says.
+./drivers/acpi/acpica/nsalloc.c:297:2-3: Unneeded semicolon
 
+Signed-off-by: Zou Wei <zou_wei@huawei.com>
+---
+ drivers/acpi/acpica/nsalloc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-ACPI 6.3 spec, Chapter 19.3.5.9.1 ArgX Objects, 1. Read from ArgX parameters:
-> ObjectReference - Automatic dereference, return the target of the reference. Use of DeRefOf returns the same.
-
-ACPI spec, Table 19-421 Reading from ArgX Objects:
-> Parameter: RefOf(Obj)
-> MTHD ArgX Type: Reference to object Obj Read operation on ArgX: 
-> Store(Arg0, ...) Result of read: Obj
-
-
-Then, here is a table I've written (argx_deref.asl):
-
-DefinitionBlock ("", "DSDT", 1, "BLAH", "BLAHDSDT", 0x00000001)
-{
-    Name (INT5, 5)
-    Name (INTX, 0)
-
-    Method (DRFA, 1) {
-        printf("Arg0: %o", DeRefOf(Arg0))
-        printf("Arg0: %o", Arg0)
-        Store (DeRefOf(Arg0), INTX)
-        Store (Arg0, INTX)       // <- line 10
-        Debug = INTX
-    }
-
-    Method (MAIN, 0)
-    {
-        DRFA(RefOf(INT5))
-    }
-}
-
-
-Finally, the output of `acpiexec -m -eo argx_deref.aml':
-
-> Intel ACPI Component Architecture
-> AML Execution/Debug Utility version 20200717
-> ...
->    Nested method call     :     DRFA
-> ACPI Debug:  "Arg0: 00000005"
-> ACPI Debug:  "Arg0: [Reference Object]"
-> ACPI Error: Cannot assign type [Reference] to [Integer] (must be type Int/Str/Buf) (20200717/exstoren-239)
-> Failed at AML Offset 00024, Opcode 0070: Store (Arg0, INTX) /* External reference */
-> ...
-
-
-So, it turnes out (or at least seems to me) that Store(Arg0, ...) at line 10 reads a Reference object, not an Integer one as the spec says.
-I.e. there is no automatic dereference.
-
-Do I miss something? Could you elaborate on this, please?
-
-Thank you,
-Ivan
-_______________________________________________
-Devel mailing list -- devel@acpica.org
-To unsubscribe send an email to devel-leave@acpica.org
-%(web_page_url)slistinfo%(cgiext)s/%(_internal_name)s
+diff --git a/drivers/acpi/acpica/nsalloc.c b/drivers/acpi/acpica/nsalloc.c index fe9b363..83d26ab 100644
+--- a/drivers/acpi/acpica/nsalloc.c
++++ b/drivers/acpi/acpica/nsalloc.c
+@@ -294,7 +294,7 @@ void acpi_ns_delete_children(struct acpi_namespace_node *parent_node)
+ 		node_to_delete = next_node;
+ 		next_node = next_node->peer;
+ 		acpi_ns_delete_node(node_to_delete);
+-	};
++	}
+ 
+ 	/* Clear the parent's child pointer */
+ 
+--
+2.6.2
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
