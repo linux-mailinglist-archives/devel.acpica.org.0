@@ -1,54 +1,54 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EB0E2764FF
-	for <lists+devel-acpica@lfdr.de>; Thu, 24 Sep 2020 02:22:04 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [198.145.21.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id E41E5277C52
+	for <lists+devel-acpica@lfdr.de>; Fri, 25 Sep 2020 01:30:58 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 8E4C91520B6E9;
-	Wed, 23 Sep 2020 17:22:02 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.43; helo=mga05.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+	by ml01.01.org (Postfix) with ESMTP id 6841E154A7621;
+	Thu, 24 Sep 2020 16:30:57 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.31; helo=mga06.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 840A2151FB619
-	for <devel@acpica.org>; Wed, 23 Sep 2020 17:22:00 -0700 (PDT)
-IronPort-SDR: 95kDAxyzOteniGwL7dIsZLITlRDJ7uh5VX04LgtEcQAjknCpFX9eVkwEeYVwHDS5U02Zf59elR
- MCjBBrFQIxLA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9753"; a="245862598"
-X-IronPort-AV: E=Sophos;i="5.77,296,1596524400";
-   d="scan'208";a="245862598"
+	by ml01.01.org (Postfix) with ESMTPS id 10136154A618E
+	for <devel@acpica.org>; Thu, 24 Sep 2020 16:30:54 -0700 (PDT)
+IronPort-SDR: HyPkfZv1oM7iDEQKGsibaAxifeH6Pdn47VLtq2YEo2raXfP5lI0IrHaWOVMsRPYKEX87toSl7r
+ 5NP0Ef+sbV7w==
+X-IronPort-AV: E=McAfee;i="6000,8403,9754"; a="222968401"
+X-IronPort-AV: E=Sophos;i="5.77,299,1596524400";
+   d="scan'208";a="222968401"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2020 17:21:59 -0700
-IronPort-SDR: J+qtcipNnBi/LZX/8TYAcpz+RhWlVTczW48+QugvQ/w9MQW4kfRzeT+13hMp9e8j73tXxs9lBM
- W3ivXxGwZK0g==
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Sep 2020 16:30:54 -0700
+IronPort-SDR: K6mKcueJwbyouJ7WqyR3yeL3kCMDm3k0c+sFOTgjeL62hHhMKl9iOu7PVe208I48xIZVzE8q2j
+ n/HWHn+wRy6w==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.77,296,1596524400";
-   d="scan'208";a="310104632"
-Received: from lkp-server01.sh.intel.com (HELO 9f27196b5390) ([10.239.97.150])
-  by orsmga006.jf.intel.com with ESMTP; 23 Sep 2020 17:21:58 -0700
-Received: from kbuild by 9f27196b5390 with local (Exim 4.92)
+X-IronPort-AV: E=Sophos;i="5.77,299,1596524400";
+   d="scan'208";a="310587055"
+Received: from lkp-server01.sh.intel.com (HELO d1a6b931d9c6) ([10.239.97.150])
+  by orsmga006.jf.intel.com with ESMTP; 24 Sep 2020 16:30:52 -0700
+Received: from kbuild by d1a6b931d9c6 with local (Exim 4.92)
 	(envelope-from <lkp@intel.com>)
-	id 1kLF1J-0000Jo-B5; Thu, 24 Sep 2020 00:21:57 +0000
-Date: Thu, 24 Sep 2020 08:21:20 +0800
+	id 1kLahP-0000Au-VF; Thu, 24 Sep 2020 23:30:51 +0000
+Date: Fri, 25 Sep 2020 07:29:55 +0800
 From: kernel test robot <lkp@intel.com>
 To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <5f6be680.juSJmP5YBporn4lW%lkp@intel.com>
+Message-ID: <5f6d2bf3.eUzt5WRZn90nkRFo%lkp@intel.com>
 User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-Message-ID-Hash: GF2WFWGT2CSLORSKL2CC7B774GM6TPZT
-X-Message-ID-Hash: GF2WFWGT2CSLORSKL2CC7B774GM6TPZT
+Message-ID-Hash: PSYZGJQUSD4TFS7Q7HK3D3GOUZJAJ5R7
+X-Message-ID-Hash: PSYZGJQUSD4TFS7Q7HK3D3GOUZJAJ5R7
 X-MailFrom: lkp@intel.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
 CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS fbcfd124b895172288ce3a0faafd9e54f8f15a7b
+Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS c6fdc99d71f335046a3cf4014097576e9907b94b
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/GF2WFWGT2CSLORSKL2CC7B774GM6TPZT/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/PSYZGJQUSD4TFS7Q7HK3D3GOUZJAJ5R7/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -58,11 +58,11 @@ Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
 tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git  bleeding-edge
-branch HEAD: fbcfd124b895172288ce3a0faafd9e54f8f15a7b  Merge branch 'pm-cpuidle-next' into bleeding-edge
+branch HEAD: c6fdc99d71f335046a3cf4014097576e9907b94b  Merge branch 'acpi-numa' into bleeding-edge
 
-elapsed time: 725m
+elapsed time: 720m
 
-configs tested: 89
+configs tested: 90
 configs skipped: 2
 
 The following configs have been built successfully.
@@ -74,21 +74,22 @@ arm64                            allyesconfig
 arm64                               defconfig
 arm                              allyesconfig
 arm                              allmodconfig
-h8300                     edosk2674_defconfig
-powerpc                 xes_mpc85xx_defconfig
-arm                            lart_defconfig
-powerpc                        warp_defconfig
-powerpc                     ep8248e_defconfig
-sh                   secureedge5410_defconfig
-powerpc                      ppc6xx_defconfig
-sh                           se7619_defconfig
-sh                           se7722_defconfig
-arc                     haps_hs_smp_defconfig
-powerpc                        fsp2_defconfig
-mips                  maltasmvp_eva_defconfig
-arm                       cns3420vb_defconfig
-arc                             nps_defconfig
-arm                         orion5x_defconfig
+sh                          rsk7203_defconfig
+powerpc                 mpc8313_rdb_defconfig
+sparc                            alldefconfig
+arm                           h5000_defconfig
+m68k                           sun3_defconfig
+arm                          ixp4xx_defconfig
+powerpc                      arches_defconfig
+um                             i386_defconfig
+sh                            shmin_defconfig
+xtensa                  cadence_csp_defconfig
+mips                   sb1250_swarm_defconfig
+sh                           se7705_defconfig
+powerpc                    amigaone_defconfig
+arc                        nsim_700_defconfig
+sh                      rts7751r2d1_defconfig
+sh                        sh7757lcr_defconfig
 ia64                             allmodconfig
 ia64                                defconfig
 ia64                             allyesconfig
