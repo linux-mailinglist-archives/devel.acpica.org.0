@@ -2,117 +2,92 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0087929AA8F
-	for <lists+devel-acpica@lfdr.de>; Tue, 27 Oct 2020 12:28:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E236B29AA92
+	for <lists+devel-acpica@lfdr.de>; Tue, 27 Oct 2020 12:28:21 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id B03861620BF9D;
-	Tue, 27 Oct 2020 04:28:16 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=45.249.212.190; helo=szxga04-in.huawei.com; envelope-from=shameerali.kolothum.thodi@huawei.com; receiver=<UNKNOWN> 
-Received: from szxga04-in.huawei.com (szxga04-in.huawei.com [45.249.212.190])
+	by ml01.01.org (Postfix) with ESMTP id BB64E1641CDA0;
+	Tue, 27 Oct 2020 04:28:20 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=45.249.212.35; helo=szxga07-in.huawei.com; envelope-from=shameerali.kolothum.thodi@huawei.com; receiver=<UNKNOWN> 
+Received: from szxga07-in.huawei.com (szxga07-in.huawei.com [45.249.212.35])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 79FCD1620BF96
-	for <devel@acpica.org>; Tue, 27 Oct 2020 04:28:14 -0700 (PDT)
-Received: from DGGEMS403-HUB.china.huawei.com (unknown [172.30.72.59])
-	by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4CL8b36LVczkZs1;
-	Tue, 27 Oct 2020 19:28:15 +0800 (CST)
+	by ml01.01.org (Postfix) with ESMTPS id C65DF1620BF9E
+	for <devel@acpica.org>; Tue, 27 Oct 2020 04:28:18 -0700 (PDT)
+Received: from DGGEMS403-HUB.china.huawei.com (unknown [172.30.72.60])
+	by szxga07-in.huawei.com (SkyGuard) with ESMTP id 4CL8b93CqPz6wlp;
+	Tue, 27 Oct 2020 19:28:21 +0800 (CST)
 Received: from S00345302A-PC.china.huawei.com (10.47.24.15) by
  DGGEMS403-HUB.china.huawei.com (10.3.19.203) with Microsoft SMTP Server id
- 14.3.487.0; Tue, 27 Oct 2020 19:28:05 +0800
+ 14.3.487.0; Tue, 27 Oct 2020 19:28:10 +0800
 From: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 To: <linux-arm-kernel@lists.infradead.org>, <linux-acpi@vger.kernel.org>,
 	<iommu@lists.linux-foundation.org>, <devel@acpica.org>
-Date: Tue, 27 Oct 2020 11:26:45 +0000
-Message-ID: <20201027112646.44680-4-shameerali.kolothum.thodi@huawei.com>
+Date: Tue, 27 Oct 2020 11:26:46 +0000
+Message-ID: <20201027112646.44680-5-shameerali.kolothum.thodi@huawei.com>
 X-Mailer: git-send-email 2.12.0.windows.1
 In-Reply-To: <20201027112646.44680-1-shameerali.kolothum.thodi@huawei.com>
 References: <20201027112646.44680-1-shameerali.kolothum.thodi@huawei.com>
 MIME-Version: 1.0
 X-Originating-IP: [10.47.24.15]
 X-CFilter-Loop: Reflected
-Message-ID-Hash: PRHT6QMG7RDLMHZX2MJGS5V2HRVKQ45S
-X-Message-ID-Hash: PRHT6QMG7RDLMHZX2MJGS5V2HRVKQ45S
+Message-ID-Hash: KDBY72UKWJLDTMLQFP432CTKY2GSKZDR
+X-Message-ID-Hash: KDBY72UKWJLDTMLQFP432CTKY2GSKZDR
 X-MailFrom: shameerali.kolothum.thodi@huawei.com
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
 CC: linuxarm@huawei.com, lorenzo.pieralisi@arm.com, joro@8bytes.org, robin.murphy@arm.com, wanghuiqiang@huawei.com, jonathan.cameron@huawei.com
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [RFC PATCH 3/4] ACPI/IORT: Add RMR memory regions reservation helper
+Subject: [Devel] [RFC PATCH 4/4] iommu/dma: Reserve any RMR regions associated with a dev
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/PRHT6QMG7RDLMHZX2MJGS5V2HRVKQ45S/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/KDBY72UKWJLDTMLQFP432CTKY2GSKZDR/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 
-QWRkIGEgaGVscGVyIGZ1bmN0aW9uIHRoYXQgcmV0cmlldmVzIFJNUiBtZW1vcnkgZGVzY3JpcHRv
-cnMNCmFzc29jaWF0ZWQgd2l0aCBhIGdpdmVuIGVuZHBvaW50IGRldi4gVGhlc2UgbWVtb3J5IHJl
-Z2lvbnMNCnNob3VsZCBoYXZlIGEgdW5pdHnCoG1hcHBpbmcgaW4gdGhlIFNNTVUuIFNvIHJlc2Vy
-dmUgdGhlbSBhcw0KSU9NTVVfUkVTVl9ESVJFQ1QuDQoNClNpZ25lZC1vZmYtYnk6IFNoYW1lZXIg
-S29sb3RodW0gPHNoYW1lZXJhbGkua29sb3RodW0udGhvZGlAaHVhd2VpLmNvbT4NCi0tLQ0KIGRy
-aXZlcnMvYWNwaS9hcm02NC9pb3J0LmMgfCA1NiArKysrKysrKysrKysrKysrKysrKysrKysrKysr
-KysrKysrKysrKysNCiBpbmNsdWRlL2xpbnV4L2FjcGlfaW9ydC5oIHwgIDQgKysrDQogMiBmaWxl
-cyBjaGFuZ2VkLCA2MCBpbnNlcnRpb25zKCspDQoNCmRpZmYgLS1naXQgYS9kcml2ZXJzL2FjcGkv
-YXJtNjQvaW9ydC5jIGIvZHJpdmVycy9hY3BpL2FybTY0L2lvcnQuYw0KaW5kZXggYjMyY2Q1M2Nj
-YTA4Li5jMDcwMDE0OWU2MGIgMTAwNjQ0DQotLS0gYS9kcml2ZXJzL2FjcGkvYXJtNjQvaW9ydC5j
-DQorKysgYi9kcml2ZXJzL2FjcGkvYXJtNjQvaW9ydC5jDQpAQCAtODQyLDYgKzg0Miw2MCBAQCBz
-dGF0aWMgaW5saW5lIGludCBpb3J0X2FkZF9kZXZpY2VfcmVwbGF5KHN0cnVjdCBkZXZpY2UgKmRl
-dikNCiAJcmV0dXJuIGVycjsNCiB9DQogDQorc3RhdGljIGJvb2wgaW9ydF9kZXZfaGFzX3Jtcihz
-dHJ1Y3QgZGV2aWNlICpkZXYsIHN0cnVjdCBpb3J0X3Jtcl9lbnRyeSAqZSkNCit7DQorCXN0cnVj
-dCBpb21tdV9md3NwZWMgKmZ3c3BlYyA9IGRldl9pb21tdV9md3NwZWNfZ2V0KGRldik7DQorCXN0
-cnVjdCBhY3BpX2lvcnRfbm9kZSAqaW9tbXU7DQorCXN0cnVjdCBpb3J0X3Jtcl9pZCAqcm1yX2lk
-cyA9IGUtPnJtcl9pZHM7DQorCWludCBpLCBqOw0KKw0KKwlpb21tdSA9IGlvcnRfZ2V0X2lvcnRf
-bm9kZShmd3NwZWMtPmlvbW11X2Z3bm9kZSk7DQorDQorCWZvciAoaSA9IDA7IGkgPCBlLT5ybXJf
-aWRzX251bTsgaSsrLCBybXJfaWRzKyspIHsNCisJCWZvciAoaiA9IDA7IGogPCBmd3NwZWMtPm51
-bV9pZHM7IGorKykgew0KKwkJCWlmIChybXJfaWRzLT5zaWQgPT0gZndzcGVjLT5pZHNbal0gJiYN
-CisJCQkgICAgcm1yX2lkcy0+c21tdSA9PSBpb21tdSkNCisJCQkJcmV0dXJuIHRydWU7DQorCQl9
-DQorCX0NCisNCisJcmV0dXJuIGZhbHNlOw0KK30NCisNCisvKioNCisgKiBpb3J0X2Rldl9ybXJf
-Z2V0X3Jlc3ZfcmVnaW9ucyAtIFJNUiBSZXNlcnZlZCByZWdpb24gZHJpdmVyIGhlbHBlcg0KKyAq
-IEBkZXY6IERldmljZSBmcm9tIGlvbW11X2dldF9yZXN2X3JlZ2lvbnMoKQ0KKyAqIEBoZWFkOiBS
-ZXNlcnZlZCByZWdpb24gbGlzdCBmcm9tIGlvbW11X2dldF9yZXN2X3JlZ2lvbnMoKQ0KKyAqDQor
-ICogUmV0dXJuczogMCBvbiBzdWNjZXNzLCA8MCBmYWlsdXJlDQorICovDQoraW50IGlvcnRfZGV2
-X3Jtcl9nZXRfcmVzdl9yZWdpb25zKHN0cnVjdCBkZXZpY2UgKmRldiwgc3RydWN0IGxpc3RfaGVh
-ZCAqaGVhZCkNCit7DQorCXN0cnVjdCBpb3J0X3Jtcl9lbnRyeSAqZTsNCisNCisJbGlzdF9mb3Jf
-ZWFjaF9lbnRyeShlLCAmaW9ydF9ybXJfbGlzdCwgbGlzdCkgew0KKwkJc3RydWN0IGlvbW11X3Jl
-c3ZfcmVnaW9uICpyZWdpb247DQorCQlzdHJ1Y3QgYWNwaV9pb3J0X3Jtcl9kZXNjICpybXI7DQor
-CQlpbnQgcHJvdCA9IElPTU1VX1JFQUQgfCBJT01NVV9XUklURSB8DQorCQkJICAgSU9NTVVfTk9F
-WEVDIHwgSU9NTVVfTU1JTzsNCisNCisJCWlmICghaW9ydF9kZXZfaGFzX3JtcihkZXYsIGUpKQ0K
-KwkJCWNvbnRpbnVlOw0KKw0KKwkJcm1yID0gZS0+cm1yX2Rlc2M7DQorCQlyZWdpb24gPSBpb21t
-dV9hbGxvY19yZXN2X3JlZ2lvbihybXItPmJhc2VfYWRkcmVzcywNCisJCQkJCQkgcm1yLT5sZW5n
-dGgsIHByb3QsDQorCQkJCQkJIElPTU1VX1JFU1ZfRElSRUNUKTsNCisJCWlmICghcmVnaW9uKSB7
-DQorCQkJZGV2X2VycihkZXYsICJPdXQgb2YgbWVtb3J5IGFsbG9jYXRpbmcgUk1SIHJlZ2lvbnNc
-biIpOw0KKwkJCXJldHVybiAtRU5PTUVNOw0KKwkJfQ0KKwkJbGlzdF9hZGRfdGFpbCgmcmVnaW9u
-LT5saXN0LCBoZWFkKTsNCisJfQ0KKw0KKwlyZXR1cm4gMDsNCit9DQorDQogLyoqDQogICogaW9y
-dF9pb21tdV9tc2lfZ2V0X3Jlc3ZfcmVnaW9ucyAtIFJlc2VydmVkIHJlZ2lvbiBkcml2ZXIgaGVs
-cGVyDQogICogQGRldjogRGV2aWNlIGZyb20gaW9tbXVfZ2V0X3Jlc3ZfcmVnaW9ucygpDQpAQCAt
-MTExMiw2ICsxMTY2LDggQEAgaW50IGlvcnRfaW9tbXVfbXNpX2dldF9yZXN2X3JlZ2lvbnMoc3Ry
-dWN0IGRldmljZSAqZGV2LCBzdHJ1Y3QgbGlzdF9oZWFkICpoZWFkKQ0KIGNvbnN0IHN0cnVjdCBp
-b21tdV9vcHMgKmlvcnRfaW9tbXVfY29uZmlndXJlX2lkKHN0cnVjdCBkZXZpY2UgKmRldiwNCiAJ
-CQkJCQljb25zdCB1MzIgKmlucHV0X2lkKQ0KIHsgcmV0dXJuIE5VTEw7IH0NCitpbnQgaW9ydF9k
-ZXZfcm1yX2dldF9yZXN2X3JlZ2lvbnMoc3RydWN0IGRldmljZSAqZGV2LCBzdHJ1Y3QgbGlzdF9o
-ZWFkICpoZWFkKQ0KK3sgcmV0dXJuIDA7IH0NCiAjZW5kaWYNCiANCiBzdGF0aWMgaW50IG5jX2Rt
-YV9nZXRfcmFuZ2Uoc3RydWN0IGRldmljZSAqZGV2LCB1NjQgKnNpemUpDQpkaWZmIC0tZ2l0IGEv
-aW5jbHVkZS9saW51eC9hY3BpX2lvcnQuaCBiL2luY2x1ZGUvbGludXgvYWNwaV9pb3J0LmgNCmlu
-ZGV4IDIwYTMyMTIwYmI4OC4uNmRkODlmYWYzNDBjIDEwMDY0NA0KLS0tIGEvaW5jbHVkZS9saW51
-eC9hY3BpX2lvcnQuaA0KKysrIGIvaW5jbHVkZS9saW51eC9hY3BpX2lvcnQuaA0KQEAgLTM4LDYg
-KzM4LDcgQEAgdm9pZCBpb3J0X2RtYV9zZXR1cChzdHJ1Y3QgZGV2aWNlICpkZXYsIHU2NCAqZG1h
-X2FkZHIsIHU2NCAqc2l6ZSk7DQogY29uc3Qgc3RydWN0IGlvbW11X29wcyAqaW9ydF9pb21tdV9j
-b25maWd1cmVfaWQoc3RydWN0IGRldmljZSAqZGV2LA0KIAkJCQkJCWNvbnN0IHUzMiAqaWRfaW4p
-Ow0KIGludCBpb3J0X2lvbW11X21zaV9nZXRfcmVzdl9yZWdpb25zKHN0cnVjdCBkZXZpY2UgKmRl
-diwgc3RydWN0IGxpc3RfaGVhZCAqaGVhZCk7DQoraW50IGlvcnRfZGV2X3Jtcl9nZXRfcmVzdl9y
-ZWdpb25zKHN0cnVjdCBkZXZpY2UgKmRldiwgc3RydWN0IGxpc3RfaGVhZCAqaGVhZCk7DQogI2Vs
-c2UNCiBzdGF0aWMgaW5saW5lIHZvaWQgYWNwaV9pb3J0X2luaXQodm9pZCkgeyB9DQogc3RhdGlj
-IGlubGluZSB1MzIgaW9ydF9tc2lfbWFwX2lkKHN0cnVjdCBkZXZpY2UgKmRldiwgdTMyIGlkKQ0K
-QEAgLTU1LDYgKzU2LDkgQEAgc3RhdGljIGlubGluZSBjb25zdCBzdHJ1Y3QgaW9tbXVfb3BzICpp
-b3J0X2lvbW11X2NvbmZpZ3VyZV9pZCgNCiBzdGF0aWMgaW5saW5lDQogaW50IGlvcnRfaW9tbXVf
-bXNpX2dldF9yZXN2X3JlZ2lvbnMoc3RydWN0IGRldmljZSAqZGV2LCBzdHJ1Y3QgbGlzdF9oZWFk
-ICpoZWFkKQ0KIHsgcmV0dXJuIDA7IH0NCitzdGF0aWMgaW5saW5lDQoraW50IGlvcnRfZGV2X3Jt
-cl9nZXRfcmVzdl9yZWdpb25zKHN0cnVjdCBkZXZpY2UgKmRldiwgc3RydWN0IGxpc3RfaGVhZCAq
-aGVhZCkNCit7IHJldHVybiAwOyB9DQogI2VuZGlmDQogDQogI2VuZGlmIC8qIF9fQUNQSV9JT1JU
-X0hfXyAqLw0KLS0gDQoyLjE3LjENCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fCkRldmVsIG1haWxpbmcgbGlzdCAtLSBkZXZlbEBhY3BpY2Eub3JnClRvIHVu
-c3Vic2NyaWJlIHNlbmQgYW4gZW1haWwgdG8gZGV2ZWwtbGVhdmVAYWNwaWNhLm9yZwolKHdlYl9w
-YWdlX3VybClzbGlzdGluZm8lKGNnaWV4dClzLyUoX2ludGVybmFsX25hbWUpcw==
+Added support to get RMR regions associated with a dev
+reserved so that there is a unity mapping for them in
+SMMU.
+
+Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+---
+ drivers/iommu/dma-iommu.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
+index 0cbcd3fc3e7e..31eec16f2af8 100644
+--- a/drivers/iommu/dma-iommu.c
++++ b/drivers/iommu/dma-iommu.c
+@@ -153,15 +153,19 @@ EXPORT_SYMBOL(iommu_put_dma_cookie);
+  * @list: Reserved region list from iommu_get_resv_regions()
+  *
+  * IOMMU drivers can use this to implement their .get_resv_regions callback
+- * for general non-IOMMU-specific reservations. Currently, this covers GICv3
+- * ITS region reservation on ACPI based ARM platforms that may require HW MSI
+- * reservation.
++ * for general non-IOMMU-specific reservations. Currently this covers,
++ *  - GICv3 ITS region reservation on ACPI based ARM platforms that may
++ *    require HW MSI reservation.
++ *  - ACPI IORT RMR memory range reservations that require a unity mapping
++ *    in the SMMU for a given endpoint device.
+  */
+ void iommu_dma_get_resv_regions(struct device *dev, struct list_head *list)
+ {
+ 
+-	if (!is_of_node(dev_iommu_fwspec_get(dev)->iommu_fwnode))
++	if (!is_of_node(dev_iommu_fwspec_get(dev)->iommu_fwnode)) {
+ 		iort_iommu_msi_get_resv_regions(dev, list);
++		iort_dev_rmr_get_resv_regions(dev, list);
++	}
+ 
+ }
+ EXPORT_SYMBOL(iommu_dma_get_resv_regions);
+-- 
+2.17.1
+_______________________________________________
+Devel mailing list -- devel@acpica.org
+To unsubscribe send an email to devel-leave@acpica.org
+%(web_page_url)slistinfo%(cgiext)s/%(_internal_name)s
