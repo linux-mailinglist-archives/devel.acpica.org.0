@@ -2,53 +2,29 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id C4BCF2A3C22
-	for <lists+devel-acpica@lfdr.de>; Tue,  3 Nov 2020 06:43:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 637D12A6C9E
+	for <lists+devel-acpica@lfdr.de>; Wed,  4 Nov 2020 19:24:14 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 1B9B51638F990;
-	Mon,  2 Nov 2020 21:43:21 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.100; helo=mga07.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 7E1791638F985
-	for <devel@acpica.org>; Mon,  2 Nov 2020 21:43:19 -0800 (PST)
-IronPort-SDR: xocX6Jc33ic/+Q5ZTsSj4al6uIcgB4AebzsRJr+REps6CmkFiZCeYssKJOy5z7svhWHo1XnDUx
- O5OeJ19iAHKA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9793"; a="233172086"
-X-IronPort-AV: E=Sophos;i="5.77,447,1596524400";
-   d="scan'208";a="233172086"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Nov 2020 21:43:18 -0800
-IronPort-SDR: q7TZnBerEMMFCCgOrnWI0bZEMTGESRAx/Vv0RUBP77VX3uRP+7jhSDf0+HOTzkThTbCHFg+WSU
- a+25FRJml7qA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.77,447,1596524400";
-   d="scan'208";a="526938734"
-Received: from lkp-server02.sh.intel.com (HELO e61783667810) ([10.239.97.151])
-  by fmsmga006.fm.intel.com with ESMTP; 02 Nov 2020 21:43:16 -0800
-Received: from kbuild by e61783667810 with local (Exim 4.92)
-	(envelope-from <lkp@intel.com>)
-	id 1kZp6C-000037-3X; Tue, 03 Nov 2020 05:43:16 +0000
-Date: Tue, 03 Nov 2020 13:42:38 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <5fa0edce.69RZlbbqrc+NFjb/%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTP id 066C21651137D;
+	Wed,  4 Nov 2020 10:24:13 -0800 (PST)
+Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
+	by ml01.01.org (Postfix) with ESMTP id 4454A164F8B96
+	for <devel@acpica.org>; Wed,  4 Nov 2020 10:24:11 -0800 (PST)
 MIME-Version: 1.0
-Message-ID-Hash: W3HCSLHRQ65TW5JHXCPKXSGDR2X3IFI4
-X-Message-ID-Hash: W3HCSLHRQ65TW5JHXCPKXSGDR2X3IFI4
-X-MailFrom: lkp@intel.com
-X-Mailman-Rule-Hits: nonmember-moderation
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+From: devinsteffler@gmail.com
+To: devel@acpica.org
+Date: Wed, 04 Nov 2020 18:24:11 -0000
+Message-ID: <20201104182411.2796.58819@ml01.vlan13.01.org>
+User-Agent: HyperKitty on https://lists.acpica.org/
+Message-ID-Hash: EEDTDTCFCIJL6X3B6L5SWSD5K7LY3RUU
+X-Message-ID-Hash: EEDTDTCFCIJL6X3B6L5SWSD5K7LY3RUU
+X-MailFrom: devinsteffler@gmail.com
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS b5d7c2d02f9915dcecf7ffa3b7d25cc01368465a
+Subject: [Devel] The PC speaker beep stops working on Lenovo M90n after enabling ACPI (in QNX)
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/W3HCSLHRQ65TW5JHXCPKXSGDR2X3IFI4/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/EEDTDTCFCIJL6X3B6L5SWSD5K7LY3RUU/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -57,117 +33,31 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git  bleeding-edge
-branch HEAD: b5d7c2d02f9915dcecf7ffa3b7d25cc01368465a  Merge branch 'pm-cpufreq-next' into bleeding-edge
+Hello,
 
-elapsed time: 723m
+I've run into a strange situation and I'm wondering if anyone can provide some insight into what might be happening. I'm using code that's basically the same as the following example to create a beep using the internal PC speaker: https://wiki.osdev.org/PC_Speaker#Sample_Code.
 
-configs tested: 93
-configs skipped: 2
+I'm running QNX on a Lenovo M90n (Intel i5-8365U CPU). I'm using my own ACPICA based driver to manage things like reading battery level.
 
-The following configs have been built successfully.
-More configs may be tested in the coming days.
+Strangely though, on this machine, after ACPI is enabled then the PC speaker stops working as expected. I've narrowed it down to the following initialization code within ACPICA:
+Status = AcpiHwWritePort (AcpiGbl_FADT.SmiCommand, // 0xB2 on this x86_64 platform (Lenovo M90n)
+            (UINT32) AcpiGbl_FADT.AcpiEnable,   // 0xA0 on this x86_64 platform (Lenovo M90n)
+	    8);
 
-gcc tested configs:
-arm                                 defconfig
-arm64                            allyesconfig
-arm                              allyesconfig
-arm                              allmodconfig
-arm64                               defconfig
-arm                    vt8500_v6_v7_defconfig
-powerpc                    amigaone_defconfig
-arm                        spear6xx_defconfig
-arm                            mmp2_defconfig
-ia64                        generic_defconfig
-mips                    maltaup_xpa_defconfig
-xtensa                generic_kc705_defconfig
-powerpc                      obs600_defconfig
-sh                   sh7770_generic_defconfig
-powerpc                 mpc837x_mds_defconfig
-sh                           se7206_defconfig
-arm                      tct_hammer_defconfig
-m68k                       m5208evb_defconfig
-microblaze                      mmu_defconfig
-arm                          pxa3xx_defconfig
-mips                      fuloong2e_defconfig
-sh                          sdk7780_defconfig
-arm                       cns3420vb_defconfig
-arm                  colibri_pxa270_defconfig
-ia64                             allmodconfig
-ia64                                defconfig
-ia64                             allyesconfig
-m68k                             allmodconfig
-m68k                                defconfig
-m68k                             allyesconfig
-nds32                               defconfig
-nios2                            allyesconfig
-csky                                defconfig
-alpha                               defconfig
-alpha                            allyesconfig
-nios2                               defconfig
-arc                              allyesconfig
-nds32                             allnoconfig
-c6x                              allyesconfig
-xtensa                           allyesconfig
-h8300                            allyesconfig
-arc                                 defconfig
-sh                               allmodconfig
-parisc                              defconfig
-s390                             allyesconfig
-parisc                           allyesconfig
-s390                                defconfig
-i386                             allyesconfig
-sparc                            allyesconfig
-sparc                               defconfig
-i386                                defconfig
-mips                             allyesconfig
-mips                             allmodconfig
-powerpc                          allyesconfig
-powerpc                          allmodconfig
-powerpc                           allnoconfig
-i386                 randconfig-a004-20201102
-i386                 randconfig-a006-20201102
-i386                 randconfig-a005-20201102
-i386                 randconfig-a001-20201102
-i386                 randconfig-a002-20201102
-i386                 randconfig-a003-20201102
-x86_64               randconfig-a012-20201102
-x86_64               randconfig-a015-20201102
-x86_64               randconfig-a011-20201102
-x86_64               randconfig-a013-20201102
-x86_64               randconfig-a014-20201102
-x86_64               randconfig-a016-20201102
-i386                 randconfig-a013-20201102
-i386                 randconfig-a015-20201102
-i386                 randconfig-a014-20201102
-i386                 randconfig-a016-20201102
-i386                 randconfig-a011-20201102
-i386                 randconfig-a012-20201102
-riscv                    nommu_k210_defconfig
-riscv                            allyesconfig
-riscv                    nommu_virt_defconfig
-riscv                             allnoconfig
-riscv                               defconfig
-riscv                          rv32_defconfig
-riscv                            allmodconfig
-x86_64                                   rhel
-x86_64                           allyesconfig
-x86_64                    rhel-7.6-kselftests
-x86_64                              defconfig
-x86_64                               rhel-8.3
-x86_64                                  kexec
+Before that line executes, I can generate a beep just fine. However, as soon as that line returns, then I cannot generate beeps anymore.
 
-clang tested configs:
-x86_64               randconfig-a004-20201102
-x86_64               randconfig-a005-20201102
-x86_64               randconfig-a003-20201102
-x86_64               randconfig-a002-20201102
-x86_64               randconfig-a006-20201102
-x86_64               randconfig-a001-20201102
+The speaker itself is still functional. If I toggle the in/out value of the speaker via port 0x61 then I hear an audible click. So it's almost as if the PIT itself is not generating a square wave on channel 2 when put into mode 3.
 
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+For example, for a 2 second beep:
+- Before ACPI is enabled, I hear a 2 second beep at my desired frequency.
+- After ACPI is enabled via the line specified above, then I hear a click, then two seconds later I hear another click. There is no beep in between the clicks.
+
+Any ideas are appreciated. Is the SMI handler implemented in the PC's UEFI firmware? If so, does this behavior suggest that there's a bug in it (and I should be contacting Lenovo for support)? From what I found online, it looks like writing to 0xB2 should generate an SMI interrupt (handled by the SMI handler, which should process the value 0xA0 that ACPICA is sending to it).
+
+I haven't tried to replicate the issue on any other OS yet, but maybe I should try that as well.
+
+Thanks,
+Devin
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
