@@ -1,231 +1,133 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D71B2A76BE
-	for <lists+devel-acpica@lfdr.de>; Thu,  5 Nov 2020 05:59:02 +0100 (CET)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BFABE2A85A5
+	for <lists+devel-acpica@lfdr.de>; Thu,  5 Nov 2020 19:04:16 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id ABE79165A78B8;
-	Wed,  4 Nov 2020 20:59:00 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.88; helo=mga01.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 5ADF9160C6A54
-	for <devel@acpica.org>; Wed,  4 Nov 2020 20:58:58 -0800 (PST)
-IronPort-SDR: BOr28oKuLQhpIB85JP/wH2JR/Jz6fBL95/AifxI7ftTdOsUlcHyChBjlBjdxrTLk3mqf4Yu6bE
- V90uXccTfn7Q==
-X-IronPort-AV: E=McAfee;i="6000,8403,9795"; a="187218995"
-X-IronPort-AV: E=Sophos;i="5.77,452,1596524400";
-   d="scan'208";a="187218995"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Nov 2020 20:58:54 -0800
-IronPort-SDR: GaFwowDkmyGkXU/+gC79uBotiOAaZ8g4g2rPyoanNNNN/r3pdl3MH2hSCvoXvVJ9Ia4+mvkZvF
- Cu/lEm+k++ZA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.77,452,1596524400";
-   d="scan'208";a="321063157"
-Received: from lkp-server02.sh.intel.com (HELO e61783667810) ([10.239.97.151])
-  by orsmga003.jf.intel.com with ESMTP; 04 Nov 2020 20:58:52 -0800
-Received: from kbuild by e61783667810 with local (Exim 4.92)
-	(envelope-from <lkp@intel.com>)
-	id 1kaXMJ-0001F2-PW; Thu, 05 Nov 2020 04:58:51 +0000
-Date: Thu, 05 Nov 2020 12:58:02 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <5fa3865a.NzIx0xFnIiHyCtua%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTP id 0AC8316631CFE;
+	Thu,  5 Nov 2020 10:04:15 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=217.140.110.172; helo=foss.arm.com; envelope-from=robin.murphy@arm.com; receiver=<UNKNOWN> 
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by ml01.01.org (Postfix) with ESMTP id 3FCD0165567B2
+	for <devel@acpica.org>; Thu,  5 Nov 2020 10:04:12 -0800 (PST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id AAC0014BF;
+	Thu,  5 Nov 2020 10:04:06 -0800 (PST)
+Received: from [10.57.54.223] (unknown [10.57.54.223])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C558F3F719;
+	Thu,  5 Nov 2020 10:03:59 -0800 (PST)
+To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ linux-arm-kernel@lists.infradead.org, linux-acpi@vger.kernel.org,
+ iommu@lists.linux-foundation.org, devel@acpica.org
+References: <20201027112646.44680-1-shameerali.kolothum.thodi@huawei.com>
+ <20201027112646.44680-4-shameerali.kolothum.thodi@huawei.com>
+From: Robin Murphy <robin.murphy@arm.com>
+Message-ID: <327e6475-eb48-33a1-ef38-fae9df3bf0cb@arm.com>
+Date: Thu, 5 Nov 2020 18:03:58 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.0
 MIME-Version: 1.0
-Message-ID-Hash: VWO7RCCSHIYQCQDZK33HYLPXZESZYCFL
-X-Message-ID-Hash: VWO7RCCSHIYQCQDZK33HYLPXZESZYCFL
-X-MailFrom: lkp@intel.com
-X-Mailman-Rule-Hits: nonmember-moderation
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+In-Reply-To: <20201027112646.44680-4-shameerali.kolothum.thodi@huawei.com>
+Content-Language: en-GB
+Message-ID-Hash: JEWBSCWNHWCETLMJYHYS3Q6PUT2YU7A2
+X-Message-ID-Hash: JEWBSCWNHWCETLMJYHYS3Q6PUT2YU7A2
+X-MailFrom: robin.murphy@arm.com
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
+CC: linuxarm@huawei.com, lorenzo.pieralisi@arm.com, joro@8bytes.org, wanghuiqiang@huawei.com, jonathan.cameron@huawei.com
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS dddc237beebb79a67a6e2cc18b6a0a29a3a7a89c
+Subject: [Devel] Re: [RFC PATCH 3/4] ACPI/IORT: Add RMR memory regions reservation helper
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/VWO7RCCSHIYQCQDZK33HYLPXZESZYCFL/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/JEWBSCWNHWCETLMJYHYS3Q6PUT2YU7A2/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"; format="flowed"
+Content-Transfer-Encoding: base64
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git  bleeding-edge
-branch HEAD: dddc237beebb79a67a6e2cc18b6a0a29a3a7a89c  Merge branch 'pm-cpufreq-next' into linux-next
-
-elapsed time: 725m
-
-configs tested: 150
-configs skipped: 2
-
-The following configs have been built successfully.
-More configs may be tested in the coming days.
-
-gcc tested configs:
-arm                                 defconfig
-arm64                            allyesconfig
-arm64                               defconfig
-arm                              allyesconfig
-arm                              allmodconfig
-mips                      bmips_stb_defconfig
-powerpc                  storcenter_defconfig
-sh                             shx3_defconfig
-powerpc                      makalu_defconfig
-arm                      pxa255-idp_defconfig
-arm                        shmobile_defconfig
-sh                           se7751_defconfig
-arm                        vexpress_defconfig
-arm                            u300_defconfig
-mips                          ath25_defconfig
-sh                          rsk7269_defconfig
-sh                   secureedge5410_defconfig
-mips                        maltaup_defconfig
-arm                          tango4_defconfig
-parisc                           alldefconfig
-powerpc               mpc834x_itxgp_defconfig
-arm                           tegra_defconfig
-mips                         cobalt_defconfig
-openrisc                            defconfig
-mips                         tb0226_defconfig
-xtensa                              defconfig
-alpha                            allyesconfig
-powerpc                    sam440ep_defconfig
-mips                         db1xxx_defconfig
-arm                            pleb_defconfig
-arm                        mvebu_v7_defconfig
-sh                        sh7785lcr_defconfig
-arm                        spear3xx_defconfig
-powerpc                 mpc834x_itx_defconfig
-ia64                                defconfig
-mips                       capcella_defconfig
-mips                       rbtx49xx_defconfig
-arc                              alldefconfig
-um                            kunit_defconfig
-powerpc                    ge_imp3a_defconfig
-mips                     loongson1c_defconfig
-arm                        multi_v5_defconfig
-powerpc                      cm5200_defconfig
-arc                            hsdk_defconfig
-mips                        jmr3927_defconfig
-powerpc                      ppc6xx_defconfig
-arm                      integrator_defconfig
-powerpc                 mpc837x_rdb_defconfig
-arm                        clps711x_defconfig
-sh                        edosk7760_defconfig
-parisc                generic-64bit_defconfig
-powerpc                     tqm8555_defconfig
-i386                             allyesconfig
-i386                             alldefconfig
-sh                           se7722_defconfig
-powerpc                       holly_defconfig
-mips                        bcm47xx_defconfig
-mips                            gpr_defconfig
-powerpc                     taishan_defconfig
-arm                          ep93xx_defconfig
-powerpc                      katmai_defconfig
-m68k                       bvme6000_defconfig
-sh                     sh7710voipgw_defconfig
-arm                         orion5x_defconfig
-riscv                    nommu_virt_defconfig
-arm                     davinci_all_defconfig
-sh                   sh7724_generic_defconfig
-powerpc                    klondike_defconfig
-mips                       lemote2f_defconfig
-riscv                            allmodconfig
-mips                            ar7_defconfig
-powerpc                        cell_defconfig
-sh                  sh7785lcr_32bit_defconfig
-powerpc                  iss476-smp_defconfig
-arm                          gemini_defconfig
-powerpc                     asp8347_defconfig
-powerpc                      ppc64e_defconfig
-powerpc                     tqm8548_defconfig
-powerpc                     ksi8560_defconfig
-arc                     nsimosci_hs_defconfig
-ia64                             allmodconfig
-ia64                             allyesconfig
-m68k                             allmodconfig
-m68k                                defconfig
-m68k                             allyesconfig
-nios2                               defconfig
-arc                              allyesconfig
-nds32                             allnoconfig
-c6x                              allyesconfig
-nds32                               defconfig
-nios2                            allyesconfig
-csky                                defconfig
-alpha                               defconfig
-xtensa                           allyesconfig
-h8300                            allyesconfig
-arc                                 defconfig
-sh                               allmodconfig
-parisc                              defconfig
-s390                             allyesconfig
-parisc                           allyesconfig
-s390                                defconfig
-sparc                            allyesconfig
-sparc                               defconfig
-i386                                defconfig
-mips                             allyesconfig
-mips                             allmodconfig
-powerpc                          allyesconfig
-powerpc                          allmodconfig
-powerpc                           allnoconfig
-i386                 randconfig-a004-20201104
-i386                 randconfig-a006-20201104
-i386                 randconfig-a005-20201104
-i386                 randconfig-a001-20201104
-i386                 randconfig-a002-20201104
-i386                 randconfig-a003-20201104
-i386                 randconfig-a004-20201105
-i386                 randconfig-a006-20201105
-i386                 randconfig-a005-20201105
-i386                 randconfig-a001-20201105
-i386                 randconfig-a002-20201105
-i386                 randconfig-a003-20201105
-x86_64               randconfig-a012-20201104
-x86_64               randconfig-a015-20201104
-x86_64               randconfig-a013-20201104
-x86_64               randconfig-a011-20201104
-x86_64               randconfig-a014-20201104
-x86_64               randconfig-a016-20201104
-i386                 randconfig-a015-20201104
-i386                 randconfig-a013-20201104
-i386                 randconfig-a014-20201104
-i386                 randconfig-a016-20201104
-i386                 randconfig-a011-20201104
-i386                 randconfig-a012-20201104
-riscv                    nommu_k210_defconfig
-riscv                            allyesconfig
-riscv                             allnoconfig
-riscv                               defconfig
-riscv                          rv32_defconfig
-x86_64                                   rhel
-x86_64                           allyesconfig
-x86_64                    rhel-7.6-kselftests
-x86_64                              defconfig
-x86_64                               rhel-8.3
-x86_64                                  kexec
-
-clang tested configs:
-x86_64               randconfig-a004-20201104
-x86_64               randconfig-a003-20201104
-x86_64               randconfig-a005-20201104
-x86_64               randconfig-a002-20201104
-x86_64               randconfig-a006-20201104
-x86_64               randconfig-a001-20201104
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
-_______________________________________________
-Devel mailing list -- devel@acpica.org
-To unsubscribe send an email to devel-leave@acpica.org
-%(web_page_url)slistinfo%(cgiext)s/%(_internal_name)s
+T24gMjAyMC0xMC0yNyAxMToyNiwgU2hhbWVlciBLb2xvdGh1bSB3cm90ZToNCj4gQWRkIGEgaGVs
+cGVyIGZ1bmN0aW9uIHRoYXQgcmV0cmlldmVzIFJNUiBtZW1vcnkgZGVzY3JpcHRvcnMNCj4gYXNz
+b2NpYXRlZCB3aXRoIGEgZ2l2ZW4gZW5kcG9pbnQgZGV2LiBUaGVzZSBtZW1vcnkgcmVnaW9ucw0K
+PiBzaG91bGQgaGF2ZSBhIHVuaXR5wqBtYXBwaW5nIGluIHRoZSBTTU1VLiBTbyByZXNlcnZlIHRo
+ZW0gYXMNCj4gSU9NTVVfUkVTVl9ESVJFQ1QuDQoNCkFzIGEgZ2VuZXJhbCBvYnNlcnZhdGlvbiwg
+d2UgYWxzbyBuZWVkIGEgd2F5IGludG8gdGhpcyB0aGF0IGlzbid0IGZyb20gDQp0aGUgcGVyc3Bl
+Y3RpdmUgb2YgZW5kcG9pbnQgZGV2aWNlcy4gV2l0aCBTTU1VdjMgd2UgbmVlZCB0byBrbm93IGFs
+bCB0aGUgDQphY3RpdmUgc3RyZWFtIElEcyByZWxldmFudCB0byBhIGdpdmVuIFNNTVUgaW5zdGFu
+Y2UgYXQgcHJvYmUgdGltZSwgc28gDQp0aGF0IHdlIGNhbiBzZXQgdXAgc29tZSBraW5kIG9mIHZh
+bGlkIHN0cmVhbSB0YWJsZSBlbnRyaWVzICpiZWZvcmUqIA0KZW5hYmxpbmcgdGhlIFNNTVUgaW4g
+dGhlIHJlc2V0IHJvdXRpbmUuIE90aGVyd2lzZSB3ZSdyZSBqdXN0IGdvaW5nIHRvIA0Ka2lsbCBv
+bmdvaW5nIHRyYWZmaWMgKGUuZy4gRUZJIEdPUCkgd2l0aCBDX0JBRF9TVEUgbG9uZyBiZWZvcmUg
+d2UgZXZlciANCnN0YXJ0IGFkZGluZyBkZXZpY2VzIGFuZCB3b3JyeWluZyBhYm91dCByZXNlcnZl
+ZCByZWdpb25zIGZvciB0aGVtLiANClNpbWlsYXJseSBmb3IgdGhlIGluaXRpYWwgU01SL1MyQ1Ig
+c3RhdGUgb24gU01NVXYyIHdpdGggZGlzYWJsZV9ieXBhc3MuDQoNClJvYmluLg0KDQo+IFNpZ25l
+ZC1vZmYtYnk6IFNoYW1lZXIgS29sb3RodW0gPHNoYW1lZXJhbGkua29sb3RodW0udGhvZGlAaHVh
+d2VpLmNvbT4NCj4gLS0tDQo+ICAgZHJpdmVycy9hY3BpL2FybTY0L2lvcnQuYyB8IDU2ICsrKysr
+KysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKw0KPiAgIGluY2x1ZGUvbGludXgvYWNw
+aV9pb3J0LmggfCAgNCArKysNCj4gICAyIGZpbGVzIGNoYW5nZWQsIDYwIGluc2VydGlvbnMoKykN
+Cj4gDQo+IGRpZmYgLS1naXQgYS9kcml2ZXJzL2FjcGkvYXJtNjQvaW9ydC5jIGIvZHJpdmVycy9h
+Y3BpL2FybTY0L2lvcnQuYw0KPiBpbmRleCBiMzJjZDUzY2NhMDguLmMwNzAwMTQ5ZTYwYiAxMDA2
+NDQNCj4gLS0tIGEvZHJpdmVycy9hY3BpL2FybTY0L2lvcnQuYw0KPiArKysgYi9kcml2ZXJzL2Fj
+cGkvYXJtNjQvaW9ydC5jDQo+IEBAIC04NDIsNiArODQyLDYwIEBAIHN0YXRpYyBpbmxpbmUgaW50
+IGlvcnRfYWRkX2RldmljZV9yZXBsYXkoc3RydWN0IGRldmljZSAqZGV2KQ0KPiAgIAlyZXR1cm4g
+ZXJyOw0KPiAgIH0NCj4gICANCj4gK3N0YXRpYyBib29sIGlvcnRfZGV2X2hhc19ybXIoc3RydWN0
+IGRldmljZSAqZGV2LCBzdHJ1Y3QgaW9ydF9ybXJfZW50cnkgKmUpDQo+ICt7DQo+ICsJc3RydWN0
+IGlvbW11X2Z3c3BlYyAqZndzcGVjID0gZGV2X2lvbW11X2Z3c3BlY19nZXQoZGV2KTsNCj4gKwlz
+dHJ1Y3QgYWNwaV9pb3J0X25vZGUgKmlvbW11Ow0KPiArCXN0cnVjdCBpb3J0X3Jtcl9pZCAqcm1y
+X2lkcyA9IGUtPnJtcl9pZHM7DQo+ICsJaW50IGksIGo7DQo+ICsNCj4gKwlpb21tdSA9IGlvcnRf
+Z2V0X2lvcnRfbm9kZShmd3NwZWMtPmlvbW11X2Z3bm9kZSk7DQo+ICsNCj4gKwlmb3IgKGkgPSAw
+OyBpIDwgZS0+cm1yX2lkc19udW07IGkrKywgcm1yX2lkcysrKSB7DQo+ICsJCWZvciAoaiA9IDA7
+IGogPCBmd3NwZWMtPm51bV9pZHM7IGorKykgew0KPiArCQkJaWYgKHJtcl9pZHMtPnNpZCA9PSBm
+d3NwZWMtPmlkc1tqXSAmJg0KPiArCQkJICAgIHJtcl9pZHMtPnNtbXUgPT0gaW9tbXUpDQo+ICsJ
+CQkJcmV0dXJuIHRydWU7DQo+ICsJCX0NCj4gKwl9DQo+ICsNCj4gKwlyZXR1cm4gZmFsc2U7DQo+
+ICt9DQo+ICsNCj4gKy8qKg0KPiArICogaW9ydF9kZXZfcm1yX2dldF9yZXN2X3JlZ2lvbnMgLSBS
+TVIgUmVzZXJ2ZWQgcmVnaW9uIGRyaXZlciBoZWxwZXINCj4gKyAqIEBkZXY6IERldmljZSBmcm9t
+IGlvbW11X2dldF9yZXN2X3JlZ2lvbnMoKQ0KPiArICogQGhlYWQ6IFJlc2VydmVkIHJlZ2lvbiBs
+aXN0IGZyb20gaW9tbXVfZ2V0X3Jlc3ZfcmVnaW9ucygpDQo+ICsgKg0KPiArICogUmV0dXJuczog
+MCBvbiBzdWNjZXNzLCA8MCBmYWlsdXJlDQo+ICsgKi8NCj4gK2ludCBpb3J0X2Rldl9ybXJfZ2V0
+X3Jlc3ZfcmVnaW9ucyhzdHJ1Y3QgZGV2aWNlICpkZXYsIHN0cnVjdCBsaXN0X2hlYWQgKmhlYWQp
+DQo+ICt7DQo+ICsJc3RydWN0IGlvcnRfcm1yX2VudHJ5ICplOw0KPiArDQo+ICsJbGlzdF9mb3Jf
+ZWFjaF9lbnRyeShlLCAmaW9ydF9ybXJfbGlzdCwgbGlzdCkgew0KPiArCQlzdHJ1Y3QgaW9tbXVf
+cmVzdl9yZWdpb24gKnJlZ2lvbjsNCj4gKwkJc3RydWN0IGFjcGlfaW9ydF9ybXJfZGVzYyAqcm1y
+Ow0KPiArCQlpbnQgcHJvdCA9IElPTU1VX1JFQUQgfCBJT01NVV9XUklURSB8DQo+ICsJCQkgICBJ
+T01NVV9OT0VYRUMgfCBJT01NVV9NTUlPOw0KPiArDQo+ICsJCWlmICghaW9ydF9kZXZfaGFzX3Jt
+cihkZXYsIGUpKQ0KPiArCQkJY29udGludWU7DQo+ICsNCj4gKwkJcm1yID0gZS0+cm1yX2Rlc2M7
+DQo+ICsJCXJlZ2lvbiA9IGlvbW11X2FsbG9jX3Jlc3ZfcmVnaW9uKHJtci0+YmFzZV9hZGRyZXNz
+LA0KPiArCQkJCQkJIHJtci0+bGVuZ3RoLCBwcm90LA0KPiArCQkJCQkJIElPTU1VX1JFU1ZfRElS
+RUNUKTsNCj4gKwkJaWYgKCFyZWdpb24pIHsNCj4gKwkJCWRldl9lcnIoZGV2LCAiT3V0IG9mIG1l
+bW9yeSBhbGxvY2F0aW5nIFJNUiByZWdpb25zXG4iKTsNCj4gKwkJCXJldHVybiAtRU5PTUVNOw0K
+PiArCQl9DQo+ICsJCWxpc3RfYWRkX3RhaWwoJnJlZ2lvbi0+bGlzdCwgaGVhZCk7DQo+ICsJfQ0K
+PiArDQo+ICsJcmV0dXJuIDA7DQo+ICt9DQo+ICsNCj4gICAvKioNCj4gICAgKiBpb3J0X2lvbW11
+X21zaV9nZXRfcmVzdl9yZWdpb25zIC0gUmVzZXJ2ZWQgcmVnaW9uIGRyaXZlciBoZWxwZXINCj4g
+ICAgKiBAZGV2OiBEZXZpY2UgZnJvbSBpb21tdV9nZXRfcmVzdl9yZWdpb25zKCkNCj4gQEAgLTEx
+MTIsNiArMTE2Niw4IEBAIGludCBpb3J0X2lvbW11X21zaV9nZXRfcmVzdl9yZWdpb25zKHN0cnVj
+dCBkZXZpY2UgKmRldiwgc3RydWN0IGxpc3RfaGVhZCAqaGVhZCkNCj4gICBjb25zdCBzdHJ1Y3Qg
+aW9tbXVfb3BzICppb3J0X2lvbW11X2NvbmZpZ3VyZV9pZChzdHJ1Y3QgZGV2aWNlICpkZXYsDQo+
+ICAgCQkJCQkJY29uc3QgdTMyICppbnB1dF9pZCkNCj4gICB7IHJldHVybiBOVUxMOyB9DQo+ICtp
+bnQgaW9ydF9kZXZfcm1yX2dldF9yZXN2X3JlZ2lvbnMoc3RydWN0IGRldmljZSAqZGV2LCBzdHJ1
+Y3QgbGlzdF9oZWFkICpoZWFkKQ0KPiAreyByZXR1cm4gMDsgfQ0KPiAgICNlbmRpZg0KPiAgIA0K
+PiAgIHN0YXRpYyBpbnQgbmNfZG1hX2dldF9yYW5nZShzdHJ1Y3QgZGV2aWNlICpkZXYsIHU2NCAq
+c2l6ZSkNCj4gZGlmZiAtLWdpdCBhL2luY2x1ZGUvbGludXgvYWNwaV9pb3J0LmggYi9pbmNsdWRl
+L2xpbnV4L2FjcGlfaW9ydC5oDQo+IGluZGV4IDIwYTMyMTIwYmI4OC4uNmRkODlmYWYzNDBjIDEw
+MDY0NA0KPiAtLS0gYS9pbmNsdWRlL2xpbnV4L2FjcGlfaW9ydC5oDQo+ICsrKyBiL2luY2x1ZGUv
+bGludXgvYWNwaV9pb3J0LmgNCj4gQEAgLTM4LDYgKzM4LDcgQEAgdm9pZCBpb3J0X2RtYV9zZXR1
+cChzdHJ1Y3QgZGV2aWNlICpkZXYsIHU2NCAqZG1hX2FkZHIsIHU2NCAqc2l6ZSk7DQo+ICAgY29u
+c3Qgc3RydWN0IGlvbW11X29wcyAqaW9ydF9pb21tdV9jb25maWd1cmVfaWQoc3RydWN0IGRldmlj
+ZSAqZGV2LA0KPiAgIAkJCQkJCWNvbnN0IHUzMiAqaWRfaW4pOw0KPiAgIGludCBpb3J0X2lvbW11
+X21zaV9nZXRfcmVzdl9yZWdpb25zKHN0cnVjdCBkZXZpY2UgKmRldiwgc3RydWN0IGxpc3RfaGVh
+ZCAqaGVhZCk7DQo+ICtpbnQgaW9ydF9kZXZfcm1yX2dldF9yZXN2X3JlZ2lvbnMoc3RydWN0IGRl
+dmljZSAqZGV2LCBzdHJ1Y3QgbGlzdF9oZWFkICpoZWFkKTsNCj4gICAjZWxzZQ0KPiAgIHN0YXRp
+YyBpbmxpbmUgdm9pZCBhY3BpX2lvcnRfaW5pdCh2b2lkKSB7IH0NCj4gICBzdGF0aWMgaW5saW5l
+IHUzMiBpb3J0X21zaV9tYXBfaWQoc3RydWN0IGRldmljZSAqZGV2LCB1MzIgaWQpDQo+IEBAIC01
+NSw2ICs1Niw5IEBAIHN0YXRpYyBpbmxpbmUgY29uc3Qgc3RydWN0IGlvbW11X29wcyAqaW9ydF9p
+b21tdV9jb25maWd1cmVfaWQoDQo+ICAgc3RhdGljIGlubGluZQ0KPiAgIGludCBpb3J0X2lvbW11
+X21zaV9nZXRfcmVzdl9yZWdpb25zKHN0cnVjdCBkZXZpY2UgKmRldiwgc3RydWN0IGxpc3RfaGVh
+ZCAqaGVhZCkNCj4gICB7IHJldHVybiAwOyB9DQo+ICtzdGF0aWMgaW5saW5lDQo+ICtpbnQgaW9y
+dF9kZXZfcm1yX2dldF9yZXN2X3JlZ2lvbnMoc3RydWN0IGRldmljZSAqZGV2LCBzdHJ1Y3QgbGlz
+dF9oZWFkICpoZWFkKQ0KPiAreyByZXR1cm4gMDsgfQ0KPiAgICNlbmRpZg0KPiAgIA0KPiAgICNl
+bmRpZiAvKiBfX0FDUElfSU9SVF9IX18gKi8NCj4gCl9fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fCkRldmVsIG1haWxpbmcgbGlzdCAtLSBkZXZlbEBhY3BpY2Eu
+b3JnClRvIHVuc3Vic2NyaWJlIHNlbmQgYW4gZW1haWwgdG8gZGV2ZWwtbGVhdmVAYWNwaWNhLm9y
+ZwolKHdlYl9wYWdlX3VybClzbGlzdGluZm8lKGNnaWV4dClzLyUoX2ludGVybmFsX25hbWUpcw==
