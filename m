@@ -2,79 +2,90 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5F952B231D
-	for <lists+devel-acpica@lfdr.de>; Fri, 13 Nov 2020 18:58:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 24B7C2B2626
+	for <lists+devel-acpica@lfdr.de>; Fri, 13 Nov 2020 22:01:34 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 6004D100EB32B;
-	Fri, 13 Nov 2020 09:58:40 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.65; helo=mga03.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+	by ml01.01.org (Postfix) with ESMTP id 8B583100EB34A;
+	Fri, 13 Nov 2020 13:01:32 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.31; helo=mga06.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 5B484100EB329
-	for <devel@acpica.org>; Fri, 13 Nov 2020 09:58:37 -0800 (PST)
-IronPort-SDR: 6tjPqRx61jLg6bMVsd1OtSHzUEJEn1ksQGaHt2n2Se1BfkH+E0VCgvDVnRTXENKVx15+xOfihv
- s9SwWQYaC1Yw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9804"; a="170612745"
+	by ml01.01.org (Postfix) with ESMTPS id 20AF9100EB349
+	for <devel@acpica.org>; Fri, 13 Nov 2020 13:01:30 -0800 (PST)
+IronPort-SDR: 7y6gVweCVwP1f2N2uNyb2xGAPNJ/crdttGWEZObuHk6Y53HMg/E4uzEqs0zvswQ50tBpQ3NZ9O
+ sUIih09jzIEQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9804"; a="232149143"
 X-IronPort-AV: E=Sophos;i="5.77,476,1596524400";
-   d="scan'208";a="170612745"
+   d="scan'208";a="232149143"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2020 09:58:36 -0800
-IronPort-SDR: fkbtRNJrDgRh4ZsUtqlUa+9KTmHeMnzIxbR016Z1l3E9Of6X2ftDe2Etho3T2jv+1Hsb1boSew
- CfUZCcWlPG0Q==
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2020 13:01:29 -0800
+IronPort-SDR: R92fIIxyE1xDwjm/7Eg7/n2K0Opzico+UPnoBbLY273ECYW8ArWNeYJlbhdra1dmEEeYh/u54K
+ FOQWNbJDLP5g==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.77,476,1596524400";
-   d="scan'208";a="361426714"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
-  by fmsmga002.fm.intel.com with ESMTP; 13 Nov 2020 09:58:36 -0800
-Received: from orsmsx608.amr.corp.intel.com (10.22.229.21) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
+   d="scan'208";a="328998506"
+Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
+  by orsmga006.jf.intel.com with ESMTP; 13 Nov 2020 13:01:28 -0800
+Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Fri, 13 Nov 2020 09:58:35 -0800
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX608.amr.corp.intel.com (10.22.229.21) with Microsoft SMTP Server
+ 15.1.1713.5; Fri, 13 Nov 2020 13:01:28 -0800
+Received: from fmsmsx609.amr.corp.intel.com (10.18.126.89) by
+ fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Fri, 13 Nov 2020 09:58:35 -0800
-Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ 15.1.1713.5; Fri, 13 Nov 2020 13:01:28 -0800
+Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
+ fmsmsx609.amr.corp.intel.com (10.18.126.89) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5
- via Frontend Transport; Fri, 13 Nov 2020 09:58:35 -0800
-Received: from NAM02-CY1-obe.outbound.protection.outlook.com (104.47.37.57) by
- edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
+ via Frontend Transport; Fri, 13 Nov 2020 13:01:28 -0800
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.106)
+ by edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.1713.5; Fri, 13 Nov 2020 09:58:35 -0800
+ 15.1.1713.5; Fri, 13 Nov 2020 13:01:27 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=V5b3Gh7b/A9XLX+WmySA7fZYKHlv39/HZ//jW+xczfmv9eiv8N7rxf0uMj+zdBWceVIUC8oSbtc2P/TrCmxNLBZi7v9SX1OdLidSuVv0EXkC6lF/sTyFTl36UxTmqZAx3KYEiOy6RLyAxEQWiHR+GPbhC3icU/DDV9lSwRhAYwLv1RaCQ2ry0LI2Zm4okq+AAQ8pjNBOcHpi2oRfqQepF9bh4fYYBxriDvB6paQLROtBmcSKSJnwq+0zpXDqA2kWUtXkUTE29eT9Wftw5AMmHsYbCMXi7kpz89Kk/nfhL3o8ay+FOkzaD0ApkvsdKJkX3WYAoY4B3vevCanuFLDnOQ==
+ b=mPvKTdWRu+zN2ydVx1bc5Sx3gNYXlJeZNzTb2qdLFROtIJZs8UN/8AU+dQVJJS7i3YfWerZKdmlXmk4yomTEoy/zgnHes3r0oBAq4EJ0NMs6+bmhAOuMUJVAdxH0Mhyaf2NNMIkQ6nr/m570uo38fAWcogf9grm91NLYoi/ayD0vwwviwHAoIVScOjvReUK/Tygo1VzqmHQnrfDekjxk4yWDeynbFfhv9/TK0NZtc2bL9GIgHSTC6Zu2Q3z/08TvTO9fjOvwvgFj6HNPhttfQiXK7S8CmKrfd/7F0iYmvw540ocSQuOl7sgbqxgjsn0WXLxtwWDaOVtfGgIHlqEJyQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zIE5cOTrpxYiZoVxl1RV9Av0f5Ga6NiApLLhlnRqGTM=;
- b=kOhuw1mSOESxGsj0BgZjmQ/Hu7ZfZgEut/qJYemkbUcDNJsYSs19K5Gzl2EsMXkV2dLNq71G2LFEwX99ug2Je5H2BJF6VnRCwPa/SyJDqdT+dk3nwz/Ar6726l6jrmZcgocqkXd6ZvKTupfSbcdgGVRcCcOwJbtvTMeewT0HIyuAMGdPq5KPuwn96/gUkyorRpPpdCuiY9WqOKTrv4WaecRH/rvPQppmzRjPoy/IZ2mujs+cgRKYnUWu5zGnRpJQvDj0+fmExHzLdm+1dlH/3D6LI2Lf4z8dgP6xGm2FEGv2N4iaqMuGsFh42bThKwNMxMsf7Jgf/1Ol5CFIHue/Kw==
+ bh=zN6OEL0yn6mehCc508tR3MOSawGaCmmZsuPzGMLeB8Y=;
+ b=KHNuulBFk+uxX5aSSPck/c5J4Q6UbYJyolnvgKf68N6wFZYjGUFKwmCdRSVL9jY23m4HfNeAlidli0VOJau4lA8+5H8+swkADxefCEv2E8l8xj/xAgi3nj+b6LAMYtixr6cVCX5fyPfmg8PkkKA8iVLgJ+JUC1G5tDw3AJ+xT8Pd6hk+CgX0BMEkdZXluWYTdK708a/mu6nNWxoo7IfeAlVTPOuu1XXdc7eALd8e1LTJpk998Ot56EPGSSWKo5qY+pX8SC4ZOKZh+0LtZ/wNV+nI8eohQ6f8y4E85+3DR3YXBv6LV6rH+1VpV8bCdlvLgHWb03RZfnldMo//eH2oAQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
  s=selector2-intel-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zIE5cOTrpxYiZoVxl1RV9Av0f5Ga6NiApLLhlnRqGTM=;
- b=eySuesB/6vrU7YpUMDKeel08UK/9KQFVWxlxBdXee56yay0SVfVGNr8ir9nul0gGZgSE1TB+je8AOgUoF5VvaeTQWFYLvJKG8n0f83zhB/Yu58s/qJ9u5RlLaBpDOZAhZn6MrDZyoIuwXwF/FLMEIFFi5EJ4yV5Coo6RdGuqjf8=
+ bh=zN6OEL0yn6mehCc508tR3MOSawGaCmmZsuPzGMLeB8Y=;
+ b=FfmLECtn2Xw1WipED/KxW5eh2lzmez8Rz95bekkHDUEpASuD1IkF87K0/XA5CUlP26JBzy1S7FD0KlCZyzNFyQ7C5inohrGclmKDyFabPlGgpNXIMMcJu9TISzEKETTZViSd8jBi8O0FwcTAu201Kuc7g3AwyAAB32vRdM+UifA=
 Received: from BYAPR11MB3256.namprd11.prod.outlook.com (2603:10b6:a03:76::19)
- by BY5PR11MB4370.namprd11.prod.outlook.com (2603:10b6:a03:1c3::20) with
+ by BYAPR11MB2597.namprd11.prod.outlook.com (2603:10b6:a02:c0::17) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3541.25; Fri, 13 Nov
- 2020 17:58:34 +0000
+ 2020 21:01:24 +0000
 Received: from BYAPR11MB3256.namprd11.prod.outlook.com
  ([fe80::9d74:8937:bd5f:3c6b]) by BYAPR11MB3256.namprd11.prod.outlook.com
  ([fe80::9d74:8937:bd5f:3c6b%6]) with mapi id 15.20.3541.025; Fri, 13 Nov 2020
- 17:58:34 +0000
+ 21:01:24 +0000
 From: "Moore, Robert" <robert.moore@intel.com>
-To: "devel@acpica.org" <devel@acpica.org>
-Thread-Topic: ACPICA version 20201113 released
-Thread-Index: Ada55lHWq7UfxNZNRu6eNEuFbbIZ7A==
-Date: Fri, 13 Nov 2020 17:58:34 +0000
-Message-ID: <BYAPR11MB325623E70C833C82CB2892FE87E60@BYAPR11MB3256.namprd11.prod.outlook.com>
+To: Joe Perches <joe@perches.com>, Miguel Ojeda
+	<miguel.ojeda.sandonis@gmail.com>, Nick Desaulniers <ndesaulniers@google.com>
+Thread-Topic: [PATCH] ACPICA: fix -Wfallthrough
+Thread-Index: AQHWt9BSaSJ92WwBRk6cKvxE5xanpKnDCsOAgAA8BQCAAVTWIIAASWOAgAAmHECAACelgIAAh4CAgACKigCAAEiToA==
+Date: Fri, 13 Nov 2020 21:01:24 +0000
+Message-ID: <BYAPR11MB3256ECDE31F1900EE1D9254687E60@BYAPR11MB3256.namprd11.prod.outlook.com>
+References: <20201111021131.822867-1-ndesaulniers@google.com>
+	 <BYAPR11MB3256E0C1DCB4F01D18DF709F87E80@BYAPR11MB3256.namprd11.prod.outlook.com>
+	 <CAKwvOdk2U5+DcXYyMoBAhyaa67EukhB6QMEUbRPcOF7P3Sz21w@mail.gmail.com>
+	 <BYAPR11MB3256C9711620932685C368F887E70@BYAPR11MB3256.namprd11.prod.outlook.com>
+	 <CAKwvOdnu07S8ZtGVe0eVFP=6hLSRa58EtDYOJUK_zGWFaqUboA@mail.gmail.com>
+	 <BYAPR11MB3256BEF30840D4AB440A359C87E70@BYAPR11MB3256.namprd11.prod.outlook.com>
+	 <CAKwvOdnYpmf=ydFVWSqVkWeUpn+M2v9PfdQd71T3oqQ9_1WQaQ@mail.gmail.com>
+	 <CANiq72k13K_zA5aH5hameoe4TSf2o5cA294bA4UEZG0M6S3DXQ@mail.gmail.com>
+ <61039da395c8a28444e2f3958d29deda4c0d49b3.camel@perches.com>
+In-Reply-To: <61039da395c8a28444e2f3958d29deda4c0d49b3.camel@perches.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -82,42 +93,44 @@ X-MS-TNEF-Correlator:
 dlp-version: 11.5.1.3
 dlp-product: dlpe-windows
 dlp-reaction: no-action
-authentication-results: acpica.org; dkim=none (message not signed)
- header.d=none;acpica.org; dmarc=none action=none header.from=intel.com;
+authentication-results: perches.com; dkim=none (message not signed)
+ header.d=none;perches.com; dmarc=none action=none header.from=intel.com;
 x-originating-ip: [134.134.136.194]
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 7f794987-eee8-4091-e63c-08d887fdbd39
-x-ms-traffictypediagnostic: BY5PR11MB4370:
-x-microsoft-antispam-prvs: <BY5PR11MB43702D10BFB32464B3AEF61A87E60@BY5PR11MB4370.namprd11.prod.outlook.com>
+x-ms-office365-filtering-correlation-id: 09431a5d-6795-46da-5c4e-08d888174807
+x-ms-traffictypediagnostic: BYAPR11MB2597:
+x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <BYAPR11MB25979D7AE1669C0DF105C75A87E60@BYAPR11MB2597.namprd11.prod.outlook.com>
 x-ms-oob-tlc-oobclassifiers: OLM:10000;
 x-ms-exchange-senderadcheck: 1
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: rJJ9h9PM9YGuNdgPzhG83pU7e6fOurOTPwH9jTLTHAhdlCYIZmBHA7qUSq9adHJgmmAKoUCTDnhfGaKK9iu4+8n2bhR19r6pThtyU0ZMWfFYP9Gb8G4FFEyr5/VqAjAas/4/3O7GVJPxgi/85MKOx960a3ob3zjBeTpsSSA3QO3nMyfp/5XVuU7071lgURuwtBQyulheMn3aaJAKjB3Wn22JEoKWZgXlxbasNw+BALEYdeRwvocYgUy//3wi08+wuqjs9O61hRswHBvFgoOM8bHRNw0nuU+mJN86lbfSJafMnwA5DkbXYDpfvFvZR8Pb0yUlhooqQ6lIOke17FFnW00dFulCpZurOrKmT/VAt8R+qyVtJFDVxGTqkxWgz2OtYjq+TeE4koWhPoXiN+suww==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(346002)(376002)(396003)(366004)(136003)(39860400002)(8936002)(186003)(76116006)(966005)(83380400001)(66946007)(316002)(71200400001)(26005)(6916009)(52536014)(66476007)(6506007)(66446008)(66556008)(7696005)(64756008)(478600001)(33656002)(55016002)(86362001)(2906002)(8676002)(9686003)(7116003)(5660300002);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata: ldXBjl2I2OL25jxX5DnXpCgYH5bjMXvbfDOzmOV2P/0OFK0nBh3F3pqxj27/8xfv8KuqWyOfzDQW6vl12KSR/uxsXsAzgmG5tA8shX4CstHUyIKFk6OL0fT6KlISuLFGxS5TdkKheQ2yW/yOx9r57k0lA4GziC6ufveZ1UMgpzIGofqEaTlnjx95Tk81Vl92BRwjQZSoYE+6dgmNPVxxM1gBxo3oz2cPkJF1Jb863965nQ0u/dEyhKF2AXRcVhVaPrRE4EFiIZ4VV4Q2AiS4ToxjsC0J9dC6rgDbZpgXk1ftE2UdagEvi+orB3DySmaOZd9gbtuVZzOHB+hD6Dr2ot8Lx7gK1Kvi/HAWu8B41oSaBbF7yHmlVkwXsIy/DPTpLSJwB2zuSl/ZHNdFO0FjPkphPrcxKeTAIBrRmSAbJ0ZIzAhL4+3LZUoCG5IG34AGYHUsz1npJdYejSrO/CpmgzPDWpixJ4obKY2Zu23S9H18Mw05uO1AbCWfc33MvT8/ZC4PKh16KSwdLTWzOQHw278pTK5+Fip6rCRZ6JVk7zUkc6vAcCTEUGIMQI8vWCQER6WTSao5sGmOZXlt3yEKaiSggOjfR3ShaXgb+Ka7HtlHExid75llsTcAuIQDXSJQj03UkYBrmvfvWcleV5Mofw==
-x-ms-exchange-transport-forked: True
+x-microsoft-antispam-message-info: T+T+T4S3uMulT+xBRK9ZkHnL268j03Ca239sKpUnfmU8+aVUD8Uo1WyurkjdDQuWi4BFovP1gmRfCTEjtV6JrpR31zDtvI1F5kAUcJRpOIcjUFJnOIkY5GiqDTAnRMesjlGeiYEOToAwCNZJ02F4FssgAVjeYA0K1j5S/8G2Z5/h3YA4bMwiSOYQn03VkOGU5W5gP+JB5MengEWR417yqF261WOkbgt6md8z7cD7uH8SEh8cjD1VTAqpNi2IAfHnbUKoCIaaJlV3EkKJ6073hUijscwG992dtrq4mJEn2GzspgToaQ+8zkjOQpJHSDkkjEGl7CYVnJXxtRr3V21rK/Mymk9SOng+1FRZd66BuyR3B43Co+skDt0AmuBXr/9MCNJIOdlGpe1W7V+ukqS7gQ==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(136003)(366004)(396003)(376002)(346002)(39860400002)(83380400001)(8936002)(66946007)(966005)(71200400001)(64756008)(66446008)(8676002)(26005)(76116006)(186003)(33656002)(4001150100001)(2906002)(7696005)(9686003)(316002)(55016002)(4326008)(86362001)(53546011)(6506007)(66556008)(478600001)(54906003)(5660300002)(66476007)(110136005)(52536014);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata: XBfW0mjATPzmkx9PFpyBNfrtbEKbk+20TQKRfjm1wSDQKUDXeREmpAW3TpoeIGf0VkWIHN8FZbEiKK0WUfLT/ij3TUk3IQpwHhbmUz8RZYCvq93H4pk3OViDNqooLCri0FWCoie+/MiMaYlIVP0pO9uWRMXkxc9e6pC30LIPRfx4TCaSftIMRp6Guo/Xb9Khrl6z8ny83LHp6tvzPHjD+BCRBd94LFUKMHWE2yhjOGM54wVwA5Rkhfxql1IacEE+Cx9FTRwpM9TWj0q1sxsacjocoDOUEuKSF1C69Hm38zEiMfe8/4rujuMz4yLbMde/yhUdvDB4qx/nlckJsY1D2nCrWi1zeH/p9y4R4yPvqnIhnldVbNTC68DkTf9dBPe644YInuWvlkBv6FSlhv/wkaU5oYCXD4CHkGxYM6BqIekRsjdo7g18e0CdoUjdxCHteOtR0oaMm5ILputFHeOCNJNJnHz1m0sBT3cQ6piwF3xkInbkc5xG1v44978amyumCAVxOQ8/2HFLgJrvMEhYOKI24va6ocJwf8qwLZG9flQvLqUO/hddmf19KaOaD+PH3f64dS1kMRJDKMgq/IIpF3R6kRWzuDSfEOvu6uq1PgFssT9BzifDaI2H2HDOE8EAT2sIe8dRwC7+fdiF6dwVYQ==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3256.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7f794987-eee8-4091-e63c-08d887fdbd39
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Nov 2020 17:58:34.3449
+X-MS-Exchange-CrossTenant-Network-Message-Id: 09431a5d-6795-46da-5c4e-08d888174807
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Nov 2020 21:01:24.5583
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: wg8F/oQbDAJlwQS6mITYhmAjXLrFpwn8Llbg2OYfUAIk1f1Q7P/bF+VW/R0DpWcpUhvv7UObhOoqYc5UFNu+bg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR11MB4370
+X-MS-Exchange-CrossTenant-userprincipalname: X+UBQBVovbl7bsHnkQktPEv8vx0vJBM4ss/4FTROOsct6buHtTvbJIHAHz6YODtE2/V8WRRaLUROXWZSu0An/A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR11MB2597
 X-OriginatorOrg: intel.com
-Message-ID-Hash: QO3SRKDKAT5K2W2D2ENYAVQRXHRUP3YX
-X-Message-ID-Hash: QO3SRKDKAT5K2W2D2ENYAVQRXHRUP3YX
+Message-ID-Hash: HEL2UMPIGRHGFPDFBAUZFALTH457HRMF
+X-Message-ID-Hash: HEL2UMPIGRHGFPDFBAUZFALTH457HRMF
 X-MailFrom: robert.moore@intel.com
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
+CC: "Kaneda, Erik" <erik.kaneda@intel.com>, "Wysocki, Rafael J" <rafael.j.wysocki@intel.com>, "Gustavo A . R . Silva" <gustavoars@kernel.org>, "clang-built-linux@googlegroups.com" <clang-built-linux@googlegroups.com>, "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>, "devel@acpica.org" <devel@acpica.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] ACPICA version 20201113 released
+Subject: [Devel] Re: [PATCH] ACPICA: fix -Wfallthrough
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/QO3SRKDKAT5K2W2D2ENYAVQRXHRUP3YX/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/HEL2UMPIGRHGFPDFBAUZFALTH457HRMF/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -125,39 +138,68 @@ List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Transfer-Encoding: 7bit
 
-13 November 2020. Summary of changes for version 20201113:
+I can do it this way:
 
-This release is available at https://acpica.org/downloads
+In the global header actypes.h:
 
+#ifndef ACPI_FALLTHROUGH
+#define ACPI_FALLTHROUGH
+#endif
 
-1) ACPICA kernel-resident subsystem:
+In the gcc-specific header (acgcc.h):
 
-Interpreter: fixed a memory leak by using use existing buffer in _HID repair. There was a memory leak that occurred when a _CID object is defined as a package containing string objects. When _CID is checked for any possible repairs, it calls a helper function to repair _HID (because _CID basically contains multiple _HID entries). The _HID repair function assumes that string objects are standalone objects that are not contained inside of any packages. The _HID repair function replaced the string object with a brand new object and attempted to delete the old object by decrementing the reference count of the old object. Strings inside of packages have a reference count of 2 so the _HID repair function leaves this object in a dangling state and causes a memory leak. Instead of allocating a brand new object and removing the old object, use the existing object when repairing the _HID object.
+#define ACPI_FALLTHROUGH        __attribute__((__fallthrough__))
 
-Added function trace macros to improve namespace debugging. The namespace repair mechanism does not have function tracing macros. Add several trace macros to improve debuggability.
+This would not be #defined in the MSVC-specific header (acmsvc.h) -- thus using the default (null) in actypes.h (The per-environment headers are always included first).
 
-Handle "orphan" _REG methods for GPIO OpRegions. Before this change AcpiEvExecuteRegMethods() had special handling to handle "orphan" (no matching OpRegion declared) _REG methods for EC nodes. On Intel Cherry Trail devices there are 2 possible ACPI OpRegions for accessing GPIOs. The standard GeneralPurposeIo OpRegion and the Cherry Trail - specific UserDefined 0x9X OpRegions. Having 2 different types of OpRegions leads to potential issues with checks for OpRegion availability, or in other words checks if _REG has been called for the OpRegion which the ACPI code wants to use. Except for the "orphan" EC handling, ACPICA core does not call _REG on an ACPI node which does not define an OpRegion matching the type being registered; and the reference design DSDT, from which most Cherry Trail DSDTs are derived, does not define GeneralPurposeIo, nor UserDefined(0x93) OpRegions for the GPO2 (UID 3) device, because no pins were assigned ACPI controlled functions in the reference design. Togethe
- r this leads to the perfect storm, at least on the Cherry Trail based Medion Akayo E1239T. This design does use a GPO2 pin from its ACPI code and has added the Cherry Trail specific UserDefined(0x93) opregion to its GPO2 ACPI node to access this pin. But it uses a "has _REG been called" availability check for the standard GeneralPurposeIo OpRegion. This clearly is a bug in the DSDT, but this does work under Windows. This issue leads to the intel vbtn driver reporting the device always being in tablet-mode at boot, even if it is in laptop mode. Which in turn causes userspace to ignore touchpad events. So in other words, this issue causes the touchpad to not work at boot. This change fixes this by extending the "orphan" _REG method handling to also apply to GPIO address-space handlers.
+(We do all macros in upper case, prefixed with "ACPI_")
 
+If you can update your patch to use ACPI_FALLTHROUGH, I can do the rest (above).
 
-2) iASL Compiler/Disassembler and ACPICA tools: 
+Thanks,
+Bob
 
-iASL: Added more info to namespace dump file (-ln option). In a separate section of the dump file (after the main namespace dump), emit the full pathname for each namespace node, its type, and the ASL filename and line number where it is declared.
+-----Original Message-----
+From: Joe Perches <joe@perches.com> 
+Sent: Friday, November 13, 2020 8:30 AM
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>; Nick Desaulniers <ndesaulniers@google.com>
+Cc: Moore, Robert <robert.moore@intel.com>; Kaneda, Erik <erik.kaneda@intel.com>; Wysocki, Rafael J <rafael.j.wysocki@intel.com>; Gustavo A . R . Silva <gustavoars@kernel.org>; clang-built-linux@googlegroups.com; Len Brown <lenb@kernel.org>; linux-acpi@vger.kernel.org; devel@acpica.org; linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] ACPICA: fix -Wfallthrough
 
-AcpiHelp: Added an option to display/decode iASL exceptions. Option is: -x [Hex Value] where "Hex Value" is the iASL exception code. If Hex Value is omitted, all iASL exceptions are displayed.
+On Fri, 2020-11-13 at 09:14 +0100, Miguel Ojeda wrote:
+> On Fri, Nov 13, 2020 at 1:09 AM Nick Desaulniers 
+> <ndesaulniers@google.com> wrote:
+> > 
+> > Thank you for the explicit diagnostics observed.  Something fishy is 
+> > going on though, https://godbolt.org/z/Gbxbxa is how I expect MSVC 
+> > to handle include/linux/compiler_attributes.h.
+> > 
+> > The C preprocessor should make it such that MSVC never sees 
+> > `__attribute__` or `__fallthrough__`; that it does begs the question.
+> > That would seem to imply that `#if __has_attribute(__fallthrough__)` 
+> > somehow evaluates to true on MSVC, but my godbolt link shows it does 
+> > not.
+> > 
+> > Could the upstream ACPICA project be #define'ing something that 
+> > could be altering this? (Or not #define'ing something?)
+> > 
+> > Worst case, we could do as Joe Perches suggested and disable 
+> > -Wfallthrough for drivers/acpi/acpica/.
+> 
+> I agree, something is fishy. MSVC has several flags for conformance 
+> and extensions support, including two full C preprocessors in newer 
+> versions; which means we might be missing something, but I don't see 
+> how the code in compiler_attributes.h could be confusing MSVC even in 
+> older non-conforming versions.
 
-iASL: Use StringLiteral instead of StringData for some ASL macros. The use of the stringData rule allows for some "string" oriented opcodes (Such as ToString, ToHexString, etc.) None of which make sense with the macros in question. This change modifies the StringData part of the rule for these macros to a simple string  literal - thus disallowing the use of ToString, ToHexString, etc.
-The following ASL operators (macros) are affected:
-EisaId
-Fprintf
-Printf
-ToUuid
-Unicode
-Note: The MS compiler requires the use of string literals for these operators also.
+I believe this has nothing to do with linux and only to do with compiling acpica for other environments like Windows.
 
-iASL: Added a remark for an unknown UUID: ASL_MSG_UUID_NOT_FOUND. Search the list of "known" UUIDs for the input to the ToUUID macro.
+From: https://acpica.org/
 
-Added 5 new UUIDs to the known UUID table. All related to NVDIMM and the NFIT table.
+The ACPI Component Architecture (ACPICA) project provides an operating system (OS)-independent reference implementation of the Advanced Configuration and Power Interface Specification (ACPI).
+
+It can be easily adapted to execute under any host OS.
+
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
