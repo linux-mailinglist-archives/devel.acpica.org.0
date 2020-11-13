@@ -1,82 +1,88 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 701012B2756
-	for <lists+devel-acpica@lfdr.de>; Fri, 13 Nov 2020 22:45:27 +0100 (CET)
+Received: from ml01.01.org (ml01.01.org [198.145.21.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id D46432B27F1
+	for <lists+devel-acpica@lfdr.de>; Fri, 13 Nov 2020 23:12:14 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 40694100EB355;
-	Fri, 13 Nov 2020 13:45:26 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.43; helo=mga05.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+	by ml01.01.org (Postfix) with ESMTP id 67AC6100EB345;
+	Fri, 13 Nov 2020 14:12:13 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.151; helo=mga17.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id CB238100EB353
-	for <devel@acpica.org>; Fri, 13 Nov 2020 13:45:24 -0800 (PST)
-IronPort-SDR: HZcHEXkO/6KjfZu/ip2UYVlyjhge6nzz/H8fZdQSW61KsH0eK1aAsKX4SliClmRC1Z3OHPNt9z
- JZj2I5DmtvQg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9804"; a="255246240"
+	by ml01.01.org (Postfix) with ESMTPS id DD54B100EC1E9
+	for <devel@acpica.org>; Fri, 13 Nov 2020 14:12:11 -0800 (PST)
+IronPort-SDR: PugPHLQqU9ZJgL9jeaK25SJnkOi8TPzBMsZ63cW8O5yDvgTs7QIxp6e7yy2mG2dY3HzVd7jXk0
+ iQbrkMD/sA5A==
+X-IronPort-AV: E=McAfee;i="6000,8403,9804"; a="150388242"
 X-IronPort-AV: E=Sophos;i="5.77,476,1596524400";
-   d="scan'208";a="255246240"
+   d="scan'208";a="150388242"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2020 13:45:24 -0800
-IronPort-SDR: YQnZxJc/63KjXkNcQ+i7+88KuKRA2Niaf7LIYjkXGHhB+Ae3hwxxyu25w0iNTyvQBcIwbMXFWq
- 9GxEPy6aYOqg==
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2020 14:12:11 -0800
+IronPort-SDR: 3UjLtoAWr/VVvkj//WocHz+PLqT3omqTdn4aEOgCV0z4+yrGGqTUnvWWAp5yiYBBuhgoCzvJId
+ Uk/0AwOWH/5A==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.77,476,1596524400";
-   d="scan'208";a="531172350"
+   d="scan'208";a="357670530"
 Received: from fmsmsx603.amr.corp.intel.com ([10.18.126.83])
-  by fmsmga006.fm.intel.com with ESMTP; 13 Nov 2020 13:45:24 -0800
-Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
+  by fmsmga004.fm.intel.com with ESMTP; 13 Nov 2020 14:12:11 -0800
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
  fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Fri, 13 Nov 2020 13:45:23 -0800
+ 15.1.1713.5; Fri, 13 Nov 2020 14:12:10 -0800
+Received: from fmsmsx601.amr.corp.intel.com (10.18.126.81) by
+ fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Fri, 13 Nov 2020 14:12:10 -0800
 Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
- fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5
- via Frontend Transport; Fri, 13 Nov 2020 13:45:23 -0800
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (104.47.58.173)
- by edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
+ via Frontend Transport; Fri, 13 Nov 2020 14:12:10 -0800
+Received: from NAM02-CY1-obe.outbound.protection.outlook.com (104.47.37.55) by
+ edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.1713.5; Fri, 13 Nov 2020 13:45:23 -0800
+ 15.1.1713.5; Fri, 13 Nov 2020 14:12:09 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=HgSSPQaPj+IE0y/EdBfpaf2Chu6+QBfBw1NDr8u2Gw9nl5/Etx51OnELz4brBbytGP0GqupOdYpE5AkJMcUxLKnHDFZYahBin5LBw1SRnCtdcjZD2iwvhqqQZxVMYbMdKi3DtzfDU6qMy8GnRpSpNcbUl1mWFETPKYCwW59xKD3NynRWh9TADQuG4JXBdhiAXDSoI7k1W98K3X/vCbaNcUwdsqiJoEWQsbExcNSqe3L7GVdpJ2eNbHp1wmxU21xJtU5Mm6k757J226k1tae/QthWXMgunQy6kCnRrT/ikPhtLI+xTq/BPd2sNZdZgYt5lFjTnEfuBpixAWjNW3iYhQ==
+ b=BlC0McdhFkFpqYANtlyZUXbgEZhSlrrMjpTUVAalFkdVPRczyIoArGhQA0tDmLFQwS+BA+ATYqMC2bPtM2yTbaSlYj2ufhv2kse/U8EBGQoxtC4WuNVDOIViLDqU01mHvyHB3le0qdwY4c8O7MJgCKPyL9OqW7wwxvc91FaRNrtqWL796pbEGi1137L5K7wiWC8zdrLLCY7oJHyPz8ck5D6acAOKoidSsZnWl6JQfzaBFkYVSKDmTdqijI3K2OX4ScVe0Ly62cDZcQ10fjJPq4SKAc9my+7RQewNNVtg6Xpa1FKEwK4hyDrVTlcE7YbVFOZTfl5IeDfK5NGaOnKC0A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rSZB0+yE4T2z1kPc2TkpTCyfqYwHHgEyabDuSYyP5VI=;
- b=fes6YfS+2k80xuba1HH3MpgQtrHF4HSk3XJXpxeqQJLIk94aKBmdgvvT1GPxVu38t9UCklDPN4hQup0cnC2xGOFA+RZ5+aO2/PoowdnbioRfdJUBHmncjcedDpOVLgB9HuWGm8uOJ6JXM5myTJDbBLDzs8Wmdl5vU4AmeVwRwwnc739L7DCotF78GXnD4xMYU+jtOgWIeMqgLoJ0Gcy4x340P3sq6SgnurksOjBV5dGhRr3FLnbDPfBcHPBqgp4IHQcvAZdT4lUin4PrUC9aJNXNUpib10NdAakLeU3gWD+OxL/8Yzq9wu/emzIGu8UvDZ4G180VxDoJbAO7oDwdng==
+ bh=OCMo4ooqRukykicn8fUi/XT2Z5LYFRXRNe+ZMrqSU3g=;
+ b=hY3AMP0dUV99jwjArcXr4eCJe3jNfrjP9l3YMTT+ZrOj8FnBMKkHzOFTGXFfxCZYNiezvL7wZsSBnAQUrj0dHmma2CvH4PV0yZ7AXLGs+P9TLaNJjHBvfrhj9yi/W3ldJQw0yshva5aK4FNedZJmGj+mYuxf1HcBBLNzBg5DWS/ZYywRm5k+Y0KQK0CBKTd/RafkLsQuejzgHAK1QqQqfeAfX8X2+tQI37uk7yC+tZfmgPRMTiap/6/JiQrGyG3WlibOJv7x/zyzOAKE3c35oBTaRZwikZ2p2BT4RW+yl7vRbfVtf0t+oaA6sLPTwzpAMB2+dFWMUwA0bxKdC5Z2dg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
  s=selector2-intel-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rSZB0+yE4T2z1kPc2TkpTCyfqYwHHgEyabDuSYyP5VI=;
- b=zqokXVnpauinqd1BQ5L/Md8CWHnMzGIBiu6LiNbVl59itEd0y6bocp5Sj6fS9bJ7ypnqqL15bM2RHJC2F97L8SH0qtyMx/s/QgYtOVloRw7ZzVKYW+212IjN9Z5GH18cmc+4TvmtZ3jjR9j9WfVhxArQ/LR1TjOj1AP+7lqfYWg=
+ bh=OCMo4ooqRukykicn8fUi/XT2Z5LYFRXRNe+ZMrqSU3g=;
+ b=FD2Q2+6cLEcGNi6ZCHexZIbaaUsQ4mqeICKwt1yajPljlTn5B6Ftuswm5RBfKXMWQAj1Mc4OWO8tdG/OBmOZApXNvFO8GJb57s3x5Zw+BPQfUtUtA3gcK8es1vcGC+8F/ABe4ljLmIsOEkNe78lpQjCIGelKQTHXC8/bkjaatBw=
 Received: from BYAPR11MB3256.namprd11.prod.outlook.com (2603:10b6:a03:76::19)
- by SJ0PR11MB4976.namprd11.prod.outlook.com (2603:10b6:a03:2d7::5) with
+ by SJ0PR11MB5085.namprd11.prod.outlook.com (2603:10b6:a03:2db::10) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3541.25; Fri, 13 Nov
- 2020 21:45:20 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3564.25; Fri, 13 Nov
+ 2020 22:12:07 +0000
 Received: from BYAPR11MB3256.namprd11.prod.outlook.com
  ([fe80::9d74:8937:bd5f:3c6b]) by BYAPR11MB3256.namprd11.prod.outlook.com
  ([fe80::9d74:8937:bd5f:3c6b%6]) with mapi id 15.20.3541.025; Fri, 13 Nov 2020
- 21:45:19 +0000
+ 22:12:06 +0000
 From: "Moore, Robert" <robert.moore@intel.com>
 To: Nick Desaulniers <ndesaulniers@google.com>
 Thread-Topic: [PATCH] ACPICA: fix -Wfallthrough
-Thread-Index: AQHWt9BSaSJ92WwBRk6cKvxE5xanpKnGl5SwgAAB3QCAAAJ3cIAAAHnQgAAAbfA=
-Date: Fri, 13 Nov 2020 21:45:19 +0000
-Message-ID: <BYAPR11MB3256DD34C3DABD2CB4FE347D87E60@BYAPR11MB3256.namprd11.prod.outlook.com>
+Thread-Index: AQHWt9BSaSJ92WwBRk6cKvxE5xanpKnGl5SwgAAB3QCAAAJ3cIAAAHnQgAAAbfCAAAbDAIAAALZQ
+Date: Fri, 13 Nov 2020 22:12:06 +0000
+Message-ID: <BYAPR11MB32566027A6A386F4A08076C687E60@BYAPR11MB3256.namprd11.prod.outlook.com>
 References: <20201111021131.822867-1-ndesaulniers@google.com>
  <BYAPR11MB32568FEEF4CFA1C20296427B87E60@BYAPR11MB3256.namprd11.prod.outlook.com>
  <CAKwvOd=qDNnOu1oTeEN+chvfJcQSS5dxREo0JQHC=W0zhpYeLw@mail.gmail.com>
  <BYAPR11MB32564DD5B9D140AFE8C3D1EB87E60@BYAPR11MB3256.namprd11.prod.outlook.com>
  <BYAPR11MB3256E6E37618702C5EA761A087E60@BYAPR11MB3256.namprd11.prod.outlook.com>
-In-Reply-To: <BYAPR11MB3256E6E37618702C5EA761A087E60@BYAPR11MB3256.namprd11.prod.outlook.com>
+ <BYAPR11MB3256DD34C3DABD2CB4FE347D87E60@BYAPR11MB3256.namprd11.prod.outlook.com>
+ <CAKwvOdmQdH3dARiP9VDPG59sgsqkmvp5AcCKrNNUuNDC5k1BwA@mail.gmail.com>
+In-Reply-To: <CAKwvOdmQdH3dARiP9VDPG59sgsqkmvp5AcCKrNNUuNDC5k1BwA@mail.gmail.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -88,31 +94,31 @@ authentication-results: google.com; dkim=none (message not signed)
  header.d=none;google.com; dmarc=none action=none header.from=intel.com;
 x-originating-ip: [134.134.136.194]
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 7717ead9-c3f4-4882-4271-08d8881d6ac3
-x-ms-traffictypediagnostic: SJ0PR11MB4976:
+x-ms-office365-filtering-correlation-id: 4739220e-b039-44e5-50d7-08d88821289d
+x-ms-traffictypediagnostic: SJ0PR11MB5085:
 x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
 x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <SJ0PR11MB49765DF640D1CD91F21339F487E60@SJ0PR11MB4976.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:10000;
+x-microsoft-antispam-prvs: <SJ0PR11MB5085FCAD7828781AE588E14087E60@SJ0PR11MB5085.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:6790;
 x-ms-exchange-senderadcheck: 1
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: x8MJsb9ALf1xF426Ail7Kh6Zmssv+ADwzn9DMNDE7PV5hw30jMRufvAFQ6o4AQIDfbzMuesoQsqlP7jRwxOwlGQO/AaZbqxAZIfPhImwLPqNUgyekbTimc531n1NXwaY9uruwtxwRVK9erWlJ3RbCzYShtAod1iWma8+AKNviPFIrGOGPKpabSQN0arCBH/t4GHwn9i85IJ9iBtNrKxW6qrwdxPGTDk1gfhlrV8k8MNBXS452TJGRKyUg64ysFujSX/487fG+C7EvNL00T4I9Fugq2qyizeCm6/2ZceytAfqP5B1Es81fdELjDYiLxopRfRlatOd0DtxeI61a/DB7w==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(39860400002)(366004)(376002)(136003)(346002)(396003)(53546011)(478600001)(2906002)(71200400001)(8936002)(5660300002)(54906003)(6916009)(76116006)(64756008)(83380400001)(52536014)(33656002)(9686003)(6506007)(2940100002)(66556008)(316002)(26005)(186003)(66446008)(66946007)(55016002)(8676002)(86362001)(7696005)(4326008)(66476007);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata: 6uAPDj/42JLZ1qfkexKalu2DZ7+FT/pdHdaCRn4iXj7OMfuqySNQePsyXXlPEN29h/3xe84I/QmRDEaNteRVHdKnZkf+0yD+PJBAeuHNLX5to3keFpu0ekx/ECRYmtZpZHYzqZDvOpCn6umKdDihbkLwjPuEWhYtrXIUgi22OFpfaquc9VFwBXhyd6kG5Xnv5sWKBn5Wusw0LRd4j8kL02VEXwN89CSI4WVEzojcz43tP67R941iwPN0YWoWLu15ZSG8UyekMgI4iYLrGsagz92K0k7I1wPw6Ls1hMQRnmNkwpDSchATHbDquYiduf2h2Qu24E9ITetSGKneHXROlrNwR4t1//R+Nm7O2ReXINY4tStNGs6jZU/KJ1tmLRdWfZyBiY3v32JfCoI84qQ1oYeZwmobILDY0eWQwpZvy5QEcae1nM7+2o05OM6z9qgHKh0sHrdRDLMEZz/75w/NE/CvZ/tIjJDV/9qgAGPKznsLoIzfxxIQETp/wRpZA7DmYMbjKkldgRG6XCun+2qDfQIx/IlOLRX9mRBDIE7cReGyUGnr5scc4kynPjsP/gGPikoKeeOteGBmLKO11DbqaMPVyNi108UKamX/12ybONzhXStx8EX9jqiLGJxLyW7iQ8ScVM6zi8pLjqZnrC9clw==
+x-microsoft-antispam-message-info: tyBMjhyJIpTVjJaFGpU9k7O3+/KGuXNS8RtF7dTrhNJcEiErAvr0guT4h2VuwebPJt4V6Gg8wy/ARyGnrzL7ByEQN0WHBdNMqn9biXqb5tM7bVerOkgKcK+iGlln6QvJp6VhyMjPFujHzgodghHKpz9GCrBYB2DHm049zHhgQuND9RS13aAFWtznD2djwPp/dhtkWZoYuts6wvHWo9jvEXU7ISImS0XSmJGT/TIACXReTK8PXU8FVUbRk3xXgsjQh37OXXKOzs2fp2PLiJaBk1F3IyfjeaZRsYVfppsSBzgT6tuI0E3sozit4AowaBjf6JIjh3kRmzArS0A18VXGsVa+4WfQP2FMxmC99KTHqMhSJSJrpEugE2gc4c5dcmXEAim3CuK/xMYNMrw11U+f5Q==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(39860400002)(366004)(346002)(396003)(376002)(136003)(33656002)(86362001)(8676002)(6506007)(55016002)(9686003)(71200400001)(66446008)(66476007)(53546011)(2906002)(76116006)(966005)(8936002)(66946007)(66556008)(478600001)(64756008)(6916009)(4326008)(54906003)(7696005)(26005)(5660300002)(4744005)(83380400001)(186003)(52536014)(316002);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata: OCNQLU9z9zjHbG0a2Xinb3teP/XOALVsqdG1lLlzxx9E5dpGNg7iWFnBBUsplD30vUc3gYfpo9oP4rYjFwQQah4h+fUOAO1fXzeE0L4MOkOpktxOz38rF3Gwijn6czqgjvKYX72jERtC9sM5AGSo84d0zPBFmTtgjwqHCtMMlYnr8G61vsoTO8QO+ULt+sqoTltQ2YwQYnf3dg2jZClLY2WBxJaswweAZy/RN9CslzkUfjPJjFVqgN0ChLmwIk7khalH63n0CHmukmAf04E6OWaGY7QXfpdskAOhIXV8XrtB+NKexUc9CbahHM/um5cHZEzZR9Ehz11sDNzDMowUdmjkflZKU5PTbQC49YY94+2a42CqtDFCQvwex4yPX+V2XV5/5v+Kf2PoquP9gIhmU+YO9KJm2hmPQywgDk6YTBD8axpSJ9zlGqzBVQVJs+sWtCkmA5L9im/GT1dW7+IMM9IcW2+11EYqz206uIprPNVkuGzyDOmTAbMCPn8AuDU+KGnzkbe0uafErpOmkWbbKKkOh0XITuEhdYVAEy/5nsHkA453XVLw9v/Pu203gXBH41hsWaKwTs8dipjZYe0nQjyUDoqx1wnGs7ggeihxLmNn/s/8KZryx9l5c6aiVGAWeuTShWYdYWQDk0GCkRASqA==
 MIME-Version: 1.0
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3256.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7717ead9-c3f4-4882-4271-08d8881d6ac3
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Nov 2020 21:45:19.8716
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4739220e-b039-44e5-50d7-08d88821289d
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Nov 2020 22:12:06.8822
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: RaSad993TR1IavDXYmh7roZagyODpptPAMcEYE6HCaR7KY0oZuP/BoaKyCKWVQJweQaMo+pHKYE8NTk78aHMUA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB4976
+X-MS-Exchange-CrossTenant-userprincipalname: K8qEkiXR1LjwNFVhXFKZneuxedPbjy6UpZ53NxA/qkIY4hzyfiPftUmHre+ym9Evza0wrtqi944alyXp1mGC/w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB5085
 X-OriginatorOrg: intel.com
-Message-ID-Hash: P3A6ESHOYELDQZQH65HXLRRNB6OUU3KM
-X-Message-ID-Hash: P3A6ESHOYELDQZQH65HXLRRNB6OUU3KM
+Message-ID-Hash: IONGJD353HT4S6QTJWN2AVGQYXFCVDXH
+X-Message-ID-Hash: IONGJD353HT4S6QTJWN2AVGQYXFCVDXH
 X-MailFrom: robert.moore@intel.com
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
 CC: "Kaneda, Erik" <erik.kaneda@intel.com>, "Wysocki, Rafael J" <rafael.j.wysocki@intel.com>, "Gustavo A . R . Silva" <gustavoars@kernel.org>, "clang-built-linux@googlegroups.com" <clang-built-linux@googlegroups.com>, "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>, "devel@acpica.org" <devel@acpica.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
@@ -120,7 +126,7 @@ X-Mailman-Version: 3.1.1
 Precedence: list
 Subject: [Devel] Re: [PATCH] ACPICA: fix -Wfallthrough
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/P3A6ESHOYELDQZQH65HXLRRNB6OUU3KM/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/IONGJD353HT4S6QTJWN2AVGQYXFCVDXH/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -129,266 +135,25 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-BTW, if you can make a pull request for the patch up on github, that would help.
 
 
 -----Original Message-----
-From: Moore, Robert 
-Sent: Friday, November 13, 2020 1:44 PM
-To: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Kaneda, Erik <erik.kaneda@intel.com>; Wysocki, Rafael J <rafael.j.wysocki@intel.com>; Gustavo A . R . Silva <gustavoars@kernel.org>; clang-built-linux@googlegroups.com; Len Brown <lenb@kernel.org>; linux-acpi@vger.kernel.org; devel@acpica.org; linux-kernel@vger.kernel.org
-Subject: RE: [PATCH] ACPICA: fix -Wfallthrough
-
-
-
------Original Message-----
-From: Moore, Robert 
-Sent: Friday, November 13, 2020 1:42 PM
-To: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Kaneda, Erik <erik.kaneda@intel.com>; Wysocki, Rafael J <rafael.j.wysocki@intel.com>; Gustavo A . R . Silva <gustavoars@kernel.org>; clang-built-linux@googlegroups.com; Len Brown <lenb@kernel.org>; linux-acpi@vger.kernel.org; devel@acpica.org; linux-kernel@vger.kernel.org
-Subject: RE: [PATCH] ACPICA: fix -Wfallthrough
-
-
-
------Original Message-----
-From: Nick Desaulniers <ndesaulniers@google.com>
-Sent: Friday, November 13, 2020 1:33 PM
+From: Nick Desaulniers <ndesaulniers@google.com> 
+Sent: Friday, November 13, 2020 2:09 PM
 To: Moore, Robert <robert.moore@intel.com>
 Cc: Kaneda, Erik <erik.kaneda@intel.com>; Wysocki, Rafael J <rafael.j.wysocki@intel.com>; Gustavo A . R . Silva <gustavoars@kernel.org>; clang-built-linux@googlegroups.com; Len Brown <lenb@kernel.org>; linux-acpi@vger.kernel.org; devel@acpica.org; linux-kernel@vger.kernel.org
 Subject: Re: [PATCH] ACPICA: fix -Wfallthrough
 
-On Fri, Nov 13, 2020 at 1:27 PM Moore, Robert <robert.moore@intel.com> wrote:
+On Fri, Nov 13, 2020 at 1:45 PM Moore, Robert <robert.moore@intel.com> wrote:
 >
->
->
-> -----Original Message-----
-> From: ndesaulniers via sendgmr
-> <ndesaulniers@ndesaulniers1.mtv.corp.google.com> On Behalf Of Nick 
-> Desaulniers
-> Sent: Tuesday, November 10, 2020 6:12 PM
-> To: Moore, Robert <robert.moore@intel.com>; Kaneda, Erik 
-> <erik.kaneda@intel.com>; Wysocki, Rafael J 
-> <rafael.j.wysocki@intel.com>; Gustavo A . R . Silva 
-> <gustavoars@kernel.org>
-> Cc: clang-built-linux@googlegroups.com; Nick Desaulniers 
-> <ndesaulniers@google.com>; Len Brown <lenb@kernel.org>; 
-> linux-acpi@vger.kernel.org; devel@acpica.org; 
-> linux-kernel@vger.kernel.org
-> Subject: [PATCH] ACPICA: fix -Wfallthrough
->
-> The "fallthrough" pseudo-keyword was added as a portable way to denote intentional fallthrough. This code seemed to be using a mix of fallthrough comments that GCC recognizes, and some kind of lint marker.
-> I'm guessing that linter hasn't been run in a while from the mixed use of the marker vs comments.
->
-> /*lint -fallthrough */
->
-> This is the lint marker
+> BTW, if you can make a pull request for the patch up on github, that would help.
 
-Yes; but from my patch, the hunk modifying
-acpi_ex_store_object_to_node() and vsnprintf() seem to indicate that maybe the linter hasn't been run in a while.
+https://github.com/acpica/acpica/pull/650
 
-Which linter is that?  I'm curious whether I should leave those be, and whether we're going to have an issue between compilers and linters as to which line/order these would need to appear on.
+Great, thanks. I'll look at/merge the request next week.
+Bob
 
-It's an old version of PC-Lint, which we don't use anymore.
-
-So, you can get rid of the lint markers.
-
-
-
->
-> BTW, what version of gcc added -Wfallthrough?
-
-GCC 7.1 added -Wimplicit-fallthrough.
-
->
->
-> Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
-> ---
->  drivers/acpi/acpica/dscontrol.c | 3 +--
->  drivers/acpi/acpica/dswexec.c   | 4 +---
->  drivers/acpi/acpica/dswload.c   | 3 +--
->  drivers/acpi/acpica/dswload2.c  | 3 +--
->  drivers/acpi/acpica/exfldio.c   | 3 +--
->  drivers/acpi/acpica/exresop.c   | 5 ++---
->  drivers/acpi/acpica/exstore.c   | 6 ++----
->  drivers/acpi/acpica/hwgpe.c     | 3 +--
->  drivers/acpi/acpica/utdelete.c  | 3 +--
->  drivers/acpi/acpica/utprint.c   | 2 +-
->  10 files changed, 12 insertions(+), 23 deletions(-)
->
-> diff --git a/drivers/acpi/acpica/dscontrol.c 
-> b/drivers/acpi/acpica/dscontrol.c index 4b5b6e859f62..1e75e5fbfd19
-> 100644
-> --- a/drivers/acpi/acpica/dscontrol.c
-> +++ b/drivers/acpi/acpica/dscontrol.c
-> @@ -61,8 +61,7 @@ acpi_ds_exec_begin_control_op(struct acpi_walk_state *walk_state,
->                                 break;
->                         }
->                 }
-> -
-> -               /*lint -fallthrough */
-> +               fallthrough;
->
->         case AML_IF_OP:
->                 /*
-> diff --git a/drivers/acpi/acpica/dswexec.c 
-> b/drivers/acpi/acpica/dswexec.c index 1d4f8c81028c..e8c32d4fe55f
-> 100644
-> --- a/drivers/acpi/acpica/dswexec.c
-> +++ b/drivers/acpi/acpica/dswexec.c
-> @@ -597,9 +597,7 @@ acpi_status acpi_ds_exec_end_op(struct acpi_walk_state *walk_state)
->                                 if (ACPI_FAILURE(status)) {
->                                         break;
->                                 }
-> -
-> -                               /* Fall through */
-> -                               /*lint -fallthrough */
-> +                               fallthrough;
->
->                         case AML_INT_EVAL_SUBTREE_OP:
->
-> diff --git a/drivers/acpi/acpica/dswload.c 
-> b/drivers/acpi/acpica/dswload.c index 27069325b6de..afc663c3742d
-> 100644
-> --- a/drivers/acpi/acpica/dswload.c
-> +++ b/drivers/acpi/acpica/dswload.c
-> @@ -223,8 +223,7 @@ acpi_ds_load1_begin_op(struct acpi_walk_state *walk_state,
->                              parse_flags & ACPI_PARSE_MODULE_LEVEL)) {
->                                 break;
->                         }
-> -
-> -                       /*lint -fallthrough */
-> +                       fallthrough;
->
->                 default:
->
-> diff --git a/drivers/acpi/acpica/dswload2.c 
-> b/drivers/acpi/acpica/dswload2.c index edadbe146506..1b794b6ba072
-> 100644
-> --- a/drivers/acpi/acpica/dswload2.c
-> +++ b/drivers/acpi/acpica/dswload2.c
-> @@ -213,8 +213,7 @@ acpi_ds_load2_begin_op(struct acpi_walk_state *walk_state,
->                              parse_flags & ACPI_PARSE_MODULE_LEVEL)) {
->                                 break;
->                         }
-> -
-> -                       /*lint -fallthrough */
-> +                       fallthrough;
->
->                 default:
->
-> diff --git a/drivers/acpi/acpica/exfldio.c 
-> b/drivers/acpi/acpica/exfldio.c index ade35ff1c7ba..9d1cabe0fed9
-> 100644
-> --- a/drivers/acpi/acpica/exfldio.c
-> +++ b/drivers/acpi/acpica/exfldio.c
-> @@ -433,8 +433,7 @@ acpi_ex_field_datum_io(union acpi_operand_object *obj_desc,
->                  * Now that the Bank has been selected, fall through to the
->                  * region_field case and write the datum to the Operation Region
->                  */
-> -
-> -               /*lint -fallthrough */
-> +               fallthrough;
->
->         case ACPI_TYPE_LOCAL_REGION_FIELD:
->                 /*
-> diff --git a/drivers/acpi/acpica/exresop.c 
-> b/drivers/acpi/acpica/exresop.c index 4d1b22971d58..df48faa9a551
-> 100644
-> --- a/drivers/acpi/acpica/exresop.c
-> +++ b/drivers/acpi/acpica/exresop.c
-> @@ -197,8 +197,7 @@ acpi_ex_resolve_operands(u16 opcode,
->                                 case ACPI_REFCLASS_DEBUG:
->
->                                         target_op = AML_DEBUG_OP;
-> -
-> -                                       /*lint -fallthrough */
-> +                                       fallthrough;
->
->                                 case ACPI_REFCLASS_ARG:
->                                 case ACPI_REFCLASS_LOCAL:
-> @@ -264,7 +263,7 @@ acpi_ex_resolve_operands(u16 opcode,
->                          * Else not a string - fall through to the normal Reference
->                          * case below
->                          */
-> -                       /*lint -fallthrough */
-> +                       fallthrough;
->
->                 case ARGI_REFERENCE:    /* References: */
->                 case ARGI_INTEGER_REF:
-> diff --git a/drivers/acpi/acpica/exstore.c 
-> b/drivers/acpi/acpica/exstore.c index 3adc0a29d890..2067baa7c120
-> 100644
-> --- a/drivers/acpi/acpica/exstore.c
-> +++ b/drivers/acpi/acpica/exstore.c
-> @@ -95,8 +95,7 @@ acpi_ex_store(union acpi_operand_object *source_desc,
->                 if (dest_desc->common.flags & AOPOBJ_AML_CONSTANT) {
->                         return_ACPI_STATUS(AE_OK);
->                 }
-> -
-> -               /*lint -fallthrough */
-> +               fallthrough;
->
->         default:
->
-> @@ -421,8 +420,7 @@ acpi_ex_store_object_to_node(union acpi_operand_object *source_desc,
->                                 }
->                                 break;
->                         }
-> -
-> -                       /* Fallthrough */
-> +                       fallthrough;
->
->                 case ACPI_TYPE_DEVICE:
->                 case ACPI_TYPE_EVENT:
-> diff --git a/drivers/acpi/acpica/hwgpe.c b/drivers/acpi/acpica/hwgpe.c 
-> index b13a4ed5bc63..fbfad80c8a53 100644
-> --- a/drivers/acpi/acpica/hwgpe.c
-> +++ b/drivers/acpi/acpica/hwgpe.c
-> @@ -166,8 +166,7 @@ acpi_hw_low_set_gpe(struct acpi_gpe_event_info *gpe_event_info, u32 action)
->                 if (!(register_bit & gpe_register_info->enable_mask)) {
->                         return (AE_BAD_PARAMETER);
->                 }
-> -
-> -               /*lint -fallthrough */
-> +               fallthrough;
->
->         case ACPI_GPE_ENABLE:
->
-> diff --git a/drivers/acpi/acpica/utdelete.c 
-> b/drivers/acpi/acpica/utdelete.c index 4c0d4e434196..8076e7947585
-> 100644
-> --- a/drivers/acpi/acpica/utdelete.c
-> +++ b/drivers/acpi/acpica/utdelete.c
-> @@ -111,8 +111,7 @@ static void acpi_ut_delete_internal_obj(union acpi_operand_object *object)
->                         (void)acpi_ev_delete_gpe_block(object->device.
->                                                        gpe_block);
->                 }
-> -
-> -               /*lint -fallthrough */
-> +               fallthrough;
->
->         case ACPI_TYPE_PROCESSOR:
->         case ACPI_TYPE_THERMAL:
-> diff --git a/drivers/acpi/acpica/utprint.c 
-> b/drivers/acpi/acpica/utprint.c index 681c11f4af4e..f7e43baf5ff2
-> 100644
-> --- a/drivers/acpi/acpica/utprint.c
-> +++ b/drivers/acpi/acpica/utprint.c
-> @@ -475,7 +475,7 @@ int vsnprintf(char *string, acpi_size size, const char *format, va_list args)
->                 case 'X':
->
->                         type |= ACPI_FORMAT_UPPER;
-> -                       /* FALLTHROUGH */
-> +                       fallthrough;
->
->                 case 'x':
->
-> --
-> 2.29.2.222.g5d2a92d10f8-goog
->
-
-
---
+-- 
 Thanks,
 ~Nick Desaulniers
 _______________________________________________
