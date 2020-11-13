@@ -1,85 +1,82 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34ADD2B2748
-	for <lists+devel-acpica@lfdr.de>; Fri, 13 Nov 2020 22:43:59 +0100 (CET)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 701012B2756
+	for <lists+devel-acpica@lfdr.de>; Fri, 13 Nov 2020 22:45:27 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id E9527100EB351;
-	Fri, 13 Nov 2020 13:43:57 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.93; helo=mga11.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+	by ml01.01.org (Postfix) with ESMTP id 40694100EB355;
+	Fri, 13 Nov 2020 13:45:26 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.43; helo=mga05.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id B75A8100EB350
-	for <devel@acpica.org>; Fri, 13 Nov 2020 13:43:55 -0800 (PST)
-IronPort-SDR: wz4SZNlkoH3S+uPgnp6GUC2OrQdO4zWCaCccBC23Y7hgTJC6xA3Ky6DzfIJOC+VeHE8Tw4x0VM
- puUBnQUqou5g==
-X-IronPort-AV: E=McAfee;i="6000,8403,9804"; a="167027038"
+	by ml01.01.org (Postfix) with ESMTPS id CB238100EB353
+	for <devel@acpica.org>; Fri, 13 Nov 2020 13:45:24 -0800 (PST)
+IronPort-SDR: HZcHEXkO/6KjfZu/ip2UYVlyjhge6nzz/H8fZdQSW61KsH0eK1aAsKX4SliClmRC1Z3OHPNt9z
+ JZj2I5DmtvQg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9804"; a="255246240"
 X-IronPort-AV: E=Sophos;i="5.77,476,1596524400";
-   d="scan'208";a="167027038"
+   d="scan'208";a="255246240"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2020 13:43:55 -0800
-IronPort-SDR: lYwTiOHOzz43nsTcAUAZfPcnkn2l2zDSRyC4bSJ40QkSDLBd1I9LM7j9d5fH70cMXZtQCbZqaB
- VUXOxckuEeqQ==
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2020 13:45:24 -0800
+IronPort-SDR: YQnZxJc/63KjXkNcQ+i7+88KuKRA2Niaf7LIYjkXGHhB+Ae3hwxxyu25w0iNTyvQBcIwbMXFWq
+ 9GxEPy6aYOqg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.77,476,1596524400";
-   d="scan'208";a="474813046"
-Received: from fmsmsx604.amr.corp.intel.com ([10.18.126.84])
-  by orsmga004.jf.intel.com with ESMTP; 13 Nov 2020 13:43:54 -0800
-Received: from fmsmsx607.amr.corp.intel.com (10.18.126.87) by
- fmsmsx604.amr.corp.intel.com (10.18.126.84) with Microsoft SMTP Server
+   d="scan'208";a="531172350"
+Received: from fmsmsx603.amr.corp.intel.com ([10.18.126.83])
+  by fmsmga006.fm.intel.com with ESMTP; 13 Nov 2020 13:45:24 -0800
+Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Fri, 13 Nov 2020 13:43:54 -0800
-Received: from fmsmsx607.amr.corp.intel.com (10.18.126.87) by
- fmsmsx607.amr.corp.intel.com (10.18.126.87) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Fri, 13 Nov 2020 13:43:53 -0800
-Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
- fmsmsx607.amr.corp.intel.com (10.18.126.87) with Microsoft SMTP Server
+ 15.1.1713.5; Fri, 13 Nov 2020 13:45:23 -0800
+Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
+ fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5
- via Frontend Transport; Fri, 13 Nov 2020 13:43:53 -0800
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (104.47.58.171)
- by edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
+ via Frontend Transport; Fri, 13 Nov 2020 13:45:23 -0800
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (104.47.58.173)
+ by edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.1713.5; Fri, 13 Nov 2020 13:43:53 -0800
+ 15.1.1713.5; Fri, 13 Nov 2020 13:45:23 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=kn87uV8AttuEKDu+Zay9FNHNVLATwyY3AqEqRI4CMSBoEzgS1O214fTTZS+VB+EGEPpCOOUOqNju3FRF1imLiBt2EdSOwyC3SX2O5b/SGojk1gegA48K30Yj63IGHbX/56olW5oKzGFhY2wtlxXxdzhh6WQ1ATZ+3K+8iyVLaLrBYnG3MQMPUGg4tJShAJWHEcnDj2G7Qd+eLDLksrnLLh4JCJIlmGfSkZ/yOpaXxRCsBjMoEQbWbONF8RzKfCUcTZKqTi3iUU3bbGJs0XDxajzwAxm3LKSkHqB+UvUz4jKAN8iWplvO+i+um2TgmgvrLVVK0IlHVZYm6B0OZQrpoQ==
+ b=HgSSPQaPj+IE0y/EdBfpaf2Chu6+QBfBw1NDr8u2Gw9nl5/Etx51OnELz4brBbytGP0GqupOdYpE5AkJMcUxLKnHDFZYahBin5LBw1SRnCtdcjZD2iwvhqqQZxVMYbMdKi3DtzfDU6qMy8GnRpSpNcbUl1mWFETPKYCwW59xKD3NynRWh9TADQuG4JXBdhiAXDSoI7k1W98K3X/vCbaNcUwdsqiJoEWQsbExcNSqe3L7GVdpJ2eNbHp1wmxU21xJtU5Mm6k757J226k1tae/QthWXMgunQy6kCnRrT/ikPhtLI+xTq/BPd2sNZdZgYt5lFjTnEfuBpixAWjNW3iYhQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=a+o+r/5Mf2zf0xepcgT3YWoZRCN6DqVRmzKWFb9llmg=;
- b=gYFX047kKx35udRLXfHl9UHcb7+aBw/qioqlxBQRiUoca0f0xEVwz4wl6VszTQtgRYv9HzV1vjFpFT+D5LAp2HRAVeIEv/MUJdpkeyQ/xVxfxPO48abdHXogZ3lK0b9dlCWyMQFvmKAcDqLwotNvZ894ABPTkXt661MU5SPXnYwDGUG9Tkln2pYzyxw9LozxHvS1hktmYSGxroPHSdDqfruibjQ6tn8BI86qLlGf5xtFC2KrGtThJsgG4TLfUMYTU3Q0gj3AgerHsra27C/uwu6vD6CFJZIxfqZwnyq8SzX67ItTPQb9f7kjU/dZZIn3mxZS3eylv4MAkT3j4tGRcA==
+ bh=rSZB0+yE4T2z1kPc2TkpTCyfqYwHHgEyabDuSYyP5VI=;
+ b=fes6YfS+2k80xuba1HH3MpgQtrHF4HSk3XJXpxeqQJLIk94aKBmdgvvT1GPxVu38t9UCklDPN4hQup0cnC2xGOFA+RZ5+aO2/PoowdnbioRfdJUBHmncjcedDpOVLgB9HuWGm8uOJ6JXM5myTJDbBLDzs8Wmdl5vU4AmeVwRwwnc739L7DCotF78GXnD4xMYU+jtOgWIeMqgLoJ0Gcy4x340P3sq6SgnurksOjBV5dGhRr3FLnbDPfBcHPBqgp4IHQcvAZdT4lUin4PrUC9aJNXNUpib10NdAakLeU3gWD+OxL/8Yzq9wu/emzIGu8UvDZ4G180VxDoJbAO7oDwdng==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
  s=selector2-intel-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=a+o+r/5Mf2zf0xepcgT3YWoZRCN6DqVRmzKWFb9llmg=;
- b=bJPMUmvXLDEB711F0rFv874uEWGF+27CBWENzTXlojac7IqF+lANKRCJOkdi0ogL/vVhwRlQcJ6fWmYnECGhR927YC5EVCRVeHkzcX6wva40HsJv/HuAGOprqQPcH+0tj3AIR845tDCxywfQGwSVULluA6xAeT4aXSMIuf4FmZI=
+ bh=rSZB0+yE4T2z1kPc2TkpTCyfqYwHHgEyabDuSYyP5VI=;
+ b=zqokXVnpauinqd1BQ5L/Md8CWHnMzGIBiu6LiNbVl59itEd0y6bocp5Sj6fS9bJ7ypnqqL15bM2RHJC2F97L8SH0qtyMx/s/QgYtOVloRw7ZzVKYW+212IjN9Z5GH18cmc+4TvmtZ3jjR9j9WfVhxArQ/LR1TjOj1AP+7lqfYWg=
 Received: from BYAPR11MB3256.namprd11.prod.outlook.com (2603:10b6:a03:76::19)
  by SJ0PR11MB4976.namprd11.prod.outlook.com (2603:10b6:a03:2d7::5) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3541.25; Fri, 13 Nov
- 2020 21:43:50 +0000
+ 2020 21:45:20 +0000
 Received: from BYAPR11MB3256.namprd11.prod.outlook.com
  ([fe80::9d74:8937:bd5f:3c6b]) by BYAPR11MB3256.namprd11.prod.outlook.com
  ([fe80::9d74:8937:bd5f:3c6b%6]) with mapi id 15.20.3541.025; Fri, 13 Nov 2020
- 21:43:50 +0000
+ 21:45:19 +0000
 From: "Moore, Robert" <robert.moore@intel.com>
 To: Nick Desaulniers <ndesaulniers@google.com>
 Thread-Topic: [PATCH] ACPICA: fix -Wfallthrough
-Thread-Index: AQHWt9BSaSJ92WwBRk6cKvxE5xanpKnGl5SwgAAB3QCAAAJ3cIAAAHnQ
-Date: Fri, 13 Nov 2020 21:43:50 +0000
-Message-ID: <BYAPR11MB3256E6E37618702C5EA761A087E60@BYAPR11MB3256.namprd11.prod.outlook.com>
+Thread-Index: AQHWt9BSaSJ92WwBRk6cKvxE5xanpKnGl5SwgAAB3QCAAAJ3cIAAAHnQgAAAbfA=
+Date: Fri, 13 Nov 2020 21:45:19 +0000
+Message-ID: <BYAPR11MB3256DD34C3DABD2CB4FE347D87E60@BYAPR11MB3256.namprd11.prod.outlook.com>
 References: <20201111021131.822867-1-ndesaulniers@google.com>
  <BYAPR11MB32568FEEF4CFA1C20296427B87E60@BYAPR11MB3256.namprd11.prod.outlook.com>
  <CAKwvOd=qDNnOu1oTeEN+chvfJcQSS5dxREo0JQHC=W0zhpYeLw@mail.gmail.com>
  <BYAPR11MB32564DD5B9D140AFE8C3D1EB87E60@BYAPR11MB3256.namprd11.prod.outlook.com>
-In-Reply-To: <BYAPR11MB32564DD5B9D140AFE8C3D1EB87E60@BYAPR11MB3256.namprd11.prod.outlook.com>
+ <BYAPR11MB3256E6E37618702C5EA761A087E60@BYAPR11MB3256.namprd11.prod.outlook.com>
+In-Reply-To: <BYAPR11MB3256E6E37618702C5EA761A087E60@BYAPR11MB3256.namprd11.prod.outlook.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -91,31 +88,31 @@ authentication-results: google.com; dkim=none (message not signed)
  header.d=none;google.com; dmarc=none action=none header.from=intel.com;
 x-originating-ip: [134.134.136.194]
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: c2b739f9-43e5-4bfb-a36d-08d8881d3576
+x-ms-office365-filtering-correlation-id: 7717ead9-c3f4-4882-4271-08d8881d6ac3
 x-ms-traffictypediagnostic: SJ0PR11MB4976:
 x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
 x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <SJ0PR11MB49764055EF729A6EDEAF61B687E60@SJ0PR11MB4976.namprd11.prod.outlook.com>
+x-microsoft-antispam-prvs: <SJ0PR11MB49765DF640D1CD91F21339F487E60@SJ0PR11MB4976.namprd11.prod.outlook.com>
 x-ms-oob-tlc-oobclassifiers: OLM:10000;
 x-ms-exchange-senderadcheck: 1
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: cSKxhCAknijyizfUYZTcNWO/ka/Z2ksGe644Ygvcrh7B0BPg7JRt8FfG5w5BK+ap3AR3PydSZuqzOnNjQodkp4td+v6ATdJ96GF3Qt4E691SqSH/DO4a/hv+01zLPA4YAVZo1iArkZ/8tYF0rvNHQanprVFA3naFwwWyhj4WW8Ml8UX64ElKIWSRdsIjb3CowSVOxqG9hYWnXnJUC8NA1Ov9lO/qmhGER71V+ZZ1IkImf9NaaVy/T/7Y7i5Orya4eug5yUCoT4htKBeA6/uFfUvV1PUF1mjFX5LjcrNgy6U6XIDy1M0YEXdV/FQH+mu5HkcmZYJoZNpERy2gGRDzpA==
+x-microsoft-antispam-message-info: x8MJsb9ALf1xF426Ail7Kh6Zmssv+ADwzn9DMNDE7PV5hw30jMRufvAFQ6o4AQIDfbzMuesoQsqlP7jRwxOwlGQO/AaZbqxAZIfPhImwLPqNUgyekbTimc531n1NXwaY9uruwtxwRVK9erWlJ3RbCzYShtAod1iWma8+AKNviPFIrGOGPKpabSQN0arCBH/t4GHwn9i85IJ9iBtNrKxW6qrwdxPGTDk1gfhlrV8k8MNBXS452TJGRKyUg64ysFujSX/487fG+C7EvNL00T4I9Fugq2qyizeCm6/2ZceytAfqP5B1Es81fdELjDYiLxopRfRlatOd0DtxeI61a/DB7w==
 x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(39860400002)(366004)(376002)(136003)(346002)(396003)(53546011)(478600001)(2906002)(71200400001)(8936002)(5660300002)(54906003)(6916009)(76116006)(64756008)(83380400001)(52536014)(33656002)(9686003)(6506007)(2940100002)(66556008)(316002)(26005)(186003)(66446008)(66946007)(55016002)(8676002)(86362001)(7696005)(4326008)(66476007);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata: yaIupS0LPIDPPH1MzTsIKZsSBxF6vCXdUmvXSrWu8Tx8eh+VV/DRyeVEW9cMFWsikYPrb7lWjCl1KTVvmNUMW1Ic5egO1cUuGgCDXc/dHdMyt/GyXjcY7jGFuBELwPL9P4KqYFx0PN4FJr4ULcfAagQA3BgmwOFhWpLu8kRioplH1z6z2DqVH5gcqVKUZXrUV74mjtKUjKdhCqV0ioIJ7WuOZqKBeORwB2nZLWzFS6WV3g0QUuKh+SYWyOJPZu/uKOwRqHXkM1RgzU4PRBSp6EFfcOVy9i5yvyIdO/O910WcC9YF0Xy+2LLLgOculDaPGHqGrpHsfMT+tsXuOAn6XzkmBPxQGaCQL24N9x8TrlWcNRfoKkrNso5gjy5+rRzvGUpoE2G4hMyiytGdQoKU2Yk0Wllz8H2xH+ERrbRoySJ+c9ky7XxN9Pn0nsteF5Xp5wKuTSDwMglwf4EjbEXltgJdV+RraTa1vzMHX5y3gHJsX8wgFhCBnwUB6MUmZ7yYPnK9El3xGn1jzAes26FNTuboWJ5Jxs3x2O5nfelz/X7vrAWNzTfdc98/dnev43c18+CpzmD8gNtSXtPog4HfC2sIZGEquWIIhfAvUrvk0noK8+OFwDw6fTuJLJFNxVfnC6CEtSiBDeUw0Cn2FCH1Mg==
+x-ms-exchange-antispam-messagedata: 6uAPDj/42JLZ1qfkexKalu2DZ7+FT/pdHdaCRn4iXj7OMfuqySNQePsyXXlPEN29h/3xe84I/QmRDEaNteRVHdKnZkf+0yD+PJBAeuHNLX5to3keFpu0ekx/ECRYmtZpZHYzqZDvOpCn6umKdDihbkLwjPuEWhYtrXIUgi22OFpfaquc9VFwBXhyd6kG5Xnv5sWKBn5Wusw0LRd4j8kL02VEXwN89CSI4WVEzojcz43tP67R941iwPN0YWoWLu15ZSG8UyekMgI4iYLrGsagz92K0k7I1wPw6Ls1hMQRnmNkwpDSchATHbDquYiduf2h2Qu24E9ITetSGKneHXROlrNwR4t1//R+Nm7O2ReXINY4tStNGs6jZU/KJ1tmLRdWfZyBiY3v32JfCoI84qQ1oYeZwmobILDY0eWQwpZvy5QEcae1nM7+2o05OM6z9qgHKh0sHrdRDLMEZz/75w/NE/CvZ/tIjJDV/9qgAGPKznsLoIzfxxIQETp/wRpZA7DmYMbjKkldgRG6XCun+2qDfQIx/IlOLRX9mRBDIE7cReGyUGnr5scc4kynPjsP/gGPikoKeeOteGBmLKO11DbqaMPVyNi108UKamX/12ybONzhXStx8EX9jqiLGJxLyW7iQ8ScVM6zi8pLjqZnrC9clw==
 MIME-Version: 1.0
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3256.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c2b739f9-43e5-4bfb-a36d-08d8881d3576
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Nov 2020 21:43:50.3572
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7717ead9-c3f4-4882-4271-08d8881d6ac3
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Nov 2020 21:45:19.8716
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: wo+wfCXnYX9sVas6Qj60P//6+na6aHgvSmwT0OnU+H8zbQ/VHemRaWReUkUFVlyi5dffvy/V78SQ+rvHXpXHBw==
+X-MS-Exchange-CrossTenant-userprincipalname: RaSad993TR1IavDXYmh7roZagyODpptPAMcEYE6HCaR7KY0oZuP/BoaKyCKWVQJweQaMo+pHKYE8NTk78aHMUA==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB4976
 X-OriginatorOrg: intel.com
-Message-ID-Hash: OVX2CMSCXGCATM6RVKJLZIQHULVOX6MU
-X-Message-ID-Hash: OVX2CMSCXGCATM6RVKJLZIQHULVOX6MU
+Message-ID-Hash: P3A6ESHOYELDQZQH65HXLRRNB6OUU3KM
+X-Message-ID-Hash: P3A6ESHOYELDQZQH65HXLRRNB6OUU3KM
 X-MailFrom: robert.moore@intel.com
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
 CC: "Kaneda, Erik" <erik.kaneda@intel.com>, "Wysocki, Rafael J" <rafael.j.wysocki@intel.com>, "Gustavo A . R . Silva" <gustavoars@kernel.org>, "clang-built-linux@googlegroups.com" <clang-built-linux@googlegroups.com>, "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>, "devel@acpica.org" <devel@acpica.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
@@ -123,7 +120,7 @@ X-Mailman-Version: 3.1.1
 Precedence: list
 Subject: [Devel] Re: [PATCH] ACPICA: fix -Wfallthrough
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/OVX2CMSCXGCATM6RVKJLZIQHULVOX6MU/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/P3A6ESHOYELDQZQH65HXLRRNB6OUU3KM/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -131,6 +128,16 @@ List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+
+BTW, if you can make a pull request for the patch up on github, that would help.
+
+
+-----Original Message-----
+From: Moore, Robert 
+Sent: Friday, November 13, 2020 1:44 PM
+To: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Kaneda, Erik <erik.kaneda@intel.com>; Wysocki, Rafael J <rafael.j.wysocki@intel.com>; Gustavo A . R . Silva <gustavoars@kernel.org>; clang-built-linux@googlegroups.com; Len Brown <lenb@kernel.org>; linux-acpi@vger.kernel.org; devel@acpica.org; linux-kernel@vger.kernel.org
+Subject: RE: [PATCH] ACPICA: fix -Wfallthrough
 
 
 
