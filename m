@@ -1,146 +1,179 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A94B2B9212
-	for <lists+devel-acpica@lfdr.de>; Thu, 19 Nov 2020 13:07:14 +0100 (CET)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B4442B9225
+	for <lists+devel-acpica@lfdr.de>; Thu, 19 Nov 2020 13:12:41 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id CAD2B100EBB89;
-	Thu, 19 Nov 2020 04:07:12 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=185.176.79.56; helo=frasgout.his.huawei.com; envelope-from=shameerali.kolothum.thodi@huawei.com; receiver=<UNKNOWN> 
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+	by ml01.01.org (Postfix) with ESMTP id 3D60F100EBB8C;
+	Thu, 19 Nov 2020 04:12:40 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=45.249.212.35; helo=szxga07-in.huawei.com; envelope-from=shameerali.kolothum.thodi@huawei.com; receiver=<UNKNOWN> 
+Received: from szxga07-in.huawei.com (szxga07-in.huawei.com [45.249.212.35])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 15DE4100EBBCC
-	for <devel@acpica.org>; Thu, 19 Nov 2020 04:07:10 -0800 (PST)
-Received: from fraeml711-chm.china.huawei.com (unknown [172.18.147.207])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4CcJJf3lMNz67F2M;
-	Thu, 19 Nov 2020 20:04:50 +0800 (CST)
-Received: from lhreml715-chm.china.huawei.com (10.201.108.66) by
- fraeml711-chm.china.huawei.com (10.206.15.60) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1913.5; Thu, 19 Nov 2020 13:07:08 +0100
-Received: from lhreml710-chm.china.huawei.com (10.201.108.61) by
- lhreml715-chm.china.huawei.com (10.201.108.66) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1913.5; Thu, 19 Nov 2020 12:07:07 +0000
-Received: from lhreml710-chm.china.huawei.com ([169.254.81.184]) by
- lhreml710-chm.china.huawei.com ([169.254.81.184]) with mapi id
- 15.01.1913.007; Thu, 19 Nov 2020 12:07:07 +0000
-From: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-To: Sami Mujawar <Sami.Mujawar@arm.com>, "david.e.box@linux.intel.com"
-	<david.e.box@linux.intel.com>, "linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, "linux-acpi@vger.kernel.org"
-	<linux-acpi@vger.kernel.org>, "iommu@lists.linux-foundation.org"
-	<iommu@lists.linux-foundation.org>, "devel@acpica.org" <devel@acpica.org>
-Thread-Topic: [Devel] Re: [RFC PATCH 2/4] ACPI/IORT: Add support for RMR node
- parsing
-Thread-Index: AQHWtpQY66bs/ZNapk2zvFyjgM+sLanPaxLw
-Date: Thu, 19 Nov 2020 12:07:07 +0000
-Message-ID: <735edb5c4da842609c1d2a0eed73b06c@huawei.com>
-References: <20201027112646.44680-1-shameerali.kolothum.thodi@huawei.com>
-	 <20201027112646.44680-3-shameerali.kolothum.thodi@huawei.com>
- <d414a22fbae9575e6c04f4a557ae49a2cd8eac57.camel@linux.intel.com>
- <DB7PR08MB3097062CEEDB4635BF3F694784EA0@DB7PR08MB3097.eurprd08.prod.outlook.com>
-In-Reply-To: <DB7PR08MB3097062CEEDB4635BF3F694784EA0@DB7PR08MB3097.eurprd08.prod.outlook.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.210.168.73]
-Content-Type: text/plain; charset="us-ascii"
+	by ml01.01.org (Postfix) with ESMTPS id 5C4A8100EBB89
+	for <devel@acpica.org>; Thu, 19 Nov 2020 04:12:36 -0800 (PST)
+Received: from DGGEMS407-HUB.china.huawei.com (unknown [172.30.72.58])
+	by szxga07-in.huawei.com (SkyGuard) with ESMTP id 4CcJTC4TQMz709F;
+	Thu, 19 Nov 2020 20:12:15 +0800 (CST)
+Received: from S00345302A-PC.china.huawei.com (10.210.168.73) by
+ DGGEMS407-HUB.china.huawei.com (10.3.19.207) with Microsoft SMTP Server id
+ 14.3.487.0; Thu, 19 Nov 2020 20:12:20 +0800
+From: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+To: <linux-arm-kernel@lists.infradead.org>, <linux-acpi@vger.kernel.org>,
+	<iommu@lists.linux-foundation.org>, <devel@acpica.org>
+Date: Thu, 19 Nov 2020 12:11:42 +0000
+Message-ID: <20201119121150.3316-1-shameerali.kolothum.thodi@huawei.com>
+X-Mailer: git-send-email 2.12.0.windows.1
 MIME-Version: 1.0
+X-Originating-IP: [10.210.168.73]
 X-CFilter-Loop: Reflected
-Message-ID-Hash: XNAANVYVW6IXCF4D7EYS5VI7ZRSGU637
-X-Message-ID-Hash: XNAANVYVW6IXCF4D7EYS5VI7ZRSGU637
+Message-ID-Hash: 7LRYD35ZMF4ITNF76FYHUXT3KZ5KWWDT
+X-Message-ID-Hash: 7LRYD35ZMF4ITNF76FYHUXT3KZ5KWWDT
 X-MailFrom: shameerali.kolothum.thodi@huawei.com
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
-CC: Linuxarm <linuxarm@huawei.com>, Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>, "joro@8bytes.org" <joro@8bytes.org>, "Robin Murphy  <Robin.Murphy@arm.com>, wanghuiqiang <wanghuiqiang@huawei.com>, Jonathan Cameron" <jonathan.cameron@huawei.com>, nd <nd@arm.com>
+CC: linuxarm@huawei.com, lorenzo.pieralisi@arm.com, joro@8bytes.org, robin.murphy@arm.com, wanghuiqiang@huawei.com, jonathan.cameron@huawei.com, steven.price@arm.com, Sami.Mujawar@arm.com
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [RFC PATCH 2/4] ACPI/IORT: Add support for RMR node parsing
+Subject: [Devel] [RFC PATCH v2 0/8] ACPI/IORT: Support for IORT RMR node
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/XNAANVYVW6IXCF4D7EYS5VI7ZRSGU637/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/7LRYD35ZMF4ITNF76FYHUXT3KZ5KWWDT/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-
-
-> -----Original Message-----
-> From: Sami Mujawar [mailto:Sami.Mujawar@arm.com]
-> Sent: 09 November 2020 12:30
-> To: david.e.box@linux.intel.com; Shameerali Kolothum Thodi
-> <shameerali.kolothum.thodi@huawei.com>;
-> linux-arm-kernel@lists.infradead.org; linux-acpi@vger.kernel.org;
-> iommu@lists.linux-foundation.org; devel@acpica.org
-> Cc: Linuxarm <linuxarm@huawei.com>; Lorenzo Pieralisi
-> <Lorenzo.Pieralisi@arm.com>; joro@8bytes.org; Robin Murphy
-> <Robin.Murphy@arm.com>; wanghuiqiang <wanghuiqiang@huawei.com>;
-> Jonathan Cameron <jonathan.cameron@huawei.com>; nd <nd@arm.com>
-> Subject: RE: [Devel] Re: [RFC PATCH 2/4] ACPI/IORT: Add support for RMR node
-> parsing
-> 
-> Hi,
-> 
-> -----Original Message-----
-> From: David E. Box <david.e.box@linux.intel.com>
-> Sent: 28 October 2020 06:44 PM
-> To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>;
-> linux-arm-kernel@lists.infradead.org; linux-acpi@vger.kernel.org;
-> iommu@lists.linux-foundation.org; devel@acpica.org
-> Cc: linuxarm@huawei.com; Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>;
-> joro@8bytes.org; Robin Murphy <Robin.Murphy@arm.com>;
-> wanghuiqiang@huawei.com; jonathan.cameron@huawei.com
-> Subject: [Devel] Re: [RFC PATCH 2/4] ACPI/IORT: Add support for RMR node
-> parsing
-> 
-> Hi,
-> 
-> On Tue, 2020-10-27 at 11:26 +0000, Shameer Kolothum wrote:
-> 
-> ...
-> 
-> > @@ -1647,6 +1667,100 @@ static void __init iort_enable_acs(struct
-> > acpi_iort_node *iort_node)
-> >  #else
-> >  static inline void iort_enable_acs(struct acpi_iort_node *iort_node)
-> > { }
-> >  #endif
-> > +static int iort_rmr_desc_valid(struct acpi_iort_rmr_desc *desc)
-> > +{
-> > +	struct iort_rmr_entry *e;
-> > +	u64 end, start = desc->base_address, length = desc->length;
-> > +
-> > +	if ((!IS_ALIGNED(start, SZ_64K)) || (length % SZ_64K != 0))
-> 
-> You could just do:
-> 
-> if ((!IS_ALIGNED(start, SZ_64K)) || (length % SZ_64K))
-> 
-> [SAMI] In my opinion, the following may be better:
-> 	if (!IS_ALIGNED(start, SZ_64K) || !IS_ALIGNED(length, SZ_64K))
-> [/SAMI]
-
-Thanks for your suggestions. I don't have a strong opinion on either
-of those, but will change it with the latter one for now.
-
-Thanks,
-Shameer
-
-> Regards,
-> 
-> Sami Mujawar
-> 
-> David
-> _______________________________________________
-> Devel mailing list -- devel@acpica.org
-> To unsubscribe send an email to devel-leave@acpica.org
-> %(web_page_url)slistinfo%(cgiext)s/%(_internal_name)s
-_______________________________________________
-Devel mailing list -- devel@acpica.org
-To unsubscribe send an email to devel-leave@acpica.org
-%(web_page_url)slistinfo%(cgiext)s/%(_internal_name)s
+UkZDIHYxIC0tPiB2MjoNCsKgLSBBZGRlZCBhIGdlbmVyaWMgaW50ZXJmYWNlIGZvciBJT01NVSBk
+cml2ZXJzIHRvIHJldHJpZXZlIGFsbCB0aGUgDQrCoCDCoFJNUiBpbmZvIGFzc29jaWF0ZWQgd2l0
+aCBhIGdpdmVuIElPTU1VLg0KwqAtIFNNTVV2MyBkcml2ZXIgZ2V0cyB0aGUgUk1SIGxpc3QgZHVy
+aW5nIHByb2JlKCkgYW5kIGluc3RhbGxzDQrCoMKgIGJ5cGFzcyBTVEVzIGZvciBhbGwgdGhlIFNJ
+RHMgaW4gdGhlIFJNUiBsaXN0LiBUaGlzIGlzIHRvIGtlZXANCiDCoCB0aGUgb25nb2luZyB0cmFm
+ZmljIGFsaXZlKGlmIGFueSkgZHVyaW5nIFNNTVV2MyByZXNldC4gVGhpcyBpcw0KICAgYmFzZWQg
+b24gdGhlIHN1Z2dlc3Rpb25zIHJlY2VpdmVkIGZvciB2MSB0byB0YWtlIGNhcmUgb2YgdGhlDQog
+ICBFRkkgZnJhbWVidWZmZXIgdXNlIGNhc2UuIE9ubHkgc2FuaXR5IHRlc3RlZCBmb3Igbm93Lg0K
+wqAtIER1cmluZyB0aGUgcHJvYmUvYXR0YWNoIGRldmljZSwgU01NVXYzIGRyaXZlciByZXNlcnZl
+cyBhbnkNCsKgIMKgUk1SIHJlZ2lvbiBhc3NvY2lhdGVkIHdpdGggdGhlIGRldmljZSBzdWNoIHRo
+YXQgdGhlcmUgaXMgYSB1bml0eQ0KwqAgwqBtYXBwaW5nIGZvciB0aGVtIGluIFNNTVUuDQotLS3C
+oCDCoMKgDQoNClRoZSBzZXJpZXMgYWRkcyBzdXBwb3J0IHRvIElPUlQgUk1SIG5vZGVzIHNwZWNp
+ZmllZCBpbiBJT1JUDQpSZXZpc2lvbiBFIC1BUk0gREVOIDAwNDlFWzBdLiBSTVIgbm9kZXMgYXJl
+IHVzZWQgdG8gZGVzY3JpYmUgbWVtb3J5DQpyYW5nZXMgdGhhdCBhcmUgdXNlZCBieSBlbmRwb2lu
+dHMgYW5kIHJlcXVpcmUgYSB1bml0eSBtYXBwaW5nDQppbiBTTU1VLg0KDQpXZSBoYXZlIGZhY2Vk
+IGlzc3VlcyB3aXRoIDM0MDhpTVIgUkFJRCBjb250cm9sbGVyIGNhcmRzIHdoaWNoDQpmYWlsIHRv
+IGJvb3Qgd2hlbiBTTU1VIGlzIGVuYWJsZWQuIFRoaXMgaXMgYmVjYXVzZSB0aGVzZSBjb250cm9s
+bGVycw0KbWFrZSB1c2Ugb2YgaG9zdCBtZW1vcnkgZm9yIHZhcmlvdXMgY2FjaGluZyByZWxhdGVk
+IHB1cnBvc2VzIGFuZCB3aGVuDQpTTU1VIGlzIGVuYWJsZWQgdGhlIGlNUiBmaXJtd2FyZSBmYWls
+cyB0byBhY2Nlc3MgdGhlc2UgbWVtb3J5IHJlZ2lvbnMNCmFzIHRoZXJlIGlzIG5vIG1hcHBpbmcg
+Zm9yIHRoZW0uIElPUlQgUk1SIHByb3ZpZGVzIGEgd2F5IGZvciBVRUZJIHRvDQpkZXNjcmliZSBh
+bmQgcmVwb3J0IHRoZXNlIG1lbW9yeSByZWdpb25zIHNvIHRoYXQgdGhlIGtlcm5lbCBjYW4gbWFr
+ZQ0KYSB1bml0eSBtYXBwaW5nIGZvciB0aGVzZSBpbiBTTU1VLg0KDQpSRkMgYmVjYXVzZSwgUGF0
+Y2ggIzEgaXMgdG8gdXBkYXRlIHRoZSBhY3RibDIuaCBhbmQgc2hvdWxkIGJlIGRvbmUNCnRocm91
+Z2ggYWNwaWNhIHVwZGF0ZS4gSSBoYXZlIHNlbmQgb3V0IGEgcHVsbCByZXF1ZXN0WzFdIGZvciB0
+aGF0Lg0KDQpUZXN0czoNCg0KV2l0aCBhIFVFRkksIHRoYXQgcmVwb3J0cyB0aGUgUk1SIGZvciB0
+aGUgZGV2LA0KLi4uLg0KWzE2RjBoIDU4NzIgICAxXSAgICAgICAgICAgICAgICAgICAgICAgICBU
+eXBlIDogMDYNClsxNkYxaCA1ODczICAgMl0gICAgICAgICAgICAgICAgICAgICAgIExlbmd0aCA6
+IDAwN0MNClsxNkYzaCA1ODc1ICAgMV0gICAgICAgICAgICAgICAgICAgICBSZXZpc2lvbiA6IDAw
+DQpbMTAzOGggMDA1NiAgIDJdICAgICAgICAgICAgICAgICAgICAgUmVzZXJ2ZWQgOiAwMDAwMDAw
+MA0KWzEwMzhoIDAwNTYgICAyXSAgICAgICAgICAgICAgICAgICBJZGVudGlmaWVyIDogMDAwMDAw
+MDANClsxNkY4aCA1ODgwICAgNF0gICAgICAgICAgICAgICAgTWFwcGluZyBDb3VudCA6IDAwMDAw
+MDAxDQpbMTZGQ2ggNTg4NCAgIDRdICAgICAgICAgICAgICAgTWFwcGluZyBPZmZzZXQgOiAwMDAw
+MDA0MA0KDQpbMTcwMGggNTg4OCAgIDRdICAgIE51bWJlciBvZiBSTVIgRGVzY3JpcHRvcnMgOiAw
+MDAwMDAwMg0KWzE3MDRoIDU4OTIgICA0XSAgICAgICAgUk1SIERlc2NyaXB0b3IgT2Zmc2V0IDog
+MDAwMDAwMTgNCg0KWzE3MDhoIDU4OTYgICA4XSAgICAgICAgICBCYXNlIEFkZHJlc3Mgb2YgUk1S
+IDogMDAwMEU2NDAwMDAwDQpbMTcxMGggNTkwNCAgIDhdICAgICAgICAgICAgICAgIExlbmd0aCBv
+ZiBSTVIgOiAwMDAwMDAxMDAwMDANClsxNzE4aCA1OTEyICAgNF0gICAgICAgICAgICAgICAgICAg
+ICBSZXNlcnZlZCA6IDAwMDAwMDAwDQoNClsxNzFDaCA1OTE2ICAgOF0gICAgICAgICAgQmFzZSBB
+ZGRyZXNzIG9mIFJNUiA6IDAwMDAwMDAwMjdCMDAwMDANClsxNzI0aCA1OTI0ICAgOF0gICAgICAg
+ICAgICAgICAgTGVuZ3RoIG9mIFJNUiA6IDAwMDAwMDAwMDBDMDAwMDANClsxNzJDaCA1OTMyICAg
+NF0gICAgICAgICAgICAgICAgICAgICBSZXNlcnZlZCA6IDAwMDAwMDAwDQoNClsxNzMwaCA1OTM2
+ICAgNF0gICAgICAgICAgICAgICAgICAgSW5wdXQgYmFzZSA6IDAwMDAwMDAwDQpbMTczNGggNTk0
+MCAgIDRdICAgICAgICAgICAgICAgICAgICAgSUQgQ291bnQgOiAwMDAwMDAwMQ0KWzE3MzhoIDU5
+NDQgICA0XSAgICAgICAgICAgICAgICAgIE91dHB1dCBCYXNlIDogMDAwMDAwMDMNClsxNzNDaCA1
+OTQ4ICAgNF0gICAgICAgICAgICAgT3V0cHV0IFJlZmVyZW5jZSA6IDAwMDAwMDY0DQpbMTc0MGgg
+NTk1MiAgIDRdICAgICAgICBGbGFncyAoZGVjb2RlZCBiZWxvdykgOiAwMDAwMDAwMQ0KICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgIFNpbmdsZSBNYXBwaW5nIDogMQ0KLi4uDQoNCldpdGhv
+dXQgdGhlIHNlcmllcyB0aGUgUkFJRCBjb250cm9sbGVyIGluaXRpYWxpemF0aW9uIGZhaWxzIGFz
+DQpiZWxvdywNCg0KLi4uDQpbICAgMTIuNjMxMTE3XSBtZWdhcmFpZF9zYXMgMDAwMDowMzowMC4w
+OiBGVyBzdXBwb3J0cyBzeW5jIGNhY2hlICAgICAgICA6IFllcyAgIA0KWyAgIDEyLjYzNzM2MF0g
+bWVnYXJhaWRfc2FzIDAwMDA6MDM6MDAuMDogbWVnYXNhc19kaXNhYmxlX2ludHJfZnVzaW9uIGlz
+IGNhbGxlZCBvdXRib3VuZF9pbnRyX21hc2s6MHg0MDAwMDAwOSAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIA0KWyAgIDE4Ljc3NjM3N10gbWVnYXJhaWRf
+c2FzIDAwMDA6MDM6MDAuMDogSW5pdCBjbWQgcmV0dXJuIHN0YXR1cyBGQUlMRUQgZm9yIFNDU0kg
+aG9zdCAwICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgIA0KWyAgIDIzLjAxOTM4M10gbWVnYXJhaWRfc2FzIDAwMDA6
+MDM6MDAuMDogV2FpdGluZyBmb3IgRlcgdG8gY29tZSB0byByZWFkeSBzdGF0ZSANClsgIDEwNi42
+ODQyODFdIG1lZ2FyYWlkX3NhcyAwMDAwOjAzOjAwLjA6IEZXIGluIEZBVUxUIHN0YXRlLCBGYXVs
+dCBjb2RlOjB4MTAwMDAgc3ViY29kZToweDAgZnVuYzptZWdhc2FzX3RyYW5zaXRpb25fdG9fcmVh
+ZHkgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICANClsgIDEwNi42OTUxODZdIG1l
+Z2FyYWlkX3NhcyAwMDAwOjAzOjAwLjA6IFN5c3RlbSBSZWdpc3RlciBzZXQ6ICAgICAgICAgICAg
+ICAgICAgDQpbICAxMDYuODg5Nzg3XSBtZWdhcmFpZF9zYXMgMDAwMDowMzowMC4wOiBGYWlsZWQg
+dG8gdHJhbnNpdGlvbiBjb250cm9sbGVyIHRvIHJlYWR5IGZvciBzY3NpMC4gICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgDQpb
+ICAxMDYuOTEwNDc1XSBtZWdhcmFpZF9zYXMgMDAwMDowMzowMC4wOiBGYWlsZWQgZnJvbSBtZWdh
+c2FzX2luaXRfZncgNjQwNyAgICAgIA0KZXN0dWFyeTovJA0KDQpXaXRoIHRoZSBzZXJpZXMsIG5v
+dyB0aGUga2VybmVsIGhhcyBkaXJlY3QgbWFwcGluZyBmb3IgdGhlIGRldiBhcw0KYmVsb3csDQoN
+CmVzdHVhcnk6LyQgY2F0IC9zeXMva2VybmVsL2lvbW11X2dyb3Vwcy8wL3Jlc2VydmVkX3JlZ2lv
+bnMgICAgICAgICAgICAgICAgICAgICAgDQoweDAwMDAwMDAwMDgwMDAwMDAgMHgwMDAwMDAwMDA4
+MGZmZmZmIG1zaSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIA0KMHgwMDAw
+MDAwMDI3YjAwMDAwIDB4MDAwMDAwMDAyODZmZmZmZiBkaXJlY3QgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICANCjB4MDAwMDAwMDBlNjQwMDAwMCAweDAwMDAwMDAwZTY0ZmZmZmYg
+ZGlyZWN0ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgDQplc3R1YXJ5Oi8kDQoN
+Ci4uLi4NClsgICAxMi4yNTQzMThdIG1lZ2FyYWlkX3NhcyAwMDAwOjAzOjAwLjA6IG1lZ2FzYXNf
+ZGlzYWJsZV9pbnRyX2Z1c2lvbiBpcyBjYWxsZWQgb3V0Ym91bmRfaW50cl9tYXNrOjB4NDAwMDAw
+MDkgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICANClsg
+ICAxMi43MzkwODldIG1lZ2FyYWlkX3NhcyAwMDAwOjAzOjAwLjA6IEZXIHByb3ZpZGVkIHN1cHBv
+cnRNYXhFeHRMRHM6IDAgICAgICBtYXhfbGRzOiAzMiAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICANClsgICAxMi43NDY2
+MjhdIG1lZ2FyYWlkX3NhcyAwMDAwOjAzOjAwLjA6IGNvbnRyb2xsZXIgdHlwZSAgICAgICA6IGlN
+UigwTUIpICAgICAgDQpbICAgMTIuNzUyNjk0XSBtZWdhcmFpZF9zYXMgMDAwMDowMzowMC4wOiBP
+bmxpbmUgQ29udHJvbGxlciBSZXNldChPQ1IpICA6IEVuYWJsZWQgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgDQpbICAgMTIuNzU5Nzk4XSBtZWdhcmFpZF9zYXMgMDAwMDowMzowMC4wOiBTZWN1cmUgSkJP
+RCBzdXBwb3J0ICAgOiBZZXMgICAgICAgICAgIA0KWyAgIDEyLjc2NTc3OF0gbWVnYXJhaWRfc2Fz
+IDAwMDA6MDM6MDAuMDogTlZNZSBwYXNzdGhydSBzdXBwb3J0IDogWWVzICAgICAgICAgICANClsg
+ICAxMi43NzE5MzFdIG1lZ2FyYWlkX3NhcyAwMDAwOjAzOjAwLjA6IEZXIHByb3ZpZGVkIFRNIFRh
+c2tBYm9ydC9SZXNldCB0aW1lb3U6IDYgc2Vjcy82MCBzZWNzICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICANClsgICAxMi43ODA1
+MDNdIG1lZ2FyYWlkX3NhcyAwMDAwOjAzOjAwLjA6IEpCT0Qgc2VxdWVuY2UgbWFwIHN1cHBvcnQg
+ICAgIDogWWVzICAgDQpbICAgMTIuNzg3MDAwXSBtZWdhcmFpZF9zYXMgMDAwMDowMzowMC4wOiBQ
+Q0kgTGFuZSBNYXJnaW5pbmcgc3VwcG9ydCAgICA6IE5vICAgIA0KWyAgIDEyLjgxOTE3OV0gbWVn
+YXJhaWRfc2FzIDAwMDA6MDM6MDAuMDogTlZNRSBwYWdlIHNpemUgICAgICAgIDogKDQwOTYpICAg
+ICAgICANClsgICAxMi44MjU2NzJdIG1lZ2FyYWlkX3NhcyAwMDAwOjAzOjAwLjA6IG1lZ2FzYXNf
+ZW5hYmxlX2ludHJfZnVzaW9uIGlzIGNhbGxlZCBvdXRib3VuZF9pbnRyX21hc2s6MHg0MDAwMDAw
+MCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICANClsg
+ICAxMi44MzUxOTldIG1lZ2FyYWlkX3NhcyAwMDAwOjAzOjAwLjA6IElOSVQgYWRhcHRlciBkb25l
+ICAgICAgICAgICAgICAgICAgICAgDQpbICAgMTIuODczOTMyXSBtZWdhcmFpZF9zYXMgMDAwMDow
+MzowMC4wOiBwY2kgaWQgICAgICAgICAgICAgICAgOiAoMHgxMDAwKS8oMHgwMDE3KS8oMHgxOWU1
+KS8oMHhkMjEzKSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgDQpbICAgMTIuODgxNjQ0XSBtZWdhcmFpZF9zYXMgMDAwMDowMzowMC4wOiB1
+bmV2ZW5zcGFuIHN1cHBvcnQgICAgOiBubyAgICAgICAgICAgIA0KWyAgIDEyLjg4NzQ1MV0gbWVn
+YXJhaWRfc2FzIDAwMDA6MDM6MDAuMDogZmlybXdhcmUgY3Jhc2ggZHVtcCAgIDogbm8gICAgICAg
+ICAgICANClsgICAxMi44OTMzNDRdIG1lZ2FyYWlkX3NhcyAwMDAwOjAzOjAwLjA6IEpCT0Qgc2Vx
+dWVuY2UgbWFwICAgICA6IGVuYWJsZWQgICAgICAgDQoNClJBSUQgY29udHJvbGxlciBpbml0IGlz
+IG5vdyBzdWNjZXNzIGFuZCBjYW4gZGV0ZWN0IHRoZSBkcml2ZXMNCmF0dGFjaGVkIGFzIHdlbGwu
+DQoNClRoYW5rcywNClNoYW1lZXINCg0KWzBdLiBodHRwczovL2RldmVsb3Blci5hcm0uY29tL2Rv
+Y3VtZW50YXRpb24vZGVuMDA0OS9sYXRlc3QvDQpbMV0uIGh0dHBzOi8vZ2l0aHViLmNvbS9hY3Bp
+Y2EvYWNwaWNhL3B1bGwvNjM4DQoNClNoYW1lZXIgS29sb3RodW0gKDgpOg0KICBBQ1BJQ0E6IElP
+UlQ6IFVwZGF0ZSBmb3IgcmV2aXNpb24gRQ0KICBBQ1BJL0lPUlQ6IEFkZCBzdXBwb3J0IGZvciBS
+TVIgbm9kZSBwYXJzaW5nDQogIGlvbW11L2RtYTogSW50cm9kdWNlIGdlbmVyaWMgaGVscGVyIHRv
+IHJldHJpZXZlIFJNUiBpbmZvDQogIEFDUEkvSU9SVDogQWRkIFJNUiBtZW1vcnkgcmVnaW9ucyBy
+ZXNlcnZhdGlvbiBoZWxwZXINCiAgaW9tbXUvYXJtLXNtbXUtdjM6IEludHJvZHVjZSBzdHJ0YWIg
+aW5pdCBoZWxwZXINCiAgaW9tbXUvYXJtLXNtbXUtdjM6IEFkZCBieXBhc3MgZmxhZyB0b8KgYXJt
+X3NtbXVfd3JpdGVfc3RydGFiX2VudCgpDQogIGlvbW11L2FybS1zbW11LXYzOiBHZXQgYXNzb2Np
+YXRlZCBSTVIgaW5mbyBhbmQgaW5zdGFsbCBieXBhc3MgU1RFDQogIGlvbW11L2FybS1zbW11LXYz
+OiBSZXNlcnZlIGFueSBSTVIgcmVnaW9ucyBhc3NvY2lhdGVkIHdpdGggYcKgZGV2DQoNCiBkcml2
+ZXJzL2FjcGkvYXJtNjQvaW9ydC5jICAgICAgICAgICAgICAgICAgIHwgMTgyICsrKysrKysrKysr
+KysrKysrKystDQogZHJpdmVycy9pb21tdS9hcm0vYXJtLXNtbXUtdjMvYXJtLXNtbXUtdjMuYyB8
+IDExMiArKysrKysrKysrLS0NCiBkcml2ZXJzL2lvbW11L2FybS9hcm0tc21tdS12My9hcm0tc21t
+dS12My5oIHwgICAyICsNCiBkcml2ZXJzL2lvbW11L2RtYS1pb21tdS5jICAgICAgICAgICAgICAg
+ICAgIHwgIDM5ICsrKysrDQogaW5jbHVkZS9hY3BpL2FjdGJsMi5oICAgICAgICAgICAgICAgICAg
+ICAgICB8ICAyNSArKy0NCiBpbmNsdWRlL2xpbnV4L2FjcGlfaW9ydC5oICAgICAgICAgICAgICAg
+ICAgIHwgICA2ICsNCiBpbmNsdWRlL2xpbnV4L2RtYS1pb21tdS5oICAgICAgICAgICAgICAgICAg
+IHwgICA3ICsNCiBpbmNsdWRlL2xpbnV4L2lvbW11LmggICAgICAgICAgICAgICAgICAgICAgIHwg
+IDE2ICsrDQogOCBmaWxlcyBjaGFuZ2VkLCAzNjcgaW5zZXJ0aW9ucygrKSwgMjIgZGVsZXRpb25z
+KC0pDQoNCi0tIA0KMi4xNy4xDQpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fXwpEZXZlbCBtYWlsaW5nIGxpc3QgLS0gZGV2ZWxAYWNwaWNhLm9yZwpUbyB1bnN1
+YnNjcmliZSBzZW5kIGFuIGVtYWlsIHRvIGRldmVsLWxlYXZlQGFjcGljYS5vcmcKJSh3ZWJfcGFn
+ZV91cmwpc2xpc3RpbmZvJShjZ2lleHQpcy8lKF9pbnRlcm5hbF9uYW1lKXM=
