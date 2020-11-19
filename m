@@ -2,134 +2,168 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 863F72B9229
-	for <lists+devel-acpica@lfdr.de>; Thu, 19 Nov 2020 13:12:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 906642B922A
+	for <lists+devel-acpica@lfdr.de>; Thu, 19 Nov 2020 13:12:54 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 597B9100EBB92;
-	Thu, 19 Nov 2020 04:12:48 -0800 (PST)
+	by ml01.01.org (Postfix) with ESMTP id 665D2100EBB90;
+	Thu, 19 Nov 2020 04:12:53 -0800 (PST)
 Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=45.249.212.191; helo=szxga05-in.huawei.com; envelope-from=shameerali.kolothum.thodi@huawei.com; receiver=<UNKNOWN> 
 Received: from szxga05-in.huawei.com (szxga05-in.huawei.com [45.249.212.191])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 77E22100EBB91
-	for <devel@acpica.org>; Thu, 19 Nov 2020 04:12:45 -0800 (PST)
-Received: from DGGEMS407-HUB.china.huawei.com (unknown [172.30.72.60])
-	by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4CcJTJ1kRJzLqQB;
-	Thu, 19 Nov 2020 20:12:20 +0800 (CST)
+	by ml01.01.org (Postfix) with ESMTPS id 0C947100EBB8D
+	for <devel@acpica.org>; Thu, 19 Nov 2020 04:12:51 -0800 (PST)
+Received: from DGGEMS407-HUB.china.huawei.com (unknown [172.30.72.59])
+	by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4CcJTP2bGyzLr01;
+	Thu, 19 Nov 2020 20:12:25 +0800 (CST)
 Received: from S00345302A-PC.china.huawei.com (10.210.168.73) by
  DGGEMS407-HUB.china.huawei.com (10.3.19.207) with Microsoft SMTP Server id
- 14.3.487.0; Thu, 19 Nov 2020 20:12:32 +0800
+ 14.3.487.0; Thu, 19 Nov 2020 20:12:38 +0800
 From: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 To: <linux-arm-kernel@lists.infradead.org>, <linux-acpi@vger.kernel.org>,
 	<iommu@lists.linux-foundation.org>, <devel@acpica.org>
-Date: Thu, 19 Nov 2020 12:11:44 +0000
-Message-ID: <20201119121150.3316-3-shameerali.kolothum.thodi@huawei.com>
+Date: Thu, 19 Nov 2020 12:11:45 +0000
+Message-ID: <20201119121150.3316-4-shameerali.kolothum.thodi@huawei.com>
 X-Mailer: git-send-email 2.12.0.windows.1
 In-Reply-To: <20201119121150.3316-1-shameerali.kolothum.thodi@huawei.com>
 References: <20201119121150.3316-1-shameerali.kolothum.thodi@huawei.com>
 MIME-Version: 1.0
 X-Originating-IP: [10.210.168.73]
 X-CFilter-Loop: Reflected
-Message-ID-Hash: PTOE2OJ72MUVYLC6HITJIA4FCNSTDNMQ
-X-Message-ID-Hash: PTOE2OJ72MUVYLC6HITJIA4FCNSTDNMQ
+Message-ID-Hash: P622VWGVX4GSUOUKSZHMB4YDWTRJM2D7
+X-Message-ID-Hash: P622VWGVX4GSUOUKSZHMB4YDWTRJM2D7
 X-MailFrom: shameerali.kolothum.thodi@huawei.com
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
 CC: linuxarm@huawei.com, lorenzo.pieralisi@arm.com, joro@8bytes.org, robin.murphy@arm.com, wanghuiqiang@huawei.com, jonathan.cameron@huawei.com, steven.price@arm.com, Sami.Mujawar@arm.com
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [RFC PATCH v2 2/8] ACPI/IORT: Add support for RMR node parsing
+Subject: [Devel] [RFC PATCH v2 3/8] iommu/dma: Introduce generic helper to retrieve RMR info
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/PTOE2OJ72MUVYLC6HITJIA4FCNSTDNMQ/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/P622VWGVX4GSUOUKSZHMB4YDWTRJM2D7/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 
-QWRkIHN1cHBvcnQgZm9yIHBhcnNpbmcgUk1SIG5vZGUgaW5mb3JtYXRpb24gZnJvbSBBQ1BJLg0K
-RmluZCBhc3NvY2lhdGVkIHN0cmVhbSBpZHMgYW5kIHNtbXUgbm9kZcKgaW5mbyBmcm9tIHRoZQ0K
-Uk1SIG5vZGUgYW5kIHBvcHVsYXRlIGEgbGlua2VkIGxpc3Qgd2l0aCBSTVIgbWVtb3J5DQpkZXNj
-cmlwdG9ycy4NCg0KU2lnbmVkLW9mZi1ieTogU2hhbWVlciBLb2xvdGh1bSA8c2hhbWVlcmFsaS5r
-b2xvdGh1bS50aG9kaUBodWF3ZWkuY29tPg0KLS0tDQogZHJpdmVycy9hY3BpL2FybTY0L2lvcnQu
-YyB8IDEyMiArKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrLQ0KIDEgZmlsZSBj
-aGFuZ2VkLCAxMjEgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbigtKQ0KDQpkaWZmIC0tZ2l0IGEv
-ZHJpdmVycy9hY3BpL2FybTY0L2lvcnQuYyBiL2RyaXZlcnMvYWNwaS9hcm02NC9pb3J0LmMNCmlu
-ZGV4IDk5MjlmZjUwYzBjMC4uYTk3MDVhYTM1MDI4IDEwMDY0NA0KLS0tIGEvZHJpdmVycy9hY3Bp
-L2FybTY0L2lvcnQuYw0KKysrIGIvZHJpdmVycy9hY3BpL2FybTY0L2lvcnQuYw0KQEAgLTQwLDYg
-KzQwLDI1IEBAIHN0cnVjdCBpb3J0X2Z3bm9kZSB7DQogc3RhdGljIExJU1RfSEVBRChpb3J0X2Z3
-bm9kZV9saXN0KTsNCiBzdGF0aWMgREVGSU5FX1NQSU5MT0NLKGlvcnRfZndub2RlX2xvY2spOw0K
-IA0KK3N0cnVjdCBpb3J0X3Jtcl9pZCB7DQorCXUzMiAgc2lkOw0KKwlzdHJ1Y3QgYWNwaV9pb3J0
-X25vZGUgKnNtbXU7DQorfTsNCisNCisvKg0KKyAqIE9uZSBlbnRyeSBmb3IgSU9SVCBSTVIuDQor
-ICovDQorc3RydWN0IGlvcnRfcm1yX2VudHJ5IHsNCisJc3RydWN0IGxpc3RfaGVhZCBsaXN0Ow0K
-Kw0KKwl1bnNpZ25lZCBpbnQgcm1yX2lkc19udW07DQorCXN0cnVjdCBpb3J0X3Jtcl9pZCAqcm1y
-X2lkczsNCisNCisJc3RydWN0IGFjcGlfaW9ydF9ybXJfZGVzYyAqcm1yX2Rlc2M7DQorfTsNCisN
-CitzdGF0aWMgTElTVF9IRUFEKGlvcnRfcm1yX2xpc3QpOyAgICAgICAgIC8qIGxpc3Qgb2YgUk1S
-IHJlZ2lvbnMgZnJvbSBBQ1BJICovDQorDQogLyoqDQogICogaW9ydF9zZXRfZndub2RlKCkgLSBD
-cmVhdGUgaW9ydF9md25vZGUgYW5kIHVzZSBpdCB0byByZWdpc3Rlcg0KICAqCQkgICAgICAgaW9t
-bXUgZGF0YSBpbiB0aGUgaW9ydF9md25vZGVfbGlzdA0KQEAgLTM5Myw3ICs0MTIsOCBAQCBzdGF0
-aWMgc3RydWN0IGFjcGlfaW9ydF9ub2RlICppb3J0X25vZGVfZ2V0X2lkKHN0cnVjdCBhY3BpX2lv
-cnRfbm9kZSAqbm9kZSwNCiAJCWlmIChub2RlLT50eXBlID09IEFDUElfSU9SVF9OT0RFX05BTUVE
-X0NPTVBPTkVOVCB8fA0KIAkJICAgIG5vZGUtPnR5cGUgPT0gQUNQSV9JT1JUX05PREVfUENJX1JP
-T1RfQ09NUExFWCB8fA0KIAkJICAgIG5vZGUtPnR5cGUgPT0gQUNQSV9JT1JUX05PREVfU01NVV9W
-MyB8fA0KLQkJICAgIG5vZGUtPnR5cGUgPT0gQUNQSV9JT1JUX05PREVfUE1DRykgew0KKwkJICAg
-IG5vZGUtPnR5cGUgPT0gQUNQSV9JT1JUX05PREVfUE1DRyB8fA0KKwkJICAgIG5vZGUtPnR5cGUg
-PT0gQUNQSV9JT1JUX05PREVfUk1SKSB7DQogCQkJKmlkX291dCA9IG1hcC0+b3V0cHV0X2Jhc2U7
-DQogCQkJcmV0dXJuIHBhcmVudDsNCiAJCX0NCkBAIC0xNjQ3LDYgKzE2NjcsMTAzIEBAIHN0YXRp
-YyB2b2lkIF9faW5pdCBpb3J0X2VuYWJsZV9hY3Moc3RydWN0IGFjcGlfaW9ydF9ub2RlICppb3J0
-X25vZGUpDQogI2Vsc2UNCiBzdGF0aWMgaW5saW5lIHZvaWQgaW9ydF9lbmFibGVfYWNzKHN0cnVj
-dCBhY3BpX2lvcnRfbm9kZSAqaW9ydF9ub2RlKSB7IH0NCiAjZW5kaWYNCitzdGF0aWMgaW50IGlv
-cnRfcm1yX2Rlc2NfdmFsaWQoc3RydWN0IGFjcGlfaW9ydF9ybXJfZGVzYyAqZGVzYykNCit7DQor
-CXN0cnVjdCBpb3J0X3Jtcl9lbnRyeSAqZTsNCisJdTY0IGVuZCwgc3RhcnQgPSBkZXNjLT5iYXNl
-X2FkZHJlc3MsIGxlbmd0aCA9IGRlc2MtPmxlbmd0aDsNCisNCisJaWYgKCFJU19BTElHTkVEKHN0
-YXJ0LCBTWl82NEspIHx8ICFJU19BTElHTkVEKGxlbmd0aCwgU1pfNjRLKSkNCisJCXJldHVybiAt
-RUlOVkFMOw0KKw0KKwllbmQgPSBzdGFydCArIGxlbmd0aCAtIDE7DQorDQorCS8qIENoZWNrIGZv
-ciBhZGRyZXNzIG92ZXJsYXAgKi8NCisJbGlzdF9mb3JfZWFjaF9lbnRyeShlLCAmaW9ydF9ybXJf
-bGlzdCwgbGlzdCkgew0KKwkJdTY0IGVfc3RhcnQgPSBlLT5ybXJfZGVzYy0+YmFzZV9hZGRyZXNz
-Ow0KKwkJdTY0IGVfZW5kID0gZV9zdGFydCArIGUtPnJtcl9kZXNjLT5sZW5ndGggLSAxOw0KKw0K
-KwkJaWYgKHN0YXJ0IDw9IGVfZW5kICYmIGVuZCA+PSBlX3N0YXJ0KQ0KKwkJCXJldHVybiAtRUlO
-VkFMOw0KKwl9DQorDQorCXJldHVybiAwOw0KK30NCisNCitzdGF0aWMgaW50IF9faW5pdCBpb3J0
-X3BhcnNlX3JtcihzdHJ1Y3QgYWNwaV9pb3J0X25vZGUgKmlvcnRfbm9kZSkNCit7DQorCXN0cnVj
-dCBpb3J0X3Jtcl9pZCAqcm1yX2lkcywgKmlkczsNCisJc3RydWN0IGlvcnRfcm1yX2VudHJ5ICpl
-Ow0KKwlzdHJ1Y3QgYWNwaV9pb3J0X3JtciAqcm1yOw0KKwlzdHJ1Y3QgYWNwaV9pb3J0X3Jtcl9k
-ZXNjICpybXJfZGVzYzsNCisJdTMyIG1hcF9jb3VudCA9IGlvcnRfbm9kZS0+bWFwcGluZ19jb3Vu
-dDsNCisJaW50IGksIHJldCA9IDAsIGRlc2NfY291bnQgPSAwOw0KKw0KKwlpZiAoaW9ydF9ub2Rl
-LT50eXBlICE9IEFDUElfSU9SVF9OT0RFX1JNUikNCisJCXJldHVybiAwOw0KKw0KKwlpZiAoIWlv
-cnRfbm9kZS0+bWFwcGluZ19vZmZzZXQgfHwgIW1hcF9jb3VudCkgew0KKwkJcHJfZXJyKEZXX0JV
-RyAiSW52YWxpZCBJRCBtYXBwaW5nLCBza2lwcGluZyBSTVIgbm9kZSAlcFxuIiwNCisJCSAgICAg
-ICBpb3J0X25vZGUpOw0KKwkJcmV0dXJuIC1FSU5WQUw7DQorCX0NCisNCisJcm1yX2lkcyA9IGtt
-YWxsb2Moc2l6ZW9mKCpybXJfaWRzKSAqIG1hcF9jb3VudCwgR0ZQX0tFUk5FTCk7DQorCWlmICgh
-cm1yX2lkcykNCisJCXJldHVybiAtRU5PTUVNOw0KKw0KKwkvKiBSZXRyaWV2ZSBhc3NvY2lhdGVk
-IHNtbXUgYW5kIHN0cmVhbSBpZCAqLw0KKwlpZHMgPSBybXJfaWRzOw0KKwlmb3IgKGkgPSAwOyBp
-IDwgbWFwX2NvdW50OyBpKyssIGlkcysrKSB7DQorCQlpZHMtPnNtbXUgPSBpb3J0X25vZGVfZ2V0
-X2lkKGlvcnRfbm9kZSwgJmlkcy0+c2lkLCBpKTsNCisJCWlmICghaWRzLT5zbW11KSB7DQorCQkJ
-cHJfZXJyKEZXX0JVRyAiSW52YWxpZCBTTU1VIHJlZmVyZW5jZSwgc2tpcHBpbmcgUk1SIG5vZGUg
-JXBcbiIsDQorCQkJICAgICAgIGlvcnRfbm9kZSk7DQorCQkJcmV0ID0gLUVJTlZBTDsNCisJCQln
-b3RvIG91dDsNCisJCX0NCisJfQ0KKw0KKwkvKiBSZXRyaWV2ZSBSTVIgZGF0YSAqLw0KKwlybXIg
-PSAoc3RydWN0IGFjcGlfaW9ydF9ybXIgKilpb3J0X25vZGUtPm5vZGVfZGF0YTsNCisJaWYgKCFy
-bXItPnJtcl9vZmZzZXQgfHwgIXJtci0+cm1yX2NvdW50KSB7DQorCQlwcl9lcnIoRldfQlVHICJJ
-bnZhbGlkIFJNUiBkZXNjcmlwdG9yIGFycmF5LCBza2lwcGluZyBSTVIgbm9kZSAlcFxuIiwNCisJ
-CSAgICAgICBpb3J0X25vZGUpOw0KKwkJcmV0ID0gLUVJTlZBTDsNCisJCWdvdG8gb3V0Ow0KKwl9
-DQorDQorCXJtcl9kZXNjID0gQUNQSV9BRERfUFRSKHN0cnVjdCBhY3BpX2lvcnRfcm1yX2Rlc2Ms
-IGlvcnRfbm9kZSwNCisJCQkJcm1yLT5ybXJfb2Zmc2V0KTsNCisNCisJZm9yIChpID0gMDsgaSA8
-IHJtci0+cm1yX2NvdW50OyBpKyssIHJtcl9kZXNjKyspIHsNCisJCXJldCA9IGlvcnRfcm1yX2Rl
-c2NfdmFsaWQocm1yX2Rlc2MpOw0KKwkJaWYgKHJldCkgew0KKwkJCXByX2VycihGV19CVUcgIklu
-dmFsaWQgUk1SIGRlc2NyaXB0b3JbJWRdIGZvciBub2RlICVwLCBza2lwcGluZy4uLlxuIiwNCisJ
-CQkgICAgICAgaSwgaW9ydF9ub2RlKTsNCisJCQlnb3RvIG91dDsNCisJCX0NCisNCisJCWUgPSBr
-bWFsbG9jKHNpemVvZigqZSksIEdGUF9LRVJORUwpOw0KKwkJaWYgKCFlKSB7DQorCQkJcmV0ID0g
-LUVOT01FTTsNCisJCQlnb3RvIG91dDsNCisJCX0NCisNCisJCWUtPnJtcl9pZHNfbnVtID0gbWFw
-X2NvdW50Ow0KKwkJZS0+cm1yX2lkcyA9IHJtcl9pZHM7DQorCQllLT5ybXJfZGVzYyA9IHJtcl9k
-ZXNjOw0KKw0KKwkJbGlzdF9hZGRfdGFpbCgmZS0+bGlzdCwgJmlvcnRfcm1yX2xpc3QpOw0KKwkJ
-ZGVzY19jb3VudCsrOw0KKwl9DQorDQorCXJldHVybiAwOw0KKw0KK291dDoNCisJaWYgKCFkZXNj
-X2NvdW50KQ0KKwkJa2ZyZWUocm1yX2lkcyk7DQorCXJldHVybiByZXQ7DQorfQ0KIA0KIHN0YXRp
-YyB2b2lkIF9faW5pdCBpb3J0X2luaXRfcGxhdGZvcm1fZGV2aWNlcyh2b2lkKQ0KIHsNCkBAIC0x
-Njc2LDYgKzE3OTMsOSBAQCBzdGF0aWMgdm9pZCBfX2luaXQgaW9ydF9pbml0X3BsYXRmb3JtX2Rl
-dmljZXModm9pZCkNCiANCiAJCWlvcnRfZW5hYmxlX2Fjcyhpb3J0X25vZGUpOw0KIA0KKwkJaWYg
-KGlvcnRfdGFibGUtPnJldmlzaW9uID09IDEpDQorCQkJaW9ydF9wYXJzZV9ybXIoaW9ydF9ub2Rl
-KTsNCisNCiAJCW9wcyA9IGlvcnRfZ2V0X2Rldl9jZmcoaW9ydF9ub2RlKTsNCiAJCWlmIChvcHMp
-IHsNCiAJCQlmd25vZGUgPSBhY3BpX2FsbG9jX2Z3bm9kZV9zdGF0aWMoKTsNCi0tIA0KMi4xNy4x
-DQpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXwpEZXZlbCBt
-YWlsaW5nIGxpc3QgLS0gZGV2ZWxAYWNwaWNhLm9yZwpUbyB1bnN1YnNjcmliZSBzZW5kIGFuIGVt
-YWlsIHRvIGRldmVsLWxlYXZlQGFjcGljYS5vcmcKJSh3ZWJfcGFnZV91cmwpc2xpc3RpbmZvJShj
-Z2lleHQpcy8lKF9pbnRlcm5hbF9uYW1lKXM=
+Reserved Memory Regions(RMR) associated with an IOMMU may be
+described either through ACPI tables or DT in systems with
+devices that require a unity mapping or bypass for those
+regions in IOMMU drivers.
+
+Introduce a generic interface so that IOMMU drivers can retrieve
+and set up necessary mappings.
+
+Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+---
+ drivers/iommu/dma-iommu.c | 36 ++++++++++++++++++++++++++++++++++++
+ include/linux/dma-iommu.h |  7 +++++++
+ include/linux/iommu.h     | 16 ++++++++++++++++
+ 3 files changed, 59 insertions(+)
+
+diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
+index 0cbcd3fc3e7e..d73768ecdd1a 100644
+--- a/drivers/iommu/dma-iommu.c
++++ b/drivers/iommu/dma-iommu.c
+@@ -166,6 +166,42 @@ void iommu_dma_get_resv_regions(struct device *dev, struct list_head *list)
+ }
+ EXPORT_SYMBOL(iommu_dma_get_resv_regions);
+ 
++/**
++ * iommu_dma_get_rmrs - Retrieve Reserved Memory Regions(RMRs) associated
++ *                      with a given IOMMU
++ * @iommu_fwnode: fwnode associated with IOMMU
++ * @list: RMR list to be populated
++ *
++ */
++int iommu_dma_get_rmrs(struct fwnode_handle *iommu_fwnode,
++		       struct list_head *list)
++{
++	return 0;
++}
++EXPORT_SYMBOL(iommu_dma_get_rmrs);
++
++struct iommu_rmr *iommu_dma_alloc_rmr(u64 base, u64 length,
++				      u32 *ids, int num_ids)
++{
++	struct iommu_rmr *rmr;
++	int i;
++
++	rmr = kzalloc(struct_size(rmr, ids, num_ids), GFP_KERNEL);
++	if (!rmr)
++		return NULL;
++
++	INIT_LIST_HEAD(&rmr->list);
++	rmr->base_address = base;
++	rmr->length = length;
++	rmr->num_ids = num_ids;
++
++	for (i = 0; i < num_ids; i++)
++		rmr->ids[i] = ids[i];
++
++	return rmr;
++}
++EXPORT_SYMBOL(iommu_dma_alloc_rmr);
++
+ static int cookie_init_hw_msi_region(struct iommu_dma_cookie *cookie,
+ 		phys_addr_t start, phys_addr_t end)
+ {
+diff --git a/include/linux/dma-iommu.h b/include/linux/dma-iommu.h
+index 2112f21f73d8..8900ccbc9e6a 100644
+--- a/include/linux/dma-iommu.h
++++ b/include/linux/dma-iommu.h
+@@ -37,6 +37,9 @@ void iommu_dma_compose_msi_msg(struct msi_desc *desc,
+ 
+ void iommu_dma_get_resv_regions(struct device *dev, struct list_head *list);
+ 
++int iommu_dma_get_rmrs(struct fwnode_handle *iommu, struct list_head *list);
++struct iommu_rmr *iommu_dma_alloc_rmr(u64 base, u64 length,
++				      u32 *ids, int num_ids);
+ #else /* CONFIG_IOMMU_DMA */
+ 
+ struct iommu_domain;
+@@ -78,5 +81,9 @@ static inline void iommu_dma_get_resv_regions(struct device *dev, struct list_he
+ {
+ }
+ 
++int iommu_dma_get_rmrs(struct fwnode_handle *iommu, struct list_head *list);
++{
++	return 0;
++}
+ #endif	/* CONFIG_IOMMU_DMA */
+ #endif	/* __DMA_IOMMU_H */
+diff --git a/include/linux/iommu.h b/include/linux/iommu.h
+index b95a6f8db6ff..e43c4e8084e7 100644
+--- a/include/linux/iommu.h
++++ b/include/linux/iommu.h
+@@ -592,6 +592,22 @@ struct iommu_sva {
+ 	struct device			*dev;
+ };
+ 
++/**
++ * struct iommu_rmr - Reserved Memory Region details per IOMMU
++ * @list: Linked list pointers to hold RMR region info
++ * @base_address: base address of Reserved Memory Region
++ * @length: length of memory region
++ * @num_ids: number of associated device IDs
++ * @ids: associated device IDs
++ */
++struct iommu_rmr {
++	struct list_head	list;
++	phys_addr_t		base_address;
++	u64			length;
++	unsigned int		num_ids;
++	u32			ids[];
++};
++
+ int iommu_fwspec_init(struct device *dev, struct fwnode_handle *iommu_fwnode,
+ 		      const struct iommu_ops *ops);
+ void iommu_fwspec_free(struct device *dev);
+-- 
+2.17.1
+_______________________________________________
+Devel mailing list -- devel@acpica.org
+To unsubscribe send an email to devel-leave@acpica.org
+%(web_page_url)slistinfo%(cgiext)s/%(_internal_name)s
