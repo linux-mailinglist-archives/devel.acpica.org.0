@@ -1,282 +1,145 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A9AE2B8AA1
-	for <lists+devel-acpica@lfdr.de>; Thu, 19 Nov 2020 05:32:48 +0100 (CET)
+Received: from ml01.01.org (ml01.01.org [198.145.21.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A94B2B9212
+	for <lists+devel-acpica@lfdr.de>; Thu, 19 Nov 2020 13:07:14 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 462B3100EBB76;
-	Wed, 18 Nov 2020 20:32:46 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.120; helo=mga04.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+	by ml01.01.org (Postfix) with ESMTP id CAD2B100EBB89;
+	Thu, 19 Nov 2020 04:07:12 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=185.176.79.56; helo=frasgout.his.huawei.com; envelope-from=shameerali.kolothum.thodi@huawei.com; receiver=<UNKNOWN> 
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 6852A100EBBCC
-	for <devel@acpica.org>; Wed, 18 Nov 2020 20:32:44 -0800 (PST)
-IronPort-SDR: wSjJWqh5Tq8BuSsNtO1T96gwHOs9H1oUDfXIaJP+SMaqchgqPQ4CIKGh7XYJf1hZIhqzuGfIs+
- Mf9OlpaRF2qg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9809"; a="168658515"
-X-IronPort-AV: E=Sophos;i="5.77,489,1596524400";
-   d="scan'208";a="168658515"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Nov 2020 20:32:43 -0800
-IronPort-SDR: gNAF51XrXcqAAQ9vM91+QizrRHKvgKczkkCndMsq3vw++sUAT3jhrrI2BXhKp/T3uvRdzkU8R+
- 9EoCdFccLVZw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.77,489,1596524400";
-   d="scan'208";a="431108008"
-Received: from lkp-server01.sh.intel.com (HELO cbf10a1dd0e4) ([10.239.97.150])
-  by fmsmga001.fm.intel.com with ESMTP; 18 Nov 2020 20:32:42 -0800
-Received: from kbuild by cbf10a1dd0e4 with local (Exim 4.92)
-	(envelope-from <lkp@intel.com>)
-	id 1kfbcf-00004K-Gl; Thu, 19 Nov 2020 04:32:41 +0000
-Date: Thu, 19 Nov 2020 12:32:31 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <5fb5f55f.shZdKr2N8+FrAMy9%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTPS id 15DE4100EBBCC
+	for <devel@acpica.org>; Thu, 19 Nov 2020 04:07:10 -0800 (PST)
+Received: from fraeml711-chm.china.huawei.com (unknown [172.18.147.207])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4CcJJf3lMNz67F2M;
+	Thu, 19 Nov 2020 20:04:50 +0800 (CST)
+Received: from lhreml715-chm.china.huawei.com (10.201.108.66) by
+ fraeml711-chm.china.huawei.com (10.206.15.60) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1913.5; Thu, 19 Nov 2020 13:07:08 +0100
+Received: from lhreml710-chm.china.huawei.com (10.201.108.61) by
+ lhreml715-chm.china.huawei.com (10.201.108.66) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1913.5; Thu, 19 Nov 2020 12:07:07 +0000
+Received: from lhreml710-chm.china.huawei.com ([169.254.81.184]) by
+ lhreml710-chm.china.huawei.com ([169.254.81.184]) with mapi id
+ 15.01.1913.007; Thu, 19 Nov 2020 12:07:07 +0000
+From: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+To: Sami Mujawar <Sami.Mujawar@arm.com>, "david.e.box@linux.intel.com"
+	<david.e.box@linux.intel.com>, "linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>, "linux-acpi@vger.kernel.org"
+	<linux-acpi@vger.kernel.org>, "iommu@lists.linux-foundation.org"
+	<iommu@lists.linux-foundation.org>, "devel@acpica.org" <devel@acpica.org>
+Thread-Topic: [Devel] Re: [RFC PATCH 2/4] ACPI/IORT: Add support for RMR node
+ parsing
+Thread-Index: AQHWtpQY66bs/ZNapk2zvFyjgM+sLanPaxLw
+Date: Thu, 19 Nov 2020 12:07:07 +0000
+Message-ID: <735edb5c4da842609c1d2a0eed73b06c@huawei.com>
+References: <20201027112646.44680-1-shameerali.kolothum.thodi@huawei.com>
+	 <20201027112646.44680-3-shameerali.kolothum.thodi@huawei.com>
+ <d414a22fbae9575e6c04f4a557ae49a2cd8eac57.camel@linux.intel.com>
+ <DB7PR08MB3097062CEEDB4635BF3F694784EA0@DB7PR08MB3097.eurprd08.prod.outlook.com>
+In-Reply-To: <DB7PR08MB3097062CEEDB4635BF3F694784EA0@DB7PR08MB3097.eurprd08.prod.outlook.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.210.168.73]
+Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
-Message-ID-Hash: 4OYP7IX726ISZJAZCFU5D53DNNCODTZ4
-X-Message-ID-Hash: 4OYP7IX726ISZJAZCFU5D53DNNCODTZ4
-X-MailFrom: lkp@intel.com
-X-Mailman-Rule-Hits: nonmember-moderation
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+X-CFilter-Loop: Reflected
+Message-ID-Hash: XNAANVYVW6IXCF4D7EYS5VI7ZRSGU637
+X-Message-ID-Hash: XNAANVYVW6IXCF4D7EYS5VI7ZRSGU637
+X-MailFrom: shameerali.kolothum.thodi@huawei.com
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
+CC: Linuxarm <linuxarm@huawei.com>, Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>, "joro@8bytes.org" <joro@8bytes.org>, "Robin Murphy  <Robin.Murphy@arm.com>, wanghuiqiang <wanghuiqiang@huawei.com>, Jonathan Cameron" <jonathan.cameron@huawei.com>, nd <nd@arm.com>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS e98c22d0368879136786ad5a500791d1846ab754
+Subject: [Devel] Re: [RFC PATCH 2/4] ACPI/IORT: Add support for RMR node parsing
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/4OYP7IX726ISZJAZCFU5D53DNNCODTZ4/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/XNAANVYVW6IXCF4D7EYS5VI7ZRSGU637/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git  bleeding-edge
-branch HEAD: e98c22d0368879136786ad5a500791d1846ab754  Merge branches 'acpi-misc' and 'acpi-resources' into linux-next
 
-elapsed time: 726m
 
-configs tested: 202
-configs skipped: 2
+> -----Original Message-----
+> From: Sami Mujawar [mailto:Sami.Mujawar@arm.com]
+> Sent: 09 November 2020 12:30
+> To: david.e.box@linux.intel.com; Shameerali Kolothum Thodi
+> <shameerali.kolothum.thodi@huawei.com>;
+> linux-arm-kernel@lists.infradead.org; linux-acpi@vger.kernel.org;
+> iommu@lists.linux-foundation.org; devel@acpica.org
+> Cc: Linuxarm <linuxarm@huawei.com>; Lorenzo Pieralisi
+> <Lorenzo.Pieralisi@arm.com>; joro@8bytes.org; Robin Murphy
+> <Robin.Murphy@arm.com>; wanghuiqiang <wanghuiqiang@huawei.com>;
+> Jonathan Cameron <jonathan.cameron@huawei.com>; nd <nd@arm.com>
+> Subject: RE: [Devel] Re: [RFC PATCH 2/4] ACPI/IORT: Add support for RMR node
+> parsing
+> 
+> Hi,
+> 
+> -----Original Message-----
+> From: David E. Box <david.e.box@linux.intel.com>
+> Sent: 28 October 2020 06:44 PM
+> To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>;
+> linux-arm-kernel@lists.infradead.org; linux-acpi@vger.kernel.org;
+> iommu@lists.linux-foundation.org; devel@acpica.org
+> Cc: linuxarm@huawei.com; Lorenzo Pieralisi <Lorenzo.Pieralisi@arm.com>;
+> joro@8bytes.org; Robin Murphy <Robin.Murphy@arm.com>;
+> wanghuiqiang@huawei.com; jonathan.cameron@huawei.com
+> Subject: [Devel] Re: [RFC PATCH 2/4] ACPI/IORT: Add support for RMR node
+> parsing
+> 
+> Hi,
+> 
+> On Tue, 2020-10-27 at 11:26 +0000, Shameer Kolothum wrote:
+> 
+> ...
+> 
+> > @@ -1647,6 +1667,100 @@ static void __init iort_enable_acs(struct
+> > acpi_iort_node *iort_node)
+> >  #else
+> >  static inline void iort_enable_acs(struct acpi_iort_node *iort_node)
+> > { }
+> >  #endif
+> > +static int iort_rmr_desc_valid(struct acpi_iort_rmr_desc *desc)
+> > +{
+> > +	struct iort_rmr_entry *e;
+> > +	u64 end, start = desc->base_address, length = desc->length;
+> > +
+> > +	if ((!IS_ALIGNED(start, SZ_64K)) || (length % SZ_64K != 0))
+> 
+> You could just do:
+> 
+> if ((!IS_ALIGNED(start, SZ_64K)) || (length % SZ_64K))
+> 
+> [SAMI] In my opinion, the following may be better:
+> 	if (!IS_ALIGNED(start, SZ_64K) || !IS_ALIGNED(length, SZ_64K))
+> [/SAMI]
 
-The following configs have been built successfully.
-More configs may be tested in the coming days.
+Thanks for your suggestions. I don't have a strong opinion on either
+of those, but will change it with the latter one for now.
 
-gcc tested configs:
-arm                                 defconfig
-arm64                            allyesconfig
-arm64                               defconfig
-arm                              allyesconfig
-arm                              allmodconfig
-sh                         ap325rxa_defconfig
-mips                  maltasmvp_eva_defconfig
-mips                      pic32mzda_defconfig
-powerpc                      bamboo_defconfig
-powerpc                     tqm8560_defconfig
-m68k                          sun3x_defconfig
-arc                        nsim_700_defconfig
-mips                      loongson3_defconfig
-arm                           sunxi_defconfig
-nios2                               defconfig
-powerpc                    socrates_defconfig
-um                           x86_64_defconfig
-powerpc                        fsp2_defconfig
-powerpc                      ppc6xx_defconfig
-arm                            mps2_defconfig
-powerpc                 xes_mpc85xx_defconfig
-powerpc                      arches_defconfig
-powerpc                     tqm8555_defconfig
-sh                        apsh4ad0a_defconfig
-arm                         hackkit_defconfig
-powerpc                     redwood_defconfig
-m68k                         apollo_defconfig
-mips                         bigsur_defconfig
-xtensa                           alldefconfig
-mips                        workpad_defconfig
-powerpc                 mpc8560_ads_defconfig
-powerpc                    adder875_defconfig
-sh                ecovec24-romimage_defconfig
-m68k                            mac_defconfig
-sh                           sh2007_defconfig
-sh                          polaris_defconfig
-arm                       aspeed_g5_defconfig
-arm                           stm32_defconfig
-powerpc                     sbc8548_defconfig
-arm                   milbeaut_m10v_defconfig
-arm                         shannon_defconfig
-arc                          axs101_defconfig
-mips                         db1xxx_defconfig
-m68k                          amiga_defconfig
-arm                            zeus_defconfig
-powerpc                      ep88xc_defconfig
-arm                           sama5_defconfig
-powerpc                      cm5200_defconfig
-arm                        realview_defconfig
-s390                          debug_defconfig
-mips                            e55_defconfig
-sh                     sh7710voipgw_defconfig
-mips                 decstation_r4k_defconfig
-sh                           se7206_defconfig
-powerpc                   lite5200b_defconfig
-powerpc                          g5_defconfig
-arm                           omap1_defconfig
-arm                       versatile_defconfig
-sh                            hp6xx_defconfig
-sh                          urquell_defconfig
-powerpc                      obs600_defconfig
-arm                             mxs_defconfig
-sh                   sh7770_generic_defconfig
-powerpc                     pq2fads_defconfig
-parisc                generic-64bit_defconfig
-arm                             rpc_defconfig
-powerpc                      katmai_defconfig
-powerpc                     mpc5200_defconfig
-powerpc                 mpc8272_ads_defconfig
-m68k                           sun3_defconfig
-powerpc                    sam440ep_defconfig
-xtensa                    xip_kc705_defconfig
-powerpc                     tqm5200_defconfig
-m68k                        m5407c3_defconfig
-powerpc                     kilauea_defconfig
-arm                        clps711x_defconfig
-mips                malta_qemu_32r6_defconfig
-mips                        nlm_xlr_defconfig
-powerpc                      chrp32_defconfig
-powerpc               mpc834x_itxgp_defconfig
-c6x                         dsk6455_defconfig
-arm                         lpc32xx_defconfig
-powerpc                  iss476-smp_defconfig
-riscv                    nommu_k210_defconfig
-powerpc                    ge_imp3a_defconfig
-m68k                        mvme16x_defconfig
-sh                        sh7757lcr_defconfig
-powerpc                      pcm030_defconfig
-sparc                            allyesconfig
-powerpc                      ppc64e_defconfig
-powerpc                     skiroot_defconfig
-sh                         ecovec24_defconfig
-sh                           se7722_defconfig
-arc                        vdk_hs38_defconfig
-sh                          kfr2r09_defconfig
-arm                     am200epdkit_defconfig
-arm                           efm32_defconfig
-arm                           corgi_defconfig
-powerpc                 mpc837x_rdb_defconfig
-mips                         rt305x_defconfig
-sh                               alldefconfig
-arm                      tct_hammer_defconfig
-sh                             sh03_defconfig
-arm                         axm55xx_defconfig
-powerpc                       ebony_defconfig
-sparc                       sparc32_defconfig
-arc                                 defconfig
-riscv                    nommu_virt_defconfig
-powerpc                mpc7448_hpc2_defconfig
-mips                           ip32_defconfig
-arm                       spear13xx_defconfig
-sh                           se7705_defconfig
-arm                         cm_x300_defconfig
-sh                          r7780mp_defconfig
-arc                              alldefconfig
-powerpc                     mpc83xx_defconfig
-powerpc                     tqm8540_defconfig
-powerpc                   motionpro_defconfig
-powerpc                         wii_defconfig
-powerpc                     kmeter1_defconfig
-ia64                             allmodconfig
-ia64                                defconfig
-ia64                             allyesconfig
-m68k                             allmodconfig
-m68k                                defconfig
-m68k                             allyesconfig
-arc                              allyesconfig
-nds32                             allnoconfig
-c6x                              allyesconfig
-nds32                               defconfig
-nios2                            allyesconfig
-csky                                defconfig
-alpha                               defconfig
-alpha                            allyesconfig
-xtensa                           allyesconfig
-h8300                            allyesconfig
-sh                               allmodconfig
-parisc                              defconfig
-s390                             allyesconfig
-parisc                           allyesconfig
-s390                                defconfig
-i386                             allyesconfig
-sparc                               defconfig
-i386                                defconfig
-mips                             allyesconfig
-mips                             allmodconfig
-powerpc                          allyesconfig
-powerpc                          allmodconfig
-powerpc                           allnoconfig
-x86_64               randconfig-a005-20201118
-x86_64               randconfig-a003-20201118
-x86_64               randconfig-a004-20201118
-x86_64               randconfig-a002-20201118
-x86_64               randconfig-a006-20201118
-x86_64               randconfig-a001-20201118
-i386                 randconfig-a006-20201119
-i386                 randconfig-a005-20201119
-i386                 randconfig-a002-20201119
-i386                 randconfig-a001-20201119
-i386                 randconfig-a003-20201119
-i386                 randconfig-a004-20201119
-i386                 randconfig-a006-20201118
-i386                 randconfig-a005-20201118
-i386                 randconfig-a002-20201118
-i386                 randconfig-a001-20201118
-i386                 randconfig-a003-20201118
-i386                 randconfig-a004-20201118
-i386                 randconfig-a012-20201118
-i386                 randconfig-a014-20201118
-i386                 randconfig-a016-20201118
-i386                 randconfig-a011-20201118
-i386                 randconfig-a013-20201118
-i386                 randconfig-a015-20201118
-i386                 randconfig-a012-20201119
-i386                 randconfig-a014-20201119
-i386                 randconfig-a016-20201119
-i386                 randconfig-a011-20201119
-i386                 randconfig-a013-20201119
-i386                 randconfig-a015-20201119
-riscv                            allyesconfig
-riscv                             allnoconfig
-riscv                               defconfig
-riscv                          rv32_defconfig
-riscv                            allmodconfig
-x86_64                                   rhel
-x86_64                           allyesconfig
-x86_64                    rhel-7.6-kselftests
-x86_64                              defconfig
-x86_64                               rhel-8.3
-x86_64                                  kexec
+Thanks,
+Shameer
 
-clang tested configs:
-x86_64               randconfig-a015-20201118
-x86_64               randconfig-a014-20201118
-x86_64               randconfig-a011-20201118
-x86_64               randconfig-a013-20201118
-x86_64               randconfig-a016-20201118
-x86_64               randconfig-a012-20201118
-x86_64               randconfig-a005-20201119
-x86_64               randconfig-a003-20201119
-x86_64               randconfig-a004-20201119
-x86_64               randconfig-a002-20201119
-x86_64               randconfig-a006-20201119
-x86_64               randconfig-a001-20201119
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+> Regards,
+> 
+> Sami Mujawar
+> 
+> David
+> _______________________________________________
+> Devel mailing list -- devel@acpica.org
+> To unsubscribe send an email to devel-leave@acpica.org
+> %(web_page_url)slistinfo%(cgiext)s/%(_internal_name)s
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
