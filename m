@@ -1,54 +1,59 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 22BC72CB537
-	for <lists+devel-acpica@lfdr.de>; Wed,  2 Dec 2020 07:46:23 +0100 (CET)
+Received: from ml01.01.org (ml01.01.org [198.145.21.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id A4F552CC52D
+	for <lists+devel-acpica@lfdr.de>; Wed,  2 Dec 2020 19:31:38 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id C45AB100EBBC2;
-	Tue,  1 Dec 2020 22:46:21 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.120; helo=mga04.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	by ml01.01.org (Postfix) with ESMTP id 3A56C100EBB71;
+	Wed,  2 Dec 2020 10:31:37 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.210.46; helo=mail-ot1-f46.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 79323100EBBC1
-	for <devel@acpica.org>; Tue,  1 Dec 2020 22:46:20 -0800 (PST)
-IronPort-SDR: Ar7sTF0M+JPRNBQbrSa0c6ar8vJk0BqHJsQzBmKMKm3paf5BadeSJIv5m9AuXXFcW7fuuqtj3P
- vOF7DzEeQvBQ==
-X-IronPort-AV: E=McAfee;i="6000,8403,9822"; a="170397330"
-X-IronPort-AV: E=Sophos;i="5.78,385,1599548400";
-   d="scan'208";a="170397330"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Dec 2020 22:46:13 -0800
-IronPort-SDR: lAB/oywrV93aVkgb99geDx3EqqfiOngpMFAA21NMI2ahLB/bn6rVc1PNEKq+tZuclszvkaU+j0
- jFY1h2khbcsQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.78,385,1599548400";
-   d="scan'208";a="537862379"
-Received: from lkp-server01.sh.intel.com (HELO 4302fe08fc2a) ([10.239.97.150])
-  by fmsmga006.fm.intel.com with ESMTP; 01 Dec 2020 22:46:12 -0800
-Received: from kbuild by 4302fe08fc2a with local (Exim 4.92)
-	(envelope-from <lkp@intel.com>)
-	id 1kkLtz-00008U-Ta; Wed, 02 Dec 2020 06:46:11 +0000
-Date: Wed, 02 Dec 2020 14:46:03 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <5fc7382b.9akS3bbjK1m0kF99%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTPS id D6259100EBB6B
+	for <devel@acpica.org>; Wed,  2 Dec 2020 10:31:34 -0800 (PST)
+Received: by mail-ot1-f46.google.com with SMTP id x15so2570277otp.4
+        for <devel@acpica.org>; Wed, 02 Dec 2020 10:31:34 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=B4i9VFRUD3xARLzYQEJLNB6JhqamFut8iCJ5lNpUlk4=;
+        b=dPI6b3l/WVI6UGwKOS5S1cbqixtePMicoEM2VNXgP4bU4zQpSLzSZgLgAQY2Hg7mSI
+         EblVTTx4EOMdAkuVOXpke0PuQLmPs4gVHujn9/SauTJ9Qf/Zgm7YblipPvWMQXQoI1rR
+         Lbp0MWdP77SrYwpndjiqV6cGwood32nRLeJM4xQUOt+Nvh162HDvCzoKjmee/oIgi/h1
+         3WuH4UYO6EBArqua/owaaIKEZWwaN7hTG3TbiBgZ64wGGjWlFwzZfPdIS3TILVW4rPgm
+         Y9Egg2iIvBRw8srAinPk2KhNELZ4S9/vfD0n+kLktKySyk0bOD6r4WpIJLTehLz9Tbr+
+         sg4Q==
+X-Gm-Message-State: AOAM5306In+GNaVarH8kQ77W5I9OHNWzFPQ1/yxBDojHZ2v0scY7l3WL
+	tQ24EELyO8cThlint7sJyEY1xONrXocKUxkQ4lk=
+X-Google-Smtp-Source: ABdhPJxpvRp8VsnzKDL27mVBm4pcDuSz96iERvdj7q3h3vU8KuTGbZbDzV61PT2USI8W+btbuSQjQw8l/wqoA9qDaTM=
+X-Received: by 2002:a9d:745a:: with SMTP id p26mr2455710otk.206.1606933893884;
+ Wed, 02 Dec 2020 10:31:33 -0800 (PST)
 MIME-Version: 1.0
-Message-ID-Hash: 2FR5LKOGI3346S2RKPXVZZIFIH5IWZFK
-X-Message-ID-Hash: 2FR5LKOGI3346S2RKPXVZZIFIH5IWZFK
-X-MailFrom: lkp@intel.com
+References: <87blkbx1gt.fsf@gmx.net> <87imdp5r80.fsf@rub.de>
+ <20200811132955.wbt55ns7bu5mxouq@linutronix.de> <CAJZ5v0h+n9VCz5=VixVbe_b=ZbTU3D=46stGhE9z7Y7yaUMJzw@mail.gmail.com>
+ <20200811152551.dmfw46urecbmeklr@linutronix.de> <87ft8tayic.fsf@gmx.net>
+ <20200811184902.2fm4eyprmpkfon2j@linutronix.de> <20201006214927.4nsqtfji4fdv3oed@linutronix.de>
+ <3fc9074b-c153-8446-0289-1e4dfab395eb@intel.com> <20201026172057.h5toqoobiyhc4g3g@linutronix.de>
+ <20201202180350.kwmgfzkom7v7bzjg@linutronix.de>
+In-Reply-To: <20201202180350.kwmgfzkom7v7bzjg@linutronix.de>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Wed, 2 Dec 2020 19:31:21 +0100
+Message-ID: <CAJZ5v0j86pX_a4bSLP=sobLoYhfQYV9dWL8HHf2941kXgND79g@mail.gmail.com>
+To: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Message-ID-Hash: E66FCOMRLXXVU7FLG4SM25PDOQMUYDH2
+X-Message-ID-Hash: E66FCOMRLXXVU7FLG4SM25PDOQMUYDH2
+X-MailFrom: rjwysocki@gmail.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+CC: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>, "Rafael J. Wysocki" <rafael@kernel.org>, Stephen Berman <stephen.berman@gmx.net>, Erik Kaneda <erik.kaneda@intel.com>, Thomas Gleixner <tglx@linutronix.de>, Peter Zijlstra <peterz@infradead.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS c723722cb18c5e60ed75a8c2653fd1514aee4096
+Subject: [Devel] Re: power-off delay/hang due to commit 6d25be57 (mainline)
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/2FR5LKOGI3346S2RKPXVZZIFIH5IWZFK/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/E66FCOMRLXXVU7FLG4SM25PDOQMUYDH2/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -57,117 +62,28 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git  bleeding-edge
-branch HEAD: c723722cb18c5e60ed75a8c2653fd1514aee4096  Merge branch 'acpica' into bleeding-edge
+On Wed, Dec 2, 2020 at 7:03 PM Sebastian Andrzej Siewior
+<bigeasy@linutronix.de> wrote:
+>
+> On 2020-10-26 18:20:59 [+0100], To Rafael J. Wysocki wrote:
+> > > > > > Done as Bug 208877.
+> > > > Rafael, do you have any suggestions?
+> > >
+> > > I've lost track of this sorry.
+> > >
+> > > I have ideas, let me get back to this next week.
+> >
+> > :)
+>
+> Rafael, any update? If you outline an idea or so then I may be able to
+> form a patch out of it. Otherwise I have no idea how to fix this - other
+> than telling the driver to not poll in smaller intervals than
+> 30secs.
 
-elapsed time: 723m
-
-configs tested: 93
-configs skipped: 2
-
-The following configs have been built successfully.
-More configs may be tested in the coming days.
-
-gcc tested configs:
-arm                                 defconfig
-arm64                            allyesconfig
-arm64                               defconfig
-arm                              allyesconfig
-arm                              allmodconfig
-um                           x86_64_defconfig
-arc                           tb10x_defconfig
-microblaze                          defconfig
-sh                         ap325rxa_defconfig
-m68k                       m5475evb_defconfig
-c6x                                 defconfig
-powerpc                     ep8248e_defconfig
-arm                          pcm027_defconfig
-mips                           ip22_defconfig
-powerpc                        fsp2_defconfig
-powerpc                      ppc40x_defconfig
-h8300                               defconfig
-powerpc                      ppc44x_defconfig
-arm                              alldefconfig
-arm                          moxart_defconfig
-powerpc                    amigaone_defconfig
-mips                        maltaup_defconfig
-arc                              alldefconfig
-microblaze                      mmu_defconfig
-ia64                             allmodconfig
-ia64                                defconfig
-ia64                             allyesconfig
-m68k                             allmodconfig
-m68k                                defconfig
-m68k                             allyesconfig
-nios2                               defconfig
-arc                              allyesconfig
-nds32                             allnoconfig
-c6x                              allyesconfig
-nds32                               defconfig
-nios2                            allyesconfig
-csky                                defconfig
-alpha                               defconfig
-alpha                            allyesconfig
-xtensa                           allyesconfig
-h8300                            allyesconfig
-arc                                 defconfig
-sh                               allmodconfig
-parisc                              defconfig
-s390                             allyesconfig
-parisc                           allyesconfig
-s390                                defconfig
-i386                             allyesconfig
-sparc                            allyesconfig
-sparc                               defconfig
-i386                                defconfig
-mips                             allyesconfig
-mips                             allmodconfig
-powerpc                          allyesconfig
-powerpc                          allmodconfig
-powerpc                           allnoconfig
-i386                 randconfig-a004-20201201
-i386                 randconfig-a005-20201201
-i386                 randconfig-a001-20201201
-i386                 randconfig-a002-20201201
-i386                 randconfig-a006-20201201
-i386                 randconfig-a003-20201201
-x86_64               randconfig-a016-20201201
-x86_64               randconfig-a012-20201201
-x86_64               randconfig-a014-20201201
-x86_64               randconfig-a013-20201201
-x86_64               randconfig-a015-20201201
-x86_64               randconfig-a011-20201201
-i386                 randconfig-a014-20201201
-i386                 randconfig-a013-20201201
-i386                 randconfig-a011-20201201
-i386                 randconfig-a015-20201201
-i386                 randconfig-a012-20201201
-i386                 randconfig-a016-20201201
-riscv                    nommu_k210_defconfig
-riscv                            allyesconfig
-riscv                    nommu_virt_defconfig
-riscv                             allnoconfig
-riscv                               defconfig
-riscv                          rv32_defconfig
-riscv                            allmodconfig
-x86_64                                   rhel
-x86_64                           allyesconfig
-x86_64                    rhel-7.6-kselftests
-x86_64                              defconfig
-x86_64                               rhel-8.3
-x86_64                                  kexec
-
-clang tested configs:
-x86_64               randconfig-a004-20201201
-x86_64               randconfig-a006-20201201
-x86_64               randconfig-a001-20201201
-x86_64               randconfig-a002-20201201
-x86_64               randconfig-a005-20201201
-x86_64               randconfig-a003-20201201
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+The idea, roughly speaking, is to limit the number of outstanding work
+items in the queue (basically, if there's a notification occurring
+before the previous one can be handled, there is no need to queue up
+another work item for it).
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
