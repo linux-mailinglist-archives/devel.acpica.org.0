@@ -2,60 +2,59 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id B83294A5A11
-	for <lists+devel-acpica@lfdr.de>; Tue,  1 Feb 2022 11:33:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CF1A4A7915
+	for <lists+devel-acpica@lfdr.de>; Wed,  2 Feb 2022 20:59:00 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 911F2100EAAEE;
-	Tue,  1 Feb 2022 02:33:36 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.93; helo=mga11.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+	by ml01.01.org (Postfix) with ESMTP id CB5E6100E5DA7;
+	Wed,  2 Feb 2022 11:58:47 -0800 (PST)
+Received-SPF: Softfail (mailfrom) identity=mailfrom; client-ip=192.55.52.136; helo=mga12.intel.com; envelope-from=andy.shevchenko@gmail.com; receiver=<UNKNOWN> 
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id A45C9100EB826
-	for <devel@acpica.org>; Tue,  1 Feb 2022 02:33:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1643711614; x=1675247614;
-  h=date:from:to:cc:subject:message-id:mime-version:
-   content-transfer-encoding;
-  bh=fHoMc+WKZWIeFg8GRpyQgVpbg1oLndtyrN1jErikPHo=;
-  b=bJ26kaZKLbSidO2xBVEHEWupmVCvHbqgr/AQT6J4PzGp9B7NMxw1Pm3K
-   77y47mCgjtN4c6I80h+c2EaQyD66sF46Q8W9sK4aLt/yshDy5M0kU0cWR
-   O8TLhB9nWICDLVzBL2WJ+DpewInuM3reu8xXFMzCnQqZyurJwbJ1Y5tIx
-   caW8spTw7/8ZILvpPXV/E1wdiQr4c+zCr7kVmeTk6VH/LKaCsc3W6M8st
-   +uEnnH+bXGWDfxv1O40MGOTgJleVRXQNfXgggLredKW1b51YLhtjehKqS
-   x/SOxRmcZ/pc2vax2xc+VnIcBC5aaFGzW4Oc3vCUrRlcAcX5YfHSu5TzL
-   A==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10244"; a="245255813"
-X-IronPort-AV: E=Sophos;i="5.88,333,1635231600";
-   d="scan'208";a="245255813"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2022 02:33:34 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,333,1635231600";
-   d="scan'208";a="482245480"
-Received: from lkp-server01.sh.intel.com (HELO 276f1b88eecb) ([10.239.97.150])
-  by orsmga006.jf.intel.com with ESMTP; 01 Feb 2022 02:33:31 -0800
-Received: from kbuild by 276f1b88eecb with local (Exim 4.92)
-	(envelope-from <lkp@intel.com>)
-	id 1nEqTa-000T7X-9U; Tue, 01 Feb 2022 10:33:30 +0000
-Date: Tue, 01 Feb 2022 18:33:25 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <61f90c75.W+IltSI+gZKu+OWX%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTPS id 0E92F100EF271
+	for <devel@acpica.org>; Mon, 28 Dec 2020 14:54:50 -0800 (PST)
+IronPort-SDR: bYm8d10SbPuoP88dEJfPalnHuj+Mvy3sv15fKUnzMGtj+Awuqhcu1/u98sxWR9ivh72MILj48a
+ c6gHpA8WxNUw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9848"; a="155637337"
+X-IronPort-AV: E=Sophos;i="5.78,456,1599548400";
+   d="scan'208";a="155637337"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Dec 2020 14:54:50 -0800
+IronPort-SDR: P8pRkp4r4hleaTdW98lANxtwRf91Y1VewUXny3A6f5SumEy48JGwSfyQyqMDBPQcqmziskMV8e
+ WeEiLzDvAsLQ==
+X-IronPort-AV: E=Sophos;i="5.78,456,1599548400";
+   d="scan'208";a="400097145"
+Received: from smile.fi.intel.com (HELO smile) ([10.237.68.40])
+  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Dec 2020 14:54:44 -0800
+Received: from andy by smile with local (Exim 4.94)
+	(envelope-from <andy.shevchenko@gmail.com>)
+	id 1ku1QX-000IqD-09; Tue, 29 Dec 2020 00:55:45 +0200
+Date: Tue, 29 Dec 2020 00:55:44 +0200
+From: Andy Shevchenko <andy.shevchenko@gmail.com>
+To: Daniel Scally <djrscally@gmail.com>
+Message-ID: <20201228225544.GH4077@smile.fi.intel.com>
+References: <20201224010907.263125-1-djrscally@gmail.com>
+ <20201224010907.263125-15-djrscally@gmail.com>
+ <CAHp75VeXN6PnV7Mzz6UMpD+m-yjPi6XK0kx1=+-M5mci=Vb=YQ@mail.gmail.com>
+ <20201228170521.GZ26370@paasikivi.fi.intel.com>
+ <2d37df3d-f04c-6679-6e27-6c7f82e9b158@gmail.com>
 MIME-Version: 1.0
-Message-ID-Hash: MMCX6PFLYXMQPAEQ5JZ22DAQDUTL2AJP
-X-Message-ID-Hash: MMCX6PFLYXMQPAEQ5JZ22DAQDUTL2AJP
-X-MailFrom: lkp@intel.com
-X-Mailman-Rule-Hits: nonmember-moderation
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <2d37df3d-f04c-6679-6e27-6c7f82e9b158@gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+X-MailFrom: andy.shevchenko@gmail.com
+X-Mailman-Rule-Hits: max-recipients
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-size; news-moderation; no-subject; suspicious-header
+Message-ID-Hash: TFYVQ2E35C3GEVXMWKLVI3QJ2TFUYUQW
+X-Message-ID-Hash: TFYVQ2E35C3GEVXMWKLVI3QJ2TFUYUQW
+X-Mailman-Approved-At: Wed, 02 Feb 2022 19:58:46 -0800
+CC: Sakari Ailus <sakari.ailus@linux.intel.com>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, Linux Media Mailing List <linux-media@vger.kernel.org>, devel@acpica.org, "Rafael J. Wysocki" <rjw@rjwysocki.net>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Yong Zhi <yong.zhi@intel.com>, Bingbu Cao <bingbu.cao@intel.com>, Tian Shu Qiu <tian.shu.qiu@intel.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, Erik Kaneda <erik.kaneda@intel.com>, Petr Mladek <pmladek@suse.com>, Steven Rostedt <rostedt@goodmis.org>, Sergey Senozhatsky <sergey.senozhatsky@gmail.com>, Rasmus Villemoes <linux@rasmusvillemoes.dk>, Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>, Jacopo Mondi <jacopo+renesas@jmondi.org>, kieran.bingham+renesas@ideasonboard.com, Hans Verkuil <hverkuil-cisco@xs4all.nl>, Marco Felsch <m.felsch@pengutronix.de>, niklas.soderlund+renesas@ragnatech.se, Steve Longerbeam <slongerbeam@gmail.com>, "Krogerus, Heik
+ ki" <heikki.krogerus@linux.intel.com>, Linus Walleij <linus.walleij@linaro.org>, Jordan Hand <jorhand@linux.microsoft.com>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [rafael-pm:bleeding-edge] BUILD SUCCESS 0c1f0e2fe5907398408d24636c5e778275870df1
+Subject: [Devel] Re: [PATCH v3 14/14] ipu3-cio2: Add cio2-bridge to ipu3-cio2 driver
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/MMCX6PFLYXMQPAEQ5JZ22DAQDUTL2AJP/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/TFYVQ2E35C3GEVXMWKLVI3QJ2TFUYUQW/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -64,140 +63,37 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-branch HEAD: 0c1f0e2fe5907398408d24636c5e778275870df1  Merge branch 'acpi-scan' into bleeding-edge
+On Mon, Dec 28, 2020 at 10:37:38PM +0000, Daniel Scally wrote:
+> On 28/12/2020 17:05, Sakari Ailus wrote:
+> > On Thu, Dec 24, 2020 at 02:54:44PM +0200, Andy Shevchenko wrote:
 
-elapsed time: 732m
+...
 
-configs tested: 115
-configs skipped: 3
+> >>> +#include <linux/property.h>
+> >>> +
+> >>> +#define CIO2_HID                               "INT343E"
+> >>> +#define CIO2_NUM_PORTS                         4
+> > 
+> > This is already defined in ipu3-cio2.h. Could you include that instead?
+> 
+> Yes; but I'd need to also include media/v4l2-device.h and
+> media/videobuf2-dma-sg.h (they're included in ipu3-cio2-main.c at the
+> moment). It didn't seem worth it; but I can move those two includes from
+> the .c to the .h and then include ipu3-cio2.h in cio2-bridge.h
+> 
+> Which do you prefer?
 
-The following configs have been built successfully.
-More configs may be tested in the coming days.
+Actually ipu3-cio2.h misses a lot of inclusions (like mutex.h which I
+immediately noticed when scrolled over data types). I think here should be a
+compromise variant, split out something like ipu3-cio2-defs.h which can be
+included in both ipu3-cio2.h and cio2-bridge.h.
 
-gcc tested configs:
-arm                                 defconfig
-arm                              allyesconfig
-arm                              allmodconfig
-arm64                            allyesconfig
-arm64                               defconfig
-i386                 randconfig-c001-20220131
-m68k                       m5475evb_defconfig
-powerpc                mpc7448_hpc2_defconfig
-sh                          rsk7203_defconfig
-powerpc                    klondike_defconfig
-powerpc                      ppc40x_defconfig
-sh                          rsk7269_defconfig
-arm                           stm32_defconfig
-sh                  sh7785lcr_32bit_defconfig
-powerpc                 mpc837x_rdb_defconfig
-arc                                 defconfig
-m68k                          sun3x_defconfig
-mips                      maltasmvp_defconfig
-sh                               alldefconfig
-arm                  randconfig-c002-20220130
-arm                  randconfig-c002-20220131
-ia64                                defconfig
-ia64                             allyesconfig
-ia64                             allmodconfig
-m68k                                defconfig
-m68k                             allmodconfig
-m68k                             allyesconfig
-nds32                             allnoconfig
-nios2                               defconfig
-arc                              allyesconfig
-csky                                defconfig
-alpha                               defconfig
-nds32                               defconfig
-alpha                            allyesconfig
-nios2                            allyesconfig
-sh                               allmodconfig
-xtensa                           allyesconfig
-h8300                            allyesconfig
-parisc                              defconfig
-s390                             allmodconfig
-parisc                           allyesconfig
-s390                                defconfig
-s390                             allyesconfig
-i386                             allyesconfig
-sparc                               defconfig
-i386                                defconfig
-i386                   debian-10.3-kselftests
-i386                              debian-10.3
-sparc                            allyesconfig
-mips                             allyesconfig
-mips                             allmodconfig
-powerpc                           allnoconfig
-powerpc                          allyesconfig
-powerpc                          allmodconfig
-i386                 randconfig-a002-20220131
-i386                 randconfig-a001-20220131
-i386                 randconfig-a005-20220131
-i386                 randconfig-a003-20220131
-i386                 randconfig-a004-20220131
-i386                 randconfig-a006-20220131
-x86_64               randconfig-a004-20220131
-x86_64               randconfig-a003-20220131
-x86_64               randconfig-a001-20220131
-x86_64               randconfig-a006-20220131
-x86_64               randconfig-a005-20220131
-x86_64               randconfig-a002-20220131
-riscv                randconfig-r042-20220130
-arc                  randconfig-r043-20220130
-arc                  randconfig-r043-20220131
-s390                 randconfig-r044-20220130
-riscv                    nommu_k210_defconfig
-riscv                            allyesconfig
-riscv                    nommu_virt_defconfig
-riscv                             allnoconfig
-riscv                               defconfig
-riscv                          rv32_defconfig
-riscv                            allmodconfig
-um                             i386_defconfig
-um                           x86_64_defconfig
-x86_64                           allyesconfig
-x86_64                              defconfig
-x86_64                               rhel-8.3
-x86_64                          rhel-8.3-func
-x86_64                                  kexec
-x86_64                    rhel-8.3-kselftests
+And cio2-bridge.h needs more inclusions like types.h.
 
-clang tested configs:
-x86_64                        randconfig-c007
-powerpc              randconfig-c003-20220201
-mips                 randconfig-c004-20220201
-i386                          randconfig-c001
-arm                  randconfig-c002-20220201
-s390                 randconfig-c005-20220201
-riscv                randconfig-c006-20220201
-arm                         shannon_defconfig
-riscv                    nommu_virt_defconfig
-powerpc                    mvme5100_defconfig
-powerpc                     kilauea_defconfig
-arm                       imx_v4_v5_defconfig
-powerpc                 xes_mpc85xx_defconfig
-x86_64               randconfig-a013-20220131
-x86_64               randconfig-a014-20220131
-x86_64               randconfig-a016-20220131
-x86_64               randconfig-a011-20220131
-x86_64               randconfig-a012-20220131
-x86_64               randconfig-a015-20220131
-i386                 randconfig-a013-20220131
-i386                 randconfig-a014-20220131
-i386                 randconfig-a012-20220131
-i386                 randconfig-a015-20220131
-i386                 randconfig-a016-20220131
-i386                 randconfig-a011-20220131
-riscv                randconfig-r042-20220131
-s390                 randconfig-r044-20220131
-hexagon              randconfig-r045-20220130
-hexagon              randconfig-r045-20220131
-hexagon              randconfig-r041-20220130
-hexagon              randconfig-r041-20220131
+-- 
+With Best Regards,
+Andy Shevchenko
 
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
