@@ -1,56 +1,52 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D8FA02E71EF
-	for <lists+devel-acpica@lfdr.de>; Tue, 29 Dec 2020 16:47:04 +0100 (CET)
+Received: from ml01.01.org (ml01.01.org [198.145.21.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id D3A822E7627
+	for <lists+devel-acpica@lfdr.de>; Wed, 30 Dec 2020 06:18:37 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 4E690100ED4BC;
-	Tue, 29 Dec 2020 07:47:03 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.167.175; helo=mail-oi1-f175.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	by ml01.01.org (Postfix) with ESMTP id C9BE3100ED4A4;
+	Tue, 29 Dec 2020 21:18:35 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.100; helo=mga07.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id F3364100ED4AE
-	for <devel@acpica.org>; Tue, 29 Dec 2020 07:47:00 -0800 (PST)
-Received: by mail-oi1-f175.google.com with SMTP id f132so14926699oib.12
-        for <devel@acpica.org>; Tue, 29 Dec 2020 07:47:00 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MEK4Mw7UBxOJIa/S7PzM0wAgV0d+78LiF/JzTK6IpGY=;
-        b=YGAS+mmj3cwH14RjvmLfC2Bus6Lyg0mre3tcUt+QuAi01a0Z90GOfHFonK+WDbr1Am
-         2YkGw1zowLwCEQhGBfNTjrcl2HYvRCe1Kvx+GrPSXmw+4eZ+d10VrX4VAd4xBODE6jKK
-         sG7gUwxVTH8SV6yYGk60yFKEVmINTCb41B3xORmmeeXTj0yd/e/5Sb7ArDAj1+i15YgP
-         /v7ytgvtOJ/EFbVUcLbzXTHGbUGZeuUba2ezmF4DBfLeIxuzZoUo/nf6DqoS7EmlYCok
-         ZYwx0HuSEmbkskt4C+cJyCbNQBDQSWr+pqFCxu08VzTNO+WL0BgiHcp4udaSn2Sb1EZm
-         RSdA==
-X-Gm-Message-State: AOAM531Zr/+XahlQfTCWuEE1LA5UT0k/p8pD8CA+l3m5kz+DB0ck420i
-	FncmCml5mFNJBNLHNQRwlt1XkC9Nf0mb6qOoKKI=
-X-Google-Smtp-Source: ABdhPJympvLKSdtn+Fy+6FP9V+9doVUVBA4W7GeIJDtKG8gT7sd01LpO7TI4S50YuBA/JEnu2FTSmmKRRj/lb9Y+FOA=
-X-Received: by 2002:aca:4c1:: with SMTP id 184mr2791324oie.157.1609256820193;
- Tue, 29 Dec 2020 07:47:00 -0800 (PST)
+	by ml01.01.org (Postfix) with ESMTPS id BAA61100ED490
+	for <devel@acpica.org>; Tue, 29 Dec 2020 21:18:32 -0800 (PST)
+IronPort-SDR: V85XEhwRUacjRAp3j++I/uuMLVxYZUf4sF+rHktweyraYM8xro0GG/ZmPUtD+zqrAkkX+f3sMd
+ Ys2zqGzD8dug==
+X-IronPort-AV: E=McAfee;i="6000,8403,9849"; a="240651444"
+X-IronPort-AV: E=Sophos;i="5.78,460,1599548400";
+   d="scan'208";a="240651444"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Dec 2020 21:18:31 -0800
+IronPort-SDR: KVrMcJBxkoh6uPezi1lmCqno4I9Q0g4ugYXc8UMLlxh68EAFpNXEBkqZOi/HF9bnCwonZaY13W
+ HqRyZlaXcoMg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.78,460,1599548400";
+   d="scan'208";a="460360537"
+Received: from lkp-server02.sh.intel.com (HELO 4242b19f17ef) ([10.239.97.151])
+  by fmsmga001.fm.intel.com with ESMTP; 29 Dec 2020 21:18:29 -0800
+Received: from kbuild by 4242b19f17ef with local (Exim 4.92)
+	(envelope-from <lkp@intel.com>)
+	id 1kuTsT-000422-2j; Wed, 30 Dec 2020 05:18:29 +0000
+Date: Wed, 30 Dec 2020 13:17:58 +0800
+From: kernel test robot <lkp@intel.com>
+To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Message-ID: <5fec0d86.i0RjnNeExICZGSu7%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-References: <202012271352.JvNDF17O-lkp@intel.com> <34a43212-ff2b-cbc6-a670-975d39ac9f12@redhat.com>
- <16284400-7c71-ee40-b694-614d6daf21f5@lenovo.com> <CAJZ5v0je=BeU98tkXmE9Mu1aiqc4=o288S=uOuFwh=okWJC2eQ@mail.gmail.com>
- <22e7ec14-faab-bddd-fff2-303ab3bff01e@lenovo.com>
-In-Reply-To: <22e7ec14-faab-bddd-fff2-303ab3bff01e@lenovo.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Tue, 29 Dec 2020 16:46:38 +0100
-Message-ID: <CAJZ5v0gyAXmbbjbW=sh9UzZRaJMuc0_Btx4V+4DhrSQOPrt3Mg@mail.gmail.com>
-To: Mark Pearson <markpearson@lenovo.com>
-Message-ID-Hash: M7TWAOMDBWWQVNAKI6OPCOXEQCL3EMP6
-X-Message-ID-Hash: M7TWAOMDBWWQVNAKI6OPCOXEQCL3EMP6
-X-MailFrom: rjwysocki@gmail.com
+Message-ID-Hash: LW3G2VPXESNKUPNA6HGZUKQDKPI53NRX
+X-Message-ID-Hash: LW3G2VPXESNKUPNA6HGZUKQDKPI53NRX
+X-MailFrom: lkp@intel.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: "Rafael J. Wysocki" <rafael@kernel.org>, Hans de Goede <hdegoede@redhat.com>, kernel test robot <lkp@intel.com>, kbuild-all@lists.01.org, clang-built-linux@googlegroups.com, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Linux PM <linux-pm@vger.kernel.org>, "Rafael J. Wysocki" <rjw@rjwysocki.net>
+CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [External] Re: [pm:bleeding-edge 8612/8615] drivers/acpi/platform_profile.c:147:24: warning: address of array 'pprof->choices' will always evaluate to 'true'
+Subject: [Devel] [pm:bleeding-edge] BUILD REGRESSION 0c7a6fd3a0e835b0158a1f52176f5d3858fac110
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/M7TWAOMDBWWQVNAKI6OPCOXEQCL3EMP6/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/LW3G2VPXESNKUPNA6HGZUKQDKPI53NRX/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -59,82 +55,186 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Tue, Dec 29, 2020 at 4:36 PM Mark Pearson <markpearson@lenovo.com> wrote:
->
-> Hi Rafael
->
-> On 29/12/2020 10:23, Rafael J. Wysocki wrote:
-> > On Tue, Dec 29, 2020 at 12:18 AM Mark Pearson <markpearson@lenovo.com> wrote:
-> >>
-> >> Hi Hans
-> >>
-> >> On 27/12/2020 06:56, Hans de Goede wrote:
-> >>> Hi,
-> >>>
-> >>> On 12/27/20 6:11 AM, kernel test robot wrote:
-> >>>> tree:   https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-> >>>> head:   a33520709645543f108361fe21fa9434a351c4e9
-> >>>> commit: 8c9b909fb1282e43792433e6c1cba125ccfc6201 [8612/8615] ACPI: platform-profile: Add platform profile support
-> >>>> config: x86_64-randconfig-a015-20201221 (attached as .config)
-> >>>> compiler: clang version 12.0.0 (https://github.com/llvm/llvm-project cee1e7d14f4628d6174b33640d502bff3b54ae45)
-> >>>> reproduce (this is a W=1 build):
-> >>>>         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-> >>>>         chmod +x ~/bin/make.cross
-> >>>>         # install x86_64 cross compiling tool for clang build
-> >>>>         # apt-get install binutils-x86-64-linux-gnu
-> >>>>         # https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git/commit/?id=8c9b909fb1282e43792433e6c1cba125ccfc6201
-> >>>>         git remote add pm https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git
-> >>>>         git fetch --no-tags pm bleeding-edge
-> >>>>         git checkout 8c9b909fb1282e43792433e6c1cba125ccfc6201
-> >>>>         # save the attached .config to linux build tree
-> >>>>         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross ARCH=x86_64
-> >>>>
-> >>>> If you fix the issue, kindly add following tag as appropriate
-> >>>> Reported-by: kernel test robot <lkp@intel.com>
-> >>>>
-> >>>> All warnings (new ones prefixed by >>):
-> >>>>
-> >>>>>> drivers/acpi/platform_profile.c:147:24: warning: address of array 'pprof->choices' will always evaluate to 'true' [-Wpointer-bool-conversion]
-> >>>>            if (!pprof || !pprof->choices || !pprof->profile_set ||
-> >>>>                          ~~~~~~~~^~~~~~~
-> >>>>    1 warning generated.
-> >>>
-> >>>
-> >>> Ah, this is caused by changing choices from a single long to:
-> >>>
-> >>>       unsigned long choices[BITS_TO_LONGS(PLATFORM_PROFILE_LAST)];
-> >>>
-> >>> So that we can use for_each_set_bit and are future proof for more then
-> >>> 32 profiles.
-> >>>
-> >>> To fix this the check should be changed into this (untested):
-> >>>
-> >>> #include <linux/bitmap.h>
-> >>>
-> >>>       if (!pprof || bitmap_empty(pprof->choices, PLATFORM_PROFILE_LAST) ||
-> >>>           !pprof->profile_set || !pprof->profile_get) {
-> >>>               mutex_unlock(&profile_lock);
-> >>>               return -EINVAL;
-> >>>       }
-> >>>
-> >>> Mark can you provide a (tested) patch for this?
-> >>>
-> >>> Regards,
-> >>>
-> >>> Hans
-> >>>
-> >> Will do!
-> >
-> > Please note that I'm not going to push the material to Linus with this
-> > warning, so if you want it to go into 5.11, that needs to be addressed
-> > timely.
-> >
-> > Thanks!
-> >
-> Understood :) I tested this last night and it looks good. Do I push this
-> as a v8 patch on the current series or as a new standalone patch?
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git  bleeding-edge
+branch HEAD: 0c7a6fd3a0e835b0158a1f52176f5d3858fac110  Merge branch 'pm-cpuidle-next' into bleeding-edge
 
-An incremental patch to fix the issue, please.
+Error/Warning reports:
+
+https://lore.kernel.org/linux-acpi/202012180806.uUcdy2LC-lkp@intel.com
+https://lore.kernel.org/linux-acpi/202012271352.JvNDF17O-lkp@intel.com
+https://lore.kernel.org/linux-acpi/202012280239.stlWMtr3-lkp@intel.com
+https://lore.kernel.org/linux-acpi/202012280249.nrNm8Jn3-lkp@intel.com
+
+Error/Warning in current branch:
+
+drivers/acpi/platform_profile.c:147:24: warning: address of array 'pprof->choices' will always evaluate to 'true' [-Wpointer-bool-conversion]
+drivers/acpi/x86/s2idle.c:108:30: warning: variable 'info' set but not used [-Wunused-but-set-variable]
+drivers/acpi/x86/s2idle.c:138:25: warning: variable 'obj_new' set but not used [-Wunused-but-set-variable]
+dtpm.c:(.text+0x24c): undefined reference to `__udivdi3'
+dtpm.c:(.text+0x2a4): undefined reference to `__udivdi3'
+dtpm.c:(.text+0x3bc): undefined reference to `__udivdi3'
+dtpm.c:(.text+0x514): undefined reference to `__aeabi_uldivmod'
+dtpm.c:(.text+0x52d): undefined reference to `__udivdi3'
+
+Error/Warning ids grouped by kconfigs:
+
+gcc_recent_errors
+|-- arm-allmodconfig
+|   `-- dtpm.c:(.text):undefined-reference-to-__aeabi_uldivmod
+|-- arm-allyesconfig
+|   `-- dtpm.c:(.text):undefined-reference-to-__aeabi_uldivmod
+|-- h8300-allmodconfig
+|   `-- dtpm.c:(.text):undefined-reference-to-__udivdi3
+|-- h8300-allyesconfig
+|   `-- dtpm.c:(.text):undefined-reference-to-__udivdi3
+|-- i386-allyesconfig
+|   `-- dtpm.c:(.text):undefined-reference-to-__udivdi3
+|-- i386-randconfig-a006-20201229
+|   |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
+|   `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
+|-- i386-randconfig-r002-20201229
+|   |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
+|   `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
+|-- i386-randconfig-s001-20201229
+|   |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
+|   `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
+|-- m68k-allmodconfig
+|   `-- dtpm.c:(.text):undefined-reference-to-__udivdi3
+|-- m68k-allyesconfig
+|   `-- dtpm.c:(.text):undefined-reference-to-__udivdi3
+|-- sh-allmodconfig
+|   `-- dtpm.c:(.text):undefined-reference-to-__udivdi3
+|-- x86_64-randconfig-a002-20201229
+|   |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
+|   `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
+|-- x86_64-randconfig-a004-20201229
+|   |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
+|   `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
+`-- x86_64-randconfig-s021-20201229
+    |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
+    `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
+
+clang_recent_errors
+|-- x86_64-randconfig-a011-20201229
+|   `-- drivers-acpi-platform_profile.c:warning:address-of-array-pprof-choices-will-always-evaluate-to-true
+|-- x86_64-randconfig-a012-20201229
+|   `-- drivers-acpi-platform_profile.c:warning:address-of-array-pprof-choices-will-always-evaluate-to-true
+|-- x86_64-randconfig-a013-20201229
+|   `-- drivers-acpi-platform_profile.c:warning:address-of-array-pprof-choices-will-always-evaluate-to-true
+|-- x86_64-randconfig-a014-20201229
+|   `-- drivers-acpi-platform_profile.c:warning:address-of-array-pprof-choices-will-always-evaluate-to-true
+|-- x86_64-randconfig-a015-20201229
+|   `-- drivers-acpi-platform_profile.c:warning:address-of-array-pprof-choices-will-always-evaluate-to-true
+`-- x86_64-randconfig-a016-20201229
+    `-- drivers-acpi-platform_profile.c:warning:address-of-array-pprof-choices-will-always-evaluate-to-true
+
+elapsed time: 724m
+
+configs tested: 95
+configs skipped: 2
+
+gcc tested configs:
+arm                                 defconfig
+arm64                            allyesconfig
+arm64                               defconfig
+arm                              allyesconfig
+arm                              allmodconfig
+sh                           se7619_defconfig
+sh                        sh7785lcr_defconfig
+arm                        trizeps4_defconfig
+mips                        workpad_defconfig
+um                           x86_64_defconfig
+mips                     cu1000-neo_defconfig
+m68k                          sun3x_defconfig
+mips                        bcm47xx_defconfig
+arm                            mps2_defconfig
+mips                         tb0287_defconfig
+s390                          debug_defconfig
+arm                           sama5_defconfig
+arm                         s3c2410_defconfig
+arm                         lpc18xx_defconfig
+sh                         microdev_defconfig
+arm                         s5pv210_defconfig
+mips                         tb0226_defconfig
+arm                          pxa910_defconfig
+c6x                        evmc6474_defconfig
+ia64                             allmodconfig
+ia64                                defconfig
+ia64                             allyesconfig
+m68k                             allmodconfig
+m68k                                defconfig
+m68k                             allyesconfig
+nios2                               defconfig
+arc                              allyesconfig
+nds32                             allnoconfig
+c6x                              allyesconfig
+nds32                               defconfig
+nios2                            allyesconfig
+csky                                defconfig
+alpha                               defconfig
+alpha                            allyesconfig
+xtensa                           allyesconfig
+h8300                            allyesconfig
+arc                                 defconfig
+sh                               allmodconfig
+parisc                              defconfig
+s390                             allyesconfig
+parisc                           allyesconfig
+s390                                defconfig
+i386                             allyesconfig
+sparc                            allyesconfig
+sparc                               defconfig
+i386                               tinyconfig
+i386                                defconfig
+mips                             allyesconfig
+mips                             allmodconfig
+powerpc                          allyesconfig
+powerpc                          allmodconfig
+powerpc                           allnoconfig
+x86_64               randconfig-a001-20201229
+x86_64               randconfig-a006-20201229
+x86_64               randconfig-a002-20201229
+x86_64               randconfig-a004-20201229
+x86_64               randconfig-a003-20201229
+x86_64               randconfig-a005-20201229
+i386                 randconfig-a002-20201229
+i386                 randconfig-a005-20201229
+i386                 randconfig-a004-20201229
+i386                 randconfig-a006-20201229
+i386                 randconfig-a003-20201229
+i386                 randconfig-a001-20201229
+i386                 randconfig-a014-20201229
+i386                 randconfig-a012-20201229
+i386                 randconfig-a011-20201229
+i386                 randconfig-a016-20201229
+i386                 randconfig-a015-20201229
+i386                 randconfig-a013-20201229
+riscv                    nommu_k210_defconfig
+riscv                            allyesconfig
+riscv                    nommu_virt_defconfig
+riscv                             allnoconfig
+riscv                               defconfig
+riscv                          rv32_defconfig
+riscv                            allmodconfig
+x86_64                                   rhel
+x86_64                           allyesconfig
+x86_64                    rhel-7.6-kselftests
+x86_64                              defconfig
+x86_64                               rhel-8.3
+x86_64                      rhel-8.3-kbuiltin
+x86_64                                  kexec
+
+clang tested configs:
+x86_64               randconfig-a014-20201229
+x86_64               randconfig-a015-20201229
+x86_64               randconfig-a016-20201229
+x86_64               randconfig-a012-20201229
+x86_64               randconfig-a011-20201229
+x86_64               randconfig-a013-20201229
+
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
