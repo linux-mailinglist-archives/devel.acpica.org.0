@@ -2,245 +2,128 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id ABB0C2E7E62
-	for <lists+devel-acpica@lfdr.de>; Thu, 31 Dec 2020 07:12:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id AC0392E81FE
+	for <lists+devel-acpica@lfdr.de>; Thu, 31 Dec 2020 21:46:21 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 2A893100EBBBD;
-	Wed, 30 Dec 2020 22:12:36 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.126; helo=mga18.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	by ml01.01.org (Postfix) with ESMTP id A20E7100EBBAC;
+	Thu, 31 Dec 2020 12:46:19 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=79.96.170.134; helo=cloudserver094114.home.pl; envelope-from=rjw@rjwysocki.net; receiver=<UNKNOWN> 
+Received: from cloudserver094114.home.pl (cloudserver094114.home.pl [79.96.170.134])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id DECD4100EBBBB
-	for <devel@acpica.org>; Wed, 30 Dec 2020 22:12:33 -0800 (PST)
-IronPort-SDR: JdoGqoRBE6CP/+nb/Wum/jMkpbTFPvmBQSJOht+N4TGtp46utVKR/OxqQLRLa53TFyTqZQEPtX
- zYr91dPYGPVQ==
-X-IronPort-AV: E=McAfee;i="6000,8403,9850"; a="164384616"
-X-IronPort-AV: E=Sophos;i="5.78,463,1599548400";
-   d="scan'208";a="164384616"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Dec 2020 22:12:32 -0800
-IronPort-SDR: RKAqR6faMHtreLbdY0LPclLnNoc+94VuYVAhO3U19XlY99AdIMTCwe1v7gR6n+PYMU6SGuUr8d
- HMLMNmXu/qzg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.78,463,1599548400";
-   d="scan'208";a="563689565"
-Received: from lkp-server02.sh.intel.com (HELO 4242b19f17ef) ([10.239.97.151])
-  by orsmga005.jf.intel.com with ESMTP; 30 Dec 2020 22:12:31 -0800
-Received: from kbuild by 4242b19f17ef with local (Exim 4.92)
-	(envelope-from <lkp@intel.com>)
-	id 1kurCI-0004kU-IS; Thu, 31 Dec 2020 06:12:30 +0000
-Date: Thu, 31 Dec 2020 14:11:43 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <5fed6b9f.xlILK10i2fBDuwxj%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTPS id A2237100EBBA0
+	for <devel@acpica.org>; Thu, 31 Dec 2020 12:46:16 -0800 (PST)
+Received: from 89-77-60-66.dynamic.chello.pl (89.77.60.66) (HELO kreacher.localnet)
+ by serwer1319399.home.pl (79.96.170.134) with SMTP (IdeaSmtpServer 0.83.537)
+ id adb218dee83d9126; Thu, 31 Dec 2020 21:46:12 +0100
+From: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+To: Sebastian Andrzej Siewior <bigeasy@linutronix.de>, Stephen Berman <stephen.berman@gmx.net>
+Date: Thu, 31 Dec 2020 21:46:11 +0100
+Message-ID: <9709109.MH8tSaV5v9@kreacher>
+In-Reply-To: <CAJZ5v0j7i86twMS+csYMaetUkvqjof4FD2GRNoZ_AN=SBF7F1w@mail.gmail.com>
+References: <87blkbx1gt.fsf@gmx.net> <CAJZ5v0j86pX_a4bSLP=sobLoYhfQYV9dWL8HHf2941kXgND79g@mail.gmail.com> <CAJZ5v0j7i86twMS+csYMaetUkvqjof4FD2GRNoZ_AN=SBF7F1w@mail.gmail.com>
 MIME-Version: 1.0
-Message-ID-Hash: 4GNJOJ4AOHCHR5CRCKIIRLJ7EUCBGO3C
-X-Message-ID-Hash: 4GNJOJ4AOHCHR5CRCKIIRLJ7EUCBGO3C
-X-MailFrom: lkp@intel.com
-X-Mailman-Rule-Hits: nonmember-moderation
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Message-ID-Hash: TGBHKXE5BMCIGQB6ZU6TKWO44JPEGG3U
+X-Message-ID-Hash: TGBHKXE5BMCIGQB6ZU6TKWO44JPEGG3U
+X-MailFrom: rjw@rjwysocki.net
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
+CC: Erik Kaneda <erik.kaneda@intel.com>, Thomas Gleixner <tglx@linutronix.de>, Peter Zijlstra <peterz@infradead.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, "Rafael J. Wysocki" <rafael@kernel.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS WITH WARNING 2e19c856a4614c113119f3f4d4795b190c5c828f
+Subject: [Devel] Re: power-off delay/hang due to commit 6d25be57 (mainline)
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/4GNJOJ4AOHCHR5CRCKIIRLJ7EUCBGO3C/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/TGBHKXE5BMCIGQB6ZU6TKWO44JPEGG3U/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git  bleeding-edge
-branch HEAD: 2e19c856a4614c113119f3f4d4795b190c5c828f  Merge branch 'acpi-platform' into bleeding-edge
+On Wednesday, December 2, 2020 8:13:38 PM CET Rafael J. Wysocki wrote:
+> On Wed, Dec 2, 2020 at 7:31 PM Rafael J. Wysocki <rafael@kernel.org> wrote:
+> >
+> > On Wed, Dec 2, 2020 at 7:03 PM Sebastian Andrzej Siewior
+> > <bigeasy@linutronix.de> wrote:
+> > >
+> > > On 2020-10-26 18:20:59 [+0100], To Rafael J. Wysocki wrote:
+> > > > > > > > Done as Bug 208877.
+> > > > > > Rafael, do you have any suggestions?
+> > > > >
+> > > > > I've lost track of this sorry.
+> > > > >
+> > > > > I have ideas, let me get back to this next week.
+> > > >
+> > > > :)
+> > >
+> > > Rafael, any update? If you outline an idea or so then I may be able to
+> > > form a patch out of it. Otherwise I have no idea how to fix this - other
+> > > than telling the driver to not poll in smaller intervals than
+> > > 30secs.
+> >
+> > The idea, roughly speaking, is to limit the number of outstanding work
+> > items in the queue (basically, if there's a notification occurring
+> > before the previous one can be handled, there is no need to queue up
+> > another work item for it).
+> 
+> That's easier said than done, though, because of the way the work item
+> queue-up is hooked up into the ACPICA code.
 
-Warning reports:
+So scratch this and it wouldn't work in general anyway AFAICS.
 
-https://lore.kernel.org/linux-acpi/202012180806.uUcdy2LC-lkp@intel.com
+ATM, I'm tempted to do something like the patch below (with the rationale
+that it shouldn't be necessary to read the temperature right after updating
+the trip points if polling is in use, because the next update through polling
+will cause it to be read anyway and it will trigger trip point actions as
+needed).
 
-Warning in current branch:
-
-drivers/acpi/x86/s2idle.c:108:30: warning: variable 'info' set but not used [-Wunused-but-set-variable]
-drivers/acpi/x86/s2idle.c:138:25: warning: variable 'obj_new' set but not used [-Wunused-but-set-variable]
-
-Warning ids grouped by kconfigs:
-
-gcc_recent_errors
-|-- i386-allyesconfig
-|   |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
-|   `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
-|-- i386-defconfig
-|   |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
-|   `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
-|-- i386-randconfig-a011-20201230
-|   |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
-|   `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
-|-- i386-randconfig-a012-20201230
-|   |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
-|   `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
-|-- i386-randconfig-a013-20201230
-|   |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
-|   `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
-|-- i386-randconfig-a015-20201230
-|   |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
-|   `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
-|-- i386-randconfig-a016-20201230
-|   |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
-|   `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
-|-- i386-randconfig-m021-20201230
-|   |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
-|   `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
-|-- i386-randconfig-p002-20201230
-|   |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
-|   `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
-|-- x86_64-allyesconfig
-|   |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
-|   `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
-|-- x86_64-defconfig
-|   |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
-|   `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
-|-- x86_64-kexec
-|   |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
-|   `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
-|-- x86_64-randconfig-a001-20201230
-|   |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
-|   `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
-|-- x86_64-randconfig-a003-20201230
-|   |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
-|   `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
-|-- x86_64-randconfig-a005-20201230
-|   |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
-|   `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
-|-- x86_64-randconfig-a006-20201230
-|   |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
-|   `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
-|-- x86_64-randconfig-s022-20201230
-|   |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
-|   `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
-|-- x86_64-rhel
-|   |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
-|   `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
-|-- x86_64-rhel-7.6-kselftests
-|   |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
-|   `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
-|-- x86_64-rhel-8.3
-|   |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
-|   `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
-`-- x86_64-rhel-8.3-kbuiltin
-    |-- drivers-acpi-x86-s2idle.c:warning:variable-info-set-but-not-used
-    `-- drivers-acpi-x86-s2idle.c:warning:variable-obj_new-set-but-not-used
-
-elapsed time: 725m
-
-configs tested: 95
-configs skipped: 2
-
-gcc tested configs:
-arm                                 defconfig
-arm64                            allyesconfig
-arm64                               defconfig
-arm                              allyesconfig
-arm                              allmodconfig
-sh                      rts7751r2d1_defconfig
-m68k                             alldefconfig
-m68k                        m5407c3_defconfig
-sh                            shmin_defconfig
-arm                         s3c6400_defconfig
-mips                           rs90_defconfig
-h8300                    h8300h-sim_defconfig
-sh                             shx3_defconfig
-mips                   sb1250_swarm_defconfig
-powerpc                     akebono_defconfig
-powerpc                      obs600_defconfig
-powerpc                    klondike_defconfig
-arm                        mvebu_v5_defconfig
-s390                             alldefconfig
-sh                   rts7751r2dplus_defconfig
-powerpc                    sam440ep_defconfig
-arc                     haps_hs_smp_defconfig
-ia64                             alldefconfig
-sh                     sh7710voipgw_defconfig
-ia64                             allmodconfig
-ia64                                defconfig
-ia64                             allyesconfig
-m68k                             allmodconfig
-m68k                                defconfig
-m68k                             allyesconfig
-nios2                               defconfig
-arc                              allyesconfig
-nds32                             allnoconfig
-c6x                              allyesconfig
-nds32                               defconfig
-nios2                            allyesconfig
-csky                                defconfig
-alpha                               defconfig
-alpha                            allyesconfig
-xtensa                           allyesconfig
-h8300                            allyesconfig
-arc                                 defconfig
-sh                               allmodconfig
-parisc                              defconfig
-s390                             allyesconfig
-parisc                           allyesconfig
-s390                                defconfig
-i386                             allyesconfig
-sparc                            allyesconfig
-sparc                               defconfig
-i386                               tinyconfig
-i386                                defconfig
-mips                             allyesconfig
-mips                             allmodconfig
-powerpc                          allyesconfig
-powerpc                          allmodconfig
-powerpc                           allnoconfig
-i386                 randconfig-a005-20201230
-i386                 randconfig-a006-20201230
-i386                 randconfig-a004-20201230
-i386                 randconfig-a003-20201230
-i386                 randconfig-a002-20201230
-i386                 randconfig-a001-20201230
-i386                 randconfig-a016-20201230
-i386                 randconfig-a014-20201230
-i386                 randconfig-a012-20201230
-i386                 randconfig-a015-20201230
-i386                 randconfig-a011-20201230
-i386                 randconfig-a013-20201230
-x86_64               randconfig-a005-20201230
-x86_64               randconfig-a001-20201230
-x86_64               randconfig-a006-20201230
-x86_64               randconfig-a002-20201230
-x86_64               randconfig-a004-20201230
-x86_64               randconfig-a003-20201230
-riscv                    nommu_k210_defconfig
-riscv                            allyesconfig
-riscv                    nommu_virt_defconfig
-riscv                             allnoconfig
-riscv                               defconfig
-riscv                          rv32_defconfig
-riscv                            allmodconfig
-x86_64                                   rhel
-x86_64                           allyesconfig
-x86_64                    rhel-7.6-kselftests
-x86_64                              defconfig
-x86_64                               rhel-8.3
-x86_64                      rhel-8.3-kbuiltin
-x86_64                                  kexec
-
-clang tested configs:
-x86_64               randconfig-a015-20201230
-x86_64               randconfig-a014-20201230
-x86_64               randconfig-a016-20201230
-x86_64               randconfig-a011-20201230
-x86_64               randconfig-a013-20201230
-x86_64               randconfig-a012-20201230
+Stephen, can you give it a go, please?
 
 ---
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+ drivers/acpi/thermal.c |   17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
+
+Index: linux-pm/drivers/acpi/thermal.c
+===================================================================
+--- linux-pm.orig/drivers/acpi/thermal.c
++++ linux-pm/drivers/acpi/thermal.c
+@@ -911,24 +911,25 @@ static void acpi_thermal_notify(struct a
+ 	switch (event) {
+ 	case ACPI_THERMAL_NOTIFY_TEMPERATURE:
+ 		acpi_thermal_check(tz);
+-		break;
++		return;
+ 	case ACPI_THERMAL_NOTIFY_THRESHOLDS:
+ 		acpi_thermal_trips_update(tz, ACPI_TRIPS_REFRESH_THRESHOLDS);
+-		acpi_thermal_check(tz);
+-		acpi_bus_generate_netlink_event(device->pnp.device_class,
+-						  dev_name(&device->dev), event, 0);
+ 		break;
+ 	case ACPI_THERMAL_NOTIFY_DEVICES:
+ 		acpi_thermal_trips_update(tz, ACPI_TRIPS_REFRESH_DEVICES);
+-		acpi_thermal_check(tz);
+-		acpi_bus_generate_netlink_event(device->pnp.device_class,
+-						  dev_name(&device->dev), event, 0);
+ 		break;
+ 	default:
+ 		ACPI_DEBUG_PRINT((ACPI_DB_INFO,
+ 				  "Unsupported event [0x%x]\n", event));
+-		break;
++		return;
+ 	}
++
++	/* Trigger an update of the thermal zone unless polling is in use. */
++	if (!tz->polling_frequency)
++		acpi_thermal_check(tz);
++
++	acpi_bus_generate_netlink_event(device->pnp.device_class,
++					dev_name(&device->dev), event, 0);
+ }
+ 
+ /*
+
+
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
