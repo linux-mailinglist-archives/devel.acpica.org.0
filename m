@@ -1,274 +1,349 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E92E2E922C
-	for <lists+devel-acpica@lfdr.de>; Mon,  4 Jan 2021 09:55:50 +0100 (CET)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A7BB42E9FE0
+	for <lists+devel-acpica@lfdr.de>; Mon,  4 Jan 2021 23:17:50 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 69D7C100ED4AE;
-	Mon,  4 Jan 2021 00:55:47 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=185.176.79.56; helo=frasgout.his.huawei.com; envelope-from=shameerali.kolothum.thodi@huawei.com; receiver=<UNKNOWN> 
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+	by ml01.01.org (Postfix) with ESMTP id C7745100ED49C;
+	Mon,  4 Jan 2021 14:17:48 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.65; helo=mga03.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 4DEDC100ED4A6
-	for <devel@acpica.org>; Mon,  4 Jan 2021 00:55:44 -0800 (PST)
-Received: from fraeml715-chm.china.huawei.com (unknown [172.18.147.201])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4D8Tqp0P8Nz67Ph9;
-	Mon,  4 Jan 2021 16:51:02 +0800 (CST)
-Received: from lhreml720-chm.china.huawei.com (10.201.108.71) by
- fraeml715-chm.china.huawei.com (10.206.15.34) with Microsoft SMTP Server
+	by ml01.01.org (Postfix) with ESMTPS id 30CDD100ED48C
+	for <devel@acpica.org>; Mon,  4 Jan 2021 14:17:46 -0800 (PST)
+IronPort-SDR: BI0Ixk3qrCFEZ5OYHWtzbK4ZNhyk0j8afItPzcJcqKF11SYU7jz1M+JJQoI1WmAhBEQW7lSOmL
+ YUc+kehr6irw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9854"; a="177118689"
+X-IronPort-AV: E=Sophos;i="5.78,475,1599548400";
+   d="scan'208";a="177118689"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jan 2021 14:17:46 -0800
+IronPort-SDR: MoFraJMMbJmeFy1y3O+hX+D4KjvSWqhfKmNu+VIP2wr0iOg5napc1FVgnHEmFAh7qRGYRVGBZ2
+ 5YvZ7ZF3A8OA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.78,475,1599548400";
+   d="scan'208";a="421530306"
+Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
+  by orsmga001.jf.intel.com with ESMTP; 04 Jan 2021 14:17:46 -0800
+Received: from fmsmsx606.amr.corp.intel.com (10.18.126.86) by
+ fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2106.2; Mon, 4 Jan 2021 09:55:41 +0100
-Received: from lhreml710-chm.china.huawei.com (10.201.108.61) by
- lhreml720-chm.china.huawei.com (10.201.108.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2106.2; Mon, 4 Jan 2021 08:55:41 +0000
-Received: from lhreml710-chm.china.huawei.com ([169.254.81.184]) by
- lhreml710-chm.china.huawei.com ([169.254.81.184]) with mapi id
- 15.01.2106.002; Mon, 4 Jan 2021 08:55:41 +0000
-From: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-To: Jon Nettleton <jon@solid-run.com>
-Thread-Topic: [RFC PATCH v2 0/8] ACPI/IORT: Support for IORT RMR node
-Thread-Index: AQHWvm1ikW2cGVer1kuw1XacsP3g9qnwQL+AgAY7lgCAADGKgIAAE1CAgAANPCCABLvjgIAAC6dggAAGtoCAAT53gIAalBgg
-Date: Mon, 4 Jan 2021 08:55:40 +0000
-Message-ID: <4f0ede92d9d24b9da0baacd7e77e672d@huawei.com>
-References: <20201119121150.3316-1-shameerali.kolothum.thodi@huawei.com>
- <e9837ba5-deeb-c64c-2261-d0ab82eebfac@arm.com>
- <67cb563d19114f609348dc9f8b4307e9@huawei.com>
- <8f92d0b3-360b-5d47-10a7-83d09e75d993@arm.com>
- <6dcf51b2-cad5-d377-a34c-4e64fd3acbb8@arm.com>
- <3d0a3ae81241474f91748dde0cdd4d39@huawei.com>
- <CABdtJHvoWCE4Zd5gTf4wbAKtriWRFx6y1CSH0taVxMmEf7tweg@mail.gmail.com>
- <93c22f3c57c042c39871a0fd3a2eaa0e@huawei.com>
- <CABdtJHswDUdB-mw5EJtncvFxqyE0O4zAH5QavbsrG9mWHyateQ@mail.gmail.com>
- <CABdtJHvGXBMmjbb8z9aHQt=nhAvCiFdsKJZfzagsmT+Kj8G_Bw@mail.gmail.com>
-In-Reply-To: <CABdtJHvGXBMmjbb8z9aHQt=nhAvCiFdsKJZfzagsmT+Kj8G_Bw@mail.gmail.com>
-Accept-Language: en-GB, en-US
+ 15.1.1713.5; Mon, 4 Jan 2021 14:17:45 -0800
+Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
+ fmsmsx606.amr.corp.intel.com (10.18.126.86) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5
+ via Frontend Transport; Mon, 4 Jan 2021 14:17:45 -0800
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.176)
+ by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.1713.5; Mon, 4 Jan 2021 14:17:45 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=VsW9a3cn0bLwvbYsEXSRqwMF5RmRTY0EiSH0MmXRHfE35uxioXorrBOJ65U45SSBknd1kY4xs6lMIlOR9zveRL2/NTpvbGJajJBUm948gMscAUroakrOj33JcPlJgs8GXT60UPPVipHt5yCZS8hziG2AbKfpym69JGQOTqQ8Tbh8W4OKqBHoKNL27USy34kW8gUryv3G6Y2RAeAZuV4dFsxxEzxV8xo+98tj2ChtwTbPC2N2a8hlzyC0BwV/4zKpBRVunFvQlWET6S0LrmM57+5TiMfGeJ8rv1N4vpe5Ciszx9nRTWUiRDKP2aZTWGlYB0MOqq1323hfhTLq6zMTBQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=mqjvqvux42zLbQ7+4UwqfakZMbQwvR9P0tOz+ndgj9g=;
+ b=QhpghOhQGnuWHF/BuuoeyS8sPb9qqtWfekRuz5g4/kVpdXoMNfWQs2BnhxCxeQewi1IQhPktplt35OHLFKcpY4M0Y5PpL3Exa5nO8WpwZHQiQSrcw8HrFGxXLOEGWAg3bNhRdOAtwHndYMSyjWXrctFJNdDKNSiUypiIdr8HilfNzRc6atA6EalWy9TSPyzeHnnI83piVpKsirG7uSPRjfYSNxYKV9TSNMnWON7rzm0PxZqlcKwp0sfW9eDDRMR4EtNQKCzbLh7moSciG6GYWqPVbg2WmT1I7cYERqqAxlUEfL2uardiaO1YjkHn6VMBzmV4SocQUc3R7ig1f+adyQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
+ s=selector2-intel-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=mqjvqvux42zLbQ7+4UwqfakZMbQwvR9P0tOz+ndgj9g=;
+ b=EGvmrMD9o2WBSc+HIXafydYuqCOnHOiQGlV2eCUwAxwTGtBjk1fsoL2jWeRLnEtKxenGsZ4bVREa5RkqI7+LV10nJe9ueHtKTKukWBPvbB2gYr17GeAv2hHfGo64qBqoI6/Wcy3cjWuj2zM15JmCPTNpjFIPKtuSiKSBIgQOGEo=
+Received: from BYAPR11MB3256.namprd11.prod.outlook.com (2603:10b6:a03:76::19)
+ by BYAPR11MB3109.namprd11.prod.outlook.com (2603:10b6:a03:8c::26) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3721.19; Mon, 4 Jan
+ 2021 22:17:44 +0000
+Received: from BYAPR11MB3256.namprd11.prod.outlook.com
+ ([fe80::ac88:24d1:1225:553d]) by BYAPR11MB3256.namprd11.prod.outlook.com
+ ([fe80::ac88:24d1:1225:553d%3]) with mapi id 15.20.3721.024; Mon, 4 Jan 2021
+ 22:17:44 +0000
+From: "Moore, Robert" <robert.moore@intel.com>
+To: Hans de Goede <hdegoede@redhat.com>, "Rafael J . Wysocki"
+	<rjw@rjwysocki.net>, Len Brown <lenb@kernel.org>, "Kaneda, Erik"
+	<erik.kaneda@intel.com>
+Thread-Topic: [PATCH 1/2] ACPICA: Fix race in GenericSerialBus (I2C) and GPIO
+ OpRegion parameter handling
+Thread-Index: AQHW25NrWzXvIr23REWQrLVwsahNEqoYF4Tw
+Date: Mon, 4 Jan 2021 22:17:43 +0000
+Message-ID: <BYAPR11MB3256C957AA72754D07D6583F87D20@BYAPR11MB3256.namprd11.prod.outlook.com>
+References: <20201226142830.48818-1-hdegoede@redhat.com>
+ <20201226142830.48818-2-hdegoede@redhat.com>
+In-Reply-To: <20201226142830.48818-2-hdegoede@redhat.com>
+Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-x-originating-ip: [10.52.128.202]
-Content-Type: text/plain; charset="utf-8"
+dlp-version: 11.5.1.3
+dlp-product: dlpe-windows
+dlp-reaction: no-action
+authentication-results: redhat.com; dkim=none (message not signed)
+ header.d=none;redhat.com; dmarc=none action=none header.from=intel.com;
+x-originating-ip: [134.134.136.194]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: f15fd57c-c61c-4d5c-21b2-08d8b0fe8f02
+x-ms-traffictypediagnostic: BYAPR11MB3109:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <BYAPR11MB3109C3FE40D52ED0C8DA804E87D20@BYAPR11MB3109.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:222;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: ofyDke5aC77lK7hpN0QHlJDpNSSV4qV/kPmFnJ9WzwNAdEp79QunpHevYZ+sKrrsR3Y1a+h6tBHLADgzgWrMhCeOGrBtvaL2wd4Qqf4WuqoqG8T6OOBr5QI718Ee4VV3mnZE0DviAU1OliO/zSQZCEYz8ak5c+JZjjvLj14B9ALIjz5tkd/sbJUg+dqlSMT9qM0hAllY2+/C6tbrDZAgRLljDQyRo+QtihktueazA6l7uKgxjjsAnpE/vRVNGozgw5X9KyLSgdb8ZOJe7l5P50WQoCnDOYiZrTJh0Je5UJuc4bEr783xz3+OOrt/B7pfYsD1OYGfIOd9KD/A4q+/kCpVZSIjW51AjUeVeMVbEiFRPBuKg21CjQR5CC+MY9C3S+A0TmQ7jXOlkZNCkN4drw==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(6029001)(4636009)(376002)(136003)(396003)(346002)(366004)(39860400002)(26005)(2906002)(8936002)(7696005)(33656002)(6636002)(186003)(55016002)(9686003)(316002)(83380400001)(54906003)(110136005)(6506007)(5660300002)(53546011)(52536014)(8676002)(4326008)(478600001)(64756008)(66556008)(66446008)(86362001)(71200400001)(66476007)(76116006)(66946007);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata: =?us-ascii?Q?qMwRccC+UiOb9GK7IJThif/HVb0fVw1DzlJv0WJVI2BY6t1ovPRBKXr1e8zp?=
+ =?us-ascii?Q?MsFvmNCjWQtyhBR6riIxarv0m4AMzLyxA04Zpi5+wBkxRGWKWLQ0BJF2ywgw?=
+ =?us-ascii?Q?q1dckXeT3hRJe39IuusAId9OewY1JYkhM7JLbha8eSGffAgDp6mQFChLQlfm?=
+ =?us-ascii?Q?CK2CUy9o73qoG89dCglSsg7pnETy6vWmNtdAFBlnTZbK415WdYLArcloawc+?=
+ =?us-ascii?Q?vJC2/OPIFeVl8j3H/swoLH5+mVnvPdyJF5rP51eVq/8L4l47yNw/aWFq0vFz?=
+ =?us-ascii?Q?yq92wD6ZvSC/vlHtZE9+1wDuWicr7iQLnHNhlCG/DHYmXNw7SofQ7xjLg55b?=
+ =?us-ascii?Q?HKqLTW5VwNUklN7h4zublTvqAZnLs0idLpQMd0L75IqCWHW2XUVNVrapQ6YO?=
+ =?us-ascii?Q?55XoghWp/NoKYRQRyYw248bVMCQ/O2zNsd1e62MRnV8VW6MWww8GAnV2BLuy?=
+ =?us-ascii?Q?KZweFFwcN60/kUMzuao32VTeeslw+3XzOKTSEr2GGdsmUG9GtuY8Njv8a99h?=
+ =?us-ascii?Q?pbCMPpuNj+59lU3eZzUSfz5qYOLwcF0uP2rXyzjJP/MM3JUctZo5MVDCEhOc?=
+ =?us-ascii?Q?9pjd0SDh7QV13BGMSySFCwaBS3uxC6g2dBnSkci1AwF7gZrJvBqE98Q1GR7v?=
+ =?us-ascii?Q?ekslKrlIWCtEyP/bK2e8MNB7fj14qRINsFNoH7VSkMgMY3pP8mHPu2Vco1b4?=
+ =?us-ascii?Q?VaYqnTd8u0+ClCzoY7Lr/htbYkp7Ip/DNMDvd9RrZoneE6D2qLL0RymEj3qy?=
+ =?us-ascii?Q?UUY6jJscH5rYdOSrKNVlyOa0tUt5Yl5vmOaEAynv3j0AA02X88dHmOqwo7wW?=
+ =?us-ascii?Q?XOcLNe3uz20z8Nytm8EK+MFiFhEpGtCBO0ZzaTMLHY7d31P6zR2SQ7lFcz+r?=
+ =?us-ascii?Q?yMMugs6dNQp6ZMqr+ziyT7K7hFZ8yxicqXJjXAua/PtLt6W0J2FJWCh4U/OA?=
+ =?us-ascii?Q?NxJGmrsRSrN2QAt8M8oggFs+7Wi0bGkBN8AnzwiooYo=3D?=
+Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
-X-CFilter-Loop: Reflected
-Message-ID-Hash: XNIA4R5SWRCV3RFCOEUSOWUQKF5RBLQR
-X-Message-ID-Hash: XNIA4R5SWRCV3RFCOEUSOWUQKF5RBLQR
-X-MailFrom: shameerali.kolothum.thodi@huawei.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3256.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f15fd57c-c61c-4d5c-21b2-08d8b0fe8f02
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Jan 2021 22:17:43.9219
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: zn9/AItgskzVrlYtdVcJ5Wt+JeZEC8G8zTmbRzT6OA5NooBfZS3q4cRYMNFwsabG1FFEQMBaiSCkp0Av7714QQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR11MB3109
+X-OriginatorOrg: intel.com
+Message-ID-Hash: SCYLXAXJJJNLNQ7UKOCOR2B5DMNCSS4Z
+X-Message-ID-Hash: SCYLXAXJJJNLNQ7UKOCOR2B5DMNCSS4Z
+X-MailFrom: robert.moore@intel.com
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
-CC: Steven Price <steven.price@arm.com>, Robin Murphy <robin.murphy@arm.com>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>, "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>, "devel@acpica.org" <devel@acpica.org>, "lorenzo.pieralisi@arm.com" <lorenzo.pieralisi@arm.com>, "joro@8bytes.org" <joro@8bytes.org>, Linuxarm <linuxarm@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>, "Sami.Mujawar@arm.com" <Sami.Mujawar@arm.com>, wanghuiqiang <wanghuiqiang@huawei.com>
+CC: "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>, "devel@acpica.org" <devel@acpica.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [RFC PATCH v2 0/8] ACPI/IORT: Support for IORT RMR node
+Subject: [Devel] Re: [PATCH 1/2] ACPICA: Fix race in GenericSerialBus (I2C) and GPIO OpRegion parameter handling
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/XNIA4R5SWRCV3RFCOEUSOWUQKF5RBLQR/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/SCYLXAXJJJNLNQ7UKOCOR2B5DMNCSS4Z/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: 7bit
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogSm9uIE5ldHRsZXRvbiBb
-bWFpbHRvOmpvbkBzb2xpZC1ydW4uY29tXQ0KPiBTZW50OiAxOCBEZWNlbWJlciAyMDIwIDEwOjUz
-DQo+IFRvOiBTaGFtZWVyYWxpIEtvbG90aHVtIFRob2RpIDxzaGFtZWVyYWxpLmtvbG90aHVtLnRo
-b2RpQGh1YXdlaS5jb20+DQo+IENjOiBTdGV2ZW4gUHJpY2UgPHN0ZXZlbi5wcmljZUBhcm0uY29t
-PjsgUm9iaW4gTXVycGh5DQo+IDxyb2Jpbi5tdXJwaHlAYXJtLmNvbT47IGxpbnV4LWFybS1rZXJu
-ZWxAbGlzdHMuaW5mcmFkZWFkLm9yZzsNCj4gbGludXgtYWNwaUB2Z2VyLmtlcm5lbC5vcmc7IGlv
-bW11QGxpc3RzLmxpbnV4LWZvdW5kYXRpb24ub3JnOw0KPiBkZXZlbEBhY3BpY2Eub3JnOyBsb3Jl
-bnpvLnBpZXJhbGlzaUBhcm0uY29tOyBqb3JvQDhieXRlcy5vcmc7IEd1b2hhbmp1bg0KPiAoSGFu
-anVuIEd1bykgPGd1b2hhbmp1bkBodWF3ZWkuY29tPjsgTGludXhhcm0gPGxpbnV4YXJtQGh1YXdl
-aS5jb20+Ow0KPiBKb25hdGhhbiBDYW1lcm9uIDxqb25hdGhhbi5jYW1lcm9uQGh1YXdlaS5jb20+
-Ow0KPiBTYW1pLk11amF3YXJAYXJtLmNvbTsgd2FuZ2h1aXFpYW5nIDx3YW5naHVpcWlhbmdAaHVh
-d2VpLmNvbT4NCj4gU3ViamVjdDogUmU6IFtSRkMgUEFUQ0ggdjIgMC84XSBBQ1BJL0lPUlQ6IFN1
-cHBvcnQgZm9yIElPUlQgUk1SIG5vZGUNCj4gDQo+IE9uIFRodSwgRGVjIDE3LCAyMDIwIGF0IDQ6
-NTMgUE0gSm9uIE5ldHRsZXRvbiA8am9uQHNvbGlkLXJ1bi5jb20+IHdyb3RlOg0KPiA+DQo+ID4g
-T24gVGh1LCBEZWMgMTcsIDIwMjAgYXQgNDo0MiBQTSBTaGFtZWVyYWxpIEtvbG90aHVtIFRob2Rp
-DQo+ID4gPHNoYW1lZXJhbGkua29sb3RodW0udGhvZGlAaHVhd2VpLmNvbT4gd3JvdGU6DQo+ID4g
-Pg0KPiA+ID4NCj4gPiA+DQo+ID4gPiA+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+ID4g
-PiA+IEZyb206IEpvbiBOZXR0bGV0b24gW21haWx0bzpqb25Ac29saWQtcnVuLmNvbV0NCj4gPiA+
-ID4gU2VudDogMTcgRGVjZW1iZXIgMjAyMCAxNDo0OA0KPiA+ID4gPiBUbzogU2hhbWVlcmFsaSBL
-b2xvdGh1bSBUaG9kaQ0KPiA8c2hhbWVlcmFsaS5rb2xvdGh1bS50aG9kaUBodWF3ZWkuY29tPg0K
-PiA+ID4gPiBDYzogU3RldmVuIFByaWNlIDxzdGV2ZW4ucHJpY2VAYXJtLmNvbT47IFJvYmluIE11
-cnBoeQ0KPiA+ID4gPiA8cm9iaW4ubXVycGh5QGFybS5jb20+OyBsaW51eC1hcm0ta2VybmVsQGxp
-c3RzLmluZnJhZGVhZC5vcmc7DQo+ID4gPiA+IGxpbnV4LWFjcGlAdmdlci5rZXJuZWwub3JnOyBp
-b21tdUBsaXN0cy5saW51eC1mb3VuZGF0aW9uLm9yZzsNCj4gPiA+ID4gZGV2ZWxAYWNwaWNhLm9y
-ZzsgbG9yZW56by5waWVyYWxpc2lAYXJtLmNvbTsgam9yb0A4Ynl0ZXMub3JnOw0KPiBHdW9oYW5q
-dW4NCj4gPiA+ID4gKEhhbmp1biBHdW8pIDxndW9oYW5qdW5AaHVhd2VpLmNvbT47IExpbnV4YXJt
-DQo+IDxsaW51eGFybUBodWF3ZWkuY29tPjsNCj4gPiA+ID4gSm9uYXRoYW4gQ2FtZXJvbiA8am9u
-YXRoYW4uY2FtZXJvbkBodWF3ZWkuY29tPjsNCj4gPiA+ID4gU2FtaS5NdWphd2FyQGFybS5jb207
-IHdhbmdodWlxaWFuZyA8d2FuZ2h1aXFpYW5nQGh1YXdlaS5jb20+DQo+ID4gPiA+IFN1YmplY3Q6
-IFJlOiBbUkZDIFBBVENIIHYyIDAvOF0gQUNQSS9JT1JUOiBTdXBwb3J0IGZvciBJT1JUIFJNUiBu
-b2RlDQo+ID4gPiA+DQo+ID4gPiA+IE9uIE1vbiwgRGVjIDE0LCAyMDIwIGF0IDM6NDggUE0gU2hh
-bWVlcmFsaSBLb2xvdGh1bSBUaG9kaQ0KPiA+ID4gPiA8c2hhbWVlcmFsaS5rb2xvdGh1bS50aG9k
-aUBodWF3ZWkuY29tPiB3cm90ZToNCj4gPiA+ID4gPg0KPiA+ID4gPiA+DQo+ID4gPiA+ID4NCj4g
-PiA+ID4gPiA+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+ID4gPiA+ID4gPiBGcm9tOiBT
-dGV2ZW4gUHJpY2UgW21haWx0bzpzdGV2ZW4ucHJpY2VAYXJtLmNvbV0NCj4gPiA+ID4gPiA+IFNl
-bnQ6IDE0IERlY2VtYmVyIDIwMjAgMTM6NDMNCj4gPiA+ID4gPiA+IFRvOiBSb2JpbiBNdXJwaHkg
-PHJvYmluLm11cnBoeUBhcm0uY29tPjsgU2hhbWVlcmFsaSBLb2xvdGh1bQ0KPiBUaG9kaQ0KPiA+
-ID4gPiA+ID4gPHNoYW1lZXJhbGkua29sb3RodW0udGhvZGlAaHVhd2VpLmNvbT47DQo+ID4gPiA+
-ID4gPiBsaW51eC1hcm0ta2VybmVsQGxpc3RzLmluZnJhZGVhZC5vcmc7IGxpbnV4LWFjcGlAdmdl
-ci5rZXJuZWwub3JnOw0KPiA+ID4gPiA+ID4gaW9tbXVAbGlzdHMubGludXgtZm91bmRhdGlvbi5v
-cmc7IGRldmVsQGFjcGljYS5vcmcNCj4gPiA+ID4gPiA+IENjOiBMaW51eGFybSA8bGludXhhcm1A
-aHVhd2VpLmNvbT47IGxvcmVuem8ucGllcmFsaXNpQGFybS5jb207DQo+ID4gPiA+ID4gPiBqb3Jv
-QDhieXRlcy5vcmc7IHdhbmdodWlxaWFuZyA8d2FuZ2h1aXFpYW5nQGh1YXdlaS5jb20+Ow0KPiBH
-dW9oYW5qdW4NCj4gPiA+ID4gPiA+IChIYW5qdW4gR3VvKSA8Z3VvaGFuanVuQGh1YXdlaS5jb20+
-OyBKb25hdGhhbiBDYW1lcm9uDQo+ID4gPiA+ID4gPiA8am9uYXRoYW4uY2FtZXJvbkBodWF3ZWku
-Y29tPjsgU2FtaS5NdWphd2FyQGFybS5jb20NCj4gPiA+ID4gPiA+IFN1YmplY3Q6IFJlOiBbUkZD
-IFBBVENIIHYyIDAvOF0gQUNQSS9JT1JUOiBTdXBwb3J0IGZvciBJT1JUIFJNUg0KPiBub2RlDQo+
-ID4gPiA+ID4gPg0KPiA+ID4gPiA+ID4gT24gMTQvMTIvMjAyMCAxMjozMywgUm9iaW4gTXVycGh5
-IHdyb3RlOg0KPiA+ID4gPiA+ID4gPiBPbiAyMDIwLTEyLTE0IDEwOjU1LCBTaGFtZWVyYWxpIEtv
-bG90aHVtIFRob2RpIHdyb3RlOg0KPiA+ID4gPiA+ID4gPj4gSGkgU3RldmUsDQo+ID4gPiA+ID4g
-PiA+Pg0KPiA+ID4gPiA+ID4gPj4+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+ID4gPiA+
-ID4gPiA+Pj4gRnJvbTogU3RldmVuIFByaWNlIFttYWlsdG86c3RldmVuLnByaWNlQGFybS5jb21d
-DQo+ID4gPiA+ID4gPiA+Pj4gU2VudDogMTAgRGVjZW1iZXIgMjAyMCAxMDoyNg0KPiA+ID4gPiA+
-ID4gPj4+IFRvOiBTaGFtZWVyYWxpIEtvbG90aHVtIFRob2RpDQo+ID4gPiA+ID4gPiA8c2hhbWVl
-cmFsaS5rb2xvdGh1bS50aG9kaUBodWF3ZWkuY29tPjsNCj4gPiA+ID4gPiA+ID4+PiBsaW51eC1h
-cm0ta2VybmVsQGxpc3RzLmluZnJhZGVhZC5vcmc7IGxpbnV4LWFjcGlAdmdlci5rZXJuZWwub3Jn
-Ow0KPiA+ID4gPiA+ID4gPj4+IGlvbW11QGxpc3RzLmxpbnV4LWZvdW5kYXRpb24ub3JnOyBkZXZl
-bEBhY3BpY2Eub3JnDQo+ID4gPiA+ID4gPiA+Pj4gQ2M6IExpbnV4YXJtIDxsaW51eGFybUBodWF3
-ZWkuY29tPjsNCj4gbG9yZW56by5waWVyYWxpc2lAYXJtLmNvbTsNCj4gPiA+ID4gPiA+ID4+PiBq
-b3JvQDhieXRlcy5vcmc7IHJvYmluLm11cnBoeUBhcm0uY29tOyB3YW5naHVpcWlhbmcNCj4gPiA+
-ID4gPiA+ID4+PiA8d2FuZ2h1aXFpYW5nQGh1YXdlaS5jb20+OyBHdW9oYW5qdW4gKEhhbmp1biBH
-dW8pDQo+ID4gPiA+ID4gPiA+Pj4gPGd1b2hhbmp1bkBodWF3ZWkuY29tPjsgSm9uYXRoYW4gQ2Ft
-ZXJvbg0KPiA+ID4gPiA+ID4gPj4+IDxqb25hdGhhbi5jYW1lcm9uQGh1YXdlaS5jb20+OyBTYW1p
-Lk11amF3YXJAYXJtLmNvbQ0KPiA+ID4gPiA+ID4gPj4+IFN1YmplY3Q6IFJlOiBbUkZDIFBBVENI
-IHYyIDAvOF0gQUNQSS9JT1JUOiBTdXBwb3J0IGZvciBJT1JUIFJNUg0KPiBub2RlDQo+ID4gPiA+
-ID4gPiA+Pj4NCj4gPiA+ID4gPiA+ID4+PiBPbiAxOS8xMS8yMDIwIDEyOjExLCBTaGFtZWVyIEtv
-bG90aHVtIHdyb3RlOg0KPiA+ID4gPiA+ID4gPj4+PiBSRkMgdjEgLS0+IHYyOg0KPiA+ID4gPiA+
-ID4gPj4+PiAgICAtIEFkZGVkIGEgZ2VuZXJpYyBpbnRlcmZhY2UgZm9yIElPTU1VIGRyaXZlcnMg
-dG8gcmV0cmlldmUgYWxsDQo+IHRoZQ0KPiA+ID4gPiA+ID4gPj4+PiAgICAgIFJNUiBpbmZvIGFz
-c29jaWF0ZWQgd2l0aCBhIGdpdmVuIElPTU1VLg0KPiA+ID4gPiA+ID4gPj4+PiAgICAtIFNNTVV2
-MyBkcml2ZXIgZ2V0cyB0aGUgUk1SIGxpc3QgZHVyaW5nIHByb2JlKCkgYW5kDQo+IGluc3RhbGxz
-DQo+ID4gPiA+ID4gPiA+Pj4+ICAgICAgYnlwYXNzIFNURXMgZm9yIGFsbCB0aGUgU0lEcyBpbiB0
-aGUgUk1SIGxpc3QuIFRoaXMgaXMgdG8ga2VlcA0KPiA+ID4gPiA+ID4gPj4+PiAgICAgIHRoZSBv
-bmdvaW5nIHRyYWZmaWMgYWxpdmUoaWYgYW55KSBkdXJpbmcgU01NVXYzIHJlc2V0LiBUaGlzDQo+
-IGlzDQo+ID4gPiA+ID4gPiA+Pj4+ICAgICAgYmFzZWQgb24gdGhlIHN1Z2dlc3Rpb25zIHJlY2Vp
-dmVkIGZvciB2MSB0byB0YWtlIGNhcmUgb2YNCj4gdGhlDQo+ID4gPiA+ID4gPiA+Pj4+ICAgICAg
-RUZJIGZyYW1lYnVmZmVyIHVzZSBjYXNlLiBPbmx5IHNhbml0eSB0ZXN0ZWQgZm9yIG5vdy4NCj4g
-PiA+ID4gPiA+ID4+Pg0KPiA+ID4gPiA+ID4gPj4+IEhpIFNoYW1lZXIsDQo+ID4gPiA+ID4gPiA+
-Pj4NCj4gPiA+ID4gPiA+ID4+PiBTb3JyeSBmb3Igbm90IGxvb2tpbmcgYXQgdGhpcyBiZWZvcmUu
-DQo+ID4gPiA+ID4gPiA+Pj4NCj4gPiA+ID4gPiA+ID4+PiBEbyB5b3UgaGF2ZSBhbnkgcGxhbnMg
-dG8gaW1wbGVtZW50IHN1cHBvcnQgaW4gdGhlIFNNTVV2Mg0KPiBkcml2ZXI/DQo+ID4gPiA+IFRo
-ZQ0KPiA+ID4gPiA+ID4gPj4+IHBsYXRmb3JtIEkndmUgYmVlbiB0ZXN0aW5nIHRoZSBFRkkgZnJh
-bWVidWZmZXIgc3VwcG9ydCBvbiBoYXMgdGhlDQo+ID4gPiA+ID4gPiA+Pj4gZGlzcGxheSBjb250
-cm9sbGVyIGJlaGluZCBTTU1VdjIsIHNvIGFzIGl0IHN0YW5kcyB0aGlzIHNlcmllcw0KPiBkb2Vz
-bid0DQo+ID4gPiA+ID4gPiA+Pj4gd29yay4gSSBkaWQgaGFjayBzb21ldGhpbmcgdXAgZm9yIFNN
-TVV2MiBzbyBJIHdhcyBhYmxlIHRvIHRlc3QNCj4gdGhlDQo+ID4gPiA+IGZpcnN0DQo+ID4gPiA+
-ID4gPiA+Pj4gNCBwYXRjaGVzLg0KPiA+ID4gPiA+ID4gPj4NCj4gPiA+ID4gPiA+ID4+IFRoYW5r
-cyBmb3IgdGFraW5nIGEgbG9vay4gU3VyZSwgSSBjYW4gbG9vayBpbnRvIGFkZGluZyB0aGUgc3Vw
-cG9ydCBmb3INCj4gPiA+ID4gPiA+ID4+IFNNTVV2Mi4NCj4gPiA+ID4gPiA+DQo+ID4gPiA+ID4g
-PiBHcmVhdCwgdGhhbmtzIQ0KPiA+ID4gPiA+ID4NCj4gPiA+ID4gPiA+ID4+Pg0KPiA+ID4gPiA+
-ID4gPj4+PiAgICAtIER1cmluZyB0aGUgcHJvYmUvYXR0YWNoIGRldmljZSwgU01NVXYzIGRyaXZl
-ciByZXNlcnZlcw0KPiBhbnkNCj4gPiA+ID4gPiA+ID4+Pj4gICAgICBSTVIgcmVnaW9uIGFzc29j
-aWF0ZWQgd2l0aCB0aGUgZGV2aWNlIHN1Y2ggdGhhdCB0aGVyZSBpcw0KPiBhDQo+ID4gPiA+IHVu
-aXR5DQo+ID4gPiA+ID4gPiA+Pj4+ICAgICAgbWFwcGluZyBmb3IgdGhlbSBpbiBTTU1VLg0KPiA+
-ID4gPiA+ID4gPj4+DQo+ID4gPiA+ID4gPiA+Pj4gRm9yIHRoZSBFRkkgZnJhbWVidWZmZXIgdXNl
-IGNhc2UgdGhlcmUgaXMgbm8gZGV2aWNlIHRvIGF0dGFjaCBzbyBJDQo+ID4gPiA+ID4gPiA+Pj4g
-YmVsaWV2ZSB3ZSBhcmUgbGVmdCB3aXRoIGp1c3QgdGhlIHN0cmVhbSBJRCBpbiBieXBhc3MgbW9k
-ZSAtIHdoaWNoDQo+IGlzDQo+ID4gPiA+ID4gPiA+Pj4gZGVmaW5pdGVseSBhbiBpbXByb3ZlbWVu
-dCAodGhlIGRpc3BsYXkgd29ya3MhKQ0KPiA+ID4gPiA+ID4gPj4NCj4gPiA+ID4gPiA+ID4+IENv
-b2wuIFRoYXTigJlzIGdvb2QgdG8ga25vdy4NCj4gPiA+ID4gPiA+ID4+DQo+ID4gPiA+ID4gPiA+
-PiAgIGJ1dCBub3QgYWN0dWFsbHkgYSB1bml0eQ0KPiA+ID4gPiA+ID4gPj4+IG1hcHBpbmcgb2Yg
-dGhlIFJNUiByYW5nZS4gSSdtIG5vdCBzdXJlIHdoZXRoZXIgaXQncyB3b3J0aCBmaXhpbmcNCj4g
-dGhpcw0KPiA+ID4gPiBvcg0KPiA+ID4gPiA+ID4gPj4+IG5vdCwgYnV0IEkganVzdCB3YW50ZWQg
-dG8gcG9pbnQgb3V0IHRoZXJlJ3Mgc3RpbGwgYSBuZWVkIGZvciBhIGRyaXZlcg0KPiA+ID4gPiA+
-ID4gPj4+IGZvciB0aGUgZGV2aWNlIGJlZm9yZSB0aGUgYnlwYXNzIG1vZGUgaXMgcmVwbGFjZWQg
-d2l0aCB0aGUgdW5pdHkNCj4gPiA+ID4gPiA+ID4+PiBtYXBwaW5nLg0KPiA+ID4gPiA+ID4gPj4N
-Cj4gPiA+ID4gPiA+ID4+IEkgYW0gbm90IHN1cmUgZWl0aGVyLiBNeSBpZGVhIHdhcyB3ZSB3aWxs
-IGhhdmUgYnlwYXNzIFNURSBzZXR1cCBmb3INCj4gPiA+ID4gPiA+ID4+IGFsbCBkZXZpY2VzDQo+
-ID4gPiA+ID4gPiA+PiB3aXRoIFJNUiBpbml0aWFsbHkgYW5kIHdoZW4gdGhlIGNvcnJlc3BvbmRp
-bmcgZHJpdmVyIHRha2VzIG92ZXIoaWYNCj4gPiA+ID4gPiA+ID4+IHRoYXQgaGFwcGVucykNCj4g
-PiA+ID4gPiA+ID4+IHdlIHdpbGwgaGF2ZSB0aGUgdW5pdHkgbWFwcGluZyBzZXR1cCBwcm9wZXJs
-eSBmb3IgdGhlIFJNUiByZWdpb25zLg0KPiBBbmQNCj4gPiA+ID4gPiA+ID4+IGZvciBjYXNlcw0K
-PiA+ID4gPiA+ID4gPj4gbGlrZSB0aGUgYWJvdmUsIGl0IHdpbGwgcmVtYWluIGluIHRoZSBieXBh
-c3MgbW9kZS4NCj4gPiA+ID4gPiA+ID4+DQo+ID4gPiA+ID4gPiA+PiBEbyB5b3Ugc2VlIGFueSBw
-cm9ibGVtKHNlY3VyaXR5PykgaWYgdGhlIGRldiBzdHJlYW1zIHJlbWFpbiBpbg0KPiBieXBhc3MN
-Cj4gPiA+ID4gPiA+ID4+IG1vZGUgZm9yDQo+ID4gPiA+ID4gPiA+PiB0aGlzIGRldj8gT3IgaXMg
-aXQgcG9zc2libGUgdG8gaGF2ZSBhIHN0dWIgZHJpdmVyIGZvciB0aGlzIGRldiwgc28NCj4gPiA+
-ID4gPiA+ID4+IHRoYXQgd2Ugd2lsbCBoYXZlDQo+ID4gPiA+ID4gPiA+PiB0aGUgcHJvYmUvYXR0
-YWNoIGludm9rZWQgYW5kIGV2ZXJ5dGhpbmcgd2lsbCBmYWxsIGluIHBsYWNlPw0KPiA+ID4gPiA+
-ID4gPg0KPiA+ID4gPiA+ID4gPiBUaGUgZG93bnNpZGUgaXMgdGhhdCBpZiBhIGRyaXZlciBuZXZl
-ciBiaW5kcyB0byB0aGF0IGRldmljZSwgaXQgcmVtYWlucw0KPiA+ID4gPiA+ID4gPiBieXBhc3Nl
-ZC4gSWYgc29tZSBvdGhlciBleHRlcm5hbGx5LWNvbnRyb2xsZWQgbWFsaWNpb3VzIGRldmljZSBj
-b3VsZA0KPiA+ID4gPiA+ID4gPiBtYW5hZ2UgdG8gc3Bvb2YgdGhhdCBkZXZpY2UncyByZXF1ZXN0
-ZXIgSUQsIHRoYXQgY291bGQgcG90ZW50aWFsbHkgYmUNCj4gPiA+ID4gPiA+ID4gZXhwbG9pdGVk
-Lg0KPiA+ID4gPiA+ID4gPg0KPiA+ID4gPiA+ID4gPj4gVEJILCBJIGhhdmVuJ3QgbG9va2VkIGlu
-dG8gY3JlYXRpbmcgYSB0ZW1wIGRvbWFpbiBmb3IgdGhlc2UgdHlwZXMNCj4gb2YNCj4gPiA+ID4g
-PiA+ID4+IHRoZSBkZXZpY2VzDQo+ID4gPiA+ID4gPiA+PiBhbmQgYWxzbyBub3Qgc3VyZSBob3cg
-d2UgYmVuZWZpdCBmcm9tIHRoYXQgY29tcGFyZWQgdG8gdGhlIFNURQ0KPiBieXBhc3MNCj4gPiA+
-ID4gPiA+ID4+IG1vZGUuDQo+ID4gPiA+ID4gPiA+DQo+ID4gPiA+ID4gPiA+IFRoYXQgc2FpZCwg
-c2V0dGluZyB1cCB0ZW1wb3JhcnkgdHJhbnNsYXRpb24gY29udGV4dHMgdGhhdCBlbnN1cmUgYW55
-DQo+ID4gPiA+ID4gPiA+IGFjY2VzcyBjYW4gKm9ubHkqIGJlIHRvIFJNUiByZWdpb25zIHVudGls
-IGEgZHJpdmVyIHRha2VzIG92ZXIgaXMgYW4NCj4gPiA+ID4gPiA+ID4gYXdmdWwgbG90IG1vcmUg
-d29yay4gSSdtIGluY2xpbmVkIHRvIGJlIHByYWdtYXRpYyBoZXJlIGFuZCBzYXkgd2UNCj4gc2hv
-dWxkDQo+ID4gPiA+ID4gPiA+IGdldCB0aGluZ3Mgd29ya2luZyBhdCBhbGwgd2l0aCB0aGUgc2lt
-cGxlIGJ5cGFzcyBTVEUvUzJDUiBtZXRob2QsDQo+IHRoZW4NCj4gPiA+ID4gPiA+ID4gbG9vayBh
-dCBhZGRpbmcgdGhlIGhpZ2hlci1zZWN1cml0eSBlZmZvcnQgb24gdG9wLg0KPiA+ID4gPiA+ID4g
-Pg0KPiA+ID4gPiA+ID4gPiBSaWdodCBub3cgc3lzdGVtcyB0aGF0IG5lZWQgdGhpcyBhcmUgZWl0
-aGVyIGJyb2tlbiAoYnV0IGVmZmVjdGl2ZWx5DQo+ID4gPiA+ID4gPiA+IHNlY3VyZSkgb3IgdXNp
-bmcgZGVmYXVsdCBieXBhc3Mgd2l0aCBTTU1VdjIuIFBlb3BsZSB3aG8gcHJlZmVyIHRvDQo+ID4g
-PiA+ID4gPiA+IG1haW50YWluIHNlY3VyaXR5IG92ZXIgZnVuY3Rpb25hbGl0eSBpbiB0aGUgaW50
-ZXJpbSBjYW4gbWFpbnRhaW4gdGhhdA0KPiA+ID4gPiA+ID4gPiBzdGF0dXMgcXVvIGJ5IHNpbXBs
-eSBjb250aW51aW5nIHRvIG5vdCBkZXNjcmliZSBhbnkgUk1Scy4NCj4gPiA+ID4gPiA+DQo+ID4g
-PiA+ID4gPiBJIGFncmVlIHdpdGggUm9iaW4sIGxldCdzIGdldCB0aGlzIHdvcmtpbmcgd2l0aCB0
-aGUgYnlwYXNzIG1vZGUgKHVudGlsDQo+ID4gPiA+ID4gPiB0aGUgZGV2aWNlIGJpbmRzKSBsaWtl
-IHlvdSd2ZSBjdXJyZW50bHkgZ290LiBJdCdzIG11Y2ggYmV0dGVyIHRoYW4gd2hhdA0KPiA+ID4g
-PiA+ID4gd2UgaGF2ZSBvdGhlcndpc2UuIFRoZW4gb25jZSB0aGF0IGlzIG1lcmdlZCB3ZSBjYW4g
-bG9vayBhdCB0aGUNCj4gdGVtcG9yYXJ5DQo+ID4gPiA+ID4gPiB0cmFuc2xhdGlvbiBjb250ZXh0
-IG9yIHN0dWIgZHJpdmVyLiBUaGUgdGVtcG9yYXJ5IHRyYW5zbGF0aW9uIGNvbnRleHQNCj4gPiA+
-ID4gPiA+IHdvdWxkIGJlICduZWF0ZXN0JywgYnV0IEknbSBvbmx5IGF3YXJlIG9mIHRoZSBFRkkg
-ZnJhbWVidWZmZXIgdXNlIGNhc2UNCj4gPiA+ID4gPiA+IGFuZCBmb3IgdGhhdCBpdCBtaWdodCBi
-ZSBwb3NzaWJsZSB0byBkbyBzb21ldGhpbmcgc2ltcGxlciAtIGlmIGluZGVlZA0KPiA+ID4gPiA+
-ID4gYW55dGhpbmcgaXMgbmVlZGVkIGF0IGFsbC4gSSdtIG5vdCBzdXJlIGhvdyBtdWNoIHdlIG5l
-ZWQgdG8gYmUNCj4gd29ycmllZA0KPiA+ID4gPiA+ID4gYWJvdXQgbWFsaWNpb3VzIGRldmljZXMg
-c3Bvb2ZpbmcgcmVxdWVzdGVyIElEcy4NCj4gPiA+ID4gPg0KPiA+ID4gPiA+IFBlcmZlY3QuIEkg
-d2lsbCBrZWVwIHRoZSBTVEUgYnlwYXNzIGFuZCByZXNwaW4gdGhlIHNlcmllcyBvbmNlIHRoZSB1
-cGRhdGUNCj4gPiA+ID4gPiB0byB0aGUgSU9SVCByZXYgRSBpcyBtYWRlIHB1YmxpYyhob3BlIHRo
-YXQgd2lsbCBoYXBwZW4gc29vbikuIEluIHRoZQ0KPiA+ID4gPiA+IG1lYW50aW1lLCBhcHByZWNp
-YXRlIGFueSBmZWVkYmFjayBvbiB0aGUgcmVzdCBvZiB0aGUgcGF0Y2hlcyBpbiB0aGlzDQo+IHNl
-cmllcy4NCj4gPiA+ID4NCj4gPiA+ID4gU2hhbWVlciwNCj4gPiA+DQo+ID4gPiBIaSBKb24sDQo+
-ID4gPg0KPiA+ID4gPg0KPiA+ID4gPiBJIGFtIHByZXR0eSBzdXJlIHJldiBFIGlzIGFscmVhZHkg
-cHVibGljLiAgWW91IGNhbiBmaW5kIGl0IGhlcmUuDQo+ID4gPiA+DQo+ID4gPiA+IGh0dHBzOi8v
-ZGV2ZWxvcGVyLmFybS5jb20vZG9jdW1lbnRhdGlvbi9kZW4wMDQ5L2xhdGVzdC8NCj4gPiA+ID4N
-Cj4gPiA+ID4gSXQgaXMgYWxzbyBtYXJrZWQgbm9uLWNvbmZpZGVudGlhbC4NCj4gPiA+DQo+ID4g
-PiBZZXMsIFJldiBFIGlzIGFscmVhZHkgb3V0IHRoZXJlLiBCdXQgSSBhbSB0b2xkIHRoYXQgQVJN
-IGZvbGtzIGFyZSB3b3JraW5nIG9uDQo+ID4gPiBzb21lIHVwZGF0ZXMgdG8gdGhlIElPUlQgc3Bl
-YywgZXNwZWNpYWxseSBhcm91bmQgdGhlIFJNUiB0b3BpYy4gSG9wZWZ1bGx5DQo+ID4gPiBpdCB3
-aWxsIGJlIG91dCBzb29uLg0KPiA+DQo+ID4gWWVzIHRoZXJlIGFyZSBzb21lIGNoYW5nZXMgY29t
-aW5nIHRvIHRoZSBTUEVDIGJ1dCBJIGRvbid0IGtub3cgaWYgaXQgaXMNCj4gPiB3b3J0aCBob2xk
-aW5nIHVwIHlvdXIgcGF0Y2hzZXQgYXMgYW4gaW5pdGlhbCBpbXBsZW1lbnRhdGlvbi4gIElmIHlv
-dSB3b3VsZA0KPiA+IGxpa2UgSSBhbSBtb3JlIHRoYW4gaGFwcHkgdG8gYnJpbmcgdGhpcyB1cCBh
-cyBhIHRvcGljIGZvciB0aGUgbmV4dCBTdGVlcmluZw0KPiA+IENvbW1pdHRlZSBtZWV0aW5nLg0K
-PiA+DQo+ID4gSm9uDQo+DQo+IFNoYW1lZXIsDQo+DQoNCkhpIEpvbiwNCiANCj4gTXkgZmlyc3Qg
-YXR0ZW1wdCBhdCBzbW11djIgc3VwcG9ydCBjYW4gYmUgZm91bmQgaW4gdGhpcyBrZXJuZWwgYnJh
-bmNoLg0KPiANCj4gaHR0cHM6Ly9naXRodWIuY29tL1NvbGlkUnVuL2xpbnV4LXN0YWJsZS9jb21t
-aXRzL2xpbnV4LTUuMTAueS1jZXg3DQo+IA0KPiBJdCBpcyBmdW5jdGlvbmluZyBpZiB0aGUgYnlw
-YXNzIFNNUnMgYXJlIHNldHVwIGluIHRoZSBmaXJtd2FyZSBhbmQgUk1SJ3MNCj4gYXJlIGV4cG9z
-ZWQgaW4gdGhlIEFDUEkgdGFibGVzLg0KDQpPay4gVGhhbmtzIGZvciBzaGFyaW5nIGl0LiBIYXBw
-eSB0byBjYXJyeSB0aG9zZSBwYXRjaGVzIGFzIHBhcnQgb2YgdGhpcw0Kc2VyaWVzIGlmIHlvdSBh
-cmUgZmluZSB3aXRoIGl0Lg0KDQogIERpZmZlcmVudCBmcm9tIHlvdXIgc2l0dWF0aW9uIHdlIGRv
-IHdhbnQNCj4gdGhlIGRldmljZSB0byByZWNsYWltIHRoZSBSTVIncyBhc3NvY2lhdGVkIHdpdGgg
-aXQgb24gaW5pdGlhbGl6YXRpb24sIGFuZCBJDQo+IGFtIHN0aWxsIHNlZWluZyBpc3N1ZXMgdGhl
-cmUuICBJIG5lZWQgdG8gc3BlbmQgbW9yZSB0aW1lIGZpZ3VyaW5nIG91dCB3aHkNCj4gdGhpcyBp
-cyBub3Qgd29ya2luZyBwcm9wZXJseS4NCg0KSSBhbSBub3Qgc3VyZSB3aGF0IHlvdXIgcmVxdWly
-ZW1lbnQgaXMgaGVyZS4gU28gaWYgdGhlIGtlcm5lbCBkcml2ZXIgZXZlbnR1YWxseQ0KY29tZXMg
-dXAgYW5kIHRha2VzIGNvbnRyb2wgb2YgdGhlIGRldmljZSwgeW91IG5vIGxvbmdlciByZXF1aXJl
-IHRoZSBieXBhc3MvaWRlbnRpdHkNCm1hcHBpbmcgZm9yIHRoZXNlIHJlZ2lvbnMuIElzIHRoYXQg
-Y29ycmVjdD8NCg0KU2hhbWVlcg0KDQo+IC1Kb24NCj4gDQo+ID4NCj4gPiA+DQo+ID4gPiA+DQo+
-ID4gPiA+IEkgYWxzbyBoYXZlIGluaXRpYWwgcGF0Y2hlcyBmb3IgZWRrMiBhbmQgdGhlIEhvbmV5
-Q29tYiBMWDIxNjBhDQo+ID4gPiA+IEFDUEkgdGFibGVzIGFkZGluZyBSTVIgbm9kZXMgdGhhdCBw
-YXJ0aWFsbHkgd29yayB3aXRoIHlvdXIgcGF0Y2hlcy4NCj4gPiA+DQo+ID4gPiBUaGFua3MgZm9y
-IHRoZSB1cGRhdGUgYW5kIGdvb2QgdG8ga25vdyB0aGF0IGl0IGlzIHVzZWZ1bC4NCj4gPiA+DQo+
-ID4gPiBTaGFtZWVyDQo+ID4gPg0KPiA+ID4gPiBUaGlzIGlzIHdpdGggYmFzaWMgU01NVXYyIHN1
-cHBvcnQgYnV0IHNpbmNlIHlvdSBoYXZlIG1vcmUgZXhwZXJpZW5jZQ0KPiA+ID4gPiB0aGlzIHRo
-aXMgSSBhbSBtb3JlIHRoYW4gaGFwcHkgdG8gd29yayB3aXRoIHlvdSBvbiB5b3VyIHBhdGNoc2V0
-Lg0KPiA+ID4gPg0KPiA+ID4gPiAtSm9uDQo+ID4gPiA+DQo+ID4gPiA+DQo+ID4gPiA+ID4NCj4g
-PiA+ID4gPiBUaGFua3MsDQo+ID4gPiA+ID4gU2hhbWVlcg0KPiA+ID4gPiA+IF9fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fDQo+ID4gPiA+ID4gbGludXgtYXJt
-LWtlcm5lbCBtYWlsaW5nIGxpc3QNCj4gPiA+ID4gPiBsaW51eC1hcm0ta2VybmVsQGxpc3RzLmlu
-ZnJhZGVhZC5vcmcNCj4gPiA+ID4gPiBodHRwOi8vbGlzdHMuaW5mcmFkZWFkLm9yZy9tYWlsbWFu
-L2xpc3RpbmZvL2xpbnV4LWFybS1rZXJuZWwNCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fCkRldmVsIG1haWxpbmcgbGlzdCAtLSBkZXZlbEBhY3BpY2Eub3Jn
-ClRvIHVuc3Vic2NyaWJlIHNlbmQgYW4gZW1haWwgdG8gZGV2ZWwtbGVhdmVAYWNwaWNhLm9yZwol
-KHdlYl9wYWdlX3VybClzbGlzdGluZm8lKGNnaWV4dClzLyUoX2ludGVybmFsX25hbWUpcw==
+Hans,
+Could you make a pull request for this (and any related patches) on our github?
+Thanks,
+Bob
+
+
+-----Original Message-----
+From: Hans de Goede <hdegoede@redhat.com> 
+Sent: Saturday, December 26, 2020 6:28 AM
+To: Rafael J . Wysocki <rjw@rjwysocki.net>; Len Brown <lenb@kernel.org>; Moore, Robert <robert.moore@intel.com>; Kaneda, Erik <erik.kaneda@intel.com>
+Cc: Hans de Goede <hdegoede@redhat.com>; linux-acpi@vger.kernel.org; devel@acpica.org
+Subject: [PATCH 1/2] ACPICA: Fix race in GenericSerialBus (I2C) and GPIO OpRegion parameter handling
+
+The handling of the GenericSerialBus (I2C) and GPIO OpRegions in
+acpi_ev_address_space_dispatch() passes a number of extra parameters to the address-space handler through the address-space context pointer (instead of using more function parameters).
+
+The context is shared between threads, so if multiple threads try to call the handler for the same address-space at the same time, then a second thread could change the parameters of a first thread while the handler is running for the first thread.
+
+An example of this race hitting is the Lenovo Yoga Tablet2 1015L, where there are both AttribBytes accesses and AttribByte accesses to the same address-space. The AttribBytes access stores the number of bytes to transfer in context->access_length. Where as for the AttribByte access the number of bytes to transfer is always 1 and field_obj->field.access_length is unused (so 0). Both types of accesses racing from different threads leads to the following problem:
+
+1. Thread a. starts an AttribBytes access, stores a non 0 value from field_obj->field.access_length in context->access_length 2. Thread b. starts an AttribByte access, stores 0 in
+context->access_length
+3. Thread a. calls i2c_acpi_space_handler() (under Linux). Which sees that the access-type is ACPI_GSB_ACCESS_ATTRIB_MULTIBYTE and calls acpi_gsb_i2c_read_bytes(..., context->access_length) 4. At this point context->access_length is 0 (set by thread b.) rather then the field_obj->field.access_length value from thread a.
+This 0 length reads leads to the following errors being logged:
+
+ i2c i2c-0: adapter quirk: no zero length (addr 0x0078, size 0, read)  i2c i2c-0: i2c read 0 bytes from client@0x78 starting at reg 0x0 failed, error: -95
+
+Note this is just an example of the problems which this race can cause.
+There are likely many more (sporadic) problems caused by this race.
+
+This commit adds a new context_mutex to acpi_object_addr_handler and makes acpi_ev_address_space_dispatch() take that mutex when using the shared context to pass extra parameters to an address-space handler, fixing this race.
+
+Note the new mutex must be taken *after* exiting the interpreter, therefor the existing acpi_ex_exit_interpreter() call is moved to above the code which stores the extra parameters in the context.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+---
+ drivers/acpi/acpica/acobject.h  |  1 +
+ drivers/acpi/acpica/evhandler.c |  6 ++++  drivers/acpi/acpica/evregion.c  | 61 ++++++++++++++++++++++++---------  drivers/acpi/acpica/evxfregn.c  |  1 +
+ 4 files changed, 52 insertions(+), 17 deletions(-)
+
+diff --git a/drivers/acpi/acpica/acobject.h b/drivers/acpi/acpica/acobject.h index 9f0219a8cb98..dd7efafcb103 100644
+--- a/drivers/acpi/acpica/acobject.h
++++ b/drivers/acpi/acpica/acobject.h
+@@ -284,6 +284,7 @@ struct acpi_object_addr_handler {
+ 	acpi_adr_space_handler handler;
+ 	struct acpi_namespace_node *node;	/* Parent device */
+ 	void *context;
++	acpi_mutex context_mutex;
+ 	acpi_adr_space_setup setup;
+ 	union acpi_operand_object *region_list;	/* Regions using this handler */
+ 	union acpi_operand_object *next;
+diff --git a/drivers/acpi/acpica/evhandler.c b/drivers/acpi/acpica/evhandler.c index 5884eba047f7..347199f29afe 100644
+--- a/drivers/acpi/acpica/evhandler.c
++++ b/drivers/acpi/acpica/evhandler.c
+@@ -489,6 +489,12 @@ acpi_ev_install_space_handler(struct acpi_namespace_node *node,
+ 
+ 	/* Init handler obj */
+ 
++	status = acpi_os_create_mutex(&handler_obj->address_space.context_mutex);
++	if (ACPI_FAILURE(status)) {
++		acpi_ut_remove_reference(handler_obj);
++		goto unlock_and_exit;
++	}
++
+ 	handler_obj->address_space.space_id = (u8)space_id;
+ 	handler_obj->address_space.handler_flags = flags;
+ 	handler_obj->address_space.region_list = NULL; diff --git a/drivers/acpi/acpica/evregion.c b/drivers/acpi/acpica/evregion.c index 21ff341e34a4..8e84eb0641e0 100644
+--- a/drivers/acpi/acpica/evregion.c
++++ b/drivers/acpi/acpica/evregion.c
+@@ -112,6 +112,8 @@ acpi_ev_address_space_dispatch(union acpi_operand_object *region_obj,
+ 	union acpi_operand_object *region_obj2;
+ 	void *region_context = NULL;
+ 	struct acpi_connection_info *context;
++	acpi_mutex context_mutex;
++	bool context_locked;
+ 	acpi_physical_address address;
+ 
+ 	ACPI_FUNCTION_TRACE(ev_address_space_dispatch);
+@@ -136,6 +138,8 @@ acpi_ev_address_space_dispatch(union acpi_operand_object *region_obj,
+ 	}
+ 
+ 	context = handler_desc->address_space.context;
++	context_mutex = handler_desc->address_space.context_mutex;
++	context_locked = false;
+ 
+ 	/*
+ 	 * It may be the case that the region has never been initialized.
+@@ -204,6 +208,23 @@ acpi_ev_address_space_dispatch(union acpi_operand_object *region_obj,
+ 	handler = handler_desc->address_space.handler;
+ 	address = (region_obj->region.address + region_offset);
+ 
++	ACPI_DEBUG_PRINT((ACPI_DB_OPREGION,
++			  "Handler %p (@%p) Address %8.8X%8.8X [%s]\n",
++			  &region_obj->region.handler->address_space, handler,
++			  ACPI_FORMAT_UINT64(address),
++			  acpi_ut_get_region_name(region_obj->region.
++						  space_id)));
++
++	if (!(handler_desc->address_space.handler_flags &
++	      ACPI_ADDR_HANDLER_DEFAULT_INSTALLED)) {
++		/*
++		 * For handlers other than the default (supplied) handlers, we must
++		 * exit the interpreter because the handler *might* block -- we don't
++		 * know what it will do, so we can't hold the lock on the interpreter.
++		 */
++		acpi_ex_exit_interpreter();
++	}
++
+ 	/*
+ 	 * Special handling for generic_serial_bus and general_purpose_io:
+ 	 * There are three extra parameters that must be passed to the @@ -212,6 +233,11 @@ acpi_ev_address_space_dispatch(union acpi_operand_object *region_obj,
+ 	 *   2) Length of the above buffer
+ 	 *   3) Actual access length from the access_as() op
+ 	 *
++	 * Since we pass these extra parameters via the context, which is
++	 * shared between threads, we must lock the context to avoid these
++	 * parameters being changed from another thread before the handler
++	 * has completed running.
++	 *
+ 	 * In addition, for general_purpose_io, the Address and bit_width fields
+ 	 * are defined as follows:
+ 	 *   1) Address is the pin number index of the field (bit offset from
+@@ -221,6 +247,13 @@ acpi_ev_address_space_dispatch(union acpi_operand_object *region_obj,
+ 	if ((region_obj->region.space_id == ACPI_ADR_SPACE_GSBUS) &&
+ 	    context && field_obj) {
+ 
++		status = acpi_os_acquire_mutex(context_mutex, ACPI_WAIT_FOREVER);
++		if (ACPI_FAILURE(status)) {
++			goto re_enter_interpreter;
++		}
++
++		context_locked = true;
++
+ 		/* Get the Connection (resource_template) buffer */
+ 
+ 		context->connection = field_obj->field.resource_buffer; @@ -230,6 +263,13 @@ acpi_ev_address_space_dispatch(union acpi_operand_object *region_obj,
+ 	if ((region_obj->region.space_id == ACPI_ADR_SPACE_GPIO) &&
+ 	    context && field_obj) {
+ 
++		status = acpi_os_acquire_mutex(context_mutex, ACPI_WAIT_FOREVER);
++		if (ACPI_FAILURE(status)) {
++			goto re_enter_interpreter;
++		}
++
++		context_locked = true;
++
+ 		/* Get the Connection (resource_template) buffer */
+ 
+ 		context->connection = field_obj->field.resource_buffer; @@ -239,28 +279,14 @@ acpi_ev_address_space_dispatch(union acpi_operand_object *region_obj,
+ 		bit_width = field_obj->field.bit_length;
+ 	}
+ 
+-	ACPI_DEBUG_PRINT((ACPI_DB_OPREGION,
+-			  "Handler %p (@%p) Address %8.8X%8.8X [%s]\n",
+-			  &region_obj->region.handler->address_space, handler,
+-			  ACPI_FORMAT_UINT64(address),
+-			  acpi_ut_get_region_name(region_obj->region.
+-						  space_id)));
+-
+-	if (!(handler_desc->address_space.handler_flags &
+-	      ACPI_ADDR_HANDLER_DEFAULT_INSTALLED)) {
+-		/*
+-		 * For handlers other than the default (supplied) handlers, we must
+-		 * exit the interpreter because the handler *might* block -- we don't
+-		 * know what it will do, so we can't hold the lock on the interpreter.
+-		 */
+-		acpi_ex_exit_interpreter();
+-	}
+-
+ 	/* Call the handler */
+ 
+ 	status = handler(function, address, bit_width, value, context,
+ 			 region_obj2->extra.region_context);
+ 
++	if (context_locked)
++		acpi_os_release_mutex(context_mutex);
++
+ 	if (ACPI_FAILURE(status)) {
+ 		ACPI_EXCEPTION((AE_INFO, status, "Returned by Handler for [%s]",
+ 				acpi_ut_get_region_name(region_obj->region.
+@@ -277,6 +303,7 @@ acpi_ev_address_space_dispatch(union acpi_operand_object *region_obj,
+ 		}
+ 	}
+ 
++re_enter_interpreter:
+ 	if (!(handler_desc->address_space.handler_flags &
+ 	      ACPI_ADDR_HANDLER_DEFAULT_INSTALLED)) {
+ 		/*
+diff --git a/drivers/acpi/acpica/evxfregn.c b/drivers/acpi/acpica/evxfregn.c index da97fd0c6b51..74d0ee8a5736 100644
+--- a/drivers/acpi/acpica/evxfregn.c
++++ b/drivers/acpi/acpica/evxfregn.c
+@@ -201,6 +201,7 @@ acpi_remove_address_space_handler(acpi_handle device,
+ 
+ 			/* Now we can delete the handler object */
+ 
++			acpi_os_release_mutex(handler_obj->address_space.context_mutex);
+ 			acpi_ut_remove_reference(handler_obj);
+ 			goto unlock_and_exit;
+ 		}
+--
+2.28.0
+_______________________________________________
+Devel mailing list -- devel@acpica.org
+To unsubscribe send an email to devel-leave@acpica.org
+%(web_page_url)slistinfo%(cgiext)s/%(_internal_name)s
