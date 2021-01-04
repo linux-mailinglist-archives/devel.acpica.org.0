@@ -2,71 +2,67 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20F164A7920
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E66A4A791F
 	for <lists+devel-acpica@lfdr.de>; Wed,  2 Feb 2022 20:59:13 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 21F09100E5DB3;
-	Wed,  2 Feb 2022 11:58:59 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2607:f8b0:4864:20::529; helo=mail-pg1-x529.google.com; envelope-from=andy.shevchenko@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+	by ml01.01.org (Postfix) with ESMTP id 2BFED100E5DB6;
+	Wed,  2 Feb 2022 11:59:00 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2607:f8b0:4864:20::102e; helo=mail-pj1-x102e.google.com; envelope-from=andy.shevchenko@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 59A33100EC1D2
-	for <devel@acpica.org>; Wed, 30 Dec 2020 12:48:08 -0800 (PST)
-Received: by mail-pg1-x529.google.com with SMTP id v19so11950138pgj.12
-        for <devel@acpica.org>; Wed, 30 Dec 2020 12:48:08 -0800 (PST)
+	by ml01.01.org (Postfix) with ESMTPS id 9AEFC100ED499
+	for <devel@acpica.org>; Mon,  4 Jan 2021 05:37:59 -0800 (PST)
+Received: by mail-pj1-x102e.google.com with SMTP id lb18so10082848pjb.5
+        for <devel@acpica.org>; Mon, 04 Jan 2021 05:37:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=jRVdipqMo3SGkScdVCSY0NCVDydJxCZXUp0vL0ss0j8=;
-        b=Ex8hVNUWqY+rbyZwRHu0Z8ZFDWv3n6GCNQ6/oKC9ORvHkbkiVNGzdB91SjAk392fsg
-         s3ED8sOmsckgJOxTaNfYxosbDaaMTahyn8teOd4ojTAUMBd0JUPKX5HzCwG4Hhbis73B
-         uRuMcfr3NQT5ekO4VMFxihb+mdcnRnFki6aY9LJt3PYKLZkgwrGw4VeNdH9ioFHjsks1
-         vbOzj6pKww4PqUZL4f29Bi4HnqOfCxVzr4w0ISFjRmcq4dfx2pLhCVAB43Q8usle0KNN
-         XoU1DpgnpDL8QwmG6+owvGJ/TZUxTIGNNavC1HalaTQByK0CRPAB+fhq7VP0yAqWMm5L
-         wt4g==
+        bh=K+CDCfA5PemkxKnAwCzf0wlF1tNUAK7fJ30n7xk8Eos=;
+        b=uePTtjoOc2coYDV9deOOVYGQB1/AH7to+N/S8Auz8QnywvItZd80oilByCOCt5hAfX
+         GDFLHWJJ31yNVUtaWWr/AgXo8eF7lHB3FC1fYYq+1+KDK94xFErDFEsD3osumFaDFgvY
+         DBgouQfpvJx53TY8gEcbYSVQNuJYBi84xq6Pq24DGJwQajR42XUBllcL7WCegYVtCFQC
+         krTYBh1U1Ci97Euk7MwAAr99JZvLyd20eDy/nIzaeAAdXth9Dp+k1mjmK+C153nlsJfM
+         FVpyq0WPMMFlbrYWhyUz0yNnBJV3kwidCzC5kwBE0XhA5t73N7aW7W56OwgZFjBbGjAE
+         4Rkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=jRVdipqMo3SGkScdVCSY0NCVDydJxCZXUp0vL0ss0j8=;
-        b=sKgLaxbxKk9gYbSMjoxRFJgq0r2hHLjz2LEgVYKEowURUbnBnBngmQ9pT1FKJqHgp7
-         aQ/x7bV3YkjzKhrbnvd7CC1F5CwAVOz2UiE0hHR6o5qNs5Qeo/dNKjB/hLQoOMvNW9M8
-         Br4EGPLNL8SdjPN26a1ztIM6ZPR0kKFfFCy/kdJKv1CL2fLvQFopH44e4dT1VAf15m90
-         g1wONy97um8R7Z93L1g1Bo22PwLShijZ17R+cdzXq3eLqfi9pSXgGophb790t8MzVq6w
-         nnlmikJX1E5ZEIfXw1evcxXb52sM+VWqPUh7Mq+Z+T9kYjmGSZ3cVkOWTAh+qnX/JIQR
-         6lHw==
-X-Gm-Message-State: AOAM532sOAM2G/dE9+P4mOqZEODd25flTLrBXyIHs0WsajcMEa4X2J90
-	XSTKMQ1D2b91TWWe0yme2Uc0m4RHG646fsrZwZE=
-X-Google-Smtp-Source: ABdhPJxSMf4/TA4B3IeFbMjgSsLR1NtTgwkka1CnQ1qojXL0WNjbTMpocAhYi5Qhs2jjwKkiX06W8HtrgHf96sok07s=
-X-Received: by 2002:a63:c04b:: with SMTP id z11mr53914993pgi.74.1609361287808;
- Wed, 30 Dec 2020 12:48:07 -0800 (PST)
+        bh=K+CDCfA5PemkxKnAwCzf0wlF1tNUAK7fJ30n7xk8Eos=;
+        b=qRx2G9AMHQPcQ2S9PbfPwhKIPUaTSneE/Obq+gC9QUAAJAI9PUhJKbzAErQgKDSadR
+         q4j2MKmSe/r//8MSZT7xczHAyXIrgJvzl6QWJUOv/FJYg33EneI1povi2nozE6sou9JS
+         I5bLJu7kFYy9aAtq+3rSxJTCerffKdwpPr2XN0fKNbopmEpiG8ewUc3812chw7Pkb8FD
+         dnd5yZSZV6TjEEX5qn4iH7jt4MUwYM/DRo5raRnjMUqv7KqX/mHzoetnDwyQAKFmrziH
+         nv0Fkq3ykIIeXZ4PrlrEKZbwzSXVOjn53xkWQU2k/FFR+QaImUW3FTxMt7B0Vz+RiPgs
+         aHiw==
+X-Gm-Message-State: AOAM531RFY/euHiBWitvQh+5f6K3b3n2ht4vpVKoJ3qU6UEIu6z3ocpI
+	qDEtVVxlo7aqy8vo9K9TQ+NhB6oKhmUePhdXEP8=
+X-Google-Smtp-Source: ABdhPJzgoMjcEAl2pjB/Fd0EbpHaPeU2biYFz0h4TI3h789ORYJfBqqtqhv5AkMXxAby+Zk+iI+bVoL9q6HazNOjsJw=
+X-Received: by 2002:a17:90b:a17:: with SMTP id gg23mr30331114pjb.129.1609767478850;
+ Mon, 04 Jan 2021 05:37:58 -0800 (PST)
 MIME-Version: 1.0
-References: <20201224010907.263125-1-djrscally@gmail.com> <20201224010907.263125-15-djrscally@gmail.com>
- <CAHp75VeXN6PnV7Mzz6UMpD+m-yjPi6XK0kx1=+-M5mci=Vb=YQ@mail.gmail.com>
- <20201228170521.GZ26370@paasikivi.fi.intel.com> <2d37df3d-f04c-6679-6e27-6c7f82e9b158@gmail.com>
- <20201228225544.GH4077@smile.fi.intel.com> <X+plTyUFhfHi7eIE@pendragon.ideasonboard.com>
- <CAHp75Vdzk7i+QzkTxLJUUkw3xZot9F7QT8pyu6b5yjkCVzMXEA@mail.gmail.com> <X+pzKDNWpiQWenHy@pendragon.ideasonboard.com>
-In-Reply-To: <X+pzKDNWpiQWenHy@pendragon.ideasonboard.com>
+References: <20210103231235.792999-1-djrscally@gmail.com> <20210103231235.792999-16-djrscally@gmail.com>
+ <20210104120905.GR4077@smile.fi.intel.com> <2f64873d-0413-3614-34e2-139b4a4d9da6@gmail.com>
+In-Reply-To: <2f64873d-0413-3614-34e2-139b4a4d9da6@gmail.com>
 From: Andy Shevchenko <andy.shevchenko@gmail.com>
-Date: Wed, 30 Dec 2020 22:47:51 +0200
-Message-ID: <CAHp75Vf18sse_QQGSy+E2qK-N_B=ky83x36HiNfmUKmya_CS9Q@mail.gmail.com>
-To: Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Date: Mon, 4 Jan 2021 15:38:47 +0200
+Message-ID: <CAHp75VcU7DcRZD_eK+B1-CX7tVtsR5YLPdrA6oULk187xhApCw@mail.gmail.com>
+To: Daniel Scally <djrscally@gmail.com>, Joe Perches <joe@perches.com>
 X-MailFrom: andy.shevchenko@gmail.com
 X-Mailman-Rule-Hits: max-recipients
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-size; news-moderation; no-subject; suspicious-header
-Message-ID-Hash: 2IHSXGF4GM6RRUQNST7H3O4QIQ4QB5G3
-X-Message-ID-Hash: 2IHSXGF4GM6RRUQNST7H3O4QIQ4QB5G3
+Message-ID-Hash: XVLV2XMSHILRQNYGG67765B7F2K32KKM
+X-Message-ID-Hash: XVLV2XMSHILRQNYGG67765B7F2K32KKM
 X-Mailman-Approved-At: Wed, 02 Feb 2022 19:58:46 -0800
-CC: Daniel Scally <djrscally@gmail.com>, Sakari Ailus <sakari.ailus@linux.intel.com>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, Linux Media Mailing List <linux-media@vger.kernel.org>, devel@acpica.org, "Rafael J. Wysocki" <rjw@rjwysocki.net>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Yong Zhi <yong.zhi@intel.com>, Bingbu Cao <bingbu.cao@intel.com>, Tian Shu Qiu <tian.shu.qiu@intel.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, Erik Kaneda <erik.kaneda@intel.com>, Petr Mladek <pmladek@suse.com>, Steven Rostedt <rostedt@goodmis.org>, Sergey Senozhatsky <sergey.senozhatsky@gmail.com>, Rasmus Villemoes <linux@rasmusvillemoes.dk>, Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>, Jacopo Mondi <jacopo+renesas@jmondi.org>, kieran.bingham+renesas@ideasonboard.com, Hans Verkuil <hverkuil-cisco@xs4all.nl>, Marco Felsch <m.felsch@pengutronix.de>, niklas.soderlund+renesas@ragnatech.se, Steve Longerbeam <sl
- ongerbeam@gmail.com>, "Krogerus, Heikki" <heikki.krogerus@linux.intel.com>, Linus Walleij <linus.walleij@linaro.org>, Jordan Hand <jorhand@linux.microsoft.com>
+CC: Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, Linux Media Mailing List <linux-media@vger.kernel.org>, devel@acpica.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rjw@rjwysocki.net>, Sergey Senozhatsky <sergey.senozhatsky@gmail.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, Yong Zhi <yong.zhi@intel.com>, Sakari Ailus <sakari.ailus@linux.intel.com>, Bingbu Cao <bingbu.cao@intel.com>, Tian Shu Qiu <tian.shu.qiu@intel.com>, Erik Kaneda <erik.kaneda@intel.com>, Petr Mladek <pmladek@suse.com>, Steven Rostedt <rostedt@goodmis.org>, Rasmus Villemoes <linux@rasmusvillemoes.dk>, Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>, Jacopo Mondi <jacopo+renesas@jmondi.org>, kieran.bingham+renesas@ideasonboard.com, Hans Verkuil <hverkuil-cisco@xs4all.nl>, Marco Felsch <m.felsch@pengutronix.de>, niklas.soderlund+renesas@ragnatech.se, Stev
+ e Longerbeam <slongerbeam@gmail.com>, "Krogerus, Heikki" <heikki.krogerus@linux.intel.com>, Linus Walleij <linus.walleij@linaro.org>, Jordan Hand <jorhand@linux.microsoft.com>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH v3 14/14] ipu3-cio2: Add cio2-bridge to ipu3-cio2 driver
+Subject: [Devel] Re: [PATCH v4 15/15] ipu3-cio2: Add cio2-bridge to ipu3-cio2 driver
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/2IHSXGF4GM6RRUQNST7H3O4QIQ4QB5G3/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/XVLV2XMSHILRQNYGG67765B7F2K32KKM/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -75,40 +71,39 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Tue, Dec 29, 2020 at 2:07 AM Laurent Pinchart
-<laurent.pinchart@ideasonboard.com> wrote:
-> On Tue, Dec 29, 2020 at 01:54:59AM +0200, Andy Shevchenko wrote:
-> > On Tue, Dec 29, 2020 at 1:08 AM Laurent Pinchart wrote:
+On Mon, Jan 4, 2021 at 3:02 PM Daniel Scally <djrscally@gmail.com> wrote:
+> On 04/01/2021 12:09, Andy Shevchenko wrote:
+> > On Sun, Jan 03, 2021 at 11:12:35PM +0000, Daniel Scally wrote:
 
 ...
 
-> > +#include <linux/videodev2.h>
->
-> I think this can be dropped.
+> >> +#define NODE_SENSOR(_HID, _PROPS)           \
+> >> +    ((const struct software_node) {         \
+> >> +            .name = _HID,                   \
+> >> +            .properties = _PROPS,           \
+> >> +    })
+> >> +
+> >> +#define NODE_PORT(_PORT, _SENSOR_NODE)              \
+> >> +    ((const struct software_node) {         \
+> >> +            .name = _PORT,                  \
+> >> +            .parent = _SENSOR_NODE,         \
+> >> +    })
+> >> +
+> >> +#define NODE_ENDPOINT(_EP, _PORT, _PROPS)   \
+> >> +    ((const struct software_node) {         \
+> >> +            .name = _EP,                    \
+> >> +            .parent = _PORT,                \
+> >> +            .properties = _PROPS,           \
+> >> +    })
+> > In all three I didn't get why you need outer parentheses. Without them it will
+> > be well defined compound literal and should work as is.
+> The code works fine, but checkpatch complains that macros with complex
+> values should be enclosed in parentheses. I guess now that I'm more
+> familiar with the code I'd call that a false-positive though, as nowhere
+> else in the kernel that I've seen encloses them the same way.
 
-I dropped above (I noticed it's included by a half of the headers listed below.
-
-> > +#include <media/media-device.h>
-> > +#include <media/media-entity.h>
-> > +#include <media/v4l2-async.h>
-> > +#include <media/v4l2-dev.h>
-> > +#include <media/v4l2-device.h>
-> > +#include <media/v4l2-subdev.h>
-> > +#include <media/videobuf2-core.h>
-> > +#include <media/videobuf2-v4l2.h>
-
-...
-
-> How about grouping all forward declarations at the top ?
-
-Done.
-
-> Otherwise this looks good,
->
-> Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-
-Thanks!
-I just sent a formal patch with your tag included.
+I guess it is yet another false positive from checkpatch.
+I would ignore its complaints.
 
 -- 
 With Best Regards,
