@@ -2,79 +2,76 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7BB42E9FE0
-	for <lists+devel-acpica@lfdr.de>; Mon,  4 Jan 2021 23:17:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6EA9E2EB425
+	for <lists+devel-acpica@lfdr.de>; Tue,  5 Jan 2021 21:27:45 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id C7745100ED49C;
-	Mon,  4 Jan 2021 14:17:48 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.65; helo=mga03.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+	by ml01.01.org (Postfix) with ESMTP id AECF5100EBB76;
+	Tue,  5 Jan 2021 12:27:43 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.20; helo=mga02.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 30CDD100ED48C
-	for <devel@acpica.org>; Mon,  4 Jan 2021 14:17:46 -0800 (PST)
-IronPort-SDR: BI0Ixk3qrCFEZ5OYHWtzbK4ZNhyk0j8afItPzcJcqKF11SYU7jz1M+JJQoI1WmAhBEQW7lSOmL
- YUc+kehr6irw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9854"; a="177118689"
-X-IronPort-AV: E=Sophos;i="5.78,475,1599548400";
-   d="scan'208";a="177118689"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jan 2021 14:17:46 -0800
-IronPort-SDR: MoFraJMMbJmeFy1y3O+hX+D4KjvSWqhfKmNu+VIP2wr0iOg5napc1FVgnHEmFAh7qRGYRVGBZ2
- 5YvZ7ZF3A8OA==
+	by ml01.01.org (Postfix) with ESMTPS id 6A2DA100EBB74
+	for <devel@acpica.org>; Tue,  5 Jan 2021 12:27:41 -0800 (PST)
+IronPort-SDR: zkitgbymAozkkY8uZR2Di0OavWJeJHPGcN1KSMZ2uCJXOSdG2Eqha2cObNyO3lGobhAF+quWJh
+ 0jkIcy3ePi8g==
+X-IronPort-AV: E=McAfee;i="6000,8403,9855"; a="164245918"
+X-IronPort-AV: E=Sophos;i="5.78,477,1599548400";
+   d="scan'208";a="164245918"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jan 2021 12:27:40 -0800
+IronPort-SDR: Vh1sQOPe94E4kRmIXjhKgLCuhSGuj1ZxtWwiwlybwNeT9JxxSAJZMHQFJDUbTsr9joL8haQd69
+ NIblASvocvSA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.78,475,1599548400";
-   d="scan'208";a="421530306"
-Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
-  by orsmga001.jf.intel.com with ESMTP; 04 Jan 2021 14:17:46 -0800
-Received: from fmsmsx606.amr.corp.intel.com (10.18.126.86) by
- fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
+X-IronPort-AV: E=Sophos;i="5.78,477,1599548400";
+   d="scan'208";a="567202510"
+Received: from fmsmsx603.amr.corp.intel.com ([10.18.126.83])
+  by fmsmga006.fm.intel.com with ESMTP; 05 Jan 2021 12:27:40 -0800
+Received: from fmsmsx608.amr.corp.intel.com (10.18.126.88) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Mon, 4 Jan 2021 14:17:45 -0800
-Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
- fmsmsx606.amr.corp.intel.com (10.18.126.86) with Microsoft SMTP Server
+ 15.1.1713.5; Tue, 5 Jan 2021 12:27:40 -0800
+Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx608.amr.corp.intel.com (10.18.126.88) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Tue, 5 Jan 2021 12:27:39 -0800
+Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
+ fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5
- via Frontend Transport; Mon, 4 Jan 2021 14:17:45 -0800
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.176)
- by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
+ via Frontend Transport; Tue, 5 Jan 2021 12:27:39 -0800
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (104.47.58.100)
+ by edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.1713.5; Mon, 4 Jan 2021 14:17:45 -0800
+ 15.1.1713.5; Tue, 5 Jan 2021 12:27:39 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=VsW9a3cn0bLwvbYsEXSRqwMF5RmRTY0EiSH0MmXRHfE35uxioXorrBOJ65U45SSBknd1kY4xs6lMIlOR9zveRL2/NTpvbGJajJBUm948gMscAUroakrOj33JcPlJgs8GXT60UPPVipHt5yCZS8hziG2AbKfpym69JGQOTqQ8Tbh8W4OKqBHoKNL27USy34kW8gUryv3G6Y2RAeAZuV4dFsxxEzxV8xo+98tj2ChtwTbPC2N2a8hlzyC0BwV/4zKpBRVunFvQlWET6S0LrmM57+5TiMfGeJ8rv1N4vpe5Ciszx9nRTWUiRDKP2aZTWGlYB0MOqq1323hfhTLq6zMTBQ==
+ b=UX24vXdAp5gmo0i2v3Vd9frId0u4Kr3V8CUdTgMwqxFkZS2LX9Xy4vMXpb+3zIql776wd3MGbnDmavos5WpoJKn9NJCIts7fLiQsu4c3xl9Q52JsyiBfsY2ZKCZ3srIj2P+WkqV5KkntEM2fdm34ao6ou/mPNAD4+POZPRrL2Gk2Nc5Nt3ui5K/MdjfUWpHpqJwk3ZhbGMtX2jTout8JYqvql7/R1PbjrFKcEkC5EY1PYjMbmuzYzXb+KJs5A+qGWb2vH69A4L+x36uhLcPrusIVKpaBeQOOxLMyPm/jiQoRfAHCE5KzZ+QbVuDH9p8RZnrdYr3WSb4QdaJxZ95S0Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=mqjvqvux42zLbQ7+4UwqfakZMbQwvR9P0tOz+ndgj9g=;
- b=QhpghOhQGnuWHF/BuuoeyS8sPb9qqtWfekRuz5g4/kVpdXoMNfWQs2BnhxCxeQewi1IQhPktplt35OHLFKcpY4M0Y5PpL3Exa5nO8WpwZHQiQSrcw8HrFGxXLOEGWAg3bNhRdOAtwHndYMSyjWXrctFJNdDKNSiUypiIdr8HilfNzRc6atA6EalWy9TSPyzeHnnI83piVpKsirG7uSPRjfYSNxYKV9TSNMnWON7rzm0PxZqlcKwp0sfW9eDDRMR4EtNQKCzbLh7moSciG6GYWqPVbg2WmT1I7cYERqqAxlUEfL2uardiaO1YjkHn6VMBzmV4SocQUc3R7ig1f+adyQ==
+ bh=JwiBsKcFqbezaesLKpPsEyKOI2joaAHeGUSZjWW+jxY=;
+ b=SufAYCbl92rnqc7SiM9Ps0l461+mezS0+PzrhJ9gvsNoh5Q8zsbsm3dYzeO1yJkNjdjpt8Yiavxyypc+TcnxzksulB1n8u4+uVXlsbierYO/wgb+Y6upfJM7k10D4BfwVUOwLewfhH5MmGAKowt1+vv7BpIMQZHAeG33RqoCZrV2qPmpFDMcQnRvIFLSxANYQxBKO9DAtzA4IeaJ48RYq8U2alYIqW1ET0zjmXa0U1PBY62phS88oattg+XD8Y7+Z/y4zAyjvwLfwXBJD77RjVdAJTtVbKUFHZEVstSsdZS6LMFHTVLHoqq3KRmuVaSG+4uhhGgd3EzmzfIE0XTXIA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
  s=selector2-intel-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=mqjvqvux42zLbQ7+4UwqfakZMbQwvR9P0tOz+ndgj9g=;
- b=EGvmrMD9o2WBSc+HIXafydYuqCOnHOiQGlV2eCUwAxwTGtBjk1fsoL2jWeRLnEtKxenGsZ4bVREa5RkqI7+LV10nJe9ueHtKTKukWBPvbB2gYr17GeAv2hHfGo64qBqoI6/Wcy3cjWuj2zM15JmCPTNpjFIPKtuSiKSBIgQOGEo=
-Received: from BYAPR11MB3256.namprd11.prod.outlook.com (2603:10b6:a03:76::19)
- by BYAPR11MB3109.namprd11.prod.outlook.com (2603:10b6:a03:8c::26) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3721.19; Mon, 4 Jan
- 2021 22:17:44 +0000
-Received: from BYAPR11MB3256.namprd11.prod.outlook.com
- ([fe80::ac88:24d1:1225:553d]) by BYAPR11MB3256.namprd11.prod.outlook.com
- ([fe80::ac88:24d1:1225:553d%3]) with mapi id 15.20.3721.024; Mon, 4 Jan 2021
- 22:17:44 +0000
+ bh=JwiBsKcFqbezaesLKpPsEyKOI2joaAHeGUSZjWW+jxY=;
+ b=LIy/SaOSXG13GQ9iYsuzv0pSjHajzQjm+VLEuIkGD+iKLbf1LX+XC/KFetlyNydOiwYq2qtyv/PeR1gP8pKPJ/i5Ll+UOLb+PL9ATzGWhvYDdicSYFnj74ijqRk66PrrvkWdEexLT0fR6Vwg15K1pERg5voRfjQcgNwFKZ7JWYU=
+Received: from DM6PR11MB3259.namprd11.prod.outlook.com (2603:10b6:5:5d::20) by
+ DM5PR11MB2026.namprd11.prod.outlook.com (2603:10b6:3:10::17) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3721.20; Tue, 5 Jan 2021 20:27:38 +0000
+Received: from DM6PR11MB3259.namprd11.prod.outlook.com
+ ([fe80::490f:36f2:eff9:9636]) by DM6PR11MB3259.namprd11.prod.outlook.com
+ ([fe80::490f:36f2:eff9:9636%5]) with mapi id 15.20.3721.024; Tue, 5 Jan 2021
+ 20:27:38 +0000
 From: "Moore, Robert" <robert.moore@intel.com>
-To: Hans de Goede <hdegoede@redhat.com>, "Rafael J . Wysocki"
-	<rjw@rjwysocki.net>, Len Brown <lenb@kernel.org>, "Kaneda, Erik"
-	<erik.kaneda@intel.com>
-Thread-Topic: [PATCH 1/2] ACPICA: Fix race in GenericSerialBus (I2C) and GPIO
- OpRegion parameter handling
-Thread-Index: AQHW25NrWzXvIr23REWQrLVwsahNEqoYF4Tw
-Date: Mon, 4 Jan 2021 22:17:43 +0000
-Message-ID: <BYAPR11MB3256C957AA72754D07D6583F87D20@BYAPR11MB3256.namprd11.prod.outlook.com>
-References: <20201226142830.48818-1-hdegoede@redhat.com>
- <20201226142830.48818-2-hdegoede@redhat.com>
-In-Reply-To: <20201226142830.48818-2-hdegoede@redhat.com>
+To: "devel@acpica.org" <devel@acpica.org>
+Thread-Topic: ACPICA version 20210105 released
+Thread-Index: AdbjoNfOWiAX9v4ORv+gU3LfXn/p1Q==
+Date: Tue, 5 Jan 2021 20:27:38 +0000
+Message-ID: <DM6PR11MB3259706E42C4AD923413C61C87D10@DM6PR11MB3259.namprd11.prod.outlook.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -82,59 +79,58 @@ X-MS-TNEF-Correlator:
 dlp-version: 11.5.1.3
 dlp-product: dlpe-windows
 dlp-reaction: no-action
-authentication-results: redhat.com; dkim=none (message not signed)
- header.d=none;redhat.com; dmarc=none action=none header.from=intel.com;
+authentication-results: acpica.org; dkim=none (message not signed)
+ header.d=none;acpica.org; dmarc=none action=none header.from=intel.com;
 x-originating-ip: [134.134.136.194]
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: f15fd57c-c61c-4d5c-21b2-08d8b0fe8f02
-x-ms-traffictypediagnostic: BYAPR11MB3109:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <BYAPR11MB3109C3FE40D52ED0C8DA804E87D20@BYAPR11MB3109.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:222;
+x-ms-office365-filtering-correlation-id: d4362f7c-8165-4aa1-30e4-08d8b1b85846
+x-ms-traffictypediagnostic: DM5PR11MB2026:
+x-microsoft-antispam-prvs: <DM5PR11MB2026327362022E7BF751F7AC87D10@DM5PR11MB2026.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:5236;
 x-ms-exchange-senderadcheck: 1
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: ofyDke5aC77lK7hpN0QHlJDpNSSV4qV/kPmFnJ9WzwNAdEp79QunpHevYZ+sKrrsR3Y1a+h6tBHLADgzgWrMhCeOGrBtvaL2wd4Qqf4WuqoqG8T6OOBr5QI718Ee4VV3mnZE0DviAU1OliO/zSQZCEYz8ak5c+JZjjvLj14B9ALIjz5tkd/sbJUg+dqlSMT9qM0hAllY2+/C6tbrDZAgRLljDQyRo+QtihktueazA6l7uKgxjjsAnpE/vRVNGozgw5X9KyLSgdb8ZOJe7l5P50WQoCnDOYiZrTJh0Je5UJuc4bEr783xz3+OOrt/B7pfYsD1OYGfIOd9KD/A4q+/kCpVZSIjW51AjUeVeMVbEiFRPBuKg21CjQR5CC+MY9C3S+A0TmQ7jXOlkZNCkN4drw==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(6029001)(4636009)(376002)(136003)(396003)(346002)(366004)(39860400002)(26005)(2906002)(8936002)(7696005)(33656002)(6636002)(186003)(55016002)(9686003)(316002)(83380400001)(54906003)(110136005)(6506007)(5660300002)(53546011)(52536014)(8676002)(4326008)(478600001)(64756008)(66556008)(66446008)(86362001)(71200400001)(66476007)(76116006)(66946007);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata: =?us-ascii?Q?qMwRccC+UiOb9GK7IJThif/HVb0fVw1DzlJv0WJVI2BY6t1ovPRBKXr1e8zp?=
- =?us-ascii?Q?MsFvmNCjWQtyhBR6riIxarv0m4AMzLyxA04Zpi5+wBkxRGWKWLQ0BJF2ywgw?=
- =?us-ascii?Q?q1dckXeT3hRJe39IuusAId9OewY1JYkhM7JLbha8eSGffAgDp6mQFChLQlfm?=
- =?us-ascii?Q?CK2CUy9o73qoG89dCglSsg7pnETy6vWmNtdAFBlnTZbK415WdYLArcloawc+?=
- =?us-ascii?Q?vJC2/OPIFeVl8j3H/swoLH5+mVnvPdyJF5rP51eVq/8L4l47yNw/aWFq0vFz?=
- =?us-ascii?Q?yq92wD6ZvSC/vlHtZE9+1wDuWicr7iQLnHNhlCG/DHYmXNw7SofQ7xjLg55b?=
- =?us-ascii?Q?HKqLTW5VwNUklN7h4zublTvqAZnLs0idLpQMd0L75IqCWHW2XUVNVrapQ6YO?=
- =?us-ascii?Q?55XoghWp/NoKYRQRyYw248bVMCQ/O2zNsd1e62MRnV8VW6MWww8GAnV2BLuy?=
- =?us-ascii?Q?KZweFFwcN60/kUMzuao32VTeeslw+3XzOKTSEr2GGdsmUG9GtuY8Njv8a99h?=
- =?us-ascii?Q?pbCMPpuNj+59lU3eZzUSfz5qYOLwcF0uP2rXyzjJP/MM3JUctZo5MVDCEhOc?=
- =?us-ascii?Q?9pjd0SDh7QV13BGMSySFCwaBS3uxC6g2dBnSkci1AwF7gZrJvBqE98Q1GR7v?=
- =?us-ascii?Q?ekslKrlIWCtEyP/bK2e8MNB7fj14qRINsFNoH7VSkMgMY3pP8mHPu2Vco1b4?=
- =?us-ascii?Q?VaYqnTd8u0+ClCzoY7Lr/htbYkp7Ip/DNMDvd9RrZoneE6D2qLL0RymEj3qy?=
- =?us-ascii?Q?UUY6jJscH5rYdOSrKNVlyOa0tUt5Yl5vmOaEAynv3j0AA02X88dHmOqwo7wW?=
- =?us-ascii?Q?XOcLNe3uz20z8Nytm8EK+MFiFhEpGtCBO0ZzaTMLHY7d31P6zR2SQ7lFcz+r?=
- =?us-ascii?Q?yMMugs6dNQp6ZMqr+ziyT7K7hFZ8yxicqXJjXAua/PtLt6W0J2FJWCh4U/OA?=
- =?us-ascii?Q?NxJGmrsRSrN2QAt8M8oggFs+7Wi0bGkBN8AnzwiooYo=3D?=
+x-microsoft-antispam-message-info: w1cnHlVsZxR3R8qOD5gDSw6QXhvr33gd9xZQJfGxcQ+Ygxo+1sU7bP0yXDA5ZOV09LKHABkzS4z4j7W+UsBg2YmifdQ9ruTlL+RVIBtLd9cJveNC6EGVJwajzJBCH2CWXKiK3VR6Wjrn/YArRrn4xynKIbl8p3pU5jU48x7BjsDB/TswGhHY1YeAVHOKgB9Wxle2kLOoYKLD7E1wWHLAPjIUcRfY/Dxe8kZK3+UauuSKxiqKPtFbzTIF7y9L4robOJX1BHruxz0s3z02hMfLCjlfB6vb/fiGeV4Opm3UX0xM62chv6OY9VNuMpIWZ58NsfkcnY96HeKPzcH+Cn3rZCvxEQ5sUqao+VE2r8G9ZsvGf8hby27/v90o/T+0SqslXdxlexx2LwLOtHTjyjRn97+tHbdraedwb7k+eTOcxpKDMmbjB2qj9EzFTaGLKXiYtXb9sVaePvUg0NqP2gfgWw==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR11MB3259.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(39860400002)(366004)(346002)(136003)(376002)(396003)(8936002)(316002)(71200400001)(478600001)(4744005)(55016002)(6916009)(9686003)(6506007)(966005)(26005)(33656002)(66556008)(86362001)(66476007)(7696005)(66446008)(7116003)(2906002)(66946007)(5660300002)(83380400001)(64756008)(76116006)(52536014)(8676002)(186003);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata: =?us-ascii?Q?kKGAGumLMRjZAgrQVScg10R1lhe3HFgcuz4QfET7eh0JaF6tEU2GIr+AAZwv?=
+ =?us-ascii?Q?jV0Y3F9IqoSkUOCKqjX4r8a3kIkyacuYKDOpoP+xQ8F00AKgfgooRkNhFekA?=
+ =?us-ascii?Q?rOubVYpTmwlEWRZ+BSZlxyhiiON6cxUz7OJUbLl/sXf956ho02DG+8atOfWS?=
+ =?us-ascii?Q?OumOcZUBQTJS3p7Tzx9F/ygd592tqHI2j+E637uW4IObEPQAXafNZwTY/lGH?=
+ =?us-ascii?Q?aqB0vwGjwlKVbOkpnW3V9HO5lbVAic2UI6xVJfUUr3v1opLsImrlTIpyeNe2?=
+ =?us-ascii?Q?o9gcs+ndpStZV8kkgzYPaZ0EpM7R5E1Y3QDO67voTndlB2VpMD49XQdqa6Cu?=
+ =?us-ascii?Q?ejAPqcBWVfYbDbJHNSLasfIOU4meMMazJDNVhArj6bTY1zOEk9JOL0q7o6Sp?=
+ =?us-ascii?Q?tc9Y9ELKReLbDd4KLynjyWpsfeHtFNv5etiTv4R2+/VcW5AN4GubYO8qu5WQ?=
+ =?us-ascii?Q?DkDeVS+bLzJ3zue+lAoOoxR2GHSPxCSwH02p3IZ44ee7nCyQAKjd1Dpq9nbz?=
+ =?us-ascii?Q?WW3G7dVQuHhIGvtKUtfi5OV6OPTnXXzc4s32u3izL1URncryoZplyI+Gc7Qk?=
+ =?us-ascii?Q?dRzqDcRyszH5GWBTIZZLoYhJFU4Aw78fK444m1pb3PEdW10vF9nF/NyO5Rzu?=
+ =?us-ascii?Q?CPotLuYnYdl3Zuz0oPAe/mc35JcAOrtwgXXHMqZRkuiyJTN2VtXMF3GdVZSo?=
+ =?us-ascii?Q?xl9YRVLgoyT7qdkIqW6lVKPa+1ChUybxfUX9PSD+BlgrNxj5C0A+NAOgi5hN?=
+ =?us-ascii?Q?v3aAygF9/nqV+InG0PNSdm1D3AGcguuMJrITd0qCxRg0tZBdj6izf50FBV9x?=
+ =?us-ascii?Q?XLv9Nzl2/5cItlX8EvYGpcQVC11SFfyZZvccFleDuVF7cOaka3r3orWC09XO?=
+ =?us-ascii?Q?X3aNt3T//7XXizh7RgNoaBn9Yeabd0OvnX3kIHJvhBaAcwsPqXseQixFjbcW?=
+ =?us-ascii?Q?m3ENwuP66Ykqn1z7ryuWDjOskNsB2iHFUwCFOi4ifsY=3D?=
+x-ms-exchange-transport-forked: True
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3256.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f15fd57c-c61c-4d5c-21b2-08d8b0fe8f02
-X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Jan 2021 22:17:43.9219
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR11MB3259.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d4362f7c-8165-4aa1-30e4-08d8b1b85846
+X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Jan 2021 20:27:38.4859
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: zn9/AItgskzVrlYtdVcJ5Wt+JeZEC8G8zTmbRzT6OA5NooBfZS3q4cRYMNFwsabG1FFEQMBaiSCkp0Av7714QQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR11MB3109
+X-MS-Exchange-CrossTenant-userprincipalname: GNFqqY0dsIQ5/ZIzgpTO02Ler02OFgVzWf1+gnJPUN4r0BIhrP2ITRqZiUX7vLzp8fFCTg/cGH30gq/B5+7nBw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR11MB2026
 X-OriginatorOrg: intel.com
-Message-ID-Hash: SCYLXAXJJJNLNQ7UKOCOR2B5DMNCSS4Z
-X-Message-ID-Hash: SCYLXAXJJJNLNQ7UKOCOR2B5DMNCSS4Z
+Message-ID-Hash: DMGHQ5MI4MFNW6YSXAW43FO6IVXL6VBY
+X-Message-ID-Hash: DMGHQ5MI4MFNW6YSXAW43FO6IVXL6VBY
 X-MailFrom: robert.moore@intel.com
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
-CC: "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>, "devel@acpica.org" <devel@acpica.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH 1/2] ACPICA: Fix race in GenericSerialBus (I2C) and GPIO OpRegion parameter handling
+Subject: [Devel] ACPICA version 20210105 released
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/SCYLXAXJJJNLNQ7UKOCOR2B5DMNCSS4Z/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/DMGHQ5MI4MFNW6YSXAW43FO6IVXL6VBY/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -142,207 +138,22 @@ List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Transfer-Encoding: 7bit
 
-Hans,
-Could you make a pull request for this (and any related patches) on our github?
-Thanks,
-Bob
+05 January 2021. Summary of changes for version 20210105:
+
+This release is available at https://acpica.org/downloads
 
 
------Original Message-----
-From: Hans de Goede <hdegoede@redhat.com> 
-Sent: Saturday, December 26, 2020 6:28 AM
-To: Rafael J . Wysocki <rjw@rjwysocki.net>; Len Brown <lenb@kernel.org>; Moore, Robert <robert.moore@intel.com>; Kaneda, Erik <erik.kaneda@intel.com>
-Cc: Hans de Goede <hdegoede@redhat.com>; linux-acpi@vger.kernel.org; devel@acpica.org
-Subject: [PATCH 1/2] ACPICA: Fix race in GenericSerialBus (I2C) and GPIO OpRegion parameter handling
+1) ACPICA kernel-resident subsystem:
 
-The handling of the GenericSerialBus (I2C) and GPIO OpRegions in
-acpi_ev_address_space_dispatch() passes a number of extra parameters to the address-space handler through the address-space context pointer (instead of using more function parameters).
+Updated all copyrights to 2021. This affects all ACPICA source code modules.
 
-The context is shared between threads, so if multiple threads try to call the handler for the same address-space at the same time, then a second thread could change the parameters of a first thread while the handler is running for the first thread.
+2) iASL Compiler/Disassembler and ACPICA tools:
 
-An example of this race hitting is the Lenovo Yoga Tablet2 1015L, where there are both AttribBytes accesses and AttribByte accesses to the same address-space. The AttribBytes access stores the number of bytes to transfer in context->access_length. Where as for the AttribByte access the number of bytes to transfer is always 1 and field_obj->field.access_length is unused (so 0). Both types of accesses racing from different threads leads to the following problem:
+ASL test suite (ASLTS): Updated all copyrights to 2021.
 
-1. Thread a. starts an AttribBytes access, stores a non 0 value from field_obj->field.access_length in context->access_length 2. Thread b. starts an AttribByte access, stores 0 in
-context->access_length
-3. Thread a. calls i2c_acpi_space_handler() (under Linux). Which sees that the access-type is ACPI_GSB_ACCESS_ATTRIB_MULTIBYTE and calls acpi_gsb_i2c_read_bytes(..., context->access_length) 4. At this point context->access_length is 0 (set by thread b.) rather then the field_obj->field.access_length value from thread a.
-This 0 length reads leads to the following errors being logged:
+Tools and utilities: Updated all signon copyrights to 2021.
 
- i2c i2c-0: adapter quirk: no zero length (addr 0x0078, size 0, read)  i2c i2c-0: i2c read 0 bytes from client@0x78 starting at reg 0x0 failed, error: -95
-
-Note this is just an example of the problems which this race can cause.
-There are likely many more (sporadic) problems caused by this race.
-
-This commit adds a new context_mutex to acpi_object_addr_handler and makes acpi_ev_address_space_dispatch() take that mutex when using the shared context to pass extra parameters to an address-space handler, fixing this race.
-
-Note the new mutex must be taken *after* exiting the interpreter, therefor the existing acpi_ex_exit_interpreter() call is moved to above the code which stores the extra parameters in the context.
-
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
----
- drivers/acpi/acpica/acobject.h  |  1 +
- drivers/acpi/acpica/evhandler.c |  6 ++++  drivers/acpi/acpica/evregion.c  | 61 ++++++++++++++++++++++++---------  drivers/acpi/acpica/evxfregn.c  |  1 +
- 4 files changed, 52 insertions(+), 17 deletions(-)
-
-diff --git a/drivers/acpi/acpica/acobject.h b/drivers/acpi/acpica/acobject.h index 9f0219a8cb98..dd7efafcb103 100644
---- a/drivers/acpi/acpica/acobject.h
-+++ b/drivers/acpi/acpica/acobject.h
-@@ -284,6 +284,7 @@ struct acpi_object_addr_handler {
- 	acpi_adr_space_handler handler;
- 	struct acpi_namespace_node *node;	/* Parent device */
- 	void *context;
-+	acpi_mutex context_mutex;
- 	acpi_adr_space_setup setup;
- 	union acpi_operand_object *region_list;	/* Regions using this handler */
- 	union acpi_operand_object *next;
-diff --git a/drivers/acpi/acpica/evhandler.c b/drivers/acpi/acpica/evhandler.c index 5884eba047f7..347199f29afe 100644
---- a/drivers/acpi/acpica/evhandler.c
-+++ b/drivers/acpi/acpica/evhandler.c
-@@ -489,6 +489,12 @@ acpi_ev_install_space_handler(struct acpi_namespace_node *node,
- 
- 	/* Init handler obj */
- 
-+	status = acpi_os_create_mutex(&handler_obj->address_space.context_mutex);
-+	if (ACPI_FAILURE(status)) {
-+		acpi_ut_remove_reference(handler_obj);
-+		goto unlock_and_exit;
-+	}
-+
- 	handler_obj->address_space.space_id = (u8)space_id;
- 	handler_obj->address_space.handler_flags = flags;
- 	handler_obj->address_space.region_list = NULL; diff --git a/drivers/acpi/acpica/evregion.c b/drivers/acpi/acpica/evregion.c index 21ff341e34a4..8e84eb0641e0 100644
---- a/drivers/acpi/acpica/evregion.c
-+++ b/drivers/acpi/acpica/evregion.c
-@@ -112,6 +112,8 @@ acpi_ev_address_space_dispatch(union acpi_operand_object *region_obj,
- 	union acpi_operand_object *region_obj2;
- 	void *region_context = NULL;
- 	struct acpi_connection_info *context;
-+	acpi_mutex context_mutex;
-+	bool context_locked;
- 	acpi_physical_address address;
- 
- 	ACPI_FUNCTION_TRACE(ev_address_space_dispatch);
-@@ -136,6 +138,8 @@ acpi_ev_address_space_dispatch(union acpi_operand_object *region_obj,
- 	}
- 
- 	context = handler_desc->address_space.context;
-+	context_mutex = handler_desc->address_space.context_mutex;
-+	context_locked = false;
- 
- 	/*
- 	 * It may be the case that the region has never been initialized.
-@@ -204,6 +208,23 @@ acpi_ev_address_space_dispatch(union acpi_operand_object *region_obj,
- 	handler = handler_desc->address_space.handler;
- 	address = (region_obj->region.address + region_offset);
- 
-+	ACPI_DEBUG_PRINT((ACPI_DB_OPREGION,
-+			  "Handler %p (@%p) Address %8.8X%8.8X [%s]\n",
-+			  &region_obj->region.handler->address_space, handler,
-+			  ACPI_FORMAT_UINT64(address),
-+			  acpi_ut_get_region_name(region_obj->region.
-+						  space_id)));
-+
-+	if (!(handler_desc->address_space.handler_flags &
-+	      ACPI_ADDR_HANDLER_DEFAULT_INSTALLED)) {
-+		/*
-+		 * For handlers other than the default (supplied) handlers, we must
-+		 * exit the interpreter because the handler *might* block -- we don't
-+		 * know what it will do, so we can't hold the lock on the interpreter.
-+		 */
-+		acpi_ex_exit_interpreter();
-+	}
-+
- 	/*
- 	 * Special handling for generic_serial_bus and general_purpose_io:
- 	 * There are three extra parameters that must be passed to the @@ -212,6 +233,11 @@ acpi_ev_address_space_dispatch(union acpi_operand_object *region_obj,
- 	 *   2) Length of the above buffer
- 	 *   3) Actual access length from the access_as() op
- 	 *
-+	 * Since we pass these extra parameters via the context, which is
-+	 * shared between threads, we must lock the context to avoid these
-+	 * parameters being changed from another thread before the handler
-+	 * has completed running.
-+	 *
- 	 * In addition, for general_purpose_io, the Address and bit_width fields
- 	 * are defined as follows:
- 	 *   1) Address is the pin number index of the field (bit offset from
-@@ -221,6 +247,13 @@ acpi_ev_address_space_dispatch(union acpi_operand_object *region_obj,
- 	if ((region_obj->region.space_id == ACPI_ADR_SPACE_GSBUS) &&
- 	    context && field_obj) {
- 
-+		status = acpi_os_acquire_mutex(context_mutex, ACPI_WAIT_FOREVER);
-+		if (ACPI_FAILURE(status)) {
-+			goto re_enter_interpreter;
-+		}
-+
-+		context_locked = true;
-+
- 		/* Get the Connection (resource_template) buffer */
- 
- 		context->connection = field_obj->field.resource_buffer; @@ -230,6 +263,13 @@ acpi_ev_address_space_dispatch(union acpi_operand_object *region_obj,
- 	if ((region_obj->region.space_id == ACPI_ADR_SPACE_GPIO) &&
- 	    context && field_obj) {
- 
-+		status = acpi_os_acquire_mutex(context_mutex, ACPI_WAIT_FOREVER);
-+		if (ACPI_FAILURE(status)) {
-+			goto re_enter_interpreter;
-+		}
-+
-+		context_locked = true;
-+
- 		/* Get the Connection (resource_template) buffer */
- 
- 		context->connection = field_obj->field.resource_buffer; @@ -239,28 +279,14 @@ acpi_ev_address_space_dispatch(union acpi_operand_object *region_obj,
- 		bit_width = field_obj->field.bit_length;
- 	}
- 
--	ACPI_DEBUG_PRINT((ACPI_DB_OPREGION,
--			  "Handler %p (@%p) Address %8.8X%8.8X [%s]\n",
--			  &region_obj->region.handler->address_space, handler,
--			  ACPI_FORMAT_UINT64(address),
--			  acpi_ut_get_region_name(region_obj->region.
--						  space_id)));
--
--	if (!(handler_desc->address_space.handler_flags &
--	      ACPI_ADDR_HANDLER_DEFAULT_INSTALLED)) {
--		/*
--		 * For handlers other than the default (supplied) handlers, we must
--		 * exit the interpreter because the handler *might* block -- we don't
--		 * know what it will do, so we can't hold the lock on the interpreter.
--		 */
--		acpi_ex_exit_interpreter();
--	}
--
- 	/* Call the handler */
- 
- 	status = handler(function, address, bit_width, value, context,
- 			 region_obj2->extra.region_context);
- 
-+	if (context_locked)
-+		acpi_os_release_mutex(context_mutex);
-+
- 	if (ACPI_FAILURE(status)) {
- 		ACPI_EXCEPTION((AE_INFO, status, "Returned by Handler for [%s]",
- 				acpi_ut_get_region_name(region_obj->region.
-@@ -277,6 +303,7 @@ acpi_ev_address_space_dispatch(union acpi_operand_object *region_obj,
- 		}
- 	}
- 
-+re_enter_interpreter:
- 	if (!(handler_desc->address_space.handler_flags &
- 	      ACPI_ADDR_HANDLER_DEFAULT_INSTALLED)) {
- 		/*
-diff --git a/drivers/acpi/acpica/evxfregn.c b/drivers/acpi/acpica/evxfregn.c index da97fd0c6b51..74d0ee8a5736 100644
---- a/drivers/acpi/acpica/evxfregn.c
-+++ b/drivers/acpi/acpica/evxfregn.c
-@@ -201,6 +201,7 @@ acpi_remove_address_space_handler(acpi_handle device,
- 
- 			/* Now we can delete the handler object */
- 
-+			acpi_os_release_mutex(handler_obj->address_space.context_mutex);
- 			acpi_ut_remove_reference(handler_obj);
- 			goto unlock_and_exit;
- 		}
---
-2.28.0
+iASL Table Compiler: Removed support for obsolete ACPI tables: VRTC, MTMR. Al Stone.
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
