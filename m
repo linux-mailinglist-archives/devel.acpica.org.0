@@ -1,144 +1,227 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36C4C4A7921
-	for <lists+devel-acpica@lfdr.de>; Wed,  2 Feb 2022 20:59:13 +0100 (CET)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA00B4A7922
+	for <lists+devel-acpica@lfdr.de>; Wed,  2 Feb 2022 20:59:14 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 63660100E5DA8;
-	Wed,  2 Feb 2022 11:59:10 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2607:f8b0:4864:20::1031; helo=mail-pj1-x1031.google.com; envelope-from=andy.shevchenko@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+	by ml01.01.org (Postfix) with ESMTP id 72C61100E5D21;
+	Wed,  2 Feb 2022 11:59:11 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2607:f8b0:4864:20::62f; helo=mail-pl1-x62f.google.com; envelope-from=andy.shevchenko@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id C677F100F225E
-	for <devel@acpica.org>; Fri,  8 Jan 2021 04:17:01 -0800 (PST)
-Received: by mail-pj1-x1031.google.com with SMTP id lj6so3554766pjb.0
-        for <devel@acpica.org>; Fri, 08 Jan 2021 04:17:01 -0800 (PST)
+	by ml01.01.org (Postfix) with ESMTPS id D1F5B100ED4A2
+	for <devel@acpica.org>; Sat,  9 Jan 2021 01:07:34 -0800 (PST)
+Received: by mail-pl1-x62f.google.com with SMTP id j1so6964726pld.3
+        for <devel@acpica.org>; Sat, 09 Jan 2021 01:07:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=QJpmPSXBMkDyRpOAie8nEtiKxW2diZukk9pipJ57ovs=;
-        b=APSTOjBSR9NIMt2G+tAKvfWj2tZ4hY4e3e1aiF7JekWmZUQuDSiZ5IbRXu1/KhIooQ
-         J/HcWQyXi3KQ8+D3KlBShkw+3DV6P4O1wxDFt0b6FOjSvZOjWafWoGAE5gPV76cBRJEm
-         Trby4n2kGLMcOmuVcRt+XtceGuTyFfThWFR/vn0PxK22wx1n4JN5HZUiXRxrbyd94B1R
-         vwNFtlu1wjAJNAzTBHWOysPbZxTNUDeohmI4FYAlxbyEXEsJR4qwQI7U+VJiK8rIce49
-         UCcCgQVlofROPknaFgODvIv6KE0B/8oLY3ZGWbI6odx41TeD/9kCPg7pBagojBWs0pX9
-         gmyw==
+        bh=F1OY2xfXW6PZlt/+WB0TjKqYU7HMU4xJinTxoh0Ncl8=;
+        b=VDOnc+X4ZzV4rzlj20vA/hf6aCQgtdLCs9HE+tYjjqUuhqd5a6zmPF9DKRkCvfsPei
+         Kp1zqyjhMLkYN5fp4Vtf96GU+jGhIMncjs7+E7sCsKcQXODLL5NC3TAgxP5wjOQSOi3K
+         cpk5ZUWJ/w9zyDk53SC/pvEZQaNsb9wbUdz9POdJdsRmFkVxhQlZyNqh99h3+Y2Lcx9Q
+         wTTDduCqj2V0JLQFYGgBIX/dI6Dxjz39hKw1C20zkC6K11d3+K6NTRhFnIydbcKUWE23
+         ereYZ0GH1CVdQ2pQGH2lRYBwLKTFGK0ILPnpyii4KwU3Kyb61aPLqgP46m/wNziIYbEE
+         b3Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=QJpmPSXBMkDyRpOAie8nEtiKxW2diZukk9pipJ57ovs=;
-        b=tv9ro34JWEozm4cTnATTtfFZz3NZ58hvENHl2U0fpCN9aCAn+ANlvmxO5UMEj5ZzK+
-         jSaoG4mGCwihfI24vBtZFYEnbQdX4zUj63Z+7CfBDuFcBCO23Fcb+8CMCOKz/gf/uIqc
-         O+5zotpgrBgXt8+loKC2NMeCOSnu7wODko+y63TjiMcmdb9LOzjnOwMBlVvaP/l5B8/U
-         BEMfYQWo/YHMFgyYUBmf56NPqHUtfQyp9QO7sr9kU19MGXu4TNNO868o0q18uri5xDNX
-         EGdQez1SBlk+pO0WyewqtcQS3q5augR5mqu1+siT4mAjTA6Lu+ZhXhY5Bc1Dpv/qXYue
-         PbrQ==
-X-Gm-Message-State: AOAM530kaytdG1H7NWluVFeFB2V4rOCFtOR5FIXx4D9EFogptxLUelkA
-	ArW9jP2uxsYRQ9rr9+SopmM1qgaBfzHD2wpXJFU=
-X-Google-Smtp-Source: ABdhPJyldR1piNAeKj9uIZ1Le/5wxh9TOr537qIrpxGvyxjo1onN4F4oe8SR/CXSTDkdvSzMQ7bZigw9hkKUqlRE4vo=
-X-Received: by 2002:a17:90a:c592:: with SMTP id l18mr3486365pjt.228.1610108221001;
- Fri, 08 Jan 2021 04:17:01 -0800 (PST)
+        bh=F1OY2xfXW6PZlt/+WB0TjKqYU7HMU4xJinTxoh0Ncl8=;
+        b=VPOKa0lcFCybVbQuRacuPsoKo17XEZaw06q/fC9TEt6U1cznE0LP8lPYX0VyHPOsaX
+         G0N1EmBtMZc3fm7iDhPK5aMKCfcIAwlhDLNylghrOhrOUrHFO8o4lUv4mAfFXXDW7Xll
+         2yHiE86GRG2iEY5DyutPx5qOJlQTJpdY0Os/4mzo3n96eadBt9MqjCOFuKKC80lWc2/L
+         jaH/Qj0T8NsaoWLLC4/dAQoQQIXYryAjUSdWTF7pzqeAXgERkyrEv7C7EPj/j0qS3KxG
+         D+jZlsFxLYTP5L9auUJoe4zMEwNb2YJ8q9wLQQ+sAyVMj7XlGeX2jFLP15vW9jN+q0s6
+         C7hg==
+X-Gm-Message-State: AOAM531TXZp9V/e/iTAwicb8MiM4fC1C4i1/CyVFUemcaIHuxwANVCd9
+	MHSoBKJU5um4Cjd0NywWbtFATdcJXPmkySIE8Wk=
+X-Google-Smtp-Source: ABdhPJzaVWWEPT4EHbg6wGuBNoMxOC0Ep4tUxIcTqyJJ1e98PHgUE/Y/x+ZSoMHuOJn8Ns6MnSxvHFLmly4mCdjTTfs=
+X-Received: by 2002:a17:902:e98c:b029:da:cb88:f11d with SMTP id
+ f12-20020a170902e98cb02900dacb88f11dmr7786323plb.17.1610183253747; Sat, 09
+ Jan 2021 01:07:33 -0800 (PST)
 MIME-Version: 1.0
-References: <20201130133129.1024662-1-djrscally@gmail.com> <20201130133129.1024662-19-djrscally@gmail.com>
- <20201130200719.GB4077@smile.fi.intel.com> <778f23fc-b99c-33a2-642d-ca0e47fd4ed5@gmail.com>
-In-Reply-To: <778f23fc-b99c-33a2-642d-ca0e47fd4ed5@gmail.com>
+Received: by 2002:a17:90b:3011:0:0:0:0 with HTTP; Sat, 9 Jan 2021 01:07:33
+ -0800 (PST)
+In-Reply-To: <X/kOYeZtkCspoAC5@pendragon.ideasonboard.com>
+References: <20210107132838.396641-1-djrscally@gmail.com> <20210107132838.396641-10-djrscally@gmail.com>
+ <X/kOYeZtkCspoAC5@pendragon.ideasonboard.com>
 From: Andy Shevchenko <andy.shevchenko@gmail.com>
-Date: Fri, 8 Jan 2021 14:17:49 +0200
-Message-ID: <CAHp75VeYOqJt9iKaGPA4=dkb2kYUbqUV4PGTn8uSsnUt_kSGSw@mail.gmail.com>
-To: Daniel Scally <djrscally@gmail.com>
+Date: Sat, 9 Jan 2021 11:07:33 +0200
+Message-ID: <CAHp75VeLiMdzXL3Awhco-w6JwJhZNVao_uj7F6bmuty_aW0SNQ@mail.gmail.com>
+To: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 X-MailFrom: andy.shevchenko@gmail.com
 X-Mailman-Rule-Hits: max-recipients
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-size; news-moderation; no-subject; suspicious-header
-Message-ID-Hash: EPIDQ3TME6BEMP6BNFONQBPLOVZJUIKW
-X-Message-ID-Hash: EPIDQ3TME6BEMP6BNFONQBPLOVZJUIKW
+Message-ID-Hash: 23ILF3F4TOFWCIOGTTTH5KM3WUP2QF2U
+X-Message-ID-Hash: 23ILF3F4TOFWCIOGTTTH5KM3WUP2QF2U
 X-Mailman-Approved-At: Wed, 02 Feb 2022 19:58:46 -0800
-CC: Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>, linux-i2c <linux-i2c@vger.kernel.org>, Linux Media Mailing List <linux-media@vger.kernel.org>, devel@acpica.org, "Rafael J. Wysocki" <rjw@rjwysocki.net>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Mika Westerberg <mika.westerberg@linux.intel.com>, Linus Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski <bgolaszewski@baylibre.com>, Wolfram Sang <wsa@kernel.org>, Yong Zhi <yong.zhi@intel.com>, Sakari Ailus <sakari.ailus@linux.intel.com>, Bingbu Cao <bingbu.cao@intel.com>, Tian Shu Qiu <tian.shu.qiu@intel.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, Erik Kaneda <erik.kaneda@intel.com>, Petr Mladek <pmladek@suse.com>, Steven Rostedt <rostedt@goodmis.org>, Sergey Senozhatsky <sergey.senozhatsky@gmail.com>, Rasmus Villemoes <linux@rasmusvillemoes.dk>, 
- kieran.bingham+renesas@ideasonboard.com, Jacopo Mondi <jacopo+renesas@jmondi.org>, Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>, Jordan Hand <jorhand@linux.microsoft.com>, Tsuchiya Yuto <kitakar@gmail.com>, "Krogerus, Heikki" <heikki.krogerus@linux.intel.com>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+CC: Petr Mladek <pmladek@suse.com>, Steven Rostedt <rostedt@goodmis.org>, Sergey Senozhatsky <sergey.senozhatsky@gmail.com>, Daniel Scally <djrscally@gmail.com>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>, "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>, "devel@acpica.org" <devel@acpica.org>, "rjw@rjwysocki.net" <rjw@rjwysocki.net>, "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>, "mchehab@kernel.org" <mchehab@kernel.org>, "yong.zhi@intel.com" <yong.zhi@intel.com>, "sakari.ailus@linux.intel.com" <sakari.ailus@linux.intel.com>, "bingbu.cao@intel.com" <bingbu.cao@intel.com>, "tian.shu.qiu@intel.com" <tian.shu.qiu@intel.com>, "erik.kaneda@intel.com" <erik.kaneda@intel.com>, "andriy.shevchenko@linux.intel.com" <andriy.shevchenko@linux.intel.com>, "linux@rasmusvillemoes.dk" <linux@rasmusvillemoes.dk>, "laurent.pinchart+renesas@ideasonboard.com" <laurent.pinchart+renesas@ideasonboard.com>, "
+ jacopo+renesas@jmondi.org" <jacopo+renesas@jmondi.org>, "kieran.bingham+renesas@ideasonboard.com" <kieran.bingham+renesas@ideasonboard.com>, "hverkuil-cisco@xs4all.nl" <hverkuil-cisco@xs4all.nl>, "m.felsch@pengutronix.de" <m.felsch@pengutronix.de>, "niklas.soderlund+renesas@ragnatech.se" <niklas.soderlund+renesas@ragnatech.se>, "prabhakar.mahadev-lad.rj@bp.renesas.com" <prabhakar.mahadev-lad.rj@bp.renesas.com>, "slongerbeam@gmail.com" <slongerbeam@gmail.com>, "heikki.krogerus@linux.intel.com" <heikki.krogerus@linux.intel.com>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH 18/18] ipu3: Add driver for dummy INT3472 ACPI device
+Subject: [Devel] Re: [PATCH v5 09/15] lib/test_printf.c: Use helper function to unwind array of software_nodes
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/EPIDQ3TME6BEMP6BNFONQBPLOVZJUIKW/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/23ILF3F4TOFWCIOGTTTH5KM3WUP2QF2U/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============6113527449635921851=="
 
-On Fri, Jan 8, 2021 at 1:56 AM Daniel Scally <djrscally@gmail.com> wrote:
-> On 30/11/2020 20:07, Andy Shevchenko wrote:
-> > On Mon, Nov 30, 2020 at 01:31:29PM +0000, Daniel Scally wrote:
+--===============6113527449635921851==
+Content-Type: multipart/alternative; boundary="000000000000dceff705b8740020"
 
-...
+--000000000000dceff705b8740020
+Content-Type: text/plain; charset="UTF-8"
 
-> > It's solely Windows driver design...
-> > Luckily I found some information and can clarify above table:
-> >
-> > 0x00 Reset
-> > 0x01 Power down
-> > 0x0b Power enable
-> > 0x0c Clock enable
-> > 0x0d LED (active high)
-> >
-> > The above text perhaps should go somewhere under Documentation.
+On Saturday, January 9, 2021, Laurent Pinchart <
+laurent.pinchart@ideasonboard.com> wrote:
+
+> Hi Peter, Steven and Sergey,
 >
-> Coming back to this; there's a bit of an anomaly with the 0x01 Power
-> Down pin for at least one platform.  As listed above, the OV2680 on one
-> of my platforms has 3 GPIOs defined, and the table above gives them as
-> type Reset, Power down and Clock enable. I'd assumed from this table
-> that "power down" meant a powerdown GPIO (I.E. the one usually called
-> PWDNB in Omnivision datasheets and "powerdown" in drivers), but the
-> datasheet for the OV2680 doesn't list a separate reset and powerdown
-> pin, but rather a single pin that performs both functions.
+> Could you please let us know if you're fine with this patch getting
+> merged in v5.12 through the linux-media tree ? The cover letter contains
+> additional details (in a nutshell, this is a cross-tree series and we
+> would like to avoid topic branches if possible).
 
-All of them are GPIOs, the question here is how they are actually
-connected on PCB level and I have no answer to that. You have to find
-schematics somewhere.
 
-> Am I wrong to treat that as something that ought to be mapped as a
-> powerdown GPIO to the sensors? Or do you know of any other way to
-> reconcile that discrepancy?
+There is already a tag by Petr.
 
-The GPIOs can go directly to the sensors or be a control pin for
-separate discrete power gates.
-So, we can do one of the following:
- a) present PD GPIO as fixed regulator;
- b) present PD & Reset GPIOs as regulator;
- c) provide them as is to the sensor and sensor driver must do what it
-considers right.
 
-Since we don't have schematics (yet?) and we have plenty of variations
-of sensors, I would go to c) and update the driver of the affected
-sensor as needed. Because even if you have separate discrete PD for
-one sensor on one platform there is no guarantee that it will be the
-same on another. Providing a "virtual" PD in a sensor that doesn't
-support it is the best choice I think. Let's hear what Sakari and
-other experienced camera sensor developers say.
-
-My vision is purely based on electrical engineering background,
-experience with existing (not exactly camera) sensor drivers and
-generic cases.
-
-> Failing that; the only way I can think to handle this is to register
-> proxy GPIO pins assigned to the sensors as you suggested previously, and
-> have them toggle the GPIO's assigned to the INT3472 based on platform
-> specific mapping data (I.E. we register a pin called "reset", which on
-> most platforms just toggles the 0x00 pin, but on this specific platform
-> would drive both 0x00 and 0x01 together. We're already heading that way
-> for the regulator consumer supplies so it's sort of nothing new, but I'd
-> still rather not if it can be avoided.
+>
+> On Thu, Jan 07, 2021 at 01:28:32PM +0000, Daniel Scally wrote:
+> > Use the software_node_unregister_nodes() helper function to unwind this
+> > array in a cleaner way.
+> >
+> > Acked-by: Petr Mladek <pmladek@suse.com>
+> > Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> > Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+> > Reviewed-by: Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
+> > Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> > Signed-off-by: Daniel Scally <djrscally@gmail.com>
+> > ---
+> > Changes in v5:
+> >
+> >       - None
+> >
+> >  lib/test_printf.c | 4 +---
+> >  1 file changed, 1 insertion(+), 3 deletions(-)
+> >
+> > diff --git a/lib/test_printf.c b/lib/test_printf.c
+> > index 7ac87f18a10f..7d60f24240a4 100644
+> > --- a/lib/test_printf.c
+> > +++ b/lib/test_printf.c
+> > @@ -644,9 +644,7 @@ static void __init fwnode_pointer(void)
+> >       test(second_name, "%pfwP", software_node_fwnode(&softnodes[1]));
+> >       test(third_name, "%pfwP", software_node_fwnode(&softnodes[2]));
+> >
+> > -     software_node_unregister(&softnodes[2]);
+> > -     software_node_unregister(&softnodes[1]);
+> > -     software_node_unregister(&softnodes[0]);
+> > +     software_node_unregister_nodes(softnodes);
+> >  }
+> >
+> >  static void __init
+>
+> --
+> Regards,
+>
+> Laurent Pinchart
+>
 
 
 -- 
 With Best Regards,
 Andy Shevchenko
+
+--000000000000dceff705b8740020
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<br><br>On Saturday, January 9, 2021, Laurent Pinchart &lt;<a href=3D"mailt=
+o:laurent.pinchart@ideasonboard.com">laurent.pinchart@ideasonboard.com</a>&=
+gt; wrote:<br><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;=
+border-left:1px #ccc solid;padding-left:1ex">Hi Peter, Steven and Sergey,<b=
+r>
+<br>
+Could you please let us know if you&#39;re fine with this patch getting<br>
+merged in v5.12 through the linux-media tree ? The cover letter contains<br=
+>
+additional details (in a nutshell, this is a cross-tree series and we<br>
+would like to avoid topic branches if possible).</blockquote><div><br></div=
+><div>There is already a tag by Petr.</div><div>=C2=A0</div><blockquote cla=
+ss=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;pa=
+dding-left:1ex">
+<br>
+On Thu, Jan 07, 2021 at 01:28:32PM +0000, Daniel Scally wrote:<br>
+&gt; Use the software_node_unregister_<wbr>nodes() helper function to unwin=
+d this<br>
+&gt; array in a cleaner way.<br>
+&gt; <br>
+&gt; Acked-by: Petr Mladek &lt;<a href=3D"mailto:pmladek@suse.com">pmladek@=
+suse.com</a>&gt;<br>
+&gt; Reviewed-by: Andy Shevchenko &lt;<a href=3D"mailto:andriy.shevchenko@l=
+inux.intel.com">andriy.shevchenko@linux.<wbr>intel.com</a>&gt;<br>
+&gt; Reviewed-by: Laurent Pinchart &lt;<a href=3D"mailto:laurent.pinchart@i=
+deasonboard.com">laurent.pinchart@<wbr>ideasonboard.com</a>&gt;<br>
+&gt; Reviewed-by: Sergey Senozhatsky &lt;<a href=3D"mailto:sergey.senozhats=
+ky@gmail.com">sergey.senozhatsky@gmail.com</a>&gt;<br>
+&gt; Suggested-by: Andy Shevchenko &lt;<a href=3D"mailto:andriy.shevchenko@=
+linux.intel.com">andriy.shevchenko@linux.<wbr>intel.com</a>&gt;<br>
+&gt; Signed-off-by: Daniel Scally &lt;<a href=3D"mailto:djrscally@gmail.com=
+">djrscally@gmail.com</a>&gt;<br>
+&gt; ---<br>
+&gt; Changes in v5:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0- None<br>
+&gt; <br>
+&gt;=C2=A0 lib/test_printf.c | 4 +---<br>
+&gt;=C2=A0 1 file changed, 1 insertion(+), 3 deletions(-)<br>
+&gt; <br>
+&gt; diff --git a/lib/test_printf.c b/lib/test_printf.c<br>
+&gt; index 7ac87f18a10f..7d60f24240a4 100644<br>
+&gt; --- a/lib/test_printf.c<br>
+&gt; +++ b/lib/test_printf.c<br>
+&gt; @@ -644,9 +644,7 @@ static void __init fwnode_pointer(void)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0test(second_name, &quot;%pfwP&quot;, softwar=
+e_node_fwnode(&amp;<wbr>softnodes[1]));<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0test(third_name, &quot;%pfwP&quot;, software=
+_node_fwnode(&amp;<wbr>softnodes[2]));<br>
+&gt;=C2=A0 <br>
+&gt; -=C2=A0 =C2=A0 =C2=A0software_node_unregister(&amp;<wbr>softnodes[2]);=
+<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0software_node_unregister(&amp;<wbr>softnodes[1]);=
+<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0software_node_unregister(&amp;<wbr>softnodes[0]);=
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0software_node_unregister_<wbr>nodes(softnodes);<b=
+r>
+&gt;=C2=A0 }<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 static void __init<br>
+<br>
+-- <br>
+Regards,<br>
+<br>
+Laurent Pinchart<br>
+</blockquote><br><br>-- <br>With Best Regards,<br>Andy Shevchenko<br><br><b=
+r>
+
+--000000000000dceff705b8740020--
+
+--===============6113527449635921851==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
 %(web_page_url)slistinfo%(cgiext)s/%(_internal_name)s
+--===============6113527449635921851==--
