@@ -1,52 +1,55 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D1F02F6FA7
-	for <lists+devel-acpica@lfdr.de>; Fri, 15 Jan 2021 01:45:39 +0100 (CET)
+Received: from ml01.01.org (ml01.01.org [198.145.21.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A0B82FA599
+	for <lists+devel-acpica@lfdr.de>; Mon, 18 Jan 2021 17:06:52 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 98F6B100EB84C;
-	Thu, 14 Jan 2021 16:45:37 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.151; helo=mga17.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	by ml01.01.org (Postfix) with ESMTP id EE239100EBBA2;
+	Mon, 18 Jan 2021 08:06:50 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.167.170; helo=mail-oi1-f170.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id A2233100EC1EF
-	for <devel@acpica.org>; Thu, 14 Jan 2021 16:45:35 -0800 (PST)
-IronPort-SDR: pu+DVI9/oijAzeGQScQy4xaiP9djRZ0ZQxhWlkgZREds+m2S9LARVuFHXwvhg1ltQ4jlHl9W12
- cboGBBZjJGYA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9864"; a="158245779"
-X-IronPort-AV: E=Sophos;i="5.79,347,1602572400";
-   d="scan'208";a="158245779"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jan 2021 16:45:35 -0800
-IronPort-SDR: fYQcPWXh3QmBpoi9uvEnChHm09WoDHWDwtxE7jkrIIdG1zv4X5kDby7tNHf/KGEQfQ+U4D5UYI
- pZ1wM14daiaw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.79,347,1602572400";
-   d="scan'208";a="352657456"
-Received: from lkp-server01.sh.intel.com (HELO 260eafd5ecd0) ([10.239.97.150])
-  by orsmga006.jf.intel.com with ESMTP; 14 Jan 2021 16:45:33 -0800
-Received: from kbuild by 260eafd5ecd0 with local (Exim 4.92)
-	(envelope-from <lkp@intel.com>)
-	id 1l0DF6-00002e-Nt; Fri, 15 Jan 2021 00:45:32 +0000
-Date: Fri, 15 Jan 2021 08:44:42 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <6000e57a.gYABxwaW9Tmbp5nl%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTPS id 1AD53100EBBA0
+	for <devel@acpica.org>; Mon, 18 Jan 2021 08:06:47 -0800 (PST)
+Received: by mail-oi1-f170.google.com with SMTP id d189so18127831oig.11
+        for <devel@acpica.org>; Mon, 18 Jan 2021 08:06:47 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CS5IjSAEXLMX2L3dlbJYEV3dTj36qlbZID0kijl+T1k=;
+        b=tTWmj6/5Z4Z826BQxVA3nCnRCAnn5yZMcHWllW30ZCY779ddnGqsP0hDMupsT/tZlj
+         KYST1/37WHNC3htZ8DAC26X68ZUjQP3pZq2A8V7T/VMwjNzBSOIWPzoB+M9Qu/rCAbCE
+         eAVnrnIzjp/E3FHWpDLz1UetKjRRGCYVIkTiu8CjXPUA/m1MLGOlp1RFdFWmHL0+Im4I
+         S7d3gWobAxVdCoZ35pLFr9qZHj+yBJ9LHEuES2Zwuy06sOhGMXGqw7lpxLzf1dSV3J5O
+         ysDNf9I/ic/QIasmNsX6zzni2c3e0c+/3NXbBMANC+UpAClPtDlaGMCX1oVMx7PVxfRm
+         OJug==
+X-Gm-Message-State: AOAM532vS8eXDrCe3ys2SKEmNEeqdR3eQCRQTfxYJ1jIcZ8v2Db1w8u9
+	2c71M03KBpyDPR/pFv7govrjMXIaBathLAFSMto=
+X-Google-Smtp-Source: ABdhPJy3ugoahJb5GudMqD9tviCmqbTq1+xfj8D5UQTzrIQJP/8XJYGCzj99cfuy+SxZwaXbxO0FovXX0bZadB5pw/w=
+X-Received: by 2002:aca:4892:: with SMTP id v140mr32020oia.71.1610986006546;
+ Mon, 18 Jan 2021 08:06:46 -0800 (PST)
 MIME-Version: 1.0
-Message-ID-Hash: 2RTGQDY3FWUS2SRYAPA3JJHW43OWS6GY
-X-Message-ID-Hash: 2RTGQDY3FWUS2SRYAPA3JJHW43OWS6GY
-X-MailFrom: lkp@intel.com
+References: <20210118003428.568892-1-djrscally@gmail.com> <20210118003428.568892-2-djrscally@gmail.com>
+ <20210118122852.GD4077@smile.fi.intel.com>
+In-Reply-To: <20210118122852.GD4077@smile.fi.intel.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Mon, 18 Jan 2021 17:06:30 +0100
+Message-ID: <CAJZ5v0hihFa=M658GE2LtoKCnPkMQznXBtq9_+g0_4gFnw6qAg@mail.gmail.com>
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Daniel Scally <djrscally@gmail.com>
+Message-ID-Hash: NVHZWJNEDRHYBLLUF66MYGBGLZHFOWXP
+X-Message-ID-Hash: NVHZWJNEDRHYBLLUF66MYGBGLZHFOWXP
+X-MailFrom: rjwysocki@gmail.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+CC: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, linux-gpio@vger.kernel.org, linux-i2c <linux-i2c@vger.kernel.org>, Platform Driver <platform-driver-x86@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, "Rafael J. Wysocki" <rjw@rjwysocki.net>, andy@kernel.org, Mika Westerberg <mika.westerberg@linux.intel.com>, Linus Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski <bgolaszewski@baylibre.com>, Wolfram Sang <wsa@kernel.org>, Lee Jones <lee.jones@linaro.org>, Hans de Goede <hdegoede@redhat.com>, Mark Gross <mgross@linux.intel.com>, Erik Kaneda <erik.kaneda@intel.com>, Sakari Ailus <sakari.ailus@linux.intel.com>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>, Kieran Bingham <kieran.bingham@ideasonboard.com>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS 55201a2b1d0648a55ca6d5febb87c5183927b0a2
+Subject: [Devel] Re: [PATCH v2 1/7] acpi: utils: move acpi_lpss_dep() to utils
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/2RTGQDY3FWUS2SRYAPA3JJHW43OWS6GY/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/NVHZWJNEDRHYBLLUF66MYGBGLZHFOWXP/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -55,120 +58,124 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git  bleeding-edge
-branch HEAD: 55201a2b1d0648a55ca6d5febb87c5183927b0a2  Merge branch 'acpi-platform' into bleeding-edge
+On Mon, Jan 18, 2021 at 1:30 PM Andy Shevchenko
+<andriy.shevchenko@linux.intel.com> wrote:
+>
+> On Mon, Jan 18, 2021 at 12:34:22AM +0000, Daniel Scally wrote:
+> > I need to be able to identify devices which declare themselves to be
+> > dependent on other devices through _DEP; add this function to utils.c
+> > and export it to the rest of the ACPI layer.
+>
+> Prefix -> "ACPI / utils: "
 
-elapsed time: 721m
+Preferably "ACPI: utils: " for that matter and yes, please rename the
+function while moving it.
 
-configs tested: 96
-configs skipped: 2
-
-The following configs have been built successfully.
-More configs may be tested in the coming days.
-
-gcc tested configs:
-arm                                 defconfig
-arm64                            allyesconfig
-arm64                               defconfig
-arm                              allyesconfig
-arm                              allmodconfig
-mips                  cavium_octeon_defconfig
-alpha                            alldefconfig
-sh                          r7780mp_defconfig
-sparc64                             defconfig
-m68k                        stmark2_defconfig
-arc                        nsimosci_defconfig
-arm                           corgi_defconfig
-arm                       aspeed_g5_defconfig
-arm                        mvebu_v5_defconfig
-arm                         assabet_defconfig
-arm                        multi_v7_defconfig
-arm64                            alldefconfig
-powerpc                     pseries_defconfig
-mips                        nlm_xlp_defconfig
-powerpc                           allnoconfig
-powerpc                     tqm8541_defconfig
-sh                         ap325rxa_defconfig
-arm                         palmz72_defconfig
-s390                             alldefconfig
-h8300                    h8300h-sim_defconfig
-powerpc                     tqm8540_defconfig
-ia64                             allmodconfig
-ia64                                defconfig
-ia64                             allyesconfig
-m68k                             allmodconfig
-m68k                                defconfig
-m68k                             allyesconfig
-nds32                               defconfig
-nios2                            allyesconfig
-csky                                defconfig
-alpha                               defconfig
-alpha                            allyesconfig
-xtensa                           allyesconfig
-h8300                            allyesconfig
-arc                                 defconfig
-sh                               allmodconfig
-parisc                              defconfig
-s390                             allyesconfig
-parisc                           allyesconfig
-s390                                defconfig
-i386                             allyesconfig
-sparc                            allyesconfig
-sparc                               defconfig
-i386                               tinyconfig
-i386                                defconfig
-nios2                               defconfig
-arc                              allyesconfig
-nds32                             allnoconfig
-c6x                              allyesconfig
-mips                             allyesconfig
-mips                             allmodconfig
-powerpc                          allyesconfig
-powerpc                          allmodconfig
-i386                 randconfig-a002-20210114
-i386                 randconfig-a005-20210114
-i386                 randconfig-a006-20210114
-i386                 randconfig-a001-20210114
-i386                 randconfig-a003-20210114
-i386                 randconfig-a004-20210114
-x86_64               randconfig-a015-20210114
-x86_64               randconfig-a012-20210114
-x86_64               randconfig-a013-20210114
-x86_64               randconfig-a016-20210114
-x86_64               randconfig-a014-20210114
-x86_64               randconfig-a011-20210114
-i386                 randconfig-a012-20210114
-i386                 randconfig-a011-20210114
-i386                 randconfig-a016-20210114
-i386                 randconfig-a015-20210114
-i386                 randconfig-a013-20210114
-i386                 randconfig-a014-20210114
-riscv                    nommu_k210_defconfig
-riscv                            allyesconfig
-riscv                    nommu_virt_defconfig
-riscv                             allnoconfig
-riscv                               defconfig
-riscv                          rv32_defconfig
-riscv                            allmodconfig
-x86_64                                   rhel
-x86_64                           allyesconfig
-x86_64                    rhel-7.6-kselftests
-x86_64                              defconfig
-x86_64                               rhel-8.3
-x86_64                      rhel-8.3-kbuiltin
-x86_64                                  kexec
-
-clang tested configs:
-x86_64               randconfig-a004-20210114
-x86_64               randconfig-a006-20210114
-x86_64               randconfig-a001-20210114
-x86_64               randconfig-a003-20210114
-x86_64               randconfig-a005-20210114
-x86_64               randconfig-a002-20210114
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+> Otherwise good to me
+> Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+>
+> > Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> > Signed-off-by: Daniel Scally <djrscally@gmail.com>
+> > ---
+> > Changes in v2:
+> >       - Introduced
+> >
+> >  drivers/acpi/acpi_lpss.c | 24 ------------------------
+> >  drivers/acpi/internal.h  |  1 +
+> >  drivers/acpi/utils.c     | 24 ++++++++++++++++++++++++
+> >  3 files changed, 25 insertions(+), 24 deletions(-)
+> >
+> > diff --git a/drivers/acpi/acpi_lpss.c b/drivers/acpi/acpi_lpss.c
+> > index be73974ce449..70c7d9a3f715 100644
+> > --- a/drivers/acpi/acpi_lpss.c
+> > +++ b/drivers/acpi/acpi_lpss.c
+> > @@ -543,30 +543,6 @@ static struct device *acpi_lpss_find_device(const char *hid, const char *uid)
+> >       return bus_find_device(&pci_bus_type, NULL, &data, match_hid_uid);
+> >  }
+> >
+> > -static bool acpi_lpss_dep(struct acpi_device *adev, acpi_handle handle)
+> > -{
+> > -     struct acpi_handle_list dep_devices;
+> > -     acpi_status status;
+> > -     int i;
+> > -
+> > -     if (!acpi_has_method(adev->handle, "_DEP"))
+> > -             return false;
+> > -
+> > -     status = acpi_evaluate_reference(adev->handle, "_DEP", NULL,
+> > -                                      &dep_devices);
+> > -     if (ACPI_FAILURE(status)) {
+> > -             dev_dbg(&adev->dev, "Failed to evaluate _DEP.\n");
+> > -             return false;
+> > -     }
+> > -
+> > -     for (i = 0; i < dep_devices.count; i++) {
+> > -             if (dep_devices.handles[i] == handle)
+> > -                     return true;
+> > -     }
+> > -
+> > -     return false;
+> > -}
+> > -
+> >  static void acpi_lpss_link_consumer(struct device *dev1,
+> >                                   const struct lpss_device_links *link)
+> >  {
+> > diff --git a/drivers/acpi/internal.h b/drivers/acpi/internal.h
+> > index cb229e24c563..ee62c0973576 100644
+> > --- a/drivers/acpi/internal.h
+> > +++ b/drivers/acpi/internal.h
+> > @@ -79,6 +79,7 @@ static inline void acpi_lpss_init(void) {}
+> >  #endif
+> >
+> >  void acpi_apd_init(void);
+> > +bool acpi_lpss_dep(struct acpi_device *adev, acpi_handle handle);
+> >
+> >  acpi_status acpi_hotplug_schedule(struct acpi_device *adev, u32 src);
+> >  bool acpi_queue_hotplug_work(struct work_struct *work);
+> > diff --git a/drivers/acpi/utils.c b/drivers/acpi/utils.c
+> > index ddca1550cce6..78b38775f18b 100644
+> > --- a/drivers/acpi/utils.c
+> > +++ b/drivers/acpi/utils.c
+> > @@ -807,6 +807,30 @@ static int acpi_dev_match_cb(struct device *dev, const void *data)
+> >       return hrv == match->hrv;
+> >  }
+> >
+> > +bool acpi_lpss_dep(struct acpi_device *adev, acpi_handle handle)
+> > +{
+> > +     struct acpi_handle_list dep_devices;
+> > +     acpi_status status;
+> > +     int i;
+> > +
+> > +     if (!acpi_has_method(adev->handle, "_DEP"))
+> > +             return false;
+> > +
+> > +     status = acpi_evaluate_reference(adev->handle, "_DEP", NULL,
+> > +                                      &dep_devices);
+> > +     if (ACPI_FAILURE(status)) {
+> > +             dev_dbg(&adev->dev, "Failed to evaluate _DEP.\n");
+> > +             return false;
+> > +     }
+> > +
+> > +     for (i = 0; i < dep_devices.count; i++) {
+> > +             if (dep_devices.handles[i] == handle)
+> > +                     return true;
+> > +     }
+> > +
+> > +     return false;
+> > +}
+> > +
+> >  /**
+> >   * acpi_dev_present - Detect that a given ACPI device is present
+> >   * @hid: Hardware ID of the device.
+> > --
+> > 2.25.1
+> >
+>
+> --
+> With Best Regards,
+> Andy Shevchenko
+>
+>
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
