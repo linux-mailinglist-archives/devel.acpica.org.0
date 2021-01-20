@@ -1,55 +1,52 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0CB922FB64C
-	for <lists+devel-acpica@lfdr.de>; Tue, 19 Jan 2021 14:19:33 +0100 (CET)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3D6BB2FCCBD
+	for <lists+devel-acpica@lfdr.de>; Wed, 20 Jan 2021 09:32:06 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id B2869100EBBDD;
-	Tue, 19 Jan 2021 05:19:31 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.167.182; helo=mail-oi1-f182.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	by ml01.01.org (Postfix) with ESMTP id 91EE4100EB829;
+	Wed, 20 Jan 2021 00:32:04 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.136; helo=mga12.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 0EE52100EBBB8
-	for <devel@acpica.org>; Tue, 19 Jan 2021 05:19:29 -0800 (PST)
-Received: by mail-oi1-f182.google.com with SMTP id 9so21116308oiq.3
-        for <devel@acpica.org>; Tue, 19 Jan 2021 05:19:29 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kUDdGSpowK1CEbj8McVC+bBtkLq63WQr+Zql2YLqG5U=;
-        b=SPfX22qdDpD9YQ1lVfUE4foNx8BMInYmNIU3FnJcOhKW/heCyxT0+GtKlt5gotDkFt
-         f+Z/NXSCagyQFVbv3JWrkGZLnP1lw4kvv3tAIvKMEMfA5/aZR0rirIrPoMfJrzxylZ/D
-         jo4fJsvXOEsL25M1WTMygxwX99wESFrI2sfctR/g1vWQuQHfcV3ZtwsMP1QiD9n0ILbo
-         UBkFHi4Mqf1VO8ta7ACDRA1uF/JabnHm2EGlCv4NdfMn+TiJrtfArMF4sIBygsBPucuu
-         iW5CD6YFmRgz+37u3ip1hMAB5AXnTMj6i3cRj3AUaFA3ecjoEJQGF7Di6aBuZ1L3m0LF
-         01oQ==
-X-Gm-Message-State: AOAM531oJmywxFh/46N/PC4feuZPPBvLLIchT8omZOv/EqQvaOwjNsEI
-	x6JK7/5JtsAwVVwccmHaqLL37cfMU2CJzA53yoQ=
-X-Google-Smtp-Source: ABdhPJx6gcAwtwXRqp5/IJOsji1kIJ+Z/62NGRk7TKZOMu+nRuZ+LcTh4icQ0/TaVor6jnR3+WE/obLzf1Lcm6Gy7n8=
-X-Received: by 2002:aca:5c05:: with SMTP id q5mr2555018oib.157.1611062368209;
- Tue, 19 Jan 2021 05:19:28 -0800 (PST)
+	by ml01.01.org (Postfix) with ESMTPS id CD605100ED4BA
+	for <devel@acpica.org>; Wed, 20 Jan 2021 00:32:02 -0800 (PST)
+IronPort-SDR: 3kldWFZaoE3cWHH24EyP9ufHRTW2BWQ9bT8BD6a2cpvK5bVazKeUttDNkoXrF0C9g4r16y8R38
+ qf9K0F/jybXQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9869"; a="158247033"
+X-IronPort-AV: E=Sophos;i="5.79,360,1602572400";
+   d="scan'208";a="158247033"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jan 2021 00:32:01 -0800
+IronPort-SDR: Q/5gFqjj8WVHygQrcpWUC87/5ltNkSgngrJJb7HPNiLWDTzgTGSv7pg0hVix/fnY7666pKEEsF
+ zK0sVbtv6rAw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.79,360,1602572400";
+   d="scan'208";a="366169984"
+Received: from lkp-server01.sh.intel.com (HELO 260eafd5ecd0) ([10.239.97.150])
+  by orsmga002.jf.intel.com with ESMTP; 20 Jan 2021 00:31:59 -0800
+Received: from kbuild by 260eafd5ecd0 with local (Exim 4.92)
+	(envelope-from <lkp@intel.com>)
+	id 1l28uF-0005hW-9m; Wed, 20 Jan 2021 08:31:59 +0000
+Date: Wed, 20 Jan 2021 16:31:30 +0800
+From: kernel test robot <lkp@intel.com>
+To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Message-ID: <6007ea62.jSePxiLME1D20RPZ%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-References: <20210118003428.568892-1-djrscally@gmail.com> <20210118003428.568892-5-djrscally@gmail.com>
- <YAVSf7+iTPNYf5XS@pendragon.ideasonboard.com>
-In-Reply-To: <YAVSf7+iTPNYf5XS@pendragon.ideasonboard.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Tue, 19 Jan 2021 14:19:16 +0100
-Message-ID: <CAJZ5v0hUELtKc9CK=z47XQvSAAx=wTWvoVwP-PaMqugaXaCgZQ@mail.gmail.com>
-To: Laurent Pinchart <laurent.pinchart@ideasonboard.com>, Daniel Scally <djrscally@gmail.com>
-Message-ID-Hash: 62YDW7MWRSOVBYDHAK4AX54KIWCCPZ7R
-X-Message-ID-Hash: 62YDW7MWRSOVBYDHAK4AX54KIWCCPZ7R
-X-MailFrom: rjwysocki@gmail.com
+Message-ID-Hash: RFAC35OGDKZ6T4DZVSV72IVB327ITJEB
+X-Message-ID-Hash: RFAC35OGDKZ6T4DZVSV72IVB327ITJEB
+X-MailFrom: lkp@intel.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, linux-gpio@vger.kernel.org, linux-i2c <linux-i2c@vger.kernel.org>, Platform Driver <platform-driver-x86@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, "Rafael J. Wysocki" <rjw@rjwysocki.net>, andy@kernel.org, Mika Westerberg <mika.westerberg@linux.intel.com>, Linus Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski <bgolaszewski@baylibre.com>, Wolfram Sang <wsa@kernel.org>, Lee Jones <lee.jones@linaro.org>, Hans de Goede <hdegoede@redhat.com>, Mark Gross <mgross@linux.intel.com>, Erik Kaneda <erik.kaneda@intel.com>, Sakari Ailus <sakari.ailus@linux.intel.com>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Kieran Bingham <kieran.bingham@ideasonboard.com>
+CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH v2 4/7] i2c: i2c-core-acpi: Add i2c_acpi_dev_name()
+Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS f2d717f48fb25785d65f740bf2425bb3ce5cce44
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/62YDW7MWRSOVBYDHAK4AX54KIWCCPZ7R/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/RFAC35OGDKZ6T4DZVSV72IVB327ITJEB/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -58,61 +55,121 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Mon, Jan 18, 2021 at 9:55 PM Laurent Pinchart
-<laurent.pinchart@ideasonboard.com> wrote:
->
-> Hi Daniel,
->
-> Thank you for the patch.
->
-> On Mon, Jan 18, 2021 at 12:34:25AM +0000, Daniel Scally wrote:
-> > We want to refer to an i2c device by name before it has been
->
-> s/i2c device/acpi i2c device/ ?
->
-> > created by the kernel; add a function that constructs the name
-> > from the acpi device instead.
-> >
-> > Signed-off-by: Daniel Scally <djrscally@gmail.com>
-> > ---
-> > Changes in v2:
-> >
-> >       - Stopped using devm_kasprintf()
-> >
-> >  drivers/i2c/i2c-core-acpi.c | 16 ++++++++++++++++
-> >  include/linux/i2c.h         |  5 +++++
-> >  2 files changed, 21 insertions(+)
-> >
-> > diff --git a/drivers/i2c/i2c-core-acpi.c b/drivers/i2c/i2c-core-acpi.c
-> > index 37c510d9347a..98c3ba9a2350 100644
-> > --- a/drivers/i2c/i2c-core-acpi.c
-> > +++ b/drivers/i2c/i2c-core-acpi.c
-> > @@ -497,6 +497,22 @@ struct i2c_client *i2c_acpi_new_device(struct device *dev, int index,
-> >  }
-> >  EXPORT_SYMBOL_GPL(i2c_acpi_new_device);
-> >
-> > +/**
-> > + * i2c_acpi_dev_name - Construct i2c device name for devs sourced from ACPI
-> > + * @adev:     ACPI device to construct the name for
-> > + *
-> > + * Constructs the name of an i2c device matching the format used by
-> > + * i2c_dev_set_name() to allow users to refer to an i2c device by name even
-> > + * before they have been instantiated.
-> > + *
-> > + * The caller is responsible for freeing the returned pointer.
-> > + */
-> > +char *i2c_acpi_dev_name(struct acpi_device *adev)
-> > +{
-> > +     return kasprintf(GFP_KERNEL, I2C_DEV_NAME_FORMAT, acpi_dev_name(adev));
->
-> There's a real danger of a memory leak, as the function name sounds very
-> similar to dev_name() or acpi_dev_name() and those don't allocate
-> memory. I'm not sure what a better name would be, but given that this
-> function is only used in patch 6/7 and not in the I2C subsystem itself,
-> I wonder if we should inline this kasprintf() call in the caller and
-> drop this patch.
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
+branch HEAD: f2d717f48fb25785d65f740bf2425bb3ce5cce44  Merge branch 'pm-clk' into bleeding-edge
 
-IMO if this is a one-off usage, it's better to open-code it.
+elapsed time: 726m
+
+configs tested: 97
+configs skipped: 2
+
+The following configs have been built successfully.
+More configs may be tested in the coming days.
+
+gcc tested configs:
+arm                                 defconfig
+arm64                            allyesconfig
+arm64                               defconfig
+arm                              allyesconfig
+arm                              allmodconfig
+powerpc                      pmac32_defconfig
+mips                           ci20_defconfig
+arm                           sunxi_defconfig
+mips                        bcm63xx_defconfig
+powerpc                  iss476-smp_defconfig
+mips                malta_kvm_guest_defconfig
+m68k                         amcore_defconfig
+mips                  decstation_64_defconfig
+ia64                            zx1_defconfig
+sh                              ul2_defconfig
+sh                           se7721_defconfig
+mips                     loongson1b_defconfig
+mips                           jazz_defconfig
+mips                        omega2p_defconfig
+powerpc                 canyonlands_defconfig
+nds32                            alldefconfig
+xtensa                    xip_kc705_defconfig
+sh                           se7724_defconfig
+arm                          pcm027_defconfig
+sh                   secureedge5410_defconfig
+mips                       lemote2f_defconfig
+ia64                             allmodconfig
+ia64                                defconfig
+ia64                             allyesconfig
+m68k                             allmodconfig
+m68k                                defconfig
+m68k                             allyesconfig
+nds32                               defconfig
+nios2                            allyesconfig
+csky                                defconfig
+alpha                               defconfig
+alpha                            allyesconfig
+xtensa                           allyesconfig
+h8300                            allyesconfig
+arc                                 defconfig
+sh                               allmodconfig
+parisc                              defconfig
+s390                             allyesconfig
+parisc                           allyesconfig
+s390                                defconfig
+i386                             allyesconfig
+sparc                            allyesconfig
+sparc                               defconfig
+i386                               tinyconfig
+i386                                defconfig
+nios2                               defconfig
+arc                              allyesconfig
+nds32                             allnoconfig
+c6x                              allyesconfig
+mips                             allyesconfig
+mips                             allmodconfig
+powerpc                          allyesconfig
+powerpc                          allmodconfig
+powerpc                           allnoconfig
+i386                 randconfig-a001-20210120
+i386                 randconfig-a002-20210120
+i386                 randconfig-a004-20210120
+i386                 randconfig-a006-20210120
+i386                 randconfig-a005-20210120
+i386                 randconfig-a003-20210120
+x86_64               randconfig-a012-20210120
+x86_64               randconfig-a015-20210120
+x86_64               randconfig-a016-20210120
+x86_64               randconfig-a011-20210120
+x86_64               randconfig-a013-20210120
+x86_64               randconfig-a014-20210120
+i386                 randconfig-a013-20210120
+i386                 randconfig-a011-20210120
+i386                 randconfig-a012-20210120
+i386                 randconfig-a014-20210120
+i386                 randconfig-a015-20210120
+i386                 randconfig-a016-20210120
+riscv                    nommu_k210_defconfig
+riscv                            allyesconfig
+riscv                    nommu_virt_defconfig
+riscv                             allnoconfig
+riscv                               defconfig
+riscv                          rv32_defconfig
+riscv                            allmodconfig
+x86_64                                   rhel
+x86_64                           allyesconfig
+x86_64                    rhel-7.6-kselftests
+x86_64                              defconfig
+x86_64                               rhel-8.3
+x86_64                      rhel-8.3-kbuiltin
+x86_64                                  kexec
+
+clang tested configs:
+x86_64               randconfig-a002-20210120
+x86_64               randconfig-a003-20210120
+x86_64               randconfig-a001-20210120
+x86_64               randconfig-a005-20210120
+x86_64               randconfig-a006-20210120
+x86_64               randconfig-a004-20210120
+
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
