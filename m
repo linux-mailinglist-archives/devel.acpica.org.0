@@ -2,51 +2,56 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6CE632FE2C0
-	for <lists+devel-acpica@lfdr.de>; Thu, 21 Jan 2021 07:25:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7DDFF2FE976
+	for <lists+devel-acpica@lfdr.de>; Thu, 21 Jan 2021 12:58:59 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 96817100EB343;
-	Wed, 20 Jan 2021 22:25:49 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.65; helo=mga03.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	by ml01.01.org (Postfix) with ESMTP id D4388100EB34C;
+	Thu, 21 Jan 2021 03:58:57 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.210.48; helo=mail-ot1-f48.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 2CAF2100EB822
-	for <devel@acpica.org>; Wed, 20 Jan 2021 22:25:46 -0800 (PST)
-IronPort-SDR: z6LRdIzu8nr1fOpAmnGrXoaoWS98JY2OO8wSwv6mKeiApnAWBzEMsJT8D4VQgfpDO5+Ut8NJxr
- +gqG6oI2Wx2Q==
-X-IronPort-AV: E=McAfee;i="6000,8403,9870"; a="179308647"
-X-IronPort-AV: E=Sophos;i="5.79,363,1602572400";
-   d="scan'208";a="179308647"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Jan 2021 22:25:46 -0800
-IronPort-SDR: YCSivWnmkbZ0e9A8AW3RrJNGJYH5aQykJ1/4YZV6IXTwbH564DyN1ToorCSixoFTBnSHwxdOxz
- J2BZr155h1ng==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.79,363,1602572400";
-   d="scan'208";a="467350049"
-Received: from lkp-server01.sh.intel.com (HELO 260eafd5ecd0) ([10.239.97.150])
-  by fmsmga001.fm.intel.com with ESMTP; 20 Jan 2021 22:25:44 -0800
-Received: from kbuild by 260eafd5ecd0 with local (Exim 4.92)
-	(envelope-from <lkp@intel.com>)
-	id 1l2TPb-0006Lb-TM; Thu, 21 Jan 2021 06:25:43 +0000
-Date: Thu, 21 Jan 2021 14:25:38 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <60091e62.ARJpxQVSwHfZKZ/b%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTPS id 526D5100EB34B
+	for <devel@acpica.org>; Thu, 21 Jan 2021 03:58:55 -0800 (PST)
+Received: by mail-ot1-f48.google.com with SMTP id i20so1324142otl.7
+        for <devel@acpica.org>; Thu, 21 Jan 2021 03:58:55 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=LMQpWTlwXlB+6DhuZpRPyd2/2y3TLAjilyG8Sg/pBQ4=;
+        b=GliMXrB4FjQFqAb4ELQHnxijduDl8Y61o5gFoTF+CnIFVN5bncovfxmP4WqH6+qUlo
+         sruexaPTZwAjQFCpcABBgfT/zthY6gE4Ah5G9YIKJnPyakr36ZMFBNJ50jkg19d8jC+3
+         geRkP+/rkKmiONBBZTaUQm4SngMRkrkTac6D/HcPjo5Fl7XfOIhBuVF4T80UJv2Sycuq
+         5R1xTkYm9h7T0pdu8892mxsgggH+A1jVAMYar5/gOCk/AbXU1K+9U1357V1EQbR3xkmk
+         IGM6aL+Jxxq+A+ssJIUBk6owPy1LR3gf/nkf+H8vS8U6l5RSEo2sT9OOa92AGbrS9h8M
+         J4Zg==
+X-Gm-Message-State: AOAM532gxrAuKUJ8HNQFhTH4COMPikmcbbAqqdfX6qq0UWBeUYxHqJxJ
+	ptsLFmWjoogMrpg98GiysyJz/Db3x9w2dwIoAes=
+X-Google-Smtp-Source: ABdhPJzUXT3Qcu1MEek/JIy1QokhzlIz+1Z889izuguqO0chtBSEj4LHKA87+uH8We9MoxEatFnak9b3i0z82NlULJU=
+X-Received: by 2002:a9d:1710:: with SMTP id i16mr9965157ota.260.1611230334235;
+ Thu, 21 Jan 2021 03:58:54 -0800 (PST)
 MIME-Version: 1.0
-Message-ID-Hash: A2DM43OVHR3Z3ZPWGSJRUULDMQJHRAFM
-X-Message-ID-Hash: A2DM43OVHR3Z3ZPWGSJRUULDMQJHRAFM
-X-MailFrom: lkp@intel.com
+References: <20210118003428.568892-1-djrscally@gmail.com> <20210118003428.568892-3-djrscally@gmail.com>
+ <CAJZ5v0gVQsZ4rxXW8uMidW9zfY_S50zpfrL-Gq0J3Z4-qqBiww@mail.gmail.com>
+ <b381b48e-1bf2-f3e7-10a6-e51cd261f43c@gmail.com> <CAJZ5v0iU2m4Hs6APuauQ645DwbjYaB8nJFjYH0+7yQnR-FPZBQ@mail.gmail.com>
+ <e2d7e5e9-920f-7227-76a6-b166e30e11e5@gmail.com>
+In-Reply-To: <e2d7e5e9-920f-7227-76a6-b166e30e11e5@gmail.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Thu, 21 Jan 2021 12:58:43 +0100
+Message-ID: <CAJZ5v0gg5oXG3yOO9iDvPKSsadYrFojW6JcKfZcQbFFpO78zAQ@mail.gmail.com>
+To: Daniel Scally <djrscally@gmail.com>
+Message-ID-Hash: EP3GL5UJ77CCQQVA6CRQASTAULK2DVRX
+X-Message-ID-Hash: EP3GL5UJ77CCQQVA6CRQASTAULK2DVRX
+X-MailFrom: rjwysocki@gmail.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+CC: "Rafael J. Wysocki" <rafael@kernel.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, linux-gpio@vger.kernel.org, linux-i2c <linux-i2c@vger.kernel.org>, Platform Driver <platform-driver-x86@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, "Rafael J. Wysocki" <rjw@rjwysocki.net>, andy@kernel.org, Mika Westerberg <mika.westerberg@linux.intel.com>, Linus Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski <bgolaszewski@baylibre.com>, Wolfram Sang <wsa@kernel.org>, Lee Jones <lee.jones@linaro.org>, Hans de Goede <hdegoede@redhat.com>, Mark Gross <mgross@linux.intel.com>, Erik Kaneda <erik.kaneda@intel.com>, Sakari Ailus <sakari.ailus@linux.intel.com>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>, Kieran Bingham <kieran.bingham@ideasonboard.com>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS WITH WARNING 693e119601907f923bcf08aca03793a0d1cf4416
+Subject: [Devel] Re: [PATCH v2 2/7] acpi: utils: Add function to fetch dependent acpi_devices
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/A2DM43OVHR3Z3ZPWGSJRUULDMQJHRAFM/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/EP3GL5UJ77CCQQVA6CRQASTAULK2DVRX/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -55,123 +60,48 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-branch HEAD: 693e119601907f923bcf08aca03793a0d1cf4416  Merge branch 'acpi-platform' into bleeding-edge
+On Thu, Jan 21, 2021 at 10:47 AM Daniel Scally <djrscally@gmail.com> wrote:
+>
+> Hi Rafael
+>
+> On 19/01/2021 13:15, Rafael J. Wysocki wrote:
+> > On Mon, Jan 18, 2021 at 9:51 PM Daniel Scally <djrscally@gmail.com> wrote:
+> >> On 18/01/2021 16:14, Rafael J. Wysocki wrote:
+> >>> On Mon, Jan 18, 2021 at 1:37 AM Daniel Scally <djrscally@gmail.com> wrote:
+> >>>> In some ACPI tables we encounter, devices use the _DEP method to assert
+> >>>> a dependence on other ACPI devices as opposed to the OpRegions that the
+> >>>> specification intends. We need to be able to find those devices "from"
+> >>>> the dependee, so add a function to parse all ACPI Devices and check if
+> >>>> the include the handle of the dependee device in their _DEP buffer.
+> >>> What exactly do you need this for?
+> >> So, in our DSDT we have devices with _HID INT3472, plus sensors which
+> >> refer to those INT3472's in their _DEP method. The driver binds to the
+> >> INT3472 device, we need to find the sensors dependent on them.
+> >>
+> > Well, this is an interesting concept. :-)
+> >
+> > Why does _DEP need to be used for that?  Isn't there any other way to
+> > look up the dependent sensors?
+> >
+> >>> Would it be practical to look up the suppliers in acpi_dep_list instead?
+> >>>
+> >>> Note that supplier drivers may remove entries from there, but does
+> >>> that matter for your use case?
+> >> Ah - that may work, yes. Thank you, let me test that.
+> > Even if that doesn't work right away, but it can be made work, I would
+> > very much prefer that to the driver parsing _DEP for every device in
+> > the namespace by itself.
+>
+>
+> This does work; do you prefer it in scan.c, or in utils.c (in which case
+> with acpi_dep_list declared as external var in internal.h)?
 
-Warning ids grouped by kconfigs:
+Let's put it in scan.c for now, because there is the lock protecting
+the list in there too.
 
-gcc_recent_errors
-`-- i386-randconfig-s002-20210119
-    `-- include-linux-spinlock.h:sparse:sparse:context-imbalance-in-pm_clk_list_lock-wrong-count-at-exit
-
-elapsed time: 722m
-
-configs tested: 96
-configs skipped: 2
-
-gcc tested configs:
-arm64                            allyesconfig
-arm64                               defconfig
-arm                                 defconfig
-arm                              allyesconfig
-arm                              allmodconfig
-mips                        workpad_defconfig
-sh                                  defconfig
-arm                          gemini_defconfig
-mips                           jazz_defconfig
-arm                           spitz_defconfig
-mips                  cavium_octeon_defconfig
-powerpc                 xes_mpc85xx_defconfig
-powerpc                     redwood_defconfig
-mips                          rm200_defconfig
-ia64                          tiger_defconfig
-m68k                       bvme6000_defconfig
-powerpc                    klondike_defconfig
-sh                            titan_defconfig
-powerpc                     rainier_defconfig
-powerpc                  storcenter_defconfig
-arm                         axm55xx_defconfig
-arm                           h3600_defconfig
-c6x                                 defconfig
-xtensa                       common_defconfig
-m68k                          multi_defconfig
-ia64                             allmodconfig
-ia64                                defconfig
-ia64                             allyesconfig
-m68k                             allmodconfig
-m68k                                defconfig
-m68k                             allyesconfig
-nds32                               defconfig
-nios2                            allyesconfig
-csky                                defconfig
-alpha                               defconfig
-alpha                            allyesconfig
-nios2                               defconfig
-arc                              allyesconfig
-nds32                             allnoconfig
-c6x                              allyesconfig
-xtensa                           allyesconfig
-h8300                            allyesconfig
-arc                                 defconfig
-sh                               allmodconfig
-parisc                              defconfig
-s390                             allyesconfig
-parisc                           allyesconfig
-s390                                defconfig
-i386                             allyesconfig
-sparc                            allyesconfig
-sparc                               defconfig
-i386                               tinyconfig
-i386                                defconfig
-mips                             allyesconfig
-mips                             allmodconfig
-powerpc                          allyesconfig
-powerpc                          allmodconfig
-powerpc                           allnoconfig
-i386                 randconfig-a001-20210120
-i386                 randconfig-a002-20210120
-i386                 randconfig-a004-20210120
-i386                 randconfig-a006-20210120
-i386                 randconfig-a005-20210120
-i386                 randconfig-a003-20210120
-i386                 randconfig-a013-20210120
-i386                 randconfig-a011-20210120
-i386                 randconfig-a012-20210120
-i386                 randconfig-a014-20210120
-i386                 randconfig-a015-20210120
-i386                 randconfig-a016-20210120
-riscv                    nommu_k210_defconfig
-riscv                            allyesconfig
-riscv                    nommu_virt_defconfig
-riscv                             allnoconfig
-riscv                               defconfig
-riscv                          rv32_defconfig
-riscv                            allmodconfig
-x86_64                                   rhel
-x86_64                           allyesconfig
-x86_64                    rhel-7.6-kselftests
-x86_64                              defconfig
-x86_64                               rhel-8.3
-x86_64                      rhel-8.3-kbuiltin
-x86_64                                  kexec
-
-clang tested configs:
-x86_64               randconfig-a002-20210120
-x86_64               randconfig-a003-20210120
-x86_64               randconfig-a001-20210120
-x86_64               randconfig-a005-20210120
-x86_64               randconfig-a006-20210120
-x86_64               randconfig-a004-20210120
-x86_64               randconfig-a015-20210119
-x86_64               randconfig-a013-20210119
-x86_64               randconfig-a012-20210119
-x86_64               randconfig-a016-20210119
-x86_64               randconfig-a011-20210119
-x86_64               randconfig-a014-20210119
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+How do you want to implement this?  Something like "walk the list and
+run a callback for the matching entries" or do you have something else
+in mind?
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
