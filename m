@@ -2,91 +2,168 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 790022FF3BB
-	for <lists+devel-acpica@lfdr.de>; Thu, 21 Jan 2021 20:03:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E3B42FFD6A
+	for <lists+devel-acpica@lfdr.de>; Fri, 22 Jan 2021 08:30:46 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 1B3E4100F2245;
-	Thu, 21 Jan 2021 11:03:38 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.167.172; helo=mail-oi1-f172.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	by ml01.01.org (Postfix) with ESMTP id CE8E7100F2263;
+	Thu, 21 Jan 2021 23:30:44 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.31; helo=mga06.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 732B9100F2242
-	for <devel@acpica.org>; Thu, 21 Jan 2021 11:03:35 -0800 (PST)
-Received: by mail-oi1-f172.google.com with SMTP id g69so2522271oib.12
-        for <devel@acpica.org>; Thu, 21 Jan 2021 11:03:35 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=sxUFDSeoZEWN4aDqisZF6mUVpomTtmiF7YK6hytZxWc=;
-        b=h+shkYudhp0XkssENiQJEtzH+uluFh2ZxQZgCkPCj/d9dzvVOmEtlOxTFRyA2pxXUO
-         EVM9/k0HJKebOeaIWb9RyIdlrCsnRycjwApYu/vlFz1hlxPtMJWHG3RkyoEIecNRvb2p
-         xwY/K5yEh2uqHOwSSb1kdZCACJNm0MPLc5qr4tY9c0NqXFGTCDYMnYrVUO3Hxh8VWwgY
-         RkRIOv8kqrKkZX0FobsK0hlVdE07c4Gy2VRY4kWS1z/FCvN+GFybGj6dNzC3XDWOqdIn
-         eOhaz6v9XQfR77KwV+Y+KnJrt9GvbqCpYRGOU262E1rSheM0DW9RB83lPz/n+0uneX1t
-         dn5w==
-X-Gm-Message-State: AOAM532tqrPUzECyhyr9AsITpg5Fx0ggfKOqjSJ3osWM6FBj3LwVGOT8
-	Mlprx7FscJ4k08sSOPft4bHMAypYcuJ0jZ/nIHk=
-X-Google-Smtp-Source: ABdhPJwFYOx7GKzTGGbTxgqjm5rCY/53kLF3X/JTRr/LaAc8hfo2mXKv0cD2IHyeZkf+1CBzz3/fcbRitQ3sr4ri09g=
-X-Received: by 2002:aca:308a:: with SMTP id w132mr703472oiw.69.1611255814671;
- Thu, 21 Jan 2021 11:03:34 -0800 (PST)
+	by ml01.01.org (Postfix) with ESMTPS id 7613F100EB342
+	for <devel@acpica.org>; Thu, 21 Jan 2021 23:30:43 -0800 (PST)
+IronPort-SDR: 6UsNKyDosZSoXu4rZ5WKM+HbO4RNG/6xJS03sm5c9E1/9EN9rrKMREDKj6y1/8g+M9R1cet65d
+ bALkLGiDpvSQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9871"; a="240941126"
+X-IronPort-AV: E=Sophos;i="5.79,366,1602572400";
+   d="scan'208";a="240941126"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jan 2021 23:30:42 -0800
+IronPort-SDR: ezljlS7CbtHOd3WXQa0V1Jv6Vd1XlpejZno5NZTHuWLPNwvFVAPZIISd+oPP6QthUR5B8fJieg
+ IfuLnJOa95xA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.79,366,1602572400";
+   d="scan'208";a="392226326"
+Received: from lkp-server01.sh.intel.com (HELO 260eafd5ecd0) ([10.239.97.150])
+  by orsmga007.jf.intel.com with ESMTP; 21 Jan 2021 23:30:41 -0800
+Received: from kbuild by 260eafd5ecd0 with local (Exim 4.92)
+	(envelope-from <lkp@intel.com>)
+	id 1l2qu0-00075E-Ge; Fri, 22 Jan 2021 07:30:40 +0000
+Date: Fri, 22 Jan 2021 15:30:36 +0800
+From: kernel test robot <lkp@intel.com>
+To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Message-ID: <600a7f1c.IUhAMURl7o4IVqMl%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-References: <20201111021131.822867-1-ndesaulniers@google.com> <031790d7-ee26-f919-9338-b135e9b94635@nvidia.com>
-In-Reply-To: <031790d7-ee26-f919-9338-b135e9b94635@nvidia.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Thu, 21 Jan 2021 20:03:23 +0100
-Message-ID: <CAJZ5v0it3KfdNo7kwq-7__C+Kvr4Eo7x8-3rBi09B5rHfNv-hQ@mail.gmail.com>
-To: Jon Hunter <jonathanh@nvidia.com>, Erik Kaneda <erik.kaneda@intel.com>,
-	Nick Desaulniers <ndesaulniers@google.com>
-Message-ID-Hash: MLYNIBUEK572GERYHPRAHRZZ2LJTYLPJ
-X-Message-ID-Hash: MLYNIBUEK572GERYHPRAHRZZ2LJTYLPJ
-X-MailFrom: rjwysocki@gmail.com
+Message-ID-Hash: H6JDRPW6A2RO2HKPNGOTURPXAR4VHT5J
+X-Message-ID-Hash: H6JDRPW6A2RO2HKPNGOTURPXAR4VHT5J
+X-MailFrom: lkp@intel.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>, "Gustavo A . R . Silva" <gustavoars@kernel.org>, clang-built-linux@googlegroups.com, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, linux-tegra <linux-tegra@vger.kernel.org>
+CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH] ACPICA: fix -Wfallthrough
+Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS WITH WARNING 33b4fa8533186db3c463120ced43b1c12ecba18d
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/MLYNIBUEK572GERYHPRAHRZZ2LJTYLPJ/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/H6JDRPW6A2RO2HKPNGOTURPXAR4VHT5J/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 
-T24gVGh1LCBKYW4gMjEsIDIwMjEgYXQgMTE6MDggQU0gSm9uIEh1bnRlciA8am9uYXRoYW5oQG52
-aWRpYS5jb20+IHdyb3RlOg0KPg0KPg0KPiBPbiAxMS8xMS8yMDIwIDAyOjExLCBOaWNrIERlc2F1
-bG5pZXJzIHdyb3RlOg0KPiA+IFRoZSAiZmFsbHRocm91Z2giIHBzZXVkby1rZXl3b3JkIHdhcyBh
-ZGRlZCBhcyBhIHBvcnRhYmxlIHdheSB0byBkZW5vdGUNCj4gPiBpbnRlbnRpb25hbCBmYWxsdGhy
-b3VnaC4gVGhpcyBjb2RlIHNlZW1lZCB0byBiZSB1c2luZyBhIG1peCBvZg0KPiA+IGZhbGx0aHJv
-dWdoIGNvbW1lbnRzIHRoYXQgR0NDIHJlY29nbml6ZXMsIGFuZCBzb21lIGtpbmQgb2YgbGludCBt
-YXJrZXIuDQo+ID4gSSdtIGd1ZXNzaW5nIHRoYXQgbGludGVyIGhhc24ndCBiZWVuIHJ1biBpbiBh
-IHdoaWxlIGZyb20gdGhlIG1peGVkIHVzZQ0KPiA+IG9mIHRoZSBtYXJrZXIgdnMgY29tbWVudHMu
-DQo+ID4NCj4gPiBTaWduZWQtb2ZmLWJ5OiBOaWNrIERlc2F1bG5pZXJzIDxuZGVzYXVsbmllcnNA
-Z29vZ2xlLmNvbT4NCj4NCj4NCj4gSSBrbm93IHRoaXMgaXMgbm90IHRoZSBleGFjdCB2ZXJzaW9u
-IHRoYXQgd2FzIG1lcmdlZCwgSSBjYW4ndCBmaW5kIGl0IG9uDQo+IHRoZSBsaXN0LCBidXQgbG9v
-a3MgbGlrZSB0aGUgdmVyc2lvbiB0aGF0IHdhcyBtZXJnZWQgWzBdLA0KDQpJdCB3b3VsZCBiZSB0
-aGlzIHBhdGNoOg0KDQpodHRwczovL3BhdGNod29yay5rZXJuZWwub3JnL3Byb2plY3QvbGludXgt
-YWNwaS9wYXRjaC8yMDIxMDExNTE4NDgyNi4yMjUwLTQtZXJpay5rYW5lZGFAaW50ZWwuY29tLw0K
-DQpOaWNrLCBFcmlrPw0KDQo+IGlzIGNhdXNpbmcgYnVpbGQgZXJyb3JzIHdpdGggb2xkZXIgdG9v
-bGNoYWlucyAoR0NDIHY2KSAuLi4NCj4NCj4gL2R2cy9naXQvZGlydHkvZ2l0LW1hc3Rlcl9sNHQt
-dXBzdHJlYW0va2VybmVsL2RyaXZlcnMvYWNwaS9hY3BpY2EvZHNjb250cm9sLmM6IEluIGZ1bmN0
-aW9uIOKAmGFjcGlfZHNfZXhlY19iZWdpbl9jb250cm9sX29w4oCZOg0KPiAvZHZzL2dpdC9kaXJ0
-eS9naXQtbWFzdGVyX2w0dC11cHN0cmVhbS9rZXJuZWwvZHJpdmVycy9hY3BpL2FjcGljYS9kc2Nv
-bnRyb2wuYzo2NTozOiBlcnJvcjog4oCYQUNQSV9GQUxMVEhST1VHSOKAmSB1bmRlY2xhcmVkIChm
-aXJzdCB1c2UgaW4gdGhpcyBmdW5jdGlvbikNCj4gICAgQUNQSV9GQUxMVEhST1VHSDsNCj4gICAg
-Xn5+fn5+fn5+fn5+fn5+fg0KPiAvZHZzL2dpdC9kaXJ0eS9naXQtbWFzdGVyX2w0dC11cHN0cmVh
-bS9rZXJuZWwvZHJpdmVycy9hY3BpL2FjcGljYS9kc2NvbnRyb2wuYzo2NTozOiBub3RlOiBlYWNo
-IHVuZGVjbGFyZWQgaWRlbnRpZmllciBpcyByZXBvcnRlZCBvbmx5IG9uY2UgZm9yIGVhY2ggZnVu
-Y3Rpb24gaXQgYXBwZWFycyBpbg0KPiAvZHZzL2dpdC9kaXJ0eS9naXQtbWFzdGVyX2w0dC11cHN0
-cmVhbS9rZXJuZWwvc2NyaXB0cy9NYWtlZmlsZS5idWlsZDoyODc6IHJlY2lwZSBmb3IgdGFyZ2V0
-ICdkcml2ZXJzL2FjcGkvYWNwaWNhL2RzY29udHJvbC5vJyBmYWlsZWQNCj4NCj4gQ2hlZXJzDQo+
-IEpvbg0KPg0KPiBbMF0gaHR0cHM6Ly9naXRodWIuY29tL2FjcGljYS9hY3BpY2EvY29tbWl0LzRi
-OTEzNWY1DQo+DQo+IC0tDQo+IG52cHVibGljCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fCkRldmVsIG1haWxpbmcgbGlzdCAtLSBkZXZlbEBhY3BpY2Eub3Jn
-ClRvIHVuc3Vic2NyaWJlIHNlbmQgYW4gZW1haWwgdG8gZGV2ZWwtbGVhdmVAYWNwaWNhLm9yZwol
-KHdlYl9wYWdlX3VybClzbGlzdGluZm8lKGNnaWV4dClzLyUoX2ludGVybmFsX25hbWUpcw==
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
+branch HEAD: 33b4fa8533186db3c463120ced43b1c12ecba18d  Merge branch 'acpi-platform' into bleeding-edge
+
+Warning ids grouped by kconfigs:
+
+gcc_recent_errors
+`-- x86_64-randconfig-s022-20210122
+    `-- include-linux-spinlock.h:sparse:sparse:context-imbalance-in-pm_clk_list_lock-wrong-count-at-exit
+
+elapsed time: 722m
+
+configs tested: 89
+configs skipped: 2
+
+gcc tested configs:
+arm                                 defconfig
+arm64                            allyesconfig
+arm64                               defconfig
+arm                              allyesconfig
+arm                              allmodconfig
+powerpc                   motionpro_defconfig
+c6x                        evmc6457_defconfig
+mips                         tb0226_defconfig
+mips                           ip22_defconfig
+powerpc                        icon_defconfig
+mips                        nlm_xlp_defconfig
+xtensa                generic_kc705_defconfig
+powerpc                    socrates_defconfig
+m68k                          atari_defconfig
+arm                             mxs_defconfig
+powerpc                   currituck_defconfig
+arm                        trizeps4_defconfig
+powerpc                 mpc834x_itx_defconfig
+arm                        shmobile_defconfig
+um                           x86_64_defconfig
+arc                        nsimosci_defconfig
+m68k                       m5208evb_defconfig
+arm                         lpc32xx_defconfig
+sh                           se7780_defconfig
+ia64                             allmodconfig
+ia64                                defconfig
+ia64                             allyesconfig
+m68k                             allmodconfig
+m68k                                defconfig
+m68k                             allyesconfig
+nios2                               defconfig
+arc                              allyesconfig
+nds32                             allnoconfig
+c6x                              allyesconfig
+nds32                               defconfig
+nios2                            allyesconfig
+csky                                defconfig
+alpha                               defconfig
+alpha                            allyesconfig
+xtensa                           allyesconfig
+h8300                            allyesconfig
+arc                                 defconfig
+sh                               allmodconfig
+parisc                              defconfig
+s390                             allyesconfig
+parisc                           allyesconfig
+s390                                defconfig
+i386                             allyesconfig
+sparc                            allyesconfig
+sparc                               defconfig
+i386                               tinyconfig
+i386                                defconfig
+mips                             allyesconfig
+mips                             allmodconfig
+powerpc                          allyesconfig
+powerpc                          allmodconfig
+powerpc                           allnoconfig
+i386                 randconfig-a001-20210121
+i386                 randconfig-a002-20210121
+i386                 randconfig-a004-20210121
+i386                 randconfig-a006-20210121
+i386                 randconfig-a005-20210121
+i386                 randconfig-a003-20210121
+i386                 randconfig-a013-20210121
+i386                 randconfig-a011-20210121
+i386                 randconfig-a012-20210121
+i386                 randconfig-a014-20210121
+i386                 randconfig-a015-20210121
+i386                 randconfig-a016-20210121
+x86_64               randconfig-a002-20210121
+x86_64               randconfig-a003-20210121
+x86_64               randconfig-a001-20210121
+x86_64               randconfig-a005-20210121
+x86_64               randconfig-a006-20210121
+x86_64               randconfig-a004-20210121
+riscv                    nommu_k210_defconfig
+riscv                            allyesconfig
+riscv                    nommu_virt_defconfig
+riscv                             allnoconfig
+riscv                               defconfig
+riscv                          rv32_defconfig
+riscv                            allmodconfig
+x86_64                                   rhel
+x86_64                           allyesconfig
+x86_64                    rhel-7.6-kselftests
+x86_64                              defconfig
+x86_64                               rhel-8.3
+x86_64                      rhel-8.3-kbuiltin
+x86_64                                  kexec
+
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+_______________________________________________
+Devel mailing list -- devel@acpica.org
+To unsubscribe send an email to devel-leave@acpica.org
+%(web_page_url)slistinfo%(cgiext)s/%(_internal_name)s
