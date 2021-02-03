@@ -1,60 +1,52 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 89CFA30C089
-	for <lists+devel-acpica@lfdr.de>; Tue,  2 Feb 2021 15:02:55 +0100 (CET)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9464530D40E
+	for <lists+devel-acpica@lfdr.de>; Wed,  3 Feb 2021 08:33:46 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 2B149100EA2AF;
-	Tue,  2 Feb 2021 06:02:54 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.167.176; helo=mail-oi1-f176.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	by ml01.01.org (Postfix) with ESMTP id 4BA9F100EAB48;
+	Tue,  2 Feb 2021 23:33:45 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.20; helo=mga02.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 6FFF8100EF271
-	for <devel@acpica.org>; Tue,  2 Feb 2021 06:02:52 -0800 (PST)
-Received: by mail-oi1-f176.google.com with SMTP id x71so22776386oia.9
-        for <devel@acpica.org>; Tue, 02 Feb 2021 06:02:52 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=XDOyyPXnhfDnLT42xUgfRv/pv03j1De9PVl4XkKNTZA=;
-        b=Pjzld24E4M44PkJKkCqKikfcYITg74tYkv3LlCa4aQLUDKw0/rLUq9aU5EIoB0jA5D
-         y753EYYo4eWjrxdaVslvh7g7EHHun2iFefrRbIJbWJnTfaFELHVIN+UBIonTvG/h1CxV
-         u0VwglC6vsSrpfNkf4dlRlD4BHUbWN+8ShVw0iKv8FdWbMVT8rcf399j6J++XwpLdH17
-         /4XdIIbt4vhorbP0+t4higHukCc6hqwn1z9me0nYXf3S56QQOdSg3GK+K5DGOMq5kAuy
-         K2SoTd6EuytxQEpKINZMtgFd2LMqrkwFt7GxrOwo8ygsv5J3gjJy8mEyAc998fXwVqGi
-         BVpg==
-X-Gm-Message-State: AOAM531xHCxI0DIGg2z061eO0uGFxDlT//jzjLcA/xnogYHhZl3lv9s+
-	/3UoJn5AgqIvAqKF4Sh4JMJVs98VorKXhiorXeE=
-X-Google-Smtp-Source: ABdhPJy0oGC9SrhvIPc6y3juU8i2CP65UYGiYv7W/WBqh/2pB9aSRhWKzEhtJZ6OKnjn/r/lWBX1jT4binoRV/rlprg=
-X-Received: by 2002:aca:308a:: with SMTP id w132mr2611030oiw.69.1612274571030;
- Tue, 02 Feb 2021 06:02:51 -0800 (PST)
+	by ml01.01.org (Postfix) with ESMTPS id 29C1A100EB350
+	for <devel@acpica.org>; Tue,  2 Feb 2021 23:33:42 -0800 (PST)
+IronPort-SDR: lbXF8iG2LCYTGBXQz/PO7oRuVRSEyBBJf8AlnM41c0QrJS+4emdSKunKL/UKki+Pnl973o426c
+ VFkWjyeR9UMw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9883"; a="168107328"
+X-IronPort-AV: E=Sophos;i="5.79,397,1602572400";
+   d="scan'208";a="168107328"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Feb 2021 23:33:11 -0800
+IronPort-SDR: myPpU4KpGAAi2oJxA6jCNviYva/KF4ik+5VbI/NWOTj1BzC0PsZDI+2XwJX4rqqcAhOjJCab6U
+ xMV1UoCYrCpw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.79,397,1602572400";
+   d="scan'208";a="372281236"
+Received: from lkp-server02.sh.intel.com (HELO 8b832f01bb9c) ([10.239.97.151])
+  by orsmga002.jf.intel.com with ESMTP; 02 Feb 2021 23:33:03 -0800
+Received: from kbuild by 8b832f01bb9c with local (Exim 4.92)
+	(envelope-from <lkp@intel.com>)
+	id 1l7Cer-00009K-30; Wed, 03 Feb 2021 07:33:01 +0000
+Date: Wed, 03 Feb 2021 15:31:58 +0800
+From: kernel test robot <lkp@intel.com>
+To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Message-ID: <601a516e.9kydFKsx8s1Ahqhn%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-References: <20210118003428.568892-1-djrscally@gmail.com> <20210118003428.568892-3-djrscally@gmail.com>
- <CAJZ5v0gVQsZ4rxXW8uMidW9zfY_S50zpfrL-Gq0J3Z4-qqBiww@mail.gmail.com>
- <b381b48e-1bf2-f3e7-10a6-e51cd261f43c@gmail.com> <CAJZ5v0iU2m4Hs6APuauQ645DwbjYaB8nJFjYH0+7yQnR-FPZBQ@mail.gmail.com>
- <e2d7e5e9-920f-7227-76a6-b166e30e11e5@gmail.com> <CAJZ5v0gg5oXG3yOO9iDvPKSsadYrFojW6JcKfZcQbFFpO78zAQ@mail.gmail.com>
- <85ccf00d-7c04-b1da-a4bc-82c805df69c9@gmail.com> <CAJZ5v0jO9O1zhBMNRNB5kRt1o86BTjr1kRuFUe=nNVTDwBQhEg@mail.gmail.com>
- <0fac24d2-e8fc-7dc8-0f2f-44c7aadb1daf@gmail.com> <CAJZ5v0jVxMMGh6k-vXeBRsCtD0L14poNUrg4kZOpCfOz2sZGZQ@mail.gmail.com>
- <ee8f6b58-55c8-e0a0-c161-bdef361f9e0a@gmail.com> <d9ec0439-4323-51a2-70e7-c258fe63cd86@gmail.com>
-In-Reply-To: <d9ec0439-4323-51a2-70e7-c258fe63cd86@gmail.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Tue, 2 Feb 2021 15:02:39 +0100
-Message-ID: <CAJZ5v0j7U=e+GHLqpivqfvOKCyCZWm4VK3___4tTfcxD==vcHA@mail.gmail.com>
-To: Daniel Scally <djrscally@gmail.com>
-Message-ID-Hash: Y7G6KAA5INOKSWCAAIJ3ZVHQR2X57QGU
-X-Message-ID-Hash: Y7G6KAA5INOKSWCAAIJ3ZVHQR2X57QGU
-X-MailFrom: rjwysocki@gmail.com
+Message-ID-Hash: WR47IQZKUQOMBDEXD2RMUJ7B7MZVDZ2M
+X-Message-ID-Hash: WR47IQZKUQOMBDEXD2RMUJ7B7MZVDZ2M
+X-MailFrom: lkp@intel.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: "Rafael J. Wysocki" <rafael@kernel.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>, linux-i2c <linux-i2c@vger.kernel.org>, Platform Driver <platform-driver-x86@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, "Rafael J. Wysocki" <rjw@rjwysocki.net>, andy@kernel.org, Mika Westerberg <mika.westerberg@linux.intel.com>, Linus Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski <bgolaszewski@baylibre.com>, Wolfram Sang <wsa@kernel.org>, Lee Jones <lee.jones@linaro.org>, Hans de Goede <hdegoede@redhat.com>, Mark Gross <mgross@linux.intel.com>, Erik Kaneda <erik.kaneda@intel.com>, Sakari Ailus <sakari.ailus@linux.intel.com>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>, Kieran Bingham <kieran.bingham@ideasonboard.com>
+CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH v2 2/7] acpi: utils: Add function to fetch dependent acpi_devices
+Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS c42187278fc107ad17fdaa2def70c451bcfdb6be
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/Y7G6KAA5INOKSWCAAIJ3ZVHQR2X57QGU/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/WR47IQZKUQOMBDEXD2RMUJ7B7MZVDZ2M/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -63,152 +55,179 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Tue, Feb 2, 2021 at 10:58 AM Daniel Scally <djrscally@gmail.com> wrote:
->
-> Hi Rafael
->
-> On 21/01/2021 21:06, Daniel Scally wrote:
-> >
-> > On 21/01/2021 18:08, Rafael J. Wysocki wrote:
-> >> On Thu, Jan 21, 2021 at 5:34 PM Daniel Scally <djrscally@gmail.com> wrote:
-> >>>
-> >>> On 21/01/2021 14:39, Rafael J. Wysocki wrote:
-> >>>> On Thu, Jan 21, 2021 at 1:04 PM Daniel Scally <djrscally@gmail.com> wrote:
-> >>>>> On 21/01/2021 11:58, Rafael J. Wysocki wrote:
-> >>>>>> On Thu, Jan 21, 2021 at 10:47 AM Daniel Scally <djrscally@gmail.com> wrote:
-> >>>>>>> Hi Rafael
-> >>>>>>>
-> >>>>>>> On 19/01/2021 13:15, Rafael J. Wysocki wrote:
-> >>>>>>>> On Mon, Jan 18, 2021 at 9:51 PM Daniel Scally <djrscally@gmail.com> wrote:
-> >>>>>>>>> On 18/01/2021 16:14, Rafael J. Wysocki wrote:
-> >>>>>>>>>> On Mon, Jan 18, 2021 at 1:37 AM Daniel Scally <djrscally@gmail.com> wrote:
-> >>>>>>>>>>> In some ACPI tables we encounter, devices use the _DEP method to assert
-> >>>>>>>>>>> a dependence on other ACPI devices as opposed to the OpRegions that the
-> >>>>>>>>>>> specification intends. We need to be able to find those devices "from"
-> >>>>>>>>>>> the dependee, so add a function to parse all ACPI Devices and check if
-> >>>>>>>>>>> the include the handle of the dependee device in their _DEP buffer.
-> >>>>>>>>>> What exactly do you need this for?
-> >>>>>>>>> So, in our DSDT we have devices with _HID INT3472, plus sensors which
-> >>>>>>>>> refer to those INT3472's in their _DEP method. The driver binds to the
-> >>>>>>>>> INT3472 device, we need to find the sensors dependent on them.
-> >>>>>>>>>
-> >>>>>>>> Well, this is an interesting concept. :-)
-> >>>>>>>>
-> >>>>>>>> Why does _DEP need to be used for that?  Isn't there any other way to
-> >>>>>>>> look up the dependent sensors?
-> >>>>>>>>
-> >>>>>>>>>> Would it be practical to look up the suppliers in acpi_dep_list instead?
-> >>>>>>>>>>
-> >>>>>>>>>> Note that supplier drivers may remove entries from there, but does
-> >>>>>>>>>> that matter for your use case?
-> >>>>>>>>> Ah - that may work, yes. Thank you, let me test that.
-> >>>>>>>> Even if that doesn't work right away, but it can be made work, I would
-> >>>>>>>> very much prefer that to the driver parsing _DEP for every device in
-> >>>>>>>> the namespace by itself.
-> >>>>>>> This does work; do you prefer it in scan.c, or in utils.c (in which case
-> >>>>>>> with acpi_dep_list declared as external var in internal.h)?
-> >>>>>> Let's put it in scan.c for now, because there is the lock protecting
-> >>>>>> the list in there too.
-> >>>>>>
-> >>>>>> How do you want to implement this?  Something like "walk the list and
-> >>>>>> run a callback for the matching entries" or do you have something else
-> >>>>>> in mind?
-> >>>>> Something like this (though with a mutex_lock()). It could be simplified
-> >>>>> by dropping the prev stuff, but we have seen INT3472 devices with
-> >>>>> multiple sensors declaring themselves dependent on the same device
-> >>>>>
-> >>>>>
-> >>>>> struct acpi_device *
-> >>>>> acpi_dev_get_next_dependent_dev(struct acpi_device *supplier,
-> >>>>>                 struct acpi_device *prev)
-> >>>>> {
-> >>>>>     struct acpi_dep_data *dep;
-> >>>>>     struct acpi_device *adev;
-> >>>>>     int ret;
-> >>>>>
-> >>>>>     if (!supplier)
-> >>>>>         return ERR_PTR(-EINVAL);
-> >>>>>
-> >>>>>     if (prev) {
-> >>>>>         /*
-> >>>>>          * We need to find the previous device in the list, so we know
-> >>>>>          * where to start iterating from.
-> >>>>>          */
-> >>>>>         list_for_each_entry(dep, &acpi_dep_list, node)
-> >>>>>             if (dep->consumer == prev->handle &&
-> >>>>>                 dep->supplier == supplier->handle)
-> >>>>>                 break;
-> >>>>>
-> >>>>>         dep = list_next_entry(dep, node);
-> >>>>>     } else {
-> >>>>>         dep = list_first_entry(&acpi_dep_list, struct acpi_dep_data,
-> >>>>>                        node);
-> >>>>>     }
-> >>>>>
-> >>>>>
-> >>>>>     list_for_each_entry_from(dep, &acpi_dep_list, node) {
-> >>>>>         if (dep->supplier == supplier->handle) {
-> >>>>>             ret = acpi_bus_get_device(dep->consumer, &adev);
-> >>>>>             if (ret)
-> >>>>>                 return ERR_PTR(ret);
-> >>>>>
-> >>>>>             return adev;
-> >>>>>         }
-> >>>>>     }
-> >>>>>
-> >>>>>     return NULL;
-> >>>>> }
-> >>>> That would work I think, but would it be practical to modify
-> >>>> acpi_walk_dep_device_list() so that it runs a callback for every
-> >>>> consumer found instead of or in addition to the "delete from the list
-> >>>> and free the entry" operation?
-> >>>
-> >>> I think that this would work fine, if that's the way you want to go.
-> >>> We'd just need to move everything inside the if (dep->supplier ==
-> >>> handle) block to a new callback, and for my purposes I think also add a
-> >>> way to stop parsing the list from the callback (so like have the
-> >>> callbacks return int and stop parsing on a non-zero return). Do you want
-> >>> to expose that ability to pass a callback outside of ACPI?
-> >> Yes.
-> >>
-> >>> Or just export helpers to call each of the callbacks (one to fetch the next
-> >>> dependent device, one to decrement the unmet dependencies counter)
-> >> If you can run a callback for every matching entry, you don't really
-> >> need to have a callback to return the next matching entry.  You can do
-> >> stuff for all of them in one go
-> >
-> > Well it my case it's more to return a pointer to the dep->consumer's
-> > acpi_device for a matching entry, so my idea was where there's multiple
-> > dependents you could use this as an iterator...but it could just be
-> > extended to that if needed later; I don't actually need to do it right now.
-> >
-> >
-> >> note that it probably is not a good
-> >> idea to run the callback under the lock, so the for loop currently in
-> >> there is not really suitable for that
-> >
-> > No problem;  I'll tweak that then
->
-> Slightly walking back my "No problem" here; as I understand this there's
-> kinda two options:
->
-> 1. Walk over the (locked) list, when a match is found unlock, run the
-> callback and re-lock.
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
+branch HEAD: c42187278fc107ad17fdaa2def70c451bcfdb6be  Merge branch 'pm-domains' into linux-next
 
-That's what I was thinking about.
+elapsed time: 726m
 
-> The problem with that idea is unless I'm mistaken there's no guarantee
-> that the .next pointer is still valid then (even using the *_safe()
-> methods) because either the next or the next + 1 entry could have been
-> removed whilst the list was unlocked and the callback was being ran, so
-> this seems a little unsafe.
+configs tested: 155
+configs skipped: 3
 
-This can be addressed by rotating the list while walking it, but that
-becomes problematic if there are concurrent walkers.
+The following configs have been built successfully.
+More configs may be tested in the coming days.
 
-OK, I guess running the callback under the lock is not really a big
-deal (and for the deletion case this is actually necessary), so let's
-do that.
+gcc tested configs:
+arm                                 defconfig
+arm64                            allyesconfig
+arm64                               defconfig
+arm                              allyesconfig
+arm                              allmodconfig
+arm                       omap2plus_defconfig
+h8300                     edosk2674_defconfig
+arm                          ep93xx_defconfig
+h8300                               defconfig
+arm                           viper_defconfig
+c6x                        evmc6457_defconfig
+powerpc                      mgcoge_defconfig
+mips                        qi_lb60_defconfig
+mips                        nlm_xlr_defconfig
+powerpc                     kilauea_defconfig
+arm                         socfpga_defconfig
+mips                      malta_kvm_defconfig
+powerpc                    klondike_defconfig
+powerpc                     ep8248e_defconfig
+parisc                generic-32bit_defconfig
+riscv                               defconfig
+powerpc                     mpc5200_defconfig
+arm                             pxa_defconfig
+powerpc                      acadia_defconfig
+m68k                        m5272c3_defconfig
+arm                        neponset_defconfig
+mips                     loongson1c_defconfig
+mips                          malta_defconfig
+sh                        apsh4ad0a_defconfig
+alpha                            allyesconfig
+powerpc                    ge_imp3a_defconfig
+xtensa                    xip_kc705_defconfig
+m68k                        mvme16x_defconfig
+arm                          collie_defconfig
+arm                         cm_x300_defconfig
+sh                           se7206_defconfig
+powerpc                     pq2fads_defconfig
+mips                             allyesconfig
+arm                      integrator_defconfig
+mips                        bcm63xx_defconfig
+sh                          landisk_defconfig
+m68k                            q40_defconfig
+arc                    vdk_hs38_smp_defconfig
+arc                           tb10x_defconfig
+c6x                        evmc6474_defconfig
+powerpc                    adder875_defconfig
+powerpc                 mpc8313_rdb_defconfig
+mips                           mtx1_defconfig
+riscv                            allyesconfig
+arm                        keystone_defconfig
+powerpc                 mpc85xx_cds_defconfig
+m68k                       m5208evb_defconfig
+powerpc                        warp_defconfig
+xtensa                  audio_kc705_defconfig
+sh                     magicpanelr2_defconfig
+sh                         ap325rxa_defconfig
+arc                         haps_hs_defconfig
+powerpc                      katmai_defconfig
+arm                           h5000_defconfig
+arm                        multi_v7_defconfig
+powerpc                     tqm8560_defconfig
+nios2                         3c120_defconfig
+arm                            pleb_defconfig
+sh                           se7343_defconfig
+arm                          badge4_defconfig
+sh                             espt_defconfig
+arm                           stm32_defconfig
+powerpc                     tqm8555_defconfig
+c6x                        evmc6472_defconfig
+c6x                              alldefconfig
+microblaze                      mmu_defconfig
+m68k                          hp300_defconfig
+powerpc                      pasemi_defconfig
+m68k                          amiga_defconfig
+arm                          pcm027_defconfig
+sh                   secureedge5410_defconfig
+um                             i386_defconfig
+powerpc                  storcenter_defconfig
+mips                    maltaup_xpa_defconfig
+mips                       lemote2f_defconfig
+mips                      bmips_stb_defconfig
+powerpc                      cm5200_defconfig
+powerpc                     skiroot_defconfig
+microblaze                          defconfig
+powerpc                          allyesconfig
+powerpc                 mpc832x_rdb_defconfig
+powerpc                        fsp2_defconfig
+powerpc                      ppc40x_defconfig
+sh                            migor_defconfig
+ia64                             allmodconfig
+ia64                                defconfig
+ia64                             allyesconfig
+m68k                             allmodconfig
+m68k                                defconfig
+m68k                             allyesconfig
+nios2                               defconfig
+arc                              allyesconfig
+nds32                             allnoconfig
+c6x                              allyesconfig
+nds32                               defconfig
+nios2                            allyesconfig
+csky                                defconfig
+alpha                               defconfig
+xtensa                           allyesconfig
+h8300                            allyesconfig
+arc                                 defconfig
+sh                               allmodconfig
+parisc                              defconfig
+s390                             allyesconfig
+parisc                           allyesconfig
+s390                                defconfig
+i386                             allyesconfig
+sparc                            allyesconfig
+sparc                               defconfig
+i386                               tinyconfig
+i386                                defconfig
+mips                             allmodconfig
+powerpc                          allmodconfig
+powerpc                           allnoconfig
+i386                 randconfig-a001-20210202
+i386                 randconfig-a005-20210202
+i386                 randconfig-a003-20210202
+i386                 randconfig-a006-20210202
+i386                 randconfig-a002-20210202
+i386                 randconfig-a004-20210202
+x86_64               randconfig-a013-20210202
+x86_64               randconfig-a014-20210202
+x86_64               randconfig-a015-20210202
+x86_64               randconfig-a016-20210202
+x86_64               randconfig-a011-20210202
+x86_64               randconfig-a012-20210202
+i386                 randconfig-a013-20210202
+i386                 randconfig-a016-20210202
+i386                 randconfig-a014-20210202
+i386                 randconfig-a012-20210202
+i386                 randconfig-a015-20210202
+i386                 randconfig-a011-20210202
+riscv                    nommu_k210_defconfig
+riscv                    nommu_virt_defconfig
+riscv                             allnoconfig
+riscv                          rv32_defconfig
+riscv                            allmodconfig
+x86_64                                   rhel
+x86_64                           allyesconfig
+x86_64                    rhel-7.6-kselftests
+x86_64                              defconfig
+x86_64                               rhel-8.3
+x86_64                      rhel-8.3-kbuiltin
+x86_64                                  kexec
+
+clang tested configs:
+x86_64               randconfig-a006-20210202
+x86_64               randconfig-a001-20210202
+x86_64               randconfig-a005-20210202
+x86_64               randconfig-a002-20210202
+x86_64               randconfig-a004-20210202
+x86_64               randconfig-a003-20210202
+
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
