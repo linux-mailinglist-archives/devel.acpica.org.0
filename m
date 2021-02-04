@@ -1,52 +1,55 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1839430ED6A
-	for <lists+devel-acpica@lfdr.de>; Thu,  4 Feb 2021 08:34:19 +0100 (CET)
+Received: from ml01.01.org (ml01.01.org [198.145.21.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 20EDC30FBCC
+	for <lists+devel-acpica@lfdr.de>; Thu,  4 Feb 2021 19:45:50 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 8A723100EAB09;
-	Wed,  3 Feb 2021 23:34:17 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.88; helo=mga01.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	by ml01.01.org (Postfix) with ESMTP id 38CED100EC1F9;
+	Thu,  4 Feb 2021 10:45:48 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.210.52; helo=mail-ot1-f52.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 8AD2A100EAB07
-	for <devel@acpica.org>; Wed,  3 Feb 2021 23:34:15 -0800 (PST)
-IronPort-SDR: efvvJmv4DSFK7ne5c9zq16ZIPDIJOW8iVn5iyX3VVxuehMcKn0Q//GTapUR9JHzTH9F33Wt9zK
- P1W784bqWdYw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9884"; a="200170993"
-X-IronPort-AV: E=Sophos;i="5.79,400,1602572400";
-   d="scan'208";a="200170993"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Feb 2021 23:34:14 -0800
-IronPort-SDR: tuQBFfMGQL7Xgm+mxxMJvT42Elb3QZ331n87q9q6vZQxYBLTXN9Hi3DWTxnZ4oDEl98Q0kEmSd
- piTJvsGWGNeQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.79,400,1602572400";
-   d="scan'208";a="576198674"
-Received: from lkp-server02.sh.intel.com (HELO 8b832f01bb9c) ([10.239.97.151])
-  by orsmga005.jf.intel.com with ESMTP; 03 Feb 2021 23:34:12 -0800
-Received: from kbuild by 8b832f01bb9c with local (Exim 4.92)
-	(envelope-from <lkp@intel.com>)
-	id 1l7Z9X-0000pE-Uy; Thu, 04 Feb 2021 07:34:11 +0000
-Date: Thu, 04 Feb 2021 15:33:38 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <601ba352.VfF+oLpzGWFpeVB1%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTPS id 8C44E100EC1E6
+	for <devel@acpica.org>; Thu,  4 Feb 2021 10:45:38 -0800 (PST)
+Received: by mail-ot1-f52.google.com with SMTP id i20so4418170otl.7
+        for <devel@acpica.org>; Thu, 04 Feb 2021 10:45:38 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=xnuUw1FLcM4+2rBIDsM0pF6wdlTJf4QW7NKIBa7PlDU=;
+        b=uVs4daPm2UmCmD4Jg+OTukiPScibxdGlOAP/L3CyMl30NdcIRvTrhtrQ79x4oVDhVE
+         +3mrQUKzLfC87HvHCX6R90ZiPgfLKhJyyODFvJVIn2OEC8knzbNhJibRYMb9pcRjDHDh
+         ecpo/Vy8T5POhQ20GnohkU9SOYPSgxOylBdsJDyhmSodcVDsg4z5JYEAQX6GCbsnUmER
+         FPslaoCCWwhBtoru0tirjQQtanHED1vYwZXGYUKZDX5Mk9PargD55tCEiLE3Rcfp2JQJ
+         GTXidLF7qpViLWIiHbLVAm4DkLO7BrXpqo9beZmOdBSEVcyRsvHEe1+M0SNWNlMeSlll
+         5QKQ==
+X-Gm-Message-State: AOAM533uMk3bnN7/A+0rdWWCm8zoR/WpXiAQ6j0o1FQH4YPWQNZk3m9N
+	ntzJ+ruLXFZyYwa9JnNkqMGJ+0llX3mzZj6iKOc=
+X-Google-Smtp-Source: ABdhPJwK95CDaaKkEZNHkySmn2WdN+iBqCzuyanMrOGG8WbGe+I9XJxDm16VMC5E8ME5QFhIbip3DGg0SxLQwDn8Ov0=
+X-Received: by 2002:a05:6830:2313:: with SMTP id u19mr554329ote.321.1612464336202;
+ Thu, 04 Feb 2021 10:45:36 -0800 (PST)
 MIME-Version: 1.0
-Message-ID-Hash: T4BAYS6DABYW4DQ7IZLIYIDHRKM3NJHX
-X-Message-ID-Hash: T4BAYS6DABYW4DQ7IZLIYIDHRKM3NJHX
-X-MailFrom: lkp@intel.com
+References: <20210203150435.27941-1-wei.liu@kernel.org> <20210203150435.27941-9-wei.liu@kernel.org>
+ <20210204183841.y4fgwjuggtbrnere@liuwe-devbox-debian-v2>
+In-Reply-To: <20210204183841.y4fgwjuggtbrnere@liuwe-devbox-debian-v2>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Thu, 4 Feb 2021 19:45:25 +0100
+Message-ID: <CAJZ5v0gJD1B92FsSo9xMrdFWYEh5DHqAQQ4TiFbHV=a2XpBEbg@mail.gmail.com>
+To: Wei Liu <wei.liu@kernel.org>
+Message-ID-Hash: CQJYQ2G7WXQ6TH3VK35ICRS7ALLC5PLS
+X-Message-ID-Hash: CQJYQ2G7WXQ6TH3VK35ICRS7ALLC5PLS
+X-MailFrom: rjwysocki@gmail.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+CC: Linux on Hyper-V List <linux-hyperv@vger.kernel.org>, virtualization@lists.linux-foundation.org, Linux Kernel List <linux-kernel@vger.kernel.org>, Michael Kelley <mikelley@microsoft.com>, Vineeth Pillai <viremana@linux.microsoft.com>, Sunil Muthuswamy <sunilmut@microsoft.com>, Nuno Das Neves <nunodasneves@linux.microsoft.com>, Pavel Tatashin <pasha.tatashin@soleen.com>, Erik Kaneda <erik.kaneda@intel.com>, "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS d0df27d78279aaa73c22e54f0b97d5f3f508f27e
+Subject: [Devel] Re: [PATCH v6 08/16] ACPI / NUMA: add a stub function for node_to_pxm()
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/T4BAYS6DABYW4DQ7IZLIYIDHRKM3NJHX/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/CQJYQ2G7WXQ6TH3VK35ICRS7ALLC5PLS/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -55,119 +58,49 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-branch HEAD: d0df27d78279aaa73c22e54f0b97d5f3f508f27e  Merge branch 'sfi-removal' into bleeding-edge
+On Thu, Feb 4, 2021 at 7:41 PM Wei Liu <wei.liu@kernel.org> wrote:
+>
+> On Wed, Feb 03, 2021 at 03:04:27PM +0000, Wei Liu wrote:
+> > There is already a stub function for pxm_to_node but conversion to the
+> > other direction is missing.
+> >
+> > It will be used by Microsoft Hypervisor code later.
+> >
+> > Signed-off-by: Wei Liu <wei.liu@kernel.org>
+>
+> Hi ACPI maintainers, if you're happy with this patch I can take it via
+> the hyperv-next tree, given the issue is discovered when pxm_to_node is
+> called in our code.
 
-elapsed time: 723m
+Yes, you can.
 
-configs tested: 95
-configs skipped: 2
+Thanks!
 
-The following configs have been built successfully.
-More configs may be tested in the coming days.
-
-gcc tested configs:
-arm                                 defconfig
-arm64                            allyesconfig
-arm64                               defconfig
-arm                              allyesconfig
-arm                              allmodconfig
-arm                         cm_x300_defconfig
-sh                          urquell_defconfig
-arm                        spear6xx_defconfig
-sh                ecovec24-romimage_defconfig
-c6x                        evmc6472_defconfig
-arc                      axs103_smp_defconfig
-arc                            hsdk_defconfig
-arc                        nsim_700_defconfig
-powerpc                      ppc6xx_defconfig
-powerpc                     tqm8548_defconfig
-powerpc                 mpc837x_rdb_defconfig
-powerpc                    socrates_defconfig
-sh                          sdk7780_defconfig
-sh                         microdev_defconfig
-arm                          pxa168_defconfig
-arc                          axs103_defconfig
-s390                          debug_defconfig
-mips                         bigsur_defconfig
-arm                          lpd270_defconfig
-ia64                             allmodconfig
-ia64                                defconfig
-ia64                             allyesconfig
-m68k                             allmodconfig
-m68k                                defconfig
-m68k                             allyesconfig
-nios2                               defconfig
-arc                              allyesconfig
-nds32                             allnoconfig
-c6x                              allyesconfig
-nds32                               defconfig
-nios2                            allyesconfig
-csky                                defconfig
-alpha                               defconfig
-alpha                            allyesconfig
-xtensa                           allyesconfig
-h8300                            allyesconfig
-arc                                 defconfig
-sh                               allmodconfig
-parisc                              defconfig
-s390                             allyesconfig
-parisc                           allyesconfig
-s390                                defconfig
-i386                             allyesconfig
-sparc                            allyesconfig
-sparc                               defconfig
-i386                               tinyconfig
-i386                                defconfig
-mips                             allyesconfig
-mips                             allmodconfig
-powerpc                          allyesconfig
-powerpc                          allmodconfig
-powerpc                           allnoconfig
-i386                 randconfig-a001-20210203
-i386                 randconfig-a005-20210203
-i386                 randconfig-a003-20210203
-i386                 randconfig-a006-20210203
-i386                 randconfig-a002-20210203
-i386                 randconfig-a004-20210203
-x86_64               randconfig-a013-20210202
-x86_64               randconfig-a014-20210202
-x86_64               randconfig-a015-20210202
-x86_64               randconfig-a016-20210202
-x86_64               randconfig-a011-20210202
-x86_64               randconfig-a012-20210202
-i386                 randconfig-a013-20210202
-i386                 randconfig-a016-20210202
-i386                 randconfig-a014-20210202
-i386                 randconfig-a012-20210202
-i386                 randconfig-a015-20210202
-i386                 randconfig-a011-20210202
-riscv                    nommu_k210_defconfig
-riscv                            allyesconfig
-riscv                    nommu_virt_defconfig
-riscv                             allnoconfig
-riscv                               defconfig
-riscv                          rv32_defconfig
-riscv                            allmodconfig
-x86_64                                   rhel
-x86_64                           allyesconfig
-x86_64                    rhel-7.6-kselftests
-x86_64                              defconfig
-x86_64                               rhel-8.3
-x86_64                      rhel-8.3-kbuiltin
-x86_64                                  kexec
-
-clang tested configs:
-x86_64               randconfig-a006-20210202
-x86_64               randconfig-a001-20210202
-x86_64               randconfig-a005-20210202
-x86_64               randconfig-a002-20210202
-x86_64               randconfig-a004-20210202
-x86_64               randconfig-a003-20210202
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+>
+> > ---
+> > v6: new
+> > ---
+> >  include/acpi/acpi_numa.h | 4 ++++
+> >  1 file changed, 4 insertions(+)
+> >
+> > diff --git a/include/acpi/acpi_numa.h b/include/acpi/acpi_numa.h
+> > index a4c6ef809e27..40a91ce87e04 100644
+> > --- a/include/acpi/acpi_numa.h
+> > +++ b/include/acpi/acpi_numa.h
+> > @@ -30,6 +30,10 @@ static inline int pxm_to_node(int pxm)
+> >  {
+> >       return 0;
+> >  }
+> > +static inline int node_to_pxm(int node)
+> > +{
+> > +     return 0;
+> > +}
+> >  #endif                               /* CONFIG_ACPI_NUMA */
+> >
+> >  #ifdef CONFIG_ACPI_HMAT
+> > --
+> > 2.20.1
+> >
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
