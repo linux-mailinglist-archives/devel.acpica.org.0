@@ -2,54 +2,53 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C981B3132DE
-	for <lists+devel-acpica@lfdr.de>; Mon,  8 Feb 2021 14:01:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C14C3151BC
+	for <lists+devel-acpica@lfdr.de>; Tue,  9 Feb 2021 15:35:32 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 2CB55100F2240;
-	Mon,  8 Feb 2021 05:01:17 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.167.171; helo=mail-oi1-f171.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+	by ml01.01.org (Postfix) with ESMTP id E07C0100EAB7D;
+	Tue,  9 Feb 2021 06:35:30 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.210.53; helo=mail-ot1-f53.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 46623100EB35F
-	for <devel@acpica.org>; Mon,  8 Feb 2021 05:01:15 -0800 (PST)
-Received: by mail-oi1-f171.google.com with SMTP id r75so1855120oie.11
-        for <devel@acpica.org>; Mon, 08 Feb 2021 05:01:15 -0800 (PST)
+	by ml01.01.org (Postfix) with ESMTPS id BF264100F227A
+	for <devel@acpica.org>; Tue,  9 Feb 2021 06:35:28 -0800 (PST)
+Received: by mail-ot1-f53.google.com with SMTP id t25so17670293otc.5
+        for <devel@acpica.org>; Tue, 09 Feb 2021 06:35:28 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=gvxc4VC9l/IR/i8ANGFEq/fIycfe1+oz586mHeCkXyY=;
-        b=dCiZAylnnL2w9t2kwtHpiCNkUqsHj//VBG6dNN+mQIBFb4h3cyvZDayhFO9bb0QkVy
-         MthcDRXrZJMgSUgCzkGYpG4iO+8HYDSe1efjceSgQP6VgpBanjzSyyka3exZ7u99Dofj
-         MUZtdBGhsyFVgb7qH7oV1YOSP7Epy5QPvexQUjhR1sqBs9DDH0xP9GDZu02+V0fr1xtn
-         86Xtds43DalqrVzrqa3689rQcgpC8UvMaQ5LvhosL91mzvsYiPCv9K58Putd4iHF8gfp
-         n74UjW5rxrTN/g8ZFNaRkPvaD1ZBK0y/fsQRNfC4Z+50NLXO0RiDZGo1nowL/3krE337
-         2GBg==
-X-Gm-Message-State: AOAM532s/MLPcMX19nengkLguZjaNCA4HrFxhbSn/Ft9pfJaMsXzuuTu
-	AUS1/qQ77SMksM1SRAl4pJXoNl3rYbEBmGED8kg=
-X-Google-Smtp-Source: ABdhPJwcBBneby+U8ATEJaNGJS/dzjUdsjmsd0GNONhJ+maNLDnptpwdadyvK1u/ZgGgN2gMddShxT5nyiPV0jERB0o=
-X-Received: by 2002:a54:400b:: with SMTP id x11mr4489172oie.71.1612789274272;
- Mon, 08 Feb 2021 05:01:14 -0800 (PST)
+        bh=lZa1gL5UO1QVOwd/KPeOZtTkGeuyxn69fTmhbjihUsk=;
+        b=pUB2UbFAa+yqq/R0gAbDfBcMnV1E2bHoFmMXnUYN/pH3IKb8Y0neqViLrfqpcKBiEM
+         60b4grLarT0NdCI6sgOk1mcXkQh6hYjDlvcEUF95opB/Re5OYqn2lw/WXbPrhOoQTYg7
+         0Emax15/1hC3tkQk8x8M3WqUQhPrXAOycubfAAx5tKgiQDu/rQJ20FklZnb7uk4/hB21
+         DL7W+3u+OSr78Q2rIDIvB0hprEL1XCQu7kkStlnJOoLNDTieHpBOhR+UNJKef/eCE0+4
+         s6f+JkRmXrlvNQ7WzD+BmYxwKt97QRbzkPXmh+ZrYVBHj6cIkfKnZKrx2YwYGE+qETXD
+         duIQ==
+X-Gm-Message-State: AOAM532vZhZNlUQ0GJCnES30z3H4xu+nR8V0THsfuOjxoAxBshO5zRih
+	BO0rZu0RHM/tA1duwERkGoPEIllLc8UscOfW7Tk=
+X-Google-Smtp-Source: ABdhPJw7RYC30OMzcFI0ZQqtGXBLiUxRNCQYDuo2ImGnO4Ce/C1BOgkndTGNVsYWfa83+pNi+h7/aZbkYDEscbISA7s=
+X-Received: by 2002:a9d:a2d:: with SMTP id 42mr14909782otg.321.1612881327590;
+ Tue, 09 Feb 2021 06:35:27 -0800 (PST)
 MIME-Version: 1.0
-References: <20210206084937.20853-1-ardb@kernel.org> <20210206104854.GC27503@dragon>
-In-Reply-To: <20210206104854.GC27503@dragon>
+References: <20210209031744.26474-1-weidongcui@gmail.com>
+In-Reply-To: <20210209031744.26474-1-weidongcui@gmail.com>
 From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Mon, 8 Feb 2021 14:00:58 +0100
-Message-ID: <CAJZ5v0hMJnaHhUYib9d3yQ1CMHLE+Hu3UM4VoN=dOiyriTPmOw@mail.gmail.com>
-To: Shawn Guo <shawn.guo@linaro.org>, Ard Biesheuvel <ardb@kernel.org>,
-	Erik Kaneda <erik.kaneda@intel.com>
-Message-ID-Hash: VHLCT6E5NGWYOWJ56A5OU2I752R6BUHO
-X-Message-ID-Hash: VHLCT6E5NGWYOWJ56A5OU2I752R6BUHO
+Date: Tue, 9 Feb 2021 15:35:14 +0100
+Message-ID: <CAJZ5v0ifzqR90BJY3u6NGvMLuVn8YApLZH=oA5COcmjs_GKFqQ@mail.gmail.com>
+To: Weidong Cui <weidongcui@gmail.com>
+Message-ID-Hash: 2MDBUP6TLRBBCZI6H6HE3HPM3HR4BCJQ
+X-Message-ID-Hash: 2MDBUP6TLRBBCZI6H6HE3HPM3HR4BCJQ
 X-MailFrom: rjwysocki@gmail.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: Linux ARM <linux-arm-kernel@lists.infradead.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+CC: Erik Kaneda <erik.kaneda@intel.com>, "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>, Xinyang Ge <aegiryy@gmail.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH] Revert "ACPICA: Interpreter: fix memory leak by using existing buffer"
+Subject: [Devel] Re: [PATCH] Enable ACPI_ADR_SPACE_PCI_CONFIG in acpi_gbl_default_address_spaces only when ACPI_PCI_CONFIGURED is defined
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/VHLCT6E5NGWYOWJ56A5OU2I752R6BUHO/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/2MDBUP6TLRBBCZI6H6HE3HPM3HR4BCJQ/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -58,28 +57,51 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Sat, Feb 6, 2021 at 11:49 AM Shawn Guo <shawn.guo@linaro.org> wrote:
+On Tue, Feb 9, 2021 at 4:22 AM Weidong Cui <weidongcui@gmail.com> wrote:
 >
-> On Sat, Feb 06, 2021 at 09:49:37AM +0100, Ard Biesheuvel wrote:
-> > This reverts commit 32cf1a12cad43358e47dac8014379c2f33dfbed4.
-> >
-> > The 'exisitng buffer' in this case is the firmware provided table, and
-> > we should not modify that in place. This fixes a crash on arm64 with
-> > initrd table overrides, in which case the DSDT is not mapped with
-> > read/write permissions.
-> >
-> > Cc: Robert Moore <robert.moore@intel.com>
-> > Cc: Erik Kaneda <erik.kaneda@intel.com>
-> > Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-> > Cc: Len Brown <lenb@kernel.org>
-> > Reported-by: Shawn Guo <shawn.guo@linaro.org>
-> > Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+> Signed-off-by: Weidong Cui <weidongcui@gmail.com>
+> Signed-off-by: Xinyang Ge <aegiryy@gmail.com>
+
+ACPICA material, left to Erik & Bob, thanks!
+
+> ---
+>  drivers/acpi/acpica/evhandler.c | 2 ++
+>  include/acpi/acconfig.h         | 4 ++++
+>  2 files changed, 6 insertions(+)
 >
-> Tested-by: Shawn Guo <shawn.guo@linaro.org>
-
-Applied, thanks!
-
-Erik, the upstream will need to sync up with this revert.
+> diff --git a/drivers/acpi/acpica/evhandler.c b/drivers/acpi/acpica/evhandler.c
+> index 5884eba04..4c25ad433 100644
+> --- a/drivers/acpi/acpica/evhandler.c
+> +++ b/drivers/acpi/acpica/evhandler.c
+> @@ -26,7 +26,9 @@ acpi_ev_install_handler(acpi_handle obj_handle,
+>  u8 acpi_gbl_default_address_spaces[ACPI_NUM_DEFAULT_SPACES] = {
+>         ACPI_ADR_SPACE_SYSTEM_MEMORY,
+>         ACPI_ADR_SPACE_SYSTEM_IO,
+> +#ifdef ACPI_PCI_CONFIGURED
+>         ACPI_ADR_SPACE_PCI_CONFIG,
+> +#endif
+>         ACPI_ADR_SPACE_DATA_TABLE
+>  };
+>
+> diff --git a/include/acpi/acconfig.h b/include/acpi/acconfig.h
+> index a225eff49..790999028 100644
+> --- a/include/acpi/acconfig.h
+> +++ b/include/acpi/acconfig.h
+> @@ -162,7 +162,11 @@
+>  /* Maximum space_ids for Operation Regions */
+>
+>  #define ACPI_MAX_ADDRESS_SPACE          255
+> +#ifdef ACPI_PCI_CONFIGURED
+>  #define ACPI_NUM_DEFAULT_SPACES         4
+> +#else
+> +#define ACPI_NUM_DEFAULT_SPACES         3
+> +#endif
+>
+>  /* Array sizes.  Used for range checking also */
+>
+> --
+> 2.24.3 (Apple Git-128)
+>
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
