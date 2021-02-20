@@ -2,51 +2,51 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id A88BA320149
-	for <lists+devel-acpica@lfdr.de>; Fri, 19 Feb 2021 23:20:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6733432058D
+	for <lists+devel-acpica@lfdr.de>; Sat, 20 Feb 2021 14:39:12 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 6B8E2100EBBB1;
-	Fri, 19 Feb 2021 14:20:15 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.24; helo=mga09.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+	by ml01.01.org (Postfix) with ESMTP id B0978100ED499;
+	Sat, 20 Feb 2021 05:39:10 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.136; helo=mga12.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id C0810100EC1D8
-	for <devel@acpica.org>; Fri, 19 Feb 2021 14:20:12 -0800 (PST)
-IronPort-SDR: /psSLTmgNc+Ohh5CBAMlEcmKxnG73Mjt7wOX0l7ngxpJvqarwSgm1HIYhcRhZ/mnhv5gT1UPSZ
- fSa5a9p3HyoA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9900"; a="184096411"
-X-IronPort-AV: E=Sophos;i="5.81,191,1610438400";
-   d="scan'208";a="184096411"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Feb 2021 14:20:12 -0800
-IronPort-SDR: pC71vhmFU2tDf6B0FQIZQWZDEOAgWg6yfu5JluhbEiLNoSljw3CVzq0128QAxaKgBDvTaNghzf
- kIUWcTc0N00Q==
+	by ml01.01.org (Postfix) with ESMTPS id 6F6C5100EF264
+	for <devel@acpica.org>; Sat, 20 Feb 2021 05:39:07 -0800 (PST)
+IronPort-SDR: oUcQ4/Zy9/gu7P9p/U9HmNWJC8Ggj7wjwo3zYg8zSY175TKkS0FNmH6OarPmu8i1sv6mhlI/Wh
+ uZLAowL/n7UQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9900"; a="163253313"
+X-IronPort-AV: E=Sophos;i="5.81,192,1610438400";
+   d="scan'208";a="163253313"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Feb 2021 05:39:06 -0800
+IronPort-SDR: wbDDrAwtgbEoM+YuUMG8QTT0Lst8ruR0TaWXrGG8lUxJwIMtzLZPsINZsqBFC1o/gBP4rByCXy
+ zJy+gcqWzm6g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.81,191,1610438400";
-   d="scan'208";a="440443242"
+X-IronPort-AV: E=Sophos;i="5.81,192,1610438400";
+   d="scan'208";a="514072987"
 Received: from lkp-server02.sh.intel.com (HELO cd560a204411) ([10.239.97.151])
-  by orsmga001.jf.intel.com with ESMTP; 19 Feb 2021 14:20:10 -0800
+  by orsmga004.jf.intel.com with ESMTP; 20 Feb 2021 05:39:04 -0800
 Received: from kbuild by cd560a204411 with local (Exim 4.92)
 	(envelope-from <lkp@intel.com>)
-	id 1lDE89-000AfC-Fx; Fri, 19 Feb 2021 22:20:09 +0000
-Date: Sat, 20 Feb 2021 06:19:55 +0800
+	id 1lDSTP-000B3I-Jm; Sat, 20 Feb 2021 13:39:03 +0000
+Date: Sat, 20 Feb 2021 21:38:52 +0800
 From: kernel test robot <lkp@intel.com>
 To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <6030398b.B2E7yyx8RuCeVTwN%lkp@intel.com>
+Message-ID: <603110ec.tBR5K6lisbTTdnBv%lkp@intel.com>
 User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-Message-ID-Hash: CBOHUMRZ4I3KVCHNL462UYO4SJ66P4IM
-X-Message-ID-Hash: CBOHUMRZ4I3KVCHNL462UYO4SJ66P4IM
+Message-ID-Hash: OFLQSV7FZL5EHOZUS6UPN43AFACTMDF5
+X-Message-ID-Hash: OFLQSV7FZL5EHOZUS6UPN43AFACTMDF5
 X-MailFrom: lkp@intel.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
 CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS 8b72d3aa065ce33df4f042840078542b1e5d2c45
+Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS fa7998ffaad0ed13479fe7026ef814b8a5bd8925
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/CBOHUMRZ4I3KVCHNL462UYO4SJ66P4IM/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/OFLQSV7FZL5EHOZUS6UPN43AFACTMDF5/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -56,12 +56,12 @@ Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
 tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-branch HEAD: 8b72d3aa065ce33df4f042840078542b1e5d2c45  Merge branches 'pm-cpufreq-fixes' and 'pm-opp-fixes' into linux-next
+branch HEAD: fa7998ffaad0ed13479fe7026ef814b8a5bd8925  Merge branch 'pm-cpufreq-fixes' into bleeding-edge
 
-elapsed time: 723m
+elapsed time: 721m
 
-configs tested: 130
-configs skipped: 4
+configs tested: 98
+configs skipped: 2
 
 The following configs have been built successfully.
 More configs may be tested in the coming days.
@@ -72,61 +72,28 @@ arm64                            allyesconfig
 arm64                               defconfig
 arm                              allyesconfig
 arm                              allmodconfig
-powerpc                      cm5200_defconfig
-mips                       rbtx49xx_defconfig
-powerpc                     stx_gp3_defconfig
-sh                           se7780_defconfig
-arm                        mvebu_v5_defconfig
-powerpc                     sequoia_defconfig
-ia64                             alldefconfig
-sh                             espt_defconfig
-arm                          pcm027_defconfig
-mips                      pistachio_defconfig
-arm                  colibri_pxa270_defconfig
-sh                            migor_defconfig
-arm                          pxa910_defconfig
-arc                    vdk_hs38_smp_defconfig
-powerpc                  storcenter_defconfig
-mips                       bmips_be_defconfig
-arm                            u300_defconfig
-powerpc                  iss476-smp_defconfig
-arm                        spear3xx_defconfig
-powerpc                   motionpro_defconfig
-arm                             pxa_defconfig
-sh                          polaris_defconfig
-arm                         at91_dt_defconfig
-sh                        edosk7760_defconfig
+sh                          landisk_defconfig
+powerpc                     tqm5200_defconfig
+xtensa                       common_defconfig
+h8300                               defconfig
+sh                           se7619_defconfig
 powerpc                 mpc834x_mds_defconfig
-arm                         bcm2835_defconfig
-arm                         s5pv210_defconfig
-powerpc                 canyonlands_defconfig
-sh                     sh7710voipgw_defconfig
-powerpc                      ppc44x_defconfig
-mips                         rt305x_defconfig
-arm                       omap2plus_defconfig
-powerpc                    amigaone_defconfig
-sparc64                          alldefconfig
-mips                          rb532_defconfig
-mips                           jazz_defconfig
-powerpc                 mpc832x_mds_defconfig
-powerpc                     sbc8548_defconfig
-arm                         hackkit_defconfig
-powerpc                    adder875_defconfig
-sh                           se7724_defconfig
-arm                           stm32_defconfig
-arm                          imote2_defconfig
-xtensa                         virt_defconfig
-arm                           corgi_defconfig
-m68k                        mvme16x_defconfig
-sh                   sh7770_generic_defconfig
-arm                            hisi_defconfig
-ia64                            zx1_defconfig
-sh                                  defconfig
+sh                           se7206_defconfig
+arm                       imx_v6_v7_defconfig
+sh                         microdev_defconfig
+powerpc                     rainier_defconfig
+arc                        nsim_700_defconfig
+sh                   rts7751r2dplus_defconfig
+arc                      axs103_smp_defconfig
+powerpc                    klondike_defconfig
+sh                           se7712_defconfig
+arm                           h5000_defconfig
+xtensa                  nommu_kc705_defconfig
+sh                           se7705_defconfig
 mips                     cu1830-neo_defconfig
-sparc                               defconfig
-arc                         haps_hs_defconfig
-powerpc                       ppc64_defconfig
-sh                          rsk7201_defconfig
+arm                        mvebu_v5_defconfig
+powerpc                     pseries_defconfig
+arm                        multi_v7_defconfig
 ia64                             allmodconfig
 ia64                                defconfig
 ia64                             allyesconfig
@@ -153,6 +120,7 @@ parisc                           allyesconfig
 s390                                defconfig
 i386                             allyesconfig
 sparc                            allyesconfig
+sparc                               defconfig
 i386                               tinyconfig
 i386                                defconfig
 mips                             allyesconfig
