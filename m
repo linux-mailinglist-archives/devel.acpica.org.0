@@ -1,64 +1,66 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B800F3219E1
-	for <lists+devel-acpica@lfdr.de>; Mon, 22 Feb 2021 15:12:55 +0100 (CET)
+Received: from ml01.01.org (ml01.01.org [198.145.21.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 57C843219F3
+	for <lists+devel-acpica@lfdr.de>; Mon, 22 Feb 2021 15:16:08 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 78DC4100EBB9E;
-	Mon, 22 Feb 2021 06:12:54 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2607:f8b0:4864:20::1034; helo=mail-pj1-x1034.google.com; envelope-from=andy.shevchenko@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+	by ml01.01.org (Postfix) with ESMTP id CB66E100EBB9E;
+	Mon, 22 Feb 2021 06:16:06 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2607:f8b0:4864:20::1036; helo=mail-pj1-x1036.google.com; envelope-from=andy.shevchenko@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 2C9DF100EBB68
-	for <devel@acpica.org>; Mon, 22 Feb 2021 06:12:53 -0800 (PST)
-Received: by mail-pj1-x1034.google.com with SMTP id b15so4074458pjb.0
-        for <devel@acpica.org>; Mon, 22 Feb 2021 06:12:53 -0800 (PST)
+	by ml01.01.org (Postfix) with ESMTPS id 7F6F9100EBB68
+	for <devel@acpica.org>; Mon, 22 Feb 2021 06:16:05 -0800 (PST)
+Received: by mail-pj1-x1036.google.com with SMTP id d2so9143105pjs.4
+        for <devel@acpica.org>; Mon, 22 Feb 2021 06:16:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=wTvuzSsDx5wHEQjCsdWnJWyRmJKaFgdpWavq1bhv6/I=;
-        b=pXXMhdxX7vhFRGsWj18RR56E2kMiwbDgIUCVhhZGSSrfM2Nyhx5kyYaGCP3ktf5tbr
-         inWpWxjUzuUCIt3FL44TA4I5dg0DEPdng/0/d9aWMrhg46iDfOai/TSq8kFOkMyekDvq
-         QL3Difmc2FSps8YCgIMMAaBZb4vWi2l32xK009SViFDQMLXUHQCAip7R6EYJsYJuxOTB
-         RKwbmMCG66xz1ALbGWPJXJX4dL/OYqGMz9NmoDvoyb/upp2o4Esbt3cZmdtpbpSh6Z3q
-         jHgwmOFm1x/b1MTYvsZEBuXR3tNBzZhEde3xqr8ShhTHwd+6B981xhylMKk36WksLZOS
-         wrag==
+        bh=MuRf9/8b8K4IIlZM2nZP16CBZ8tDQb2s0kmOZ82ah7g=;
+        b=la0El+ftwtmu5M03fzpfMVvgBdVuRP3q4ZiVGvwFO53W1pSflIkeMM/mLsuc//DbuA
+         QRhI1h4hB8VXAF16KpdwJq6snysYR/FKx7iBpYm/2wW9mLxbZt+zFxoYV+hYvxT2Ggff
+         6y03xiPi06tgGt+Es945HsXGJj9uQ1h5QrXf0ok/De/BXAD/VI5hsk+N+nR979u48HXv
+         w03SWlmlRotFvqL8UJzfdcM5iMxd8S4xhAJavUbrvyxrJUDqQDyJrRgPZAjcfaOapafA
+         88T/ub89tKwE7LkdWQIykWxc+LIUt1trusz17x/lNug6OmgOLBtaK3DVQQBnM4Z0jIdL
+         erkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=wTvuzSsDx5wHEQjCsdWnJWyRmJKaFgdpWavq1bhv6/I=;
-        b=VZqxSswxMtusjwRKiD3niGfUcz6wAgSpoiPkplw0zNIGIMOkId79EgZE+ih4n4nqTK
-         tveljIqZUSudBOPuNqvgQ4kj4G7iuTx1CwdU7j8RVeaCtkj8BEUd3TLz6+DyFU8i+3OV
-         zpyBsytHPsjt4kA6rgN/sdxs9Zf6CWaCPEvl1r9AWBwZnHrwC7G0ZpxLy8eXFSp3rfsL
-         epYZXzExSAdo0VzPHu9SO8E7AbjPRrQT26vscNmbb/Sn7N3h+4gDrdeDSDwK4S1B+nKC
-         aRQX9drn4yfDaWKvFNE5W7iEDotwLSOwPem75ehTJVvcnYpe1HKhO7y29hJKcBbsWWPI
-         XdvQ==
-X-Gm-Message-State: AOAM532I5XldYxvHNIVSluD+Y5/JZ/Y756A01IUJb56FzvBM4V89kDUA
-	IjsEKK/S/sEnNQbfS/dOMFJtfnrA0c9mES3+Lu4=
-X-Google-Smtp-Source: ABdhPJykkv6u9UtjDofhN3sWJPZJolrvMOjq9nG2MawYjC589/kCKJxpAUPfLJYijfh1vFjiJ26qD2JIUa7R8Y5yPwE=
-X-Received: by 2002:a17:90b:3d8:: with SMTP id go24mr24457261pjb.181.1614003171942;
- Mon, 22 Feb 2021 06:12:51 -0800 (PST)
+        bh=MuRf9/8b8K4IIlZM2nZP16CBZ8tDQb2s0kmOZ82ah7g=;
+        b=mgw8805upGTaOWM53uCcuFlXyLCPwprTuz31msh7JXoVEF1rdHWfG1LpiHaPd3ytfE
+         3FkMqHbTj0Hq6qzuvjPQPiVA0+a6TpuFXkwmOuoj0ZnH36IOPIr4R23C7KJytPatjMCp
+         zV7dFdbup2CP+5z2IEfqXHmWO3wAb+HsuZpxfHIG+0lHOI4h5K58od5I7/hOf2eRDqIS
+         7REws1Wj9Ru3wg4dv+c0027Ai8l+nPsWm6EYKMPBIDTGjPGzbu03rxFAT66fcqcufEtR
+         IfhpjUOg9rDDodhS5XjQmDJrqp9Vea3i4ptN7nIg8OJROblrFZl7oU8AF48OA1OC9NAz
+         eUCQ==
+X-Gm-Message-State: AOAM531rXIMTuhfM7PXmEagvVtbhBzgDNx6m8bDJnLhqRjzyxyvZNdMB
+	shyemLRjsmQsUphRaGWCGxfNYlGslyFxyVCCK4A=
+X-Google-Smtp-Source: ABdhPJyceCFX4/m8npDBtOmCtRQbAXk3yI2ti/FWHXAMEjlS4lgPJ5ZE3mk9mm2xvEKRzIgsqCPax1EQlAX7Uetnftw=
+X-Received: by 2002:a17:90b:3d8:: with SMTP id go24mr24474065pjb.181.1614003364468;
+ Mon, 22 Feb 2021 06:16:04 -0800 (PST)
 MIME-Version: 1.0
-References: <20210222130735.1313443-1-djrscally@gmail.com> <20210222130735.1313443-7-djrscally@gmail.com>
-In-Reply-To: <20210222130735.1313443-7-djrscally@gmail.com>
+References: <20210222130735.1313443-1-djrscally@gmail.com>
+In-Reply-To: <20210222130735.1313443-1-djrscally@gmail.com>
 From: Andy Shevchenko <andy.shevchenko@gmail.com>
-Date: Mon, 22 Feb 2021 16:12:35 +0200
-Message-ID: <CAHp75Veb=0OOE=iyt5ua46HkMuG6_Xu1bWAxzZX5d3378CrfNg@mail.gmail.com>
-To: Daniel Scally <djrscally@gmail.com>
-Message-ID-Hash: 3HCNYNLKLSO3OLNXSN7IIGQWCXDRDS4Q
-X-Message-ID-Hash: 3HCNYNLKLSO3OLNXSN7IIGQWCXDRDS4Q
+Date: Mon, 22 Feb 2021 16:15:48 +0200
+Message-ID: <CAHp75Vfu678RQ1-p4rXOkp5UPDuxgW4ctm1w+uEFhumcfGXf1g@mail.gmail.com>
+To: Daniel Scally <djrscally@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Dmitry Torokhov <dtor@chromium.org>,
+	Guenter Roeck <linux@roeck-us.net>
+Message-ID-Hash: BUXYJTOXTU6OSI3KHH4B5MOHSK6RUH5F
+X-Message-ID-Hash: BUXYJTOXTU6OSI3KHH4B5MOHSK6RUH5F
 X-MailFrom: andy.shevchenko@gmail.com
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
-CC: Tomasz Figa <tfiga@chromium.org>, Sakari Ailus <sakari.ailus@linux.intel.com>, Rajmohan Mani <rajmohan.mani@intel.com>, "Rafael J. Wysocki" <rjw@rjwysocki.net>, Mika Westerberg <mika.westerberg@linux.intel.com>, Linus Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski <bgolaszewski@baylibre.com>, Wolfram Sang <wsa@kernel.org>, Lee Jones <lee.jones@linaro.org>, andy.shevchenko@linux.intel.com, kieran.bingham+renesas@ideasonboard.com, Laurent Pinchart <laurent.pinchart@ideasonboard.com>, Hans de Goede <hdegoede@redhat.com>, Mark Gross <mgross@linux.intel.com>, Maximilian Luz <luzmaximilian@gmail.com>, Erik Kaneda <erik.kaneda@intel.com>, me@fabwu.ch, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>, linux-i2c <linux-i2c@vger.kernel.org>, Platform Driver <platform-driver-x86@vger.kernel.org>, devel@acpica.org
+CC: Tomasz Figa <tfiga@chromium.org>, Sakari Ailus <sakari.ailus@linux.intel.com>, Rajmohan Mani <rajmohan.mani@intel.com>, "Rafael J. Wysocki" <rjw@rjwysocki.net>, Mika Westerberg <mika.westerberg@linux.intel.com>, Linus Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski <bgolaszewski@baylibre.com>, Wolfram Sang <wsa@kernel.org>, Lee Jones <lee.jones@linaro.org>, kieran.bingham+renesas@ideasonboard.com, Laurent Pinchart <laurent.pinchart@ideasonboard.com>, Hans de Goede <hdegoede@redhat.com>, Mark Gross <mgross@linux.intel.com>, Maximilian Luz <luzmaximilian@gmail.com>, Erik Kaneda <erik.kaneda@intel.com>, me@fabwu.ch, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>, linux-i2c <linux-i2c@vger.kernel.org>, Platform Driver <platform-driver-x86@vger.kernel.org>, devel@acpica.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH v3 6/6] mfd: tps68470: Remove tps68470 MFD driver
+Subject: [Devel] Re: [PATCH v3 0/6] Introduce intel_skl_int3472 module
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/3HCNYNLKLSO3OLNXSN7IIGQWCXDRDS4Q/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/BUXYJTOXTU6OSI3KHH4B5MOHSK6RUH5F/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -67,200 +69,113 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Mon, Feb 22, 2021 at 3:12 PM Daniel Scally <djrscally@gmail.com> wrote:
+On Mon, Feb 22, 2021 at 3:11 PM Daniel Scally <djrscally@gmail.com> wrote:
 >
-> This driver only covered one scenario in which ACPI devices with _HID
-> INT3472 are found, and its functionality has been taken over by the
-> intel-skl-int3472 module, so remove it.
-
-As long as patch 5 accepted
-Acked-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-
-> Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-> Signed-off-by: Daniel Scally <djrscally@gmail.com>
-> ---
-> Changes in v3:
->         - Replaced Kconfig dependencies with INTEL_SKL_INT3472 for the tps68470
->           OpRegion and GPIO drivers.
+> v1 for this series was originally 14-18 of this series:
+> https://lore.kernel.org/linux-media/20201130133129.1024662-1-djrscally@gmail.com/T/#m91934e12e3d033da2e768e952ea3b4a125ee3e67
 >
->  drivers/acpi/pmic/Kconfig |  2 +-
->  drivers/gpio/Kconfig      |  2 +-
->  drivers/mfd/Kconfig       | 18 --------
->  drivers/mfd/Makefile      |  1 -
->  drivers/mfd/tps68470.c    | 97 ---------------------------------------
->  5 files changed, 2 insertions(+), 118 deletions(-)
+> v2 was here:
+> https://lore.kernel.org/platform-driver-x86/20210118003428.568892-1-djrscally@gmail.com/
+>
+> Series level changelog:
+>
+>         - Dropped the patch moving acpi_lpss_dep() to utils since it's not used
+>         in acpi_dev_get_dependent_dev() anymore.
+>         - Replaced it with a patch extending acpi_walk_dep_device_list() to be
+>         able to apply a given callback against each device in acpi_dep_list
+>         - Dropped the patch creating acpi_i2c_dev_name() and simply open coded
+>         that functionality.
+>
+> This has been tested on a number of devices, but currently **not** on a device
+> designed for ChromeOS, which we ideally need to do to ensure no regression
+> caused by replacing the tps68470 MFD driver. Sakari / Tomasz, is there any way
+> you could help with that? Unfortunately, I don't have a device to test it on
+> myself.
+
++Cc: Dmitry and Guenter. Guys, do you know by a chance who can help
+with the above request from Daniel?
+
+
+> Original cover letter:
+>
+> At the moment in the kernel the ACPI _HID INT3472 is taken by the tps68470
+> MFD driver, but that driver can only handle some of the cases of that _HID
+> that we see. There are at least these three possibilities:
+>
+> 1. INT3472 devices that provide GPIOs through the usual framework and run
+>    power and clocks through an operation region; this is the situation that
+>    the current module handles and is seen on ChromeOS devices
+> 2. INT3472 devices that provide GPIOs, plus clocks and regulators that are
+>    meant to be driven through the usual frameworks, usually seen on devices
+>    designed to run Windows
+> 3. INT3472 devices that don't actually represent a physical tps68470, but
+>    are being used as a convenient way of grouping a bunch of system GPIO
+>    lines that are intended to enable power and clocks for sensors which
+>    are called out as dependent on them. Also seen on devices designed to
+>    run Windows.
+>
+> This series introduces a new module which registers:
+>
+> 1. An i2c driver that determines which scenario (#1 or #2) applies to the
+>    machine and registers platform devices to be bound to GPIO, OpRegion,
+>    clock and regulator drivers as appropriate.
+> 2. A platform driver that binds to the dummy INT3472 devices described in
+>    #3
+>
+> The platform driver for the dummy device registers the GPIO lines that
+> enable the clocks and regulators to the sensors via those frameworks so
+> that sensor drivers can consume them in the usual fashion. The existing
+> GPIO and OpRegion tps68470 drivers will work with the i2c driver that's
+> registered. Clock and regulator drivers are available but have not so far been
+> tested, so aren't part of this series.
+>
+> The existing mfd/tps68470.c driver being thus superseded, it is removed.
+>
+> Thanks
+> Dan
+>
+> Daniel Scally (6):
+>   ACPI: scan: Extend acpi_walk_dep_device_list()
+>   ACPI: scan: Add function to fetch dependent of acpi device
+>   i2c: core: Add a format macro for I2C device names
+>   gpiolib: acpi: Export acpi_get_gpiod()
+>   platform/x86: Add intel_skl_int3472 driver
+>   mfd: tps68470: Remove tps68470 MFD driver
+>
+>  MAINTAINERS                                   |   5 +
+>  drivers/acpi/ec.c                             |   2 +-
+>  drivers/acpi/pmic/Kconfig                     |   2 +-
+>  drivers/acpi/pmic/intel_pmic_chtdc_ti.c       |   2 +-
+>  drivers/acpi/scan.c                           |  92 ++-
+>  drivers/gpio/Kconfig                          |   2 +-
+>  drivers/gpio/gpiolib-acpi.c                   |  38 +-
+>  drivers/i2c/i2c-core-acpi.c                   |   2 +-
+>  drivers/i2c/i2c-core-base.c                   |   4 +-
+>  drivers/mfd/Kconfig                           |  18 -
+>  drivers/mfd/Makefile                          |   1 -
+>  drivers/mfd/tps68470.c                        |  97 ---
+>  drivers/platform/surface/surface3_power.c     |   2 +-
+>  drivers/platform/x86/Kconfig                  |   2 +
+>  drivers/platform/x86/Makefile                 |   1 +
+>  drivers/platform/x86/intel-int3472/Kconfig    |  31 +
+>  drivers/platform/x86/intel-int3472/Makefile   |   4 +
+>  .../intel-int3472/intel_skl_int3472_common.c  | 106 ++++
+>  .../intel-int3472/intel_skl_int3472_common.h  | 110 ++++
+>  .../intel_skl_int3472_discrete.c              | 592 ++++++++++++++++++
+>  .../intel_skl_int3472_tps68470.c              | 113 ++++
+>  include/acpi/acpi_bus.h                       |   8 +
+>  include/linux/acpi.h                          |   4 +-
+>  include/linux/gpio/consumer.h                 |   7 +
+>  include/linux/i2c.h                           |   3 +
+>  25 files changed, 1100 insertions(+), 148 deletions(-)
 >  delete mode 100644 drivers/mfd/tps68470.c
+>  create mode 100644 drivers/platform/x86/intel-int3472/Kconfig
+>  create mode 100644 drivers/platform/x86/intel-int3472/Makefile
+>  create mode 100644 drivers/platform/x86/intel-int3472/intel_skl_int3472_common.c
+>  create mode 100644 drivers/platform/x86/intel-int3472/intel_skl_int3472_common.h
+>  create mode 100644 drivers/platform/x86/intel-int3472/intel_skl_int3472_discrete.c
+>  create mode 100644 drivers/platform/x86/intel-int3472/intel_skl_int3472_tps68470.c
 >
-> diff --git a/drivers/acpi/pmic/Kconfig b/drivers/acpi/pmic/Kconfig
-> index 56bbcb2ce61b..f84b8f6038dc 100644
-> --- a/drivers/acpi/pmic/Kconfig
-> +++ b/drivers/acpi/pmic/Kconfig
-> @@ -52,7 +52,7 @@ endif # PMIC_OPREGION
->
->  config TPS68470_PMIC_OPREGION
->         bool "ACPI operation region support for TPS68470 PMIC"
-> -       depends on MFD_TPS68470
-> +       depends on INTEL_SKL_INT3472
->         help
->           This config adds ACPI operation region support for TI TPS68470 PMIC.
->           TPS68470 device is an advanced power management unit that powers
-> diff --git a/drivers/gpio/Kconfig b/drivers/gpio/Kconfig
-> index c70f46e80a3b..998898c72af8 100644
-> --- a/drivers/gpio/Kconfig
-> +++ b/drivers/gpio/Kconfig
-> @@ -1343,7 +1343,7 @@ config GPIO_TPS65912
->
->  config GPIO_TPS68470
->         bool "TPS68470 GPIO"
-> -       depends on MFD_TPS68470
-> +       depends on INTEL_SKL_INT3472
->         help
->           Select this option to enable GPIO driver for the TPS68470
->           chip family.
-> diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
-> index bdfce7b15621..9a1f648efde0 100644
-> --- a/drivers/mfd/Kconfig
-> +++ b/drivers/mfd/Kconfig
-> @@ -1520,24 +1520,6 @@ config MFD_TPS65217
->           This driver can also be built as a module.  If so, the module
->           will be called tps65217.
->
-> -config MFD_TPS68470
-> -       bool "TI TPS68470 Power Management / LED chips"
-> -       depends on ACPI && PCI && I2C=y
-> -       depends on I2C_DESIGNWARE_PLATFORM=y
-> -       select MFD_CORE
-> -       select REGMAP_I2C
-> -       help
-> -         If you say yes here you get support for the TPS68470 series of
-> -         Power Management / LED chips.
-> -
-> -         These include voltage regulators, LEDs and other features
-> -         that are often used in portable devices.
-> -
-> -         This option is a bool as it provides an ACPI operation
-> -         region, which must be available before any of the devices
-> -         using this are probed. This option also configures the
-> -         designware-i2c driver to be built-in, for the same reason.
-> -
->  config MFD_TI_LP873X
->         tristate "TI LP873X Power Management IC"
->         depends on I2C
-> diff --git a/drivers/mfd/Makefile b/drivers/mfd/Makefile
-> index 14fdb188af02..5994e812f479 100644
-> --- a/drivers/mfd/Makefile
-> +++ b/drivers/mfd/Makefile
-> @@ -105,7 +105,6 @@ obj-$(CONFIG_MFD_TPS65910)  += tps65910.o
->  obj-$(CONFIG_MFD_TPS65912)     += tps65912-core.o
->  obj-$(CONFIG_MFD_TPS65912_I2C) += tps65912-i2c.o
->  obj-$(CONFIG_MFD_TPS65912_SPI)  += tps65912-spi.o
-> -obj-$(CONFIG_MFD_TPS68470)     += tps68470.o
->  obj-$(CONFIG_MFD_TPS80031)     += tps80031.o
->  obj-$(CONFIG_MENELAUS)         += menelaus.o
->
-> diff --git a/drivers/mfd/tps68470.c b/drivers/mfd/tps68470.c
-> deleted file mode 100644
-> index 4a4df4ffd18c..000000000000
-> --- a/drivers/mfd/tps68470.c
-> +++ /dev/null
-> @@ -1,97 +0,0 @@
-> -// SPDX-License-Identifier: GPL-2.0
-> -/*
-> - * TPS68470 chip Parent driver
-> - *
-> - * Copyright (C) 2017 Intel Corporation
-> - *
-> - * Authors:
-> - *     Rajmohan Mani <rajmohan.mani@intel.com>
-> - *     Tianshu Qiu <tian.shu.qiu@intel.com>
-> - *     Jian Xu Zheng <jian.xu.zheng@intel.com>
-> - *     Yuning Pu <yuning.pu@intel.com>
-> - */
-> -
-> -#include <linux/acpi.h>
-> -#include <linux/delay.h>
-> -#include <linux/i2c.h>
-> -#include <linux/init.h>
-> -#include <linux/mfd/core.h>
-> -#include <linux/mfd/tps68470.h>
-> -#include <linux/regmap.h>
-> -
-> -static const struct mfd_cell tps68470s[] = {
-> -       { .name = "tps68470-gpio" },
-> -       { .name = "tps68470_pmic_opregion" },
-> -};
-> -
-> -static const struct regmap_config tps68470_regmap_config = {
-> -       .reg_bits = 8,
-> -       .val_bits = 8,
-> -       .max_register = TPS68470_REG_MAX,
-> -};
-> -
-> -static int tps68470_chip_init(struct device *dev, struct regmap *regmap)
-> -{
-> -       unsigned int version;
-> -       int ret;
-> -
-> -       /* Force software reset */
-> -       ret = regmap_write(regmap, TPS68470_REG_RESET, TPS68470_REG_RESET_MASK);
-> -       if (ret)
-> -               return ret;
-> -
-> -       ret = regmap_read(regmap, TPS68470_REG_REVID, &version);
-> -       if (ret) {
-> -               dev_err(dev, "Failed to read revision register: %d\n", ret);
-> -               return ret;
-> -       }
-> -
-> -       dev_info(dev, "TPS68470 REVID: 0x%x\n", version);
-> -
-> -       return 0;
-> -}
-> -
-> -static int tps68470_probe(struct i2c_client *client)
-> -{
-> -       struct device *dev = &client->dev;
-> -       struct regmap *regmap;
-> -       int ret;
-> -
-> -       regmap = devm_regmap_init_i2c(client, &tps68470_regmap_config);
-> -       if (IS_ERR(regmap)) {
-> -               dev_err(dev, "devm_regmap_init_i2c Error %ld\n",
-> -                       PTR_ERR(regmap));
-> -               return PTR_ERR(regmap);
-> -       }
-> -
-> -       i2c_set_clientdata(client, regmap);
-> -
-> -       ret = tps68470_chip_init(dev, regmap);
-> -       if (ret < 0) {
-> -               dev_err(dev, "TPS68470 Init Error %d\n", ret);
-> -               return ret;
-> -       }
-> -
-> -       ret = devm_mfd_add_devices(dev, PLATFORM_DEVID_NONE, tps68470s,
-> -                             ARRAY_SIZE(tps68470s), NULL, 0, NULL);
-> -       if (ret < 0) {
-> -               dev_err(dev, "devm_mfd_add_devices failed: %d\n", ret);
-> -               return ret;
-> -       }
-> -
-> -       return 0;
-> -}
-> -
-> -static const struct acpi_device_id tps68470_acpi_ids[] = {
-> -       {"INT3472"},
-> -       {},
-> -};
-> -
-> -static struct i2c_driver tps68470_driver = {
-> -       .driver = {
-> -                  .name = "tps68470",
-> -                  .acpi_match_table = tps68470_acpi_ids,
-> -       },
-> -       .probe_new = tps68470_probe,
-> -};
-> -builtin_i2c_driver(tps68470_driver);
 > --
 > 2.25.1
 >
