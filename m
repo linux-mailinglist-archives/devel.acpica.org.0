@@ -1,65 +1,66 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 517F5321920
-	for <lists+devel-acpica@lfdr.de>; Mon, 22 Feb 2021 14:41:42 +0100 (CET)
+Received: from ml01.01.org (ml01.01.org [198.145.21.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F86B321973
+	for <lists+devel-acpica@lfdr.de>; Mon, 22 Feb 2021 14:54:31 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id D6058100EB82C;
-	Mon, 22 Feb 2021 05:41:40 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2607:f8b0:4864:20::52e; helo=mail-pg1-x52e.google.com; envelope-from=andy.shevchenko@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+	by ml01.01.org (Postfix) with ESMTP id CC96E100EBB9E;
+	Mon, 22 Feb 2021 05:54:28 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2607:f8b0:4864:20::532; helo=mail-pg1-x532.google.com; envelope-from=andy.shevchenko@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id F1CCE100EBB68
-	for <devel@acpica.org>; Mon, 22 Feb 2021 05:41:37 -0800 (PST)
-Received: by mail-pg1-x52e.google.com with SMTP id 75so10218363pgf.13
-        for <devel@acpica.org>; Mon, 22 Feb 2021 05:41:37 -0800 (PST)
+	by ml01.01.org (Postfix) with ESMTPS id 18805100EBB68
+	for <devel@acpica.org>; Mon, 22 Feb 2021 05:54:26 -0800 (PST)
+Received: by mail-pg1-x532.google.com with SMTP id o38so10243736pgm.9
+        for <devel@acpica.org>; Mon, 22 Feb 2021 05:54:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=2vjozFVKQtbd9R8z6ePqX0QDJApxB9ca8f7RZkFJnhg=;
-        b=Hi9GAjgrttZNmbGX5K+2Kqqbg6M2du1eGsAq53n8CmzY5H1DnRMVhUv7cxcbhdG/KT
-         6/uEjAsKYBtKHhjm9vAFCLvMsyzB2o2ZBNKPdj/wjzUhs/LukobtRL19TG3faPg2fhTA
-         OrqKhFLw4if0HUzBja40r88q7kd42qHzs9VBaLb+FuNxV+lKOFjtI+KId3+Y9nT4eobz
-         6C305sht8qnXNIS7qpR9vvPezT5AGl32MyAVUOdfA8RLXE3Q6D/5JRfRxWqujtb58cvB
-         tTLiiHKQ6ghlMyGZ0zdhc/+uH/2JnIbTp/uytRxw82KF64mfONjlnM2TXTc5+9hdrMN/
-         0XQA==
+        bh=oxf7PZzIW0TNiKFXZ0MRXr44MqqMuTtBh99bmn/oRV8=;
+        b=SJ8eRAtvrs+BerYVhbx2M+klaAObp3RhBwvqk+0BbIGXHIs9bDiPT7m0oPYjJHYjdB
+         K5U9rrHyXZZFLcm+5dVV24fR6X/lmKEH/uZ58EEWYsDtcnIdML1GgRaqf5i1khJqqMpo
+         1f1Ylzr7MqJg1FEhIXygbq0iKMM6jM7SaLN5+PfRWLD4wcIjAjXGroXUmXQDNmNIgq33
+         BEFeP15N8kCds22dktcA+xTCDFryyIN+svEX0ZPlplfAbrSNeg8ru2OhjAq72Xk9q8nB
+         RMPvp4Ad5TjDOobOYthLkBw+OAo2jdUvkCVCm989f5foX/qHupkI3NLGTuSRQxccydvu
+         k1kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=2vjozFVKQtbd9R8z6ePqX0QDJApxB9ca8f7RZkFJnhg=;
-        b=g5ktQkiK4deaU/CIw80eqbksRL7g1X8SfQTkK61Sk4+U+FgfWnYl0addAr6LMpqlOf
-         mC9K3PqJQqtAnpiaAKS9OyGvdywysl7GCXY9foFiYe1bSN6nwKcKo2hdXPSa3n2OKkEy
-         VRwsK9vataiMvuTKhY8EXN0yQ0eYBbwEXnqQGZY1X6ppZ5uLsA6WpsQQakd464jrjccm
-         CjFeBkksJNp9bbGprOjji6WEojezIiSlyjCMVqTaHAZDbYz8ir7UksMbNUeXfzHiSo1N
-         4zyYMJmveI8riRzMrlpFrv7FEwsKkVg7+kL7bw9QA6qpySE6rXtcu66W7boYpFc4azO0
-         jgJg==
-X-Gm-Message-State: AOAM533OTiGn9brYBCFmd9cwYqfNuiRDsHTMOG5nbc74Is/Xh5VGTXP5
-	KIc0Bq2ABUIqQCHo0uijmxLPKPS0anI6q5GDS2Y=
-X-Google-Smtp-Source: ABdhPJzpeHO5qMpXxlz6TPr3N1jkXmOoU620p7BHVZ1AhGbYNLUWadNWw3jbQVIbD9E7deEO9HIIndhy55p5PX2G5Jk=
-X-Received: by 2002:a63:2643:: with SMTP id m64mr12349805pgm.4.1614001297293;
- Mon, 22 Feb 2021 05:41:37 -0800 (PST)
+        bh=oxf7PZzIW0TNiKFXZ0MRXr44MqqMuTtBh99bmn/oRV8=;
+        b=AMC+RfTqxBO8N6lFAcFARDYKCiMqpbxaqoeZYEkkA8PmRA8YOySSONu4B9zeU+IhiP
+         Cto735MR+ySUrQ6QUGwhwZ4ptHo6hWFujx3RkqIJ1+hFbaoNUGJq9DOLMLA28d5pR36x
+         H6Tj2ai1oAsN4jIhRj4GySwwQxa7D+sr5lRCR/9cW9VaorG6nXgX5yYCOySDoxCSSRiY
+         d0zZYaeBSiW3dXDbe+uyrUjOHrxLx0QK5kKjA2I9WsZ+eD4ZoODXMp/yWwYIYrJTY2N/
+         xBQy39M8OVHGnrPQVoUe/aU+v9m4Kf+BQQ+HTqAJeO9RECrYlY5q/vocc/QK/dPyDOz4
+         Dj2A==
+X-Gm-Message-State: AOAM532+gTnWtorfFu18rzwWrNDaKHynRHC9QV6Sv8TScNh9L8sDbyWo
+	m9A7eby2iFvGhZ24MDofWkYcqD3+Nv7GGPTuF10=
+X-Google-Smtp-Source: ABdhPJwRZNKdobP0oagG+4NZGEz/EFMU9YEALrPwUEZPekSGiofAAAjMn+NOGUWYAAMZohk9uGKULRR/5Ap/UV8j954=
+X-Received: by 2002:a05:6a00:854:b029:1b7:6233:c5f with SMTP id
+ q20-20020a056a000854b02901b762330c5fmr14498622pfk.73.1614002065462; Mon, 22
+ Feb 2021 05:54:25 -0800 (PST)
 MIME-Version: 1.0
-References: <20210222130735.1313443-1-djrscally@gmail.com> <20210222130735.1313443-3-djrscally@gmail.com>
-In-Reply-To: <20210222130735.1313443-3-djrscally@gmail.com>
+References: <20210222130735.1313443-1-djrscally@gmail.com> <20210222130735.1313443-5-djrscally@gmail.com>
+In-Reply-To: <20210222130735.1313443-5-djrscally@gmail.com>
 From: Andy Shevchenko <andy.shevchenko@gmail.com>
-Date: Mon, 22 Feb 2021 15:41:21 +0200
-Message-ID: <CAHp75VeK-0gJ195mXjuZDPLKD4ROVKfFaoWw97yJ1NXpK1QVWg@mail.gmail.com>
+Date: Mon, 22 Feb 2021 15:54:09 +0200
+Message-ID: <CAHp75VfQpMJt8t_fOyOO0gPL686egCTnfh1=DZRKTg84Omj8=Q@mail.gmail.com>
 To: Daniel Scally <djrscally@gmail.com>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Message-ID-Hash: 6JQA2TEWXDVTQ3JFNVQQHNFDPH554FWK
-X-Message-ID-Hash: 6JQA2TEWXDVTQ3JFNVQQHNFDPH554FWK
+Message-ID-Hash: YIYBC7OZJB4NWSVCICT54BR4MSW2WRFP
+X-Message-ID-Hash: YIYBC7OZJB4NWSVCICT54BR4MSW2WRFP
 X-MailFrom: andy.shevchenko@gmail.com
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
 CC: Tomasz Figa <tfiga@chromium.org>, Sakari Ailus <sakari.ailus@linux.intel.com>, Rajmohan Mani <rajmohan.mani@intel.com>, "Rafael J. Wysocki" <rjw@rjwysocki.net>, Mika Westerberg <mika.westerberg@linux.intel.com>, Linus Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski <bgolaszewski@baylibre.com>, Wolfram Sang <wsa@kernel.org>, Lee Jones <lee.jones@linaro.org>, kieran.bingham+renesas@ideasonboard.com, Laurent Pinchart <laurent.pinchart@ideasonboard.com>, Hans de Goede <hdegoede@redhat.com>, Mark Gross <mgross@linux.intel.com>, Maximilian Luz <luzmaximilian@gmail.com>, Erik Kaneda <erik.kaneda@intel.com>, me@fabwu.ch, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>, linux-i2c <linux-i2c@vger.kernel.org>, Platform Driver <platform-driver-x86@vger.kernel.org>, devel@acpica.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH v3 2/6] ACPI: scan: Add function to fetch dependent of acpi device
+Subject: [Devel] Re: [PATCH v3 4/6] gpiolib: acpi: Export acpi_get_gpiod()
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/6JQA2TEWXDVTQ3JFNVQQHNFDPH554FWK/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/YIYBC7OZJB4NWSVCICT54BR4MSW2WRFP/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -68,106 +69,150 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Mon, Feb 22, 2021 at 3:11 PM Daniel Scally <djrscally@gmail.com> wrote:
+On Mon, Feb 22, 2021 at 3:13 PM Daniel Scally <djrscally@gmail.com> wrote:
 >
-> In some ACPI tables we encounter, devices use the _DEP method to assert
-> a dependence on other ACPI devices as opposed to the OpRegions that the
-> specification intends. We need to be able to find those devices "from"
-> the dependee, so add a callback and a wrapper to walk over the
-> acpi_dep_list and return the dependent ACPI device.
+> I need to be able to translate GPIO resources in an ACPI device's _CRS
+
+I -> we
+
+> into GPIO descriptor array. Those are represented in _CRS as a pathname
+> to a GPIO device plus the pin's index number: this function is perfect
+
+Which one? "the acpi_...() function"
+
+> for that purpose.
 >
+> As it's currently only used internally within the GPIO layer, provide and
+> export a wrapper function that additionally holds a reference to the GPIO
+> device.
 
 Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Nit-picks below as usual :-)
+after addressing above and beyond :-)
 
+>
 > Signed-off-by: Daniel Scally <djrscally@gmail.com>
 > ---
 > Changes in v3:
->         - Switched from a standalone function to a callback passed to
->           acpi_walk_dep_device_list().
 >
->  drivers/acpi/scan.c     | 34 ++++++++++++++++++++++++++++++++++
->  include/acpi/acpi_bus.h |  1 +
->  2 files changed, 35 insertions(+)
+>         - Having realised that it wasn't taking a reference to the GPIO device,
+>           I decided the best thing to do was leave the existing function as-is
+>           (apart from renaming) and provide a wrapper that simply passes
+>           through to the original and takes a reference before returning the
+>           struct gpio_desc
 >
-> diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
-> index c9e4190316ef..55626925261c 100644
-> --- a/drivers/acpi/scan.c
-> +++ b/drivers/acpi/scan.c
-> @@ -2093,6 +2093,21 @@ static void acpi_bus_attach(struct acpi_device *device, bool first_pass)
->                 device->handler->hotplug.notify_online(device);
+>           Because of the change to that functionality, I dropped the R-b's from
+>           the last version.
+>
+>  drivers/gpio/gpiolib-acpi.c   | 36 +++++++++++++++++++++++++++++++----
+>  include/linux/gpio/consumer.h |  7 +++++++
+>  2 files changed, 39 insertions(+), 4 deletions(-)
+>
+> diff --git a/drivers/gpio/gpiolib-acpi.c b/drivers/gpio/gpiolib-acpi.c
+> index e4d728fda982..0cc7cc327757 100644
+> --- a/drivers/gpio/gpiolib-acpi.c
+> +++ b/drivers/gpio/gpiolib-acpi.c
+> @@ -102,7 +102,8 @@ static int acpi_gpiochip_find(struct gpio_chip *gc, void *data)
 >  }
 >
-> +static int __acpi_dev_get_dependent_dev(struct acpi_dep_data *dep, void *data)
-> +{
-> +       struct acpi_device *adev;
-> +       int ret;
-> +
-> +       ret = acpi_bus_get_device(dep->consumer, &adev);
-> +       if (ret)
-> +               /* If we don't find an adev then we want to continue parsing */
-> +               return 0;
-> +
-> +       *(struct acpi_device **)data = adev;
+>  /**
+> - * acpi_get_gpiod() - Translate ACPI GPIO pin to GPIO descriptor usable with GPIO API
+> + * __acpi_get_gpiod() - Translate ACPI GPIO pin to GPIO descriptor usable with
 
-Hmm... I'm wondering if
-  *(void **data) = adev;
-will compile and work.
+Can we rename it better, i.e. w/o __, like "acpi_gpio_pin_to_gpiod()" or so?
 
-But on second thought the current code is more specific and explicit,
-which is good.
-
-> +
-> +       return 1;
-> +}
-> +
->  static int __acpi_dev_flag_dependency_met(struct acpi_dep_data *dep,
->                                           void *data)
+> + *                     GPIO API
+>   * @path:      ACPI GPIO controller full path name, (e.g. "\\_SB.GPO1")
+>   * @pin:       ACPI GPIO pin number (0-based, controller-relative)
+>   *
+> @@ -111,7 +112,7 @@ static int acpi_gpiochip_find(struct gpio_chip *gc, void *data)
+>   * controller does not have GPIO chip registered at the moment. This is to
+>   * support probe deferral.
+>   */
+> -static struct gpio_desc *acpi_get_gpiod(char *path, int pin)
+> +static struct gpio_desc *__acpi_get_gpiod(char *path, int pin)
 >  {
-> @@ -2145,6 +2160,25 @@ void acpi_dev_flag_dependency_met(acpi_handle handle)
+>         struct gpio_chip *chip;
+>         acpi_handle handle;
+> @@ -128,6 +129,33 @@ static struct gpio_desc *acpi_get_gpiod(char *path, int pin)
+>         return gpiochip_get_desc(chip, pin);
 >  }
->  EXPORT_SYMBOL_GPL(acpi_dev_flag_dependency_met);
 >
 > +/**
-> + * acpi_dev_get_dependent_dev - Return ACPI device dependent on @adev
-> + * @adev: Pointer to the dependee device
+> + * acpi_get_gpiod() - Translate ACPI GPIO pin to GPIO descriptor usable with
+> + *                   GPIO API, and hold a refcount to the GPIO device.
+> + * @path:      ACPI GPIO controller full path name, (e.g. "\\_SB.GPO1")
+> + * @pin:       ACPI GPIO pin number (0-based, controller-relative)
+> + * @label:     Label to pass to gpiod_request()
 > + *
-> + * Returns the first &struct acpi_device which declares itself dependent on
-> + * @adev via the _DEP buffer, parsed from the acpi_dep_list.
+> + * This function is a simple pass-through to __acpi_get_gpiod(), except that as
+> + * it is intended for use outside of the GPIO layer (in a similar fashion to
+> + * gpiod_get_index() for example) it also holds a reference to the GPIO device.
 > + */
+> +struct gpio_desc *acpi_get_gpiod(char *path, int pin, char *label)
 
-> +struct acpi_device *
-> +acpi_dev_get_dependent_dev(struct acpi_device *supplier)
-
-I believe it will be okay to have it on one line
+Name better to reflect the action, perhaps
+"acpi_gpio_get_and_request_desc()" or so.
 
 > +{
-> +       struct acpi_device *adev = NULL;
 
-> +       acpi_walk_dep_device_list(supplier->handle,
-> +                                 __acpi_dev_get_dependent_dev, &adev);
+> +       struct gpio_desc *gpio = __acpi_get_gpiod(path, pin);
 
-Ditto.
+Please, split it, so the assignment goes...
 
-> +       return adev;
-> +}
-> +EXPORT_SYMBOL_GPL(acpi_dev_get_dependent_dev);
+> +       int ret;
+
+...here.
+
+> +       if (IS_ERR(gpio))
+> +               return gpio;
 > +
->  /**
->   * acpi_bus_scan - Add ACPI device node objects in a given namespace scope.
->   * @handle: Root of the namespace scope to scan.
-> diff --git a/include/acpi/acpi_bus.h b/include/acpi/acpi_bus.h
-> index 91172af3a04d..5b14a9ae4ed5 100644
-> --- a/include/acpi/acpi_bus.h
-> +++ b/include/acpi/acpi_bus.h
-> @@ -690,6 +690,7 @@ static inline bool acpi_device_can_poweroff(struct acpi_device *adev)
->  bool acpi_dev_hid_uid_match(struct acpi_device *adev, const char *hid2, const char *uid2);
+> +       ret = gpiod_request(gpio, label);
+> +       if (ret)
+> +               return ERR_PTR(ret);
+> +
+> +       return gpio;
+> +}
+> +EXPORT_SYMBOL_GPL(acpi_get_gpiod);
+> +
+>  static irqreturn_t acpi_gpio_irq_handler(int irq, void *data)
+>  {
+>         struct acpi_gpio_event *event = data;
+> @@ -689,8 +717,8 @@ static int acpi_populate_gpio_lookup(struct acpi_resource *ares, void *data)
+>                 if (pin_index >= agpio->pin_table_length)
+>                         return 1;
 >
->  void acpi_dev_flag_dependency_met(acpi_handle handle);
-> +struct acpi_device *acpi_dev_get_dependent_dev(struct acpi_device *supplier);
->  struct acpi_device *
->  acpi_dev_get_next_match_dev(struct acpi_device *adev, const char *hid, const char *uid, s64 hrv);
->  struct acpi_device *
+> -               lookup->desc = acpi_get_gpiod(agpio->resource_source.string_ptr,
+> -                                             agpio->pin_table[pin_index]);
+> +               lookup->desc = __acpi_get_gpiod(agpio->resource_source.string_ptr,
+> +                                               agpio->pin_table[pin_index]);
+>                 lookup->info.pin_config = agpio->pin_config;
+>                 lookup->info.debounce = agpio->debounce_timeout;
+>                 lookup->info.gpioint = gpioint;
+> diff --git a/include/linux/gpio/consumer.h b/include/linux/gpio/consumer.h
+> index ef49307611d2..6eee751f44dd 100644
+> --- a/include/linux/gpio/consumer.h
+> +++ b/include/linux/gpio/consumer.h
+> @@ -690,6 +690,8 @@ int devm_acpi_dev_add_driver_gpios(struct device *dev,
+>                                    const struct acpi_gpio_mapping *gpios);
+>  void devm_acpi_dev_remove_driver_gpios(struct device *dev);
+>
+> +struct gpio_desc *acpi_get_gpiod(char *path, int pin, char *label);
+> +
+>  #else  /* CONFIG_GPIOLIB && CONFIG_ACPI */
+>
+>  struct acpi_device;
+> @@ -708,6 +710,11 @@ static inline int devm_acpi_dev_add_driver_gpios(struct device *dev,
+>  }
+>  static inline void devm_acpi_dev_remove_driver_gpios(struct device *dev) {}
+>
+> +struct gpio_desc *acpi_get_gpiod(char *path, int pin, char *label)
+> +{
+> +       return NULL;
+> +}
+> +
+>  #endif /* CONFIG_GPIOLIB && CONFIG_ACPI */
+>
+>
 > --
 > 2.25.1
 >
