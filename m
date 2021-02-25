@@ -1,212 +1,188 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1DF8B3249EE
-	for <lists+devel-acpica@lfdr.de>; Thu, 25 Feb 2021 06:06:19 +0100 (CET)
+Received: from ml01.01.org (ml01.01.org [198.145.21.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A84B3257E2
+	for <lists+devel-acpica@lfdr.de>; Thu, 25 Feb 2021 21:46:10 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 3934A100EBB9B;
-	Wed, 24 Feb 2021 21:06:17 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.100; helo=mga07.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+	by ml01.01.org (Postfix) with ESMTP id A1CFB100EAB60;
+	Thu, 25 Feb 2021 12:46:07 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.120; helo=mga04.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 43FF6100EBB94
-	for <devel@acpica.org>; Wed, 24 Feb 2021 21:06:14 -0800 (PST)
-IronPort-SDR: t16JSJ0Qv84U2/vucnlluFS8dBtdbGXoqNU0gz7qwBidSAjeEL1AO6b65WIiGm0jDJgdaYKhJa
- 9v3kt1n4u6BA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9905"; a="249468493"
-X-IronPort-AV: E=Sophos;i="5.81,203,1610438400";
-   d="scan'208";a="249468493"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Feb 2021 21:06:14 -0800
-IronPort-SDR: J6oNWdpzBIsWGrrGo7qs+37JCED0mk2Rs/NwLPM2TsQAk4T9SK/J+aWxphS7l06VB3Z1UsLu77
- kaemGNdJnhhw==
+	by ml01.01.org (Postfix) with ESMTPS id 46229100EAB5E
+	for <devel@acpica.org>; Thu, 25 Feb 2021 12:46:05 -0800 (PST)
+IronPort-SDR: k6zvExvDBhxZzYe9dp7Jt7ZZDRrwQdyS9EikEhdEUZz5GaALVBSwKZmGRQQ7tPZCadGiBdiDHn
+ CtKeaoC+M6Jw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9906"; a="183213722"
+X-IronPort-AV: E=Sophos;i="5.81,207,1610438400";
+   d="scan'208";a="183213722"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Feb 2021 12:45:59 -0800
+IronPort-SDR: aJA9bFIEoh1m01yJi6v84+ua/3JceqFvdRS1Cpwh1uiYNRj31v9O+5dEC9oZ/g9NZeL+77SXMK
+ 6Zmc3Ht3DpTw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.81,203,1610438400";
-   d="scan'208";a="367261224"
-Received: from lkp-server01.sh.intel.com (HELO 16660e54978b) ([10.239.97.150])
-  by orsmga006.jf.intel.com with ESMTP; 24 Feb 2021 21:06:12 -0800
-Received: from kbuild by 16660e54978b with local (Exim 4.92)
-	(envelope-from <lkp@intel.com>)
-	id 1lF8qp-0002VX-Vd; Thu, 25 Feb 2021 05:06:11 +0000
-Date: Thu, 25 Feb 2021 13:05:40 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <60373024.wiSJ29Hw53lVyzbJ%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+X-IronPort-AV: E=Sophos;i="5.81,207,1610438400";
+   d="scan'208";a="392564654"
+Received: from orsmsx606.amr.corp.intel.com ([10.22.229.19])
+  by fmsmga008.fm.intel.com with ESMTP; 25 Feb 2021 12:45:59 -0800
+Received: from orsmsx609.amr.corp.intel.com (10.22.229.22) by
+ ORSMSX606.amr.corp.intel.com (10.22.229.19) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2106.2; Thu, 25 Feb 2021 12:45:59 -0800
+Received: from orsmsx608.amr.corp.intel.com (10.22.229.21) by
+ ORSMSX609.amr.corp.intel.com (10.22.229.22) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2106.2; Thu, 25 Feb 2021 12:45:58 -0800
+Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
+ orsmsx608.amr.corp.intel.com (10.22.229.21) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2106.2
+ via Frontend Transport; Thu, 25 Feb 2021 12:45:58 -0800
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (104.47.56.173)
+ by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2106.2; Thu, 25 Feb 2021 12:45:58 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=T6+s/J82sSlsT42Fyv3eeiVnB5twVuWFUogN8PS5psNXpGddzbgIhW0PE6TU+d5d4urKdiznQ+DVWuUtJ9KvaZTcs+fYqQHDdGOBjvSZ9SPY9IJifZdxeYy0HzTDinKGAdur733nIMrU/dHJEVJ83BH6SL4oZBwIzFRoBapXobQ3vYqcNvtgC4rF1JbsXmzYeIqv5ZaaPWEkODEBWaro6sVjDVlDjtb3wBpSlMhkZFkr8wMJcdFzQFH53m2gaOQpijtREv5vWGzbCDE2nRaOorQxrxDo/lac8ZtlMq22rVpHEA1yKb5aQRFn7gd0Incu5rBGryCOKbKZzReHt2LeUA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=qU3qqGJztnyYX4eUlt4+HN4YXrheRl82Jen1zbITXrs=;
+ b=Nlj2tyfdeib642+l/Kt+/b4a/LqoYh1vwzJ98dU10D8a2X9R7mSCqfysLOudvAOyLcwYezwXfjrspxdVjIVrGRWwHdGIF1/DRa6J4t+XO5z+NdxCP9ClvRzqaXjTtj4PHWyJIjWG9NxUgiaumHCr1a6BUiiJ7T/4r7wi+lPT5TWHMCuh0kYheCXX+Q4QTvuTFZriZ8OitWdinJ5+Gi7NOdXIFu8NjwjDD/+arg4V1GrZyW/PRBL7L01a+xxtpI/NDYuMa8xeyqkoB/yj/I0RfPjA+BhSbQLLOyOyJl06lqeWgMYB7B+IJdLF4YJ4CkShK7AnDWYlPKq1jivn+GC84Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
+ s=selector2-intel-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=qU3qqGJztnyYX4eUlt4+HN4YXrheRl82Jen1zbITXrs=;
+ b=RsfBnTe6+UJU/gGlni0gJfanWWGKoUn3YJu3/bxIJiq1PRt/g3kdR2adOK6N1lxNIuYOnJN/1kzM92EJOJvinL1p57g/tQVvUX+bb/Oya5BwzOTvukvnIVNaNiuTc7o+nNveE3zte8XEkrvxlOWnJJ9TUx5oTOt9/dU0/3YUTNU=
+Received: from BYAPR11MB3256.namprd11.prod.outlook.com (2603:10b6:a03:76::19)
+ by SJ0PR11MB5008.namprd11.prod.outlook.com (2603:10b6:a03:2d5::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3868.30; Thu, 25 Feb
+ 2021 20:45:56 +0000
+Received: from BYAPR11MB3256.namprd11.prod.outlook.com
+ ([fe80::ac1e:2d22:3f90:4dc]) by BYAPR11MB3256.namprd11.prod.outlook.com
+ ([fe80::ac1e:2d22:3f90:4dc%7]) with mapi id 15.20.3868.033; Thu, 25 Feb 2021
+ 20:45:56 +0000
+From: "Moore, Robert" <robert.moore@intel.com>
+To: Zenghui Yu <yuzenghui@huawei.com>, "devel@acpica.org" <devel@acpica.org>,
+	"linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>
+Thread-Topic: [PATCH] [ACPICA] IORT: Fix HTTU Override mask for the SMMUv3
+ subtable
+Thread-Index: AQHXC2kwib+gFmscGEib3bZcV79rGKppV0XA
+Date: Thu, 25 Feb 2021 20:45:54 +0000
+Message-ID: <BYAPR11MB3256E28FD567C5FEB0EDCA94879E9@BYAPR11MB3256.namprd11.prod.outlook.com>
+References: <20210225112620.1827-1-yuzenghui@huawei.com>
+In-Reply-To: <20210225112620.1827-1-yuzenghui@huawei.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+dlp-version: 11.5.1.3
+dlp-product: dlpe-windows
+dlp-reaction: no-action
+authentication-results: huawei.com; dkim=none (message not signed)
+ header.d=none;huawei.com; dmarc=none action=none header.from=intel.com;
+x-originating-ip: [134.134.136.194]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: ada872a3-6631-49e6-296b-08d8d9ce5981
+x-ms-traffictypediagnostic: SJ0PR11MB5008:
+x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <SJ0PR11MB5008CF2B2ACBA4B91D72B106879E9@SJ0PR11MB5008.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:6790;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: Tm9LUmr6kKQFZux2ggGF/qdPUVjLKeGyvuCXp1qZ7AyYx46zQE9BRXkx5wCB/DMxLo01V/XCbGqAcJDl5GXqpqDd12nvv6o0BbzaG5XN3Q5ekNeW/PIav4n5hqvAEVYC40Ni0irX6joDyIkoZCAcB6ccLjDbG5nQkNUWIc2ntoLkLyvWPgvmnYs+LlpxbwPNde6LA28muJlhqeXdJAUsIsfnYGosatAHprwKOQoA0pEE0d6ou0L4yrP9aWzKuYs6lF9unJfnX2x95pE16NQ2dUwwkpME6JOL9tPI04jef9TX613Wp99eRwAvbN1omvsj/eJzz2nJBV3LfJIQ9MMQnmtLr9ZBputD8gdB1QaKiRT/Xf1PWFTaeb5pBG9pgTU9WKjj1Evc3Rrq/zhMzcquU59SZ8UC7I+spp1foF3zoQ9XA0JgwzC8m+vWEgWRkF4ZbGjwU0278CxU1STGp2wioo5/9d1uLaOb9IAyT37hFGyYc5Ykn1fqmOyheclNHYyAq2dR3AI1aaNZBlp5rQx5nA==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(366004)(396003)(39860400002)(376002)(136003)(346002)(33656002)(110136005)(4326008)(8676002)(8936002)(86362001)(478600001)(9686003)(71200400001)(54906003)(2906002)(76116006)(64756008)(53546011)(26005)(66476007)(66446008)(6506007)(5660300002)(83380400001)(186003)(7696005)(66556008)(55016002)(52536014)(316002)(66946007);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata: =?us-ascii?Q?3e9aYdhOmkK02BNBPXAgCX4ydCN+oTb10l1PKVVA/LIYLhM6T+P//xxSTSm3?=
+ =?us-ascii?Q?SxfGDiSd4mwhbnW5hOLrfkx15OIMteO3moaVbEU0wA8cIW8GFVTH3fRXPXd/?=
+ =?us-ascii?Q?p7GvRKZK2LkUwEaJdYEJJuPRsWws0E9VDQJBFssk9XkZ6eIwQziyflXz2H1H?=
+ =?us-ascii?Q?ZVnBmfPscgaKTzIFpPcNNNi/lacz8mSkrQ8zn9KC7PIFKcvu8Mnd2PhidFMf?=
+ =?us-ascii?Q?XPzM8eYho6m8TQPj2cG022rDGqu1+MAGccEvf/MdS/2W3/DN38so3112QSnd?=
+ =?us-ascii?Q?GOxVchLBoIbI8bAdqvWNO8VFrDoUw/2E7R/O1oFIGws7AUFV38BdNGB3W1Px?=
+ =?us-ascii?Q?t/GnX6ad16+vHd2SjADvu+W/sfcUUdeB750axgd6OHqyZQziXprdjcWncKB5?=
+ =?us-ascii?Q?L6VuFI8349tBlaYAE9zfJ3I3+nKs64zS5D+zag6U6jnMaJmbG6I58o/696f/?=
+ =?us-ascii?Q?/lgH0w6zqqjgyvi5F2B4DwTDoPem+jkcvmSBzEt4PDs2WTnGY+34XyNFfQdl?=
+ =?us-ascii?Q?1YfngyGNCbmRyG3GMTJCHnCJvjCsgFtT15BklYJqKxLQUdS/E5Q4xDGQw2Y4?=
+ =?us-ascii?Q?ixOAY9GMHu5yFsBVKIW1lgT7PpvlgK5KWKsuuAGQYxiLJTpb1OueDEA4zdSP?=
+ =?us-ascii?Q?5KHh8J+DB+lSB3tBlIa8WiOaY6imoJq8ZTZyP7hQyROtQdW5nYGMWXldlp1h?=
+ =?us-ascii?Q?votxnyBOuiHzZhOMKqVRuIhc8rvYhV25oortLQyXsk/mTJWHRQZH6xRbbvpC?=
+ =?us-ascii?Q?0+yP9UAtg3xpYRJDP0Cq6Ff1NWIG5BjWIzEvCTt0IxcHS1Msv1u8jjPBoNpp?=
+ =?us-ascii?Q?8le8XS8Jh1ZaZjc3jVahjFl+Rhtm+Tspyv6ff24N+McjzmJUQ8GVWETcH3or?=
+ =?us-ascii?Q?Rj8gL6qhCCzn1MsrCnrTDJZGI5TjF3vE3R1YGrximxKjHYiTjeJVkqSG/5nt?=
+ =?us-ascii?Q?MEUzdQfDA9WglnKYXnS4/BkXfCgAujnjr7irfjXjm5A1NLOD/YaP1kN2i7kf?=
+ =?us-ascii?Q?fCgPo48TUpLEBz5hdmuHJYa5Q9TxNAXqico0rqnHfFJ++rOgz380SyTn6TWA?=
+ =?us-ascii?Q?o4O+l91Yw1zPt/BSVJp8ggeefathibYRETqpoK8qjxpt/4dgFInSX9LtY44+?=
+ =?us-ascii?Q?Ee4pg5aoFYxP2US2eCf3M1dHD9bpTetodNbKpSZ6IzEFjcuAsNDVpJy2FSoS?=
+ =?us-ascii?Q?j6j5NQWrehI0Wndnh09BCws32Jm92iuL5GOv688GSzF7codyhaTy9EkTlxiA?=
+ =?us-ascii?Q?7iD2cW3gHdcq6u5E28dJi5lKCtaeg21OlUJ16uY11e+x6LNobj8fO9Mt38bk?=
+ =?us-ascii?Q?/vQYFnAcezD+Q4wn01U6QTUF?=
+Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
-Message-ID-Hash: GBLVYSFEH23CAHPZHMC2XTTD5D747E3I
-X-Message-ID-Hash: GBLVYSFEH23CAHPZHMC2XTTD5D747E3I
-X-MailFrom: lkp@intel.com
-X-Mailman-Rule-Hits: nonmember-moderation
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3256.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ada872a3-6631-49e6-296b-08d8d9ce5981
+X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Feb 2021 20:45:55.1527
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: jFWYMwaO43gjabwfpC0EVUjpOphlHkwCoZM+uqZPu9NjGL2+aSwk9OrGO1I5MH/y5lQ4213czsjo5uv8KVdreQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB5008
+X-OriginatorOrg: intel.com
+Message-ID-Hash: PTRNSSRTMUGNAS6QXBXSTF5K2IALL72L
+X-Message-ID-Hash: PTRNSSRTMUGNAS6QXBXSTF5K2IALL72L
+X-MailFrom: robert.moore@intel.com
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
+CC: "Kaneda, Erik" <erik.kaneda@intel.com>, "robin.murphy@arm.com" <robin.murphy@arm.com>, "Wysocki, Rafael J" <rafael.j.wysocki@intel.com>, "wanghaibin.wang@huawei.com" <wanghaibin.wang@huawei.com>, Kunkun Jiang <jiangkunkun@huawei.com>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS aa22459146987c639004f1fe5a30fe95743c1a1c
+Subject: [Devel] Re: [PATCH] [ACPICA] IORT: Fix HTTU Override mask for the SMMUv3 subtable
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/GBLVYSFEH23CAHPZHMC2XTTD5D747E3I/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/PTRNSSRTMUGNAS6QXBXSTF5K2IALL72L/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-branch HEAD: aa22459146987c639004f1fe5a30fe95743c1a1c  Merge branches 'acpi-platform' and 'acpi-tables' into linux-next
+If the field is two bits, I think the ACPI_DMT_* symbol should be ACPI_DMT_FLAGS2, not ACPI_DMT_FLAGS1
 
-elapsed time: 728m
+-----Original Message-----
+From: Zenghui Yu <yuzenghui@huawei.com> 
+Sent: Thursday, February 25, 2021 3:26 AM
+To: devel@acpica.org; linux-acpi@vger.kernel.org
+Cc: Moore, Robert <robert.moore@intel.com>; Kaneda, Erik <erik.kaneda@intel.com>; robin.murphy@arm.com; Wysocki, Rafael J <rafael.j.wysocki@intel.com>; guohanjun@huawei.com; wanghaibin.wang@huawei.com; Zenghui Yu <yuzenghui@huawei.com>; Kunkun Jiang <jiangkunkun@huawei.com>
+Subject: [PATCH] [ACPICA] IORT: Fix HTTU Override mask for the SMMUv3 subtable
 
-configs tested: 134
-configs skipped: 2
+As per the IORT spec, this field overrides the value in SMMU_IRD0.HTTU which should always have been 2 bits.
 
-The following configs have been built successfully.
-More configs may be tested in the coming days.
-
-gcc tested configs:
-arm                                 defconfig
-arm64                            allyesconfig
-arm64                               defconfig
-arm                              allyesconfig
-arm                              allmodconfig
-powerpc                     tqm5200_defconfig
-mips                         db1xxx_defconfig
-arm                          pcm027_defconfig
-ia64                            zx1_defconfig
-sh                            migor_defconfig
-powerpc                     ppa8548_defconfig
-xtensa                generic_kc705_defconfig
-sh                          urquell_defconfig
-arm                         s3c6400_defconfig
-arm                        magician_defconfig
-mips                        bcm47xx_defconfig
-sh                            shmin_defconfig
-arm                        clps711x_defconfig
-arm                          moxart_defconfig
-powerpc                     skiroot_defconfig
-arm                      jornada720_defconfig
-nios2                            allyesconfig
-arc                        nsim_700_defconfig
-riscv                             allnoconfig
-riscv                               defconfig
-powerpc                     stx_gp3_defconfig
-um                            kunit_defconfig
-x86_64                           allyesconfig
-powerpc                      cm5200_defconfig
-arm                         s3c2410_defconfig
-arc                        nsimosci_defconfig
-powerpc                    adder875_defconfig
-sh                            titan_defconfig
-sparc                       sparc64_defconfig
-arm                             ezx_defconfig
-sh                          rsk7201_defconfig
-arm                           corgi_defconfig
-mips                           ip27_defconfig
-arm                           u8500_defconfig
-mips                        jmr3927_defconfig
-powerpc                      acadia_defconfig
-mips                  decstation_64_defconfig
-sh                           se7750_defconfig
-m68k                       m5475evb_defconfig
-arm                           sama5_defconfig
-nios2                               defconfig
-mips                            ar7_defconfig
-arm                        multi_v7_defconfig
-sh                           se7780_defconfig
-sh                               allmodconfig
-parisc                generic-64bit_defconfig
-arm                           tegra_defconfig
-xtensa                              defconfig
-arm                         cm_x300_defconfig
-powerpc                    ge_imp3a_defconfig
-arm                             mxs_defconfig
-arm                            mmp2_defconfig
-arm                          lpd270_defconfig
-mips                           ci20_defconfig
-arm                      tct_hammer_defconfig
-c6x                                 defconfig
-powerpc                     taishan_defconfig
-powerpc                       eiger_defconfig
-powerpc                     mpc83xx_defconfig
-mips                           ip28_defconfig
-arc                        vdk_hs38_defconfig
-mips                         tb0219_defconfig
-arm                        realview_defconfig
-mips                 decstation_r4k_defconfig
-ia64                             allmodconfig
-ia64                                defconfig
-ia64                             allyesconfig
-m68k                             allmodconfig
-m68k                                defconfig
-m68k                             allyesconfig
-arc                              allyesconfig
-nds32                             allnoconfig
-c6x                              allyesconfig
-nds32                               defconfig
-csky                                defconfig
-alpha                               defconfig
-alpha                            allyesconfig
-xtensa                           allyesconfig
-h8300                            allyesconfig
-arc                                 defconfig
-parisc                              defconfig
-s390                             allyesconfig
-s390                             allmodconfig
-parisc                           allyesconfig
-s390                                defconfig
-i386                             allyesconfig
-sparc                            allyesconfig
-sparc                               defconfig
-i386                               tinyconfig
-i386                                defconfig
-mips                             allyesconfig
-mips                             allmodconfig
-powerpc                          allyesconfig
-powerpc                          allmodconfig
-powerpc                           allnoconfig
-i386                 randconfig-a005-20210223
-i386                 randconfig-a006-20210223
-i386                 randconfig-a004-20210223
-i386                 randconfig-a003-20210223
-i386                 randconfig-a001-20210223
-i386                 randconfig-a002-20210223
-x86_64               randconfig-a015-20210223
-x86_64               randconfig-a011-20210223
-x86_64               randconfig-a012-20210223
-x86_64               randconfig-a016-20210223
-x86_64               randconfig-a014-20210223
-x86_64               randconfig-a013-20210223
-i386                 randconfig-a013-20210223
-i386                 randconfig-a012-20210223
-i386                 randconfig-a011-20210223
-i386                 randconfig-a014-20210223
-i386                 randconfig-a016-20210223
-i386                 randconfig-a015-20210223
-riscv                    nommu_k210_defconfig
-riscv                            allyesconfig
-riscv                    nommu_virt_defconfig
-riscv                          rv32_defconfig
-riscv                            allmodconfig
-x86_64                    rhel-7.6-kselftests
-x86_64                              defconfig
-x86_64                               rhel-8.3
-x86_64                      rhel-8.3-kbuiltin
-x86_64                                  kexec
-
-clang tested configs:
-x86_64               randconfig-a001-20210223
-x86_64               randconfig-a002-20210223
-x86_64               randconfig-a003-20210223
-x86_64               randconfig-a005-20210223
-x86_64               randconfig-a006-20210223
-x86_64               randconfig-a004-20210223
-
+Fixes: 9f7c3e148f44 ("IORT: Add in support for the SMMUv3 subtable")
+Reported-by: Kunkun Jiang <jiangkunkun@huawei.com>
+Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
 ---
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+ source/common/dmtbinfo2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/source/common/dmtbinfo2.c b/source/common/dmtbinfo2.c index 17a80ba21..321f106fa 100644
+--- a/source/common/dmtbinfo2.c
++++ b/source/common/dmtbinfo2.c
+@@ -343,7 +343,7 @@ ACPI_DMTABLE_INFO           AcpiDmTableInfoIort4[] =
+     {ACPI_DMT_UINT64,   ACPI_IORT4_OFFSET (BaseAddress),            "Base Address", 0},
+     {ACPI_DMT_UINT32,   ACPI_IORT4_OFFSET (Flags),                  "Flags (decoded below)", 0},
+     {ACPI_DMT_FLAG0,    ACPI_IORT4_FLAG_OFFSET (Flags, 0),          "COHACC Override", 0},
+-    {ACPI_DMT_FLAG1,    ACPI_IORT4_FLAG_OFFSET (Flags, 0),          "HTTU Override", 0},
++    {ACPI_DMT_FLAGS1,   ACPI_IORT4_FLAG_OFFSET (Flags, 0),          "HTTU Override", 0},
+     {ACPI_DMT_FLAG3,    ACPI_IORT4_FLAG_OFFSET (Flags, 0),          "Proximity Domain Valid", 0},
+     {ACPI_DMT_UINT32,   ACPI_IORT4_OFFSET (Reserved),               "Reserved", 0},
+     {ACPI_DMT_UINT64,   ACPI_IORT4_OFFSET (VatosAddress),           "VATOS Address", 0},
+--
+2.19.1
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
