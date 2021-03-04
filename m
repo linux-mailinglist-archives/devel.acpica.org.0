@@ -2,150 +2,223 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4CDE232D2B2
-	for <lists+devel-acpica@lfdr.de>; Thu,  4 Mar 2021 13:15:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 40CE432D829
+	for <lists+devel-acpica@lfdr.de>; Thu,  4 Mar 2021 17:56:39 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id CF201100ED4AC;
-	Thu,  4 Mar 2021 04:15:04 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.210.51; helo=mail-ot1-f51.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	by ml01.01.org (Postfix) with ESMTP id A851F100EC1E4;
+	Thu,  4 Mar 2021 08:56:37 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.120; helo=mga04.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id C5749100ED4A4
-	for <devel@acpica.org>; Thu,  4 Mar 2021 04:15:02 -0800 (PST)
-Received: by mail-ot1-f51.google.com with SMTP id h22so27013645otr.6
-        for <devel@acpica.org>; Thu, 04 Mar 2021 04:15:02 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=6C1ZutBSyK6kqUR+ByrPHry2A5Xu5UnDxFmzQsZQ8F0=;
-        b=MngHOIJPSjZs0xYdwdFNC9qiZqeOMXk3lk9+J6/TvK+Yc1Q+0OjaYlz854sqagSzQ1
-         d1iCMEq8iSzbrtzR7z3R0jRh29ITMLsCgDpwi5R/V6GtMro7cXiMzCDYAUu2rAbuTINn
-         q3oOodasNX8HSYOf/pUz0xLBL7j6us6U9pFMbNrjLpHVS5vFxVrDAV1SXoUUahH2JbMt
-         itlDKGI5xHs7k9uLQfs0QnEG9cadogNl0GSd5EnhOTOOQJGcRMbJwUskCZt72jQSGJAI
-         wJ5nceubVzFI2GlE4jLqSrGbGLTfQIERnpNDnysScN/3MEaLo/WVowyZh4a2U+B47APx
-         TP9A==
-X-Gm-Message-State: AOAM530DdfH5PLtZVSxRawb+KC7jRJQ81PZK8JtDbXPAfRRwCEuKQPMb
-	LM00kstA95DJCjvwBl7IhzWTl3C3PooraCcX0iM=
-X-Google-Smtp-Source: ABdhPJy98h8ozgdO0m0No+u1zxOVZo7NAoKFN15Arj0BKyQ2mtdeexjpzGxgb2cv+nG9IityJHPwqzMBgAFeBV/AztY=
-X-Received: by 2002:a05:6830:1057:: with SMTP id b23mr3365157otp.206.1614860100740;
- Thu, 04 Mar 2021 04:15:00 -0800 (PST)
+	by ml01.01.org (Postfix) with ESMTPS id AEA55100ED4BC
+	for <devel@acpica.org>; Thu,  4 Mar 2021 08:56:35 -0800 (PST)
+IronPort-SDR: G4gq3A+qqwy+FQhgXEGLOxF/g6Ro2T5M8hjgVS2Y35/BVNcQoIkeh5uYU0uY3G6favt+zGX+Sc
+ qqFyeAUxjRZg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9913"; a="185045572"
+X-IronPort-AV: E=Sophos;i="5.81,222,1610438400";
+   d="scan'208";a="185045572"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Mar 2021 08:56:32 -0800
+IronPort-SDR: WVIlmacODEbag1qS3K/9hi0A+4uEB19iVvXOFpVz5Nbg2J2PUkZXiRZ7FVtsXHjGme1c22wNYk
+ lqKsGVrk3zaw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.81,222,1610438400";
+   d="scan'208";a="368246862"
+Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
+  by orsmga003.jf.intel.com with ESMTP; 04 Mar 2021 08:56:32 -0800
+Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2106.2; Thu, 4 Mar 2021 08:56:31 -0800
+Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
+ orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2106.2
+ via Frontend Transport; Thu, 4 Mar 2021 08:56:31 -0800
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (104.47.70.103)
+ by edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2106.2; Thu, 4 Mar 2021 08:56:30 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=NM/6HBhqK4pxv62YdyOSp5PDW8lmhn/lx1kcTtJDOKHtXHq1bRBnTE8nMpRehXisCUlKs4J+jryZq9jeQA0S1Cgzcv8rhp3HbAsd/iFWRc3cLa7rk2NWjc0d7esaQSFkgFrmLwjpjkU6UWyV5Vsy/azvkGjgnELpeJ/FIZaUBl6eUYX24UnQUamlbQoGegpezuRWqIyXfF6/3gWKtJCh6X4/qu9hEgn5wir8X6DoyTzVEeJDXw8oEvhvqaMqGPR3o4oBk2VIIVTH5hzWH4gVnhrBqIWE2O0UKQLal1We6kyag6d5j85ACyVQ7cvC08+RcI1ovv8VC6cm1pd0xoP3EQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=KNf0JoHGEQ1C98CKYFMKrqhti9BcAKK2Y1Plnx6tKqo=;
+ b=hN4pHmntrEOxrGOAgJAYR6uYkQrKA66k75uzP55/6Z1ExUxVDVcIveu7M5DT7e9t4e5YZD+3b+y+YDObRbiNh6Z6t/P9Tm5grb7Dd+1tnOv/r4e8QOk/O2Y2xDnOZ0ii32kMZp+ehMW3i8YAn1YABnm03RBciV1QY3rgztYAPnBPF2MdcMIHpUo1nmWDlu/q6xuYXSzy6euGiFX3OXKZtJtSFiu9ycmBZq+sdKHDIDETvGfXrYbWM6QPpit5hwgS7TjDh7zLH80r9V6/yB9MlnS4rHN/LsYL3UOrloc5v0gczbZKjR+UCWsxz6kloxCr/9JAL8n2tJmcJqEqBFhxHg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
+ s=selector2-intel-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=KNf0JoHGEQ1C98CKYFMKrqhti9BcAKK2Y1Plnx6tKqo=;
+ b=ducySPQjdg+lE8+cYPai1eRyZxiq1AO64tMoL0GQdixF8zxGd7NMWiSZhAuIvfTNJfOB31qyZfwf3yJvL28Sq6Uye6aq7BWuMtlqYqvi47mKSWyuGEZf+mQFA4cI7p8J2vhpM+1isQGGflQEx9xEwHJTN6IkmSWaPlCFDXijaG4=
+Received: from BYAPR11MB3256.namprd11.prod.outlook.com (2603:10b6:a03:76::19)
+ by BYAPR11MB2631.namprd11.prod.outlook.com (2603:10b6:a02:be::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3890.28; Thu, 4 Mar
+ 2021 16:56:28 +0000
+Received: from BYAPR11MB3256.namprd11.prod.outlook.com
+ ([fe80::ac1e:2d22:3f90:4dc]) by BYAPR11MB3256.namprd11.prod.outlook.com
+ ([fe80::ac1e:2d22:3f90:4dc%7]) with mapi id 15.20.3890.032; Thu, 4 Mar 2021
+ 16:56:26 +0000
+From: "Moore, Robert" <robert.moore@intel.com>
+To: "Kaneda, Erik" <erik.kaneda@intel.com>, Weidong Cui
+	<weidongcui@gmail.com>, "Wysocki, Rafael J" <rafael.j.wysocki@intel.com>
+Thread-Topic: [PATCH] Enable ACPI_ADR_SPACE_PCI_CONFIG in
+ acpi_gbl_default_address_spaces only when ACPI_PCI_CONFIGURED is defined
+Thread-Index: AQHW/pI3ruT7cwkxjEOUSsZ8OrOy5apyuR4AgAF306A=
+Date: Thu, 4 Mar 2021 16:56:26 +0000
+Message-ID: <BYAPR11MB325658379DB73F6EEDD6C76F87979@BYAPR11MB3256.namprd11.prod.outlook.com>
+References: <20210209031744.26474-1-weidongcui@gmail.com>
+ <MWHPR11MB1599D81078925FFD128E954EF0989@MWHPR11MB1599.namprd11.prod.outlook.com>
+In-Reply-To: <MWHPR11MB1599D81078925FFD128E954EF0989@MWHPR11MB1599.namprd11.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+dlp-version: 11.5.1.3
+dlp-product: dlpe-windows
+dlp-reaction: no-action
+authentication-results: intel.com; dkim=none (message not signed)
+ header.d=none;intel.com; dmarc=none action=none header.from=intel.com;
+x-originating-ip: [134.134.136.194]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: ed1e6995-139b-4673-7016-08d8df2e731b
+x-ms-traffictypediagnostic: BYAPR11MB2631:
+x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <BYAPR11MB26311350956B80199DF4490A87979@BYAPR11MB2631.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:3044;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 61+WlOnsvXR7dxCplt5x4D/5mDcRmnSfA7LKd/Ha06pts57tdHbrHsDNPw030e4h00xAc2PzozQtRfvCG+z1nLWVc/dm/Y5bfMVjqbSYtDZ1clO5RzmEGV6M+USuNXfk+UHb/1C2MBY284GO8lWKsc9EoJztlZj6sfPaVKNbMHEOqohkrtZS4oaVxSGJIZSawxli0EXyroC9EZOBa/AxreiY9WoqSicZRMAo2MQlW1Bi1gHJDSRY3EllW0JBMCNTC/kVBdlrGhAb8Y9YuQQnEqeZaZp3QjOnfEAKNJgaVeBk8mfXHH0FFiVc1oudngf9tJFgwD/eBMvDHnWBTXnTu62YE2bIl3NG4mccIDe2/l4zLdE701989JTunhcshTDiILdheFzlTSGUbhCcuN3oQVO5i31yshZ3Lie30EN6KjWpQr9v6hgX97kmAZ/XLrN0P6aIWXh3tWfBJlH0bXxmy/3n3erERP/j521nl25gxU/zpoLjEO/D+eyPowzCZpjocpxm1EPP9x7HgbnwvKdzSA==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(346002)(376002)(396003)(366004)(39860400002)(136003)(33656002)(54906003)(66556008)(86362001)(8936002)(76116006)(83380400001)(110136005)(316002)(8676002)(52536014)(2906002)(53546011)(186003)(7696005)(55016002)(4326008)(6506007)(26005)(71200400001)(478600001)(66446008)(64756008)(5660300002)(66946007)(9686003)(6636002)(66476007);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata: =?us-ascii?Q?uqZDCcIHsS7i6AjbyMWpjalDVnXlW87ZnwdUtrQETCZQFrQqcazvLZA19n6w?=
+ =?us-ascii?Q?QgZBvCOUYyqldvnJEXb3f8bO4RmpDk5O+e26PEBWOsv9BM1vMoOSrd7cvUVG?=
+ =?us-ascii?Q?qXr9R0zSYOH2TVwCAGiI4pcwUvTO7mnV8OyTwdVEvn8puZ1N7V0Qzxt1voT/?=
+ =?us-ascii?Q?zJdaO0+UBlgJ+X8Ib3HVTk8vACtVt1418qFlSHzKKGTeJycXrrH4KRZNvG6z?=
+ =?us-ascii?Q?UwY8JWCIOTzu8diPNS1CinfWJlj73nsoNaXKyKqCSgzLtqVX6zLVei7dTnEp?=
+ =?us-ascii?Q?17sJUo/mdtVonMr8dpchz9qVYH9maD2DsNrulJ5i7afdMbJzKucoO1mkyN0+?=
+ =?us-ascii?Q?JGkrLG0ugcwHPg82tgsSRytMfBG74PyutUTkpspUmc6hPnoGT33X3N2ST0HB?=
+ =?us-ascii?Q?evT8ip7g7nR5xUhDR1H7h17SnET1sImc82tY4PhJJLLGtW2+gUqbQ4p4pjne?=
+ =?us-ascii?Q?C3Q0JELxYF7zdVv0ssdieaaDilAwOGbbmMO+/rJc5A46PgyTaSv7Bnka7jhm?=
+ =?us-ascii?Q?a+FBxqDZoKDKc4+CT5ATiVoou6TP1jWGo461DB4tMj7LsaVxYuykrFVP52ke?=
+ =?us-ascii?Q?XKlomBxaoFGOhHnbLZdxx3654Pm8KvRUYenSLf/C46V/bjDikvJf2gdPztsp?=
+ =?us-ascii?Q?51Tu7vqIqBCPpfTBcAsCtOerklroQmNAdBcW8yDa3XgenXCH+F26+Pn/enh5?=
+ =?us-ascii?Q?7E8a9nEyqwj6o7KqOYbClIV0kFIhowat3Cffa7eLfUN1v5NA4jM04CmKJPp5?=
+ =?us-ascii?Q?MTDSmKee8w5YsAwcCHwJO62u4UA1jczju6zPl4yopNIO0y/4ibtwGInMD1I1?=
+ =?us-ascii?Q?r7oXJ2o2BPs3/fcVyU7IHzuigK9j7XOnpuvxcxHTnQJJ55Y/MrI5BKr2uXe+?=
+ =?us-ascii?Q?bt8mlC8xVfcNctGzWR9DdRx6lSAvC5FUfen/DomrwMniqGUH0R0d4tQPTUJt?=
+ =?us-ascii?Q?4xlcLfTNyzhgandIWyyjaniBdadTF8FONoY8vbPUgyR38M3oEFcV3UkKy4gy?=
+ =?us-ascii?Q?mG0LawFi/lE0EPaBhnPNXstKdjemRdWxIcbMUvrATYUFG8zVgk0TA7RB+UNV?=
+ =?us-ascii?Q?OMXVvA/e3oKVMkFlY4p5pncqU5q1FpymYNta4+vS1jiRpQTQ+hKEyJ/YAeWN?=
+ =?us-ascii?Q?bA1LUdb64MLDtQ6bQO5yO65VBygTDa2T0j6pMh4hmsACMS27uuy0odd44Ifc?=
+ =?us-ascii?Q?Ojr5cc7pb1CQcr6mUiLxWTwhLw9ukQl9/DhBuvjKlZSbi8EJ8Q/dUR2DUBNS?=
+ =?us-ascii?Q?L8WedlnZmEiqGRwCzrXUXcQI70S+90ITDLw4zO2O8LejGO6ot1cuLndiCmVw?=
+ =?us-ascii?Q?VysfNyuyUjZZgAFEjXQnSzrn?=
+Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
-References: <1614802160-29362-1-git-send-email-george.kennedy@oracle.com>
-In-Reply-To: <1614802160-29362-1-git-send-email-george.kennedy@oracle.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Thu, 4 Mar 2021 13:14:49 +0100
-Message-ID: <CAJZ5v0j3=82x1hV9SCdinJQPkDXmJd9BFoqvNxNHSb6iS8PHVQ@mail.gmail.com>
-To: George Kennedy <george.kennedy@oracle.com>
-Message-ID-Hash: YGETFT673DUHHWOI6R2HH44M4EYF75GQ
-X-Message-ID-Hash: YGETFT673DUHHWOI6R2HH44M4EYF75GQ
-X-MailFrom: rjwysocki@gmail.com
-X-Mailman-Rule-Hits: nonmember-moderation
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: Erik Kaneda <erik.kaneda@intel.com>, Rafael Wysocki <rafael.j.wysocki@intel.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Mike Rapoport <rppt@linux.ibm.com>, Dan Carpenter <dan.carpenter@oracle.com>, Dhaval Giani <dhaval.giani@oracle.com>
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3256.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ed1e6995-139b-4673-7016-08d8df2e731b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Mar 2021 16:56:26.3843
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 0PWn6wrwyiYyWWBLjp0sWzkN9XAxwusuGPp+9Hvrq7fh44SLi5dBqHDDZzNwvgk4R1Ord3UwJ+cWkoTqQCAwpA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR11MB2631
+X-OriginatorOrg: intel.com
+Message-ID-Hash: O7WK2MOY25V2VVHFM7OSZR63K3S5EH22
+X-Message-ID-Hash: O7WK2MOY25V2VVHFM7OSZR63K3S5EH22
+X-MailFrom: robert.moore@intel.com
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
+CC: Xinyang Ge <aegiryy@gmail.com>, "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>, "devel@acpica.org" <devel@acpica.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH 1/1] ACPI: fix acpi table use after free
+Subject: [Devel] Re: [PATCH] Enable ACPI_ADR_SPACE_PCI_CONFIG in acpi_gbl_default_address_spaces only when ACPI_PCI_CONFIGURED is defined
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/YGETFT673DUHHWOI6R2HH44M4EYF75GQ/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/O7WK2MOY25V2VVHFM7OSZR63K3S5EH22/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Thu, Mar 4, 2021 at 2:22 AM George Kennedy <george.kennedy@oracle.com> wrote:
->
-> Since commit 7fef431be9c9 ("mm/page_alloc: place pages to tail
-> in __free_pages_core()") the following use after free occurs
-> intermittently when acpi tables are accessed.
->
-> BUG: KASAN: use-after-free in ibft_init+0x134/0xc49
-> Read of size 4 at addr ffff8880be453004 by task swapper/0/1
-> CPU: 3 PID: 1 Comm: swapper/0 Not tainted 5.12.0-rc1-7a7fd0d #1
-> Call Trace:
->  dump_stack+0xf6/0x158
->  print_address_description.constprop.9+0x41/0x60
->  kasan_report.cold.14+0x7b/0xd4
->  __asan_report_load_n_noabort+0xf/0x20
->  ibft_init+0x134/0xc49
->  do_one_initcall+0xc4/0x3e0
->  kernel_init_freeable+0x5af/0x66b
->  kernel_init+0x16/0x1d0
->  ret_from_fork+0x22/0x30
->
-> ACPI tables mapped via kmap() do not have their mapped pages
-> reserved and the pages can be "stolen" by the buddy allocator.
+Well, I don't like the fact that PCI_CONFIGURED would have to be defined by each current host:
 
-What do you mean by this?
+> +#ifdef ACPI_PCI_CONFIGURED
 
-> Use memblock_reserve() to reserve all the ACPI table pages.
+I would rather the logic be reversed:
 
-How is this going to help?
+> +#ifdef ACPI_PCI_NOT_CONFIGURED
 
-> Signed-off-by: George Kennedy <george.kennedy@oracle.com>
+-----Original Message-----
+From: Kaneda, Erik <erik.kaneda@intel.com> 
+Sent: Wednesday, March 03, 2021 10:29 AM
+To: Weidong Cui <weidongcui@gmail.com>; Moore, Robert <robert.moore@intel.com>; Wysocki, Rafael J <rafael.j.wysocki@intel.com>
+Cc: Xinyang Ge <aegiryy@gmail.com>; linux-acpi@vger.kernel.org; devel@acpica.org; linux-kernel@vger.kernel.org; Len Brown <lenb@kernel.org>
+Subject: RE: [PATCH] Enable ACPI_ADR_SPACE_PCI_CONFIG in acpi_gbl_default_address_spaces only when ACPI_PCI_CONFIGURED is defined
+
+This looks good to me. Bob, do you have any comments?
+
+Erik
+
+> -----Original Message-----
+> From: Weidong Cui <weidongcui@gmail.com>
+> Sent: Monday, February 8, 2021 7:18 PM
+> To: Moore, Robert <robert.moore@intel.com>; Kaneda, Erik 
+> <erik.kaneda@intel.com>; Wysocki, Rafael J 
+> <rafael.j.wysocki@intel.com>; Len Brown <lenb@kernel.org>
+> Cc: Weidong Cui <weidongcui@gmail.com>; Xinyang Ge 
+> <aegiryy@gmail.com>; linux-acpi@vger.kernel.org; devel@acpica.org; 
+> linux- kernel@vger.kernel.org
+> Subject: [PATCH] Enable ACPI_ADR_SPACE_PCI_CONFIG in 
+> acpi_gbl_default_address_spaces only when ACPI_PCI_CONFIGURED is 
+> defined
+> 
+> Signed-off-by: Weidong Cui <weidongcui@gmail.com>
+> Signed-off-by: Xinyang Ge <aegiryy@gmail.com>
 > ---
->  arch/x86/kernel/setup.c        | 3 +--
->  drivers/acpi/acpica/tbinstal.c | 4 ++++
->  2 files changed, 5 insertions(+), 2 deletions(-)
->
-> diff --git a/arch/x86/kernel/setup.c b/arch/x86/kernel/setup.c
-> index d883176..97deea3 100644
-> --- a/arch/x86/kernel/setup.c
-> +++ b/arch/x86/kernel/setup.c
-> @@ -1046,6 +1046,7 @@ void __init setup_arch(char **cmdline_p)
->         cleanup_highmap();
->
->         memblock_set_current_limit(ISA_END_ADDRESS);
-> +       acpi_boot_table_init();
-
-This cannot be moved before the acpi_table_upgrade() invocation AFAICS.
-
-Why exactly do you want to move it?
-
->         e820__memblock_setup();
->
->         /*
-> @@ -1139,8 +1140,6 @@ void __init setup_arch(char **cmdline_p)
->         /*
->          * Parse the ACPI tables for possible boot-time SMP configuration.
->          */
-> -       acpi_boot_table_init();
-> -
->         early_acpi_boot_init();
->
->         initmem_init();
-> diff --git a/drivers/acpi/acpica/tbinstal.c b/drivers/acpi/acpica/tbinstal.c
-> index 8d1e5b5..4e32b22 100644
-> --- a/drivers/acpi/acpica/tbinstal.c
-> +++ b/drivers/acpi/acpica/tbinstal.c
-> @@ -8,6 +8,7 @@
->   *****************************************************************************/
->
->  #include <acpi/acpi.h>
-> +#include <linux/memblock.h>
->  #include "accommon.h"
->  #include "actables.h"
->
-> @@ -58,6 +59,9 @@
->                                       new_table_desc->flags,
->                                       new_table_desc->pointer);
->
-> +       memblock_reserve(new_table_desc->address,
-> +                        PAGE_ALIGN(new_table_desc->pointer->length));
-> +
-
-Why do you want to do this here in the first place?
-
-Things like that cannot be done in the ACPICA code in general.
-
->         acpi_tb_print_table_header(new_table_desc->address,
->                                    new_table_desc->pointer);
->
+>  drivers/acpi/acpica/evhandler.c | 2 ++
+>  include/acpi/acconfig.h         | 4 ++++
+>  2 files changed, 6 insertions(+)
+> 
+> diff --git a/drivers/acpi/acpica/evhandler.c 
+> b/drivers/acpi/acpica/evhandler.c index 5884eba04..4c25ad433 100644
+> --- a/drivers/acpi/acpica/evhandler.c
+> +++ b/drivers/acpi/acpica/evhandler.c
+> @@ -26,7 +26,9 @@ acpi_ev_install_handler(acpi_handle obj_handle,
+>  u8 acpi_gbl_default_address_spaces[ACPI_NUM_DEFAULT_SPACES] = {
+>  	ACPI_ADR_SPACE_SYSTEM_MEMORY,
+>  	ACPI_ADR_SPACE_SYSTEM_IO,
+> +#ifdef ACPI_PCI_CONFIGURED
+>  	ACPI_ADR_SPACE_PCI_CONFIG,
+> +#endif
+>  	ACPI_ADR_SPACE_DATA_TABLE
+>  };
+> 
+> diff --git a/include/acpi/acconfig.h b/include/acpi/acconfig.h index 
+> a225eff49..790999028 100644
+> --- a/include/acpi/acconfig.h
+> +++ b/include/acpi/acconfig.h
+> @@ -162,7 +162,11 @@
+>  /* Maximum space_ids for Operation Regions */
+> 
+>  #define ACPI_MAX_ADDRESS_SPACE          255
+> +#ifdef ACPI_PCI_CONFIGURED
+>  #define ACPI_NUM_DEFAULT_SPACES         4
+> +#else
+> +#define ACPI_NUM_DEFAULT_SPACES         3
+> +#endif
+> 
+>  /* Array sizes.  Used for range checking also */
+> 
 > --
+> 2.24.3 (Apple Git-128)
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
