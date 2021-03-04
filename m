@@ -1,52 +1,54 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 78E4932CDAF
-	for <lists+devel-acpica@lfdr.de>; Thu,  4 Mar 2021 08:37:22 +0100 (CET)
+Received: from ml01.01.org (ml01.01.org [198.145.21.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4CDE232D2B2
+	for <lists+devel-acpica@lfdr.de>; Thu,  4 Mar 2021 13:15:06 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 95986100F2255;
-	Wed,  3 Mar 2021 23:37:20 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.31; helo=mga06.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	by ml01.01.org (Postfix) with ESMTP id CF201100ED4AC;
+	Thu,  4 Mar 2021 04:15:04 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.210.51; helo=mail-ot1-f51.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 4C2F3100F2251
-	for <devel@acpica.org>; Wed,  3 Mar 2021 23:37:18 -0800 (PST)
-IronPort-SDR: Vetx+8g+tAqlO6SGvX4F6uQrLx1xrZo3O8GWPWWITCt4EakMsB2HfJE/WDiQPVPROFbtCuSYOH
- 96Ug1pTjkX4g==
-X-IronPort-AV: E=McAfee;i="6000,8403,9912"; a="248758847"
-X-IronPort-AV: E=Sophos;i="5.81,222,1610438400";
-   d="scan'208";a="248758847"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2021 23:37:17 -0800
-IronPort-SDR: UQ3204rotDGKE8nL/XzMzWrttMkk8WrSD4qiem0WAdKmzn0uonWc3UWhziVrI4DZImCWuG+0GM
- zb0QA1+tjqYQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.81,222,1610438400";
-   d="scan'208";a="400469883"
-Received: from lkp-server02.sh.intel.com (HELO 2482ff9f8ac0) ([10.239.97.151])
-  by fmsmga008.fm.intel.com with ESMTP; 03 Mar 2021 23:37:15 -0800
-Received: from kbuild by 2482ff9f8ac0 with local (Exim 4.92)
-	(envelope-from <lkp@intel.com>)
-	id 1lHiXr-00025e-8U; Thu, 04 Mar 2021 07:37:15 +0000
-Date: Thu, 04 Mar 2021 15:36:53 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <60408e15.+FGYqfhm+mxjf+t1%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTPS id C5749100ED4A4
+	for <devel@acpica.org>; Thu,  4 Mar 2021 04:15:02 -0800 (PST)
+Received: by mail-ot1-f51.google.com with SMTP id h22so27013645otr.6
+        for <devel@acpica.org>; Thu, 04 Mar 2021 04:15:02 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6C1ZutBSyK6kqUR+ByrPHry2A5Xu5UnDxFmzQsZQ8F0=;
+        b=MngHOIJPSjZs0xYdwdFNC9qiZqeOMXk3lk9+J6/TvK+Yc1Q+0OjaYlz854sqagSzQ1
+         d1iCMEq8iSzbrtzR7z3R0jRh29ITMLsCgDpwi5R/V6GtMro7cXiMzCDYAUu2rAbuTINn
+         q3oOodasNX8HSYOf/pUz0xLBL7j6us6U9pFMbNrjLpHVS5vFxVrDAV1SXoUUahH2JbMt
+         itlDKGI5xHs7k9uLQfs0QnEG9cadogNl0GSd5EnhOTOOQJGcRMbJwUskCZt72jQSGJAI
+         wJ5nceubVzFI2GlE4jLqSrGbGLTfQIERnpNDnysScN/3MEaLo/WVowyZh4a2U+B47APx
+         TP9A==
+X-Gm-Message-State: AOAM530DdfH5PLtZVSxRawb+KC7jRJQ81PZK8JtDbXPAfRRwCEuKQPMb
+	LM00kstA95DJCjvwBl7IhzWTl3C3PooraCcX0iM=
+X-Google-Smtp-Source: ABdhPJy98h8ozgdO0m0No+u1zxOVZo7NAoKFN15Arj0BKyQ2mtdeexjpzGxgb2cv+nG9IityJHPwqzMBgAFeBV/AztY=
+X-Received: by 2002:a05:6830:1057:: with SMTP id b23mr3365157otp.206.1614860100740;
+ Thu, 04 Mar 2021 04:15:00 -0800 (PST)
 MIME-Version: 1.0
-Message-ID-Hash: WNPMOJQFS723VNXEPR3T7EV5NGG2DI6C
-X-Message-ID-Hash: WNPMOJQFS723VNXEPR3T7EV5NGG2DI6C
-X-MailFrom: lkp@intel.com
+References: <1614802160-29362-1-git-send-email-george.kennedy@oracle.com>
+In-Reply-To: <1614802160-29362-1-git-send-email-george.kennedy@oracle.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Thu, 4 Mar 2021 13:14:49 +0100
+Message-ID: <CAJZ5v0j3=82x1hV9SCdinJQPkDXmJd9BFoqvNxNHSb6iS8PHVQ@mail.gmail.com>
+To: George Kennedy <george.kennedy@oracle.com>
+Message-ID-Hash: YGETFT673DUHHWOI6R2HH44M4EYF75GQ
+X-Message-ID-Hash: YGETFT673DUHHWOI6R2HH44M4EYF75GQ
+X-MailFrom: rjwysocki@gmail.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+CC: Erik Kaneda <erik.kaneda@intel.com>, Rafael Wysocki <rafael.j.wysocki@intel.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Mike Rapoport <rppt@linux.ibm.com>, Dan Carpenter <dan.carpenter@oracle.com>, Dhaval Giani <dhaval.giani@oracle.com>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS 2f2defdc442de857134919fc517d0b9ee7df17df
+Subject: [Devel] Re: [PATCH 1/1] ACPI: fix acpi table use after free
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/WNPMOJQFS723VNXEPR3T7EV5NGG2DI6C/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/YGETFT673DUHHWOI6R2HH44M4EYF75GQ/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -55,117 +57,95 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-branch HEAD: 2f2defdc442de857134919fc517d0b9ee7df17df  Merge branch 'acpi-bus' into bleeding-edge
+On Thu, Mar 4, 2021 at 2:22 AM George Kennedy <george.kennedy@oracle.com> wrote:
+>
+> Since commit 7fef431be9c9 ("mm/page_alloc: place pages to tail
+> in __free_pages_core()") the following use after free occurs
+> intermittently when acpi tables are accessed.
+>
+> BUG: KASAN: use-after-free in ibft_init+0x134/0xc49
+> Read of size 4 at addr ffff8880be453004 by task swapper/0/1
+> CPU: 3 PID: 1 Comm: swapper/0 Not tainted 5.12.0-rc1-7a7fd0d #1
+> Call Trace:
+>  dump_stack+0xf6/0x158
+>  print_address_description.constprop.9+0x41/0x60
+>  kasan_report.cold.14+0x7b/0xd4
+>  __asan_report_load_n_noabort+0xf/0x20
+>  ibft_init+0x134/0xc49
+>  do_one_initcall+0xc4/0x3e0
+>  kernel_init_freeable+0x5af/0x66b
+>  kernel_init+0x16/0x1d0
+>  ret_from_fork+0x22/0x30
+>
+> ACPI tables mapped via kmap() do not have their mapped pages
+> reserved and the pages can be "stolen" by the buddy allocator.
 
-elapsed time: 725m
+What do you mean by this?
 
-configs tested: 93
-configs skipped: 2
+> Use memblock_reserve() to reserve all the ACPI table pages.
 
-The following configs have been built successfully.
-More configs may be tested in the coming days.
+How is this going to help?
 
-gcc tested configs:
-arm                                 defconfig
-arm64                            allyesconfig
-arm64                               defconfig
-arm                              allyesconfig
-arm                              allmodconfig
-arm                             pxa_defconfig
-powerpc                 xes_mpc85xx_defconfig
-arm                            dove_defconfig
-sh                           se7780_defconfig
-powerpc                      chrp32_defconfig
-mips                     loongson1b_defconfig
-ia64                                defconfig
-powerpc                     tqm8540_defconfig
-arm                       spear13xx_defconfig
-mips                     cu1830-neo_defconfig
-powerpc                     tqm5200_defconfig
-mips                          rm200_defconfig
-arm64                            alldefconfig
-arm                        oxnas_v6_defconfig
-arm                            zeus_defconfig
-mips                        bcm47xx_defconfig
-powerpc                     ppa8548_defconfig
-m68k                        stmark2_defconfig
-sh                          rsk7201_defconfig
-ia64                             allmodconfig
-ia64                             allyesconfig
-m68k                             allmodconfig
-m68k                                defconfig
-m68k                             allyesconfig
-nios2                               defconfig
-arc                              allyesconfig
-nds32                             allnoconfig
-nds32                               defconfig
-nios2                            allyesconfig
-csky                                defconfig
-alpha                               defconfig
-alpha                            allyesconfig
-xtensa                           allyesconfig
-h8300                            allyesconfig
-arc                                 defconfig
-sh                               allmodconfig
-parisc                              defconfig
-s390                             allyesconfig
-s390                             allmodconfig
-parisc                           allyesconfig
-s390                                defconfig
-i386                             allyesconfig
-sparc                            allyesconfig
-sparc                               defconfig
-i386                               tinyconfig
-i386                                defconfig
-mips                             allyesconfig
-mips                             allmodconfig
-powerpc                          allyesconfig
-powerpc                          allmodconfig
-powerpc                           allnoconfig
-i386                 randconfig-a005-20210303
-i386                 randconfig-a003-20210303
-i386                 randconfig-a002-20210303
-i386                 randconfig-a004-20210303
-i386                 randconfig-a006-20210303
-i386                 randconfig-a001-20210303
-x86_64               randconfig-a013-20210303
-x86_64               randconfig-a016-20210303
-x86_64               randconfig-a015-20210303
-x86_64               randconfig-a014-20210303
-x86_64               randconfig-a012-20210303
-x86_64               randconfig-a011-20210303
-i386                 randconfig-a016-20210303
-i386                 randconfig-a012-20210303
-i386                 randconfig-a014-20210303
-i386                 randconfig-a013-20210303
-i386                 randconfig-a011-20210303
-i386                 randconfig-a015-20210303
-riscv                    nommu_k210_defconfig
-riscv                            allyesconfig
-riscv                    nommu_virt_defconfig
-riscv                             allnoconfig
-riscv                               defconfig
-riscv                          rv32_defconfig
-riscv                            allmodconfig
-x86_64                           allyesconfig
-x86_64                    rhel-7.6-kselftests
-x86_64                              defconfig
-x86_64                               rhel-8.3
-x86_64                      rhel-8.3-kbuiltin
-x86_64                                  kexec
+> Signed-off-by: George Kennedy <george.kennedy@oracle.com>
+> ---
+>  arch/x86/kernel/setup.c        | 3 +--
+>  drivers/acpi/acpica/tbinstal.c | 4 ++++
+>  2 files changed, 5 insertions(+), 2 deletions(-)
+>
+> diff --git a/arch/x86/kernel/setup.c b/arch/x86/kernel/setup.c
+> index d883176..97deea3 100644
+> --- a/arch/x86/kernel/setup.c
+> +++ b/arch/x86/kernel/setup.c
+> @@ -1046,6 +1046,7 @@ void __init setup_arch(char **cmdline_p)
+>         cleanup_highmap();
+>
+>         memblock_set_current_limit(ISA_END_ADDRESS);
+> +       acpi_boot_table_init();
 
-clang tested configs:
-x86_64               randconfig-a006-20210303
-x86_64               randconfig-a001-20210303
-x86_64               randconfig-a004-20210303
-x86_64               randconfig-a002-20210303
-x86_64               randconfig-a005-20210303
-x86_64               randconfig-a003-20210303
+This cannot be moved before the acpi_table_upgrade() invocation AFAICS.
 
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+Why exactly do you want to move it?
+
+>         e820__memblock_setup();
+>
+>         /*
+> @@ -1139,8 +1140,6 @@ void __init setup_arch(char **cmdline_p)
+>         /*
+>          * Parse the ACPI tables for possible boot-time SMP configuration.
+>          */
+> -       acpi_boot_table_init();
+> -
+>         early_acpi_boot_init();
+>
+>         initmem_init();
+> diff --git a/drivers/acpi/acpica/tbinstal.c b/drivers/acpi/acpica/tbinstal.c
+> index 8d1e5b5..4e32b22 100644
+> --- a/drivers/acpi/acpica/tbinstal.c
+> +++ b/drivers/acpi/acpica/tbinstal.c
+> @@ -8,6 +8,7 @@
+>   *****************************************************************************/
+>
+>  #include <acpi/acpi.h>
+> +#include <linux/memblock.h>
+>  #include "accommon.h"
+>  #include "actables.h"
+>
+> @@ -58,6 +59,9 @@
+>                                       new_table_desc->flags,
+>                                       new_table_desc->pointer);
+>
+> +       memblock_reserve(new_table_desc->address,
+> +                        PAGE_ALIGN(new_table_desc->pointer->length));
+> +
+
+Why do you want to do this here in the first place?
+
+Things like that cannot be done in the ACPICA code in general.
+
+>         acpi_tb_print_table_header(new_table_desc->address,
+>                                    new_table_desc->pointer);
+>
+> --
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
