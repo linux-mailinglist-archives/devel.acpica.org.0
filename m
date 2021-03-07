@@ -2,51 +2,66 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id E388A330205
-	for <lists+devel-acpica@lfdr.de>; Sun,  7 Mar 2021 15:22:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7265133049C
+	for <lists+devel-acpica@lfdr.de>; Sun,  7 Mar 2021 21:39:39 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 2DB2F100EC1D9;
-	Sun,  7 Mar 2021 06:22:56 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.20; helo=mga02.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	by ml01.01.org (Postfix) with ESMTP id 2E6F8100EF27E;
+	Sun,  7 Mar 2021 12:39:37 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2607:f8b0:4864:20::102f; helo=mail-pj1-x102f.google.com; envelope-from=andy.shevchenko@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 91016100EC1D3
-	for <devel@acpica.org>; Sun,  7 Mar 2021 06:22:52 -0800 (PST)
-IronPort-SDR: 5xi2MrEE8yV1k1Kpbm4MC6u0vKh8kU6zBG9Z+Tpv8YaJ9UUB4/Rv55iZ8BNvV8XmghG/gz0SWh
- lHG3oEYJzatA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9916"; a="175013885"
-X-IronPort-AV: E=Sophos;i="5.81,230,1610438400";
-   d="scan'208";a="175013885"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Mar 2021 06:22:51 -0800
-IronPort-SDR: gIWYoReKf6pdxmmgJUy0onQpT1UwsXXFHd5YXIhy5LScWtErvIgcUAT2zii6O/Jzj7RufZPkrF
- HsRL/7+90Hng==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.81,230,1610438400";
-   d="scan'208";a="402504422"
-Received: from lkp-server01.sh.intel.com (HELO 3e992a48ca98) ([10.239.97.150])
-  by fmsmga008.fm.intel.com with ESMTP; 07 Mar 2021 06:22:49 -0800
-Received: from kbuild by 3e992a48ca98 with local (Exim 4.92)
-	(envelope-from <lkp@intel.com>)
-	id 1lIuIy-0000R7-PN; Sun, 07 Mar 2021 14:22:48 +0000
-Date: Sun, 07 Mar 2021 22:22:06 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <6044e18e.bJjTnUBj+uJ5MB4v%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTPS id EE6FC100EF275
+	for <devel@acpica.org>; Sun,  7 Mar 2021 12:39:35 -0800 (PST)
+Received: by mail-pj1-x102f.google.com with SMTP id x7-20020a17090a2b07b02900c0ea793940so1835308pjc.2
+        for <devel@acpica.org>; Sun, 07 Mar 2021 12:39:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ksneqLZ9zvuj+Q9Pi6/GCANghUOfFQNIq6D+RQ8519s=;
+        b=gsBwdgKy0qJ/sWj2BknIzEzST332yyHdoW5xYOtq9fWcfHflnhmaGhq2v6q3a4IYmj
+         4m0L+gBQsxS6lqDfeq7qXVpJa/1xFLnOtrpduuYufDMwijEVDsiVCTrifmiuqRHxy4D7
+         hLPkAgOp1xjPHPBPLFjlvyGFa7ikTYDXjMVWzPUK/5feTbTPDv+eJWQhQcsrNEjHQIp6
+         xh2gqgD09F6/3L4HXirWiqukMjWmlgiMFw0TDgmAeTr9NHY8yVNQyppk+HAKOREQHwFZ
+         79dWlj2kWlC85Y2y3L72bZ8CmWcgy+y7cDQG3rf24DBn73gv54r1lQ9diZdY+lzLWWdG
+         BNDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ksneqLZ9zvuj+Q9Pi6/GCANghUOfFQNIq6D+RQ8519s=;
+        b=TGevKhe1CF1fUytTdMWGz8Ltl86YzatJrLrMvnD/H8G5V5ezNO7FD2I/pxV3NdmAb4
+         cm6hYb1746TNixFfKfTR0BnEOxDmp39OR/ClHBhKhYf6GWOawV+RDgKy/iD9aG8UtDLL
+         XQCp7kalwOQ0LVKYvA6I6Wg0mc7ulIwaLyvJfKeQtwRxHMYkiausC0dsZzT8MiRHYzJ7
+         QYyni2Bjzp95TjaLkoMdzsPuWHZRosncR2MBH+h9DH+bY1oHf2DbZ7LWZKC3a+7JOD+r
+         6AWfsn1VF7e9yJHwWQSxpcwR7FuEM4YpjI3rw6+cBsHdv+RLsNhuIK+9PSnH0YdujdD+
+         +bOw==
+X-Gm-Message-State: AOAM530jHVqKQ2tMv+rdIgHyAF8lP0A2LRcPcvxRDNg7bIHje+LJnITP
+	s3CITBFMYmOfu1G1Shg0S+Rq0u0tdomIF/sAb3U=
+X-Google-Smtp-Source: ABdhPJxlj04alWLqhDKdUE58NU9W7umO8MwZXqbfilTz4/eiKjejZ6M4QMIuwTi82BfFMcr9ywapb7y/aJ9mm6zMO+c=
+X-Received: by 2002:a17:902:d2c1:b029:e5:ccfe:1e93 with SMTP id
+ n1-20020a170902d2c1b02900e5ccfe1e93mr17949404plc.0.1615149575234; Sun, 07 Mar
+ 2021 12:39:35 -0800 (PST)
 MIME-Version: 1.0
-Message-ID-Hash: AFPT6YX3P4PPN4VITXPSJ46QUCKIUVQD
-X-Message-ID-Hash: AFPT6YX3P4PPN4VITXPSJ46QUCKIUVQD
-X-MailFrom: lkp@intel.com
-X-Mailman-Rule-Hits: nonmember-moderation
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+References: <20210222130735.1313443-1-djrscally@gmail.com> <20210222130735.1313443-2-djrscally@gmail.com>
+ <CAHp75VfPuDjt=ZfHkwErF7_6Ks6wpqXO8mtq-2KjV+mU_PXFtg@mail.gmail.com> <615bad5e-6e68-43c9-dd0b-f26d2832d52f@gmail.com>
+In-Reply-To: <615bad5e-6e68-43c9-dd0b-f26d2832d52f@gmail.com>
+From: Andy Shevchenko <andy.shevchenko@gmail.com>
+Date: Sun, 7 Mar 2021 22:39:18 +0200
+Message-ID: <CAHp75Vc2iwvh1RiYmQDPSvgNvGT_gBcGTK67F+MhWgXyoxqn0A@mail.gmail.com>
+To: Daniel Scally <djrscally@gmail.com>
+Message-ID-Hash: HX3QR6ANCJI5ZQXPEAKYPV7NDQ3J7EY7
+X-Message-ID-Hash: HX3QR6ANCJI5ZQXPEAKYPV7NDQ3J7EY7
+X-MailFrom: andy.shevchenko@gmail.com
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
+CC: Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Tomasz Figa <tfiga@chromium.org>, Sakari Ailus <sakari.ailus@linux.intel.com>, Rajmohan Mani <rajmohan.mani@intel.com>, "Rafael J. Wysocki" <rjw@rjwysocki.net>, Mika Westerberg <mika.westerberg@linux.intel.com>, Linus Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski <bgolaszewski@baylibre.com>, Wolfram Sang <wsa@kernel.org>, Lee Jones <lee.jones@linaro.org>, kieran.bingham+renesas@ideasonboard.com, Laurent Pinchart <laurent.pinchart@ideasonboard.com>, Hans de Goede <hdegoede@redhat.com>, Mark Gross <mgross@linux.intel.com>, Maximilian Luz <luzmaximilian@gmail.com>, Erik Kaneda <erik.kaneda@intel.com>, me@fabwu.ch, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>, linux-i2c <linux-i2c@vger.kernel.org>, Platform Driver <platform-driver-x86@vger.kernel.org>, devel@acpica.org, "Rafael J . Wysocki" <rafael@ker
+ nel.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS 5c476073a9df062a501edf9ea7b11ccc53c27bf7
+Subject: [Devel] Re: [PATCH v3 1/6] ACPI: scan: Extend acpi_walk_dep_device_list()
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/AFPT6YX3P4PPN4VITXPSJ46QUCKIUVQD/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/HX3QR6ANCJI5ZQXPEAKYPV7NDQ3J7EY7/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -55,164 +70,39 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-branch HEAD: 5c476073a9df062a501edf9ea7b11ccc53c27bf7  Merge branches 'acpi-drivers' and 'acpi-bus' into linux-next
+On Sun, Mar 7, 2021 at 3:36 PM Daniel Scally <djrscally@gmail.com> wrote:
+> On 22/02/2021 13:34, Andy Shevchenko wrote:
+> > On Mon, Feb 22, 2021 at 3:12 PM Daniel Scally <djrscally@gmail.com> wrote:
+> >> The acpi_walk_dep_device_list() is not as generalisable as its name
+> >> implies, serving only to decrement the dependency count for each
+> >> dependent device of the input. Extend the function to instead accept
+> >> a callback which can be applied to all the dependencies in acpi_dep_list.
+> >> Replace all existing calls to the function with calls to a wrapper, passing
+> >> a callback that applies the same dependency reduction.
+> > The code looks okay to me, if it was the initial idea, feel free to add
+> > Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+>
+>
+> Thank you!
+>
+>
+> >> + */
+> >> +void acpi_dev_flag_dependency_met(acpi_handle handle)
+> >> +{
+> > Since it's acpi_dev_* namespace, perhaps it should take struct acpi_device here?
+>
+>
+> I can do this, but I avoided it because in most of the uses in the
+> kernel currently there's no struct acpi_device, they're just passing
+> ACPI_HANDLE(dev) instead, so I'd need to get the adev with
+> ACPI_COMPANION() in each place. It didn't seem worth it...but happy to
+> do it if you'd prefer it that way?
 
-elapsed time: 721m
+I see, let Rafael decide then. I'm not pushing here.
 
-configs tested: 140
-configs skipped: 2
-
-The following configs have been built successfully.
-More configs may be tested in the coming days.
-
-gcc tested configs:
-arm                                 defconfig
-arm64                            allyesconfig
-arm64                               defconfig
-arm                              allyesconfig
-arm                              allmodconfig
-sh                        sh7763rdp_defconfig
-powerpc                          g5_defconfig
-xtensa                    smp_lx200_defconfig
-csky                             alldefconfig
-arm                         orion5x_defconfig
-powerpc                      pasemi_defconfig
-arc                              allyesconfig
-powerpc                    klondike_defconfig
-sh                            titan_defconfig
-arm                       aspeed_g4_defconfig
-mips                      malta_kvm_defconfig
-arm                         lubbock_defconfig
-mips                            e55_defconfig
-powerpc                      ppc44x_defconfig
-powerpc                    ge_imp3a_defconfig
-arm                         hackkit_defconfig
-arc                 nsimosci_hs_smp_defconfig
-arc                         haps_hs_defconfig
-powerpc                      arches_defconfig
-sh                          rsk7264_defconfig
-arm                         bcm2835_defconfig
-mips                     decstation_defconfig
-powerpc                 mpc8560_ads_defconfig
-arm                          pcm027_defconfig
-arm                          lpd270_defconfig
-riscv                    nommu_k210_defconfig
-sparc                            allyesconfig
-mips                        maltaup_defconfig
-sh                        sh7785lcr_defconfig
-mips                  maltasmvp_eva_defconfig
-powerpc                     ep8248e_defconfig
-powerpc                     sbc8548_defconfig
-parisc                generic-32bit_defconfig
-powerpc                     tqm8555_defconfig
-sh                          r7780mp_defconfig
-powerpc                      bamboo_defconfig
-parisc                generic-64bit_defconfig
-arc                           tb10x_defconfig
-ia64                                defconfig
-sparc                       sparc64_defconfig
-mips                           ci20_defconfig
-s390                       zfcpdump_defconfig
-mips                     cu1000-neo_defconfig
-arm                        keystone_defconfig
-sh                           se7705_defconfig
-nios2                            alldefconfig
-sh                   sh7724_generic_defconfig
-xtensa                    xip_kc705_defconfig
-m68k                            q40_defconfig
-mips                           rs90_defconfig
-arm                          pxa3xx_defconfig
-arc                      axs103_smp_defconfig
-mips                  decstation_64_defconfig
-powerpc                     tqm8560_defconfig
-microblaze                          defconfig
-mips                         tb0287_defconfig
-powerpc                     tqm8541_defconfig
-sh                          landisk_defconfig
-mips                       rbtx49xx_defconfig
-arm                       versatile_defconfig
-arm                          pxa910_defconfig
-mips                 decstation_r4k_defconfig
-mips                         tb0219_defconfig
-powerpc                     redwood_defconfig
-m68k                          sun3x_defconfig
-sh                        apsh4ad0a_defconfig
-arm                        shmobile_defconfig
-sh                           se7724_defconfig
-powerpc                       holly_defconfig
-powerpc                          allmodconfig
-ia64                             allyesconfig
-ia64                             allmodconfig
-m68k                             allmodconfig
-m68k                                defconfig
-m68k                             allyesconfig
-nios2                               defconfig
-nds32                             allnoconfig
-nds32                               defconfig
-nios2                            allyesconfig
-csky                                defconfig
-alpha                               defconfig
-alpha                            allyesconfig
-xtensa                           allyesconfig
-h8300                            allyesconfig
-arc                                 defconfig
-sh                               allmodconfig
-parisc                              defconfig
-s390                             allyesconfig
-s390                             allmodconfig
-parisc                           allyesconfig
-s390                                defconfig
-i386                             allyesconfig
-sparc                               defconfig
-i386                               tinyconfig
-i386                                defconfig
-mips                             allyesconfig
-mips                             allmodconfig
-powerpc                          allyesconfig
-powerpc                           allnoconfig
-i386                 randconfig-a005-20210307
-i386                 randconfig-a003-20210307
-i386                 randconfig-a002-20210307
-i386                 randconfig-a004-20210307
-i386                 randconfig-a006-20210307
-i386                 randconfig-a001-20210307
-x86_64               randconfig-a013-20210307
-x86_64               randconfig-a016-20210307
-x86_64               randconfig-a015-20210307
-x86_64               randconfig-a014-20210307
-x86_64               randconfig-a012-20210307
-x86_64               randconfig-a011-20210307
-i386                 randconfig-a016-20210307
-i386                 randconfig-a012-20210307
-i386                 randconfig-a013-20210307
-i386                 randconfig-a011-20210307
-i386                 randconfig-a015-20210307
-i386                 randconfig-a014-20210307
-riscv                            allyesconfig
-riscv                    nommu_virt_defconfig
-riscv                             allnoconfig
-riscv                               defconfig
-riscv                          rv32_defconfig
-riscv                            allmodconfig
-x86_64                           allyesconfig
-x86_64                    rhel-7.6-kselftests
-x86_64                              defconfig
-x86_64                               rhel-8.3
-x86_64                      rhel-8.3-kbuiltin
-x86_64                                  kexec
-
-clang tested configs:
-x86_64               randconfig-a006-20210307
-x86_64               randconfig-a001-20210307
-x86_64               randconfig-a004-20210307
-x86_64               randconfig-a005-20210307
-x86_64               randconfig-a002-20210307
-x86_64               randconfig-a003-20210307
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+-- 
+With Best Regards,
+Andy Shevchenko
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
