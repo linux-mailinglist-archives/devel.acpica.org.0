@@ -2,269 +2,217 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5FA3D32F4B8
-	for <lists+devel-acpica@lfdr.de>; Fri,  5 Mar 2021 21:46:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E388A330205
+	for <lists+devel-acpica@lfdr.de>; Sun,  7 Mar 2021 15:22:58 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 79176100F2271;
-	Fri,  5 Mar 2021 12:46:19 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.93; helo=mga11.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+	by ml01.01.org (Postfix) with ESMTP id 2DB2F100EC1D9;
+	Sun,  7 Mar 2021 06:22:56 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.20; helo=mga02.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 2997E100F226B
-	for <devel@acpica.org>; Fri,  5 Mar 2021 12:46:17 -0800 (PST)
-IronPort-SDR: UpYeBcJG2ro9IQW5kzNrnT378blV6NrmzgMoaDgvtkIR+p7c318pOeMtv+8g2JKXBD86ZZ8+9W
- TqZdipI7jR+A==
-X-IronPort-AV: E=McAfee;i="6000,8403,9914"; a="184353848"
-X-IronPort-AV: E=Sophos;i="5.81,226,1610438400";
-   d="scan'208";a="184353848"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Mar 2021 12:46:17 -0800
-IronPort-SDR: FSDOPU+Ecb9oaYcAWEbIaVgeWbR9jcCfWi18O3LYCo9o3VpphuII71P0Uh0PILWTq1n2Bo0w5R
- m83440OOYS6g==
+	by ml01.01.org (Postfix) with ESMTPS id 91016100EC1D3
+	for <devel@acpica.org>; Sun,  7 Mar 2021 06:22:52 -0800 (PST)
+IronPort-SDR: 5xi2MrEE8yV1k1Kpbm4MC6u0vKh8kU6zBG9Z+Tpv8YaJ9UUB4/Rv55iZ8BNvV8XmghG/gz0SWh
+ lHG3oEYJzatA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9916"; a="175013885"
+X-IronPort-AV: E=Sophos;i="5.81,230,1610438400";
+   d="scan'208";a="175013885"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Mar 2021 06:22:51 -0800
+IronPort-SDR: gIWYoReKf6pdxmmgJUy0onQpT1UwsXXFHd5YXIhy5LScWtErvIgcUAT2zii6O/Jzj7RufZPkrF
+ HsRL/7+90Hng==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.81,226,1610438400";
-   d="scan'208";a="429529858"
-Received: from orsmsx605.amr.corp.intel.com ([10.22.229.18])
-  by fmsmga004.fm.intel.com with ESMTP; 05 Mar 2021 12:46:16 -0800
-Received: from orsmsx606.amr.corp.intel.com (10.22.229.19) by
- ORSMSX605.amr.corp.intel.com (10.22.229.18) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2106.2; Fri, 5 Mar 2021 12:46:16 -0800
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx606.amr.corp.intel.com (10.22.229.19) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2106.2
- via Frontend Transport; Fri, 5 Mar 2021 12:46:16 -0800
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (104.47.66.47) by
- edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2106.2; Fri, 5 Mar 2021 12:46:16 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Qxaf0vQ9lsrN3uTHxu8wDXKuootf4rKUfGpA7gZViAvCvMdXGDclM5iqiGZfDSFm66O7kA7+7Gq1bYvwUCrXhlMi54sdwh6MP70L3RKSoTpEN67YI8ncVp29FTcFxWPaS3UZIX2hjdIKHb5SFNCgJCq8rNoYgmR/sTK6oa15vfRI41+7wesI/6zsWwhdqH9kJ4YeIaJ6GFcKbR6td+wJzEJryrpuvligCC47Mu04ftRTy0/v/Vvwc9Nqs1EyCs/wQch6rXFCUBkaNPzhWlJWKlrhrax+nyXgnIPDoEg7jddcTnYB/5xqJo9qpVOa7vopW9PMyzq+VxauyLdF0sWeyQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=7G+s+8STzCXDwvFjW5Zcbxok/JszllK5zlrfejVz4v8=;
- b=Otz73CzmfPvBasKdXKht8iwD17a8xXIOJ2o6BCk6Naxwvik7du2I2MuDgQFRVXNrfvhd/D+QAuCqC8HhypSUK/G/mz598vz3Y6hMJZUAb/dZ/tS8Kj/DWYanpxRJL/IZvDk0ij4ME4TUMww+Ex0oDrapv4HTMMMsevo5G2faLig8emhxTxAGdVYDQ176vfPDXx0VPoGQnIjUdVHT5SoHFt5Q+x4BI/0JHYYIGLESzQhzPRqslfE2XVYEIYnv2aZ8kykxWME6Io1pTN8XSXpgod5NHz0R+tyoUkI/y5EZEWxESnV3erhz0ydWESLjTZwwdPD0iZ5DqvYotTTyUYfghA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
- s=selector2-intel-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=7G+s+8STzCXDwvFjW5Zcbxok/JszllK5zlrfejVz4v8=;
- b=B2RwdoHjNc5JM8qweKzUWq8+oEXQsF5MTEg69bb1uIMhG+9B+fbX7pwEsIrqsIShRgckk1Y7Y0PyFbENisDYuRKUYSDV6KHi2sFjGaoHLThzl4Xf81z4WG8UUghecIw1nzKv33BtZpNKA6fl/vrnE3LmeA+o0mrOrffQXxxZRE8=
-Received: from BYAPR11MB3256.namprd11.prod.outlook.com (2603:10b6:a03:76::19)
- by BYAPR11MB3608.namprd11.prod.outlook.com (2603:10b6:a03:b1::24) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3912.21; Fri, 5 Mar
- 2021 20:46:14 +0000
-Received: from BYAPR11MB3256.namprd11.prod.outlook.com
- ([fe80::ac1e:2d22:3f90:4dc]) by BYAPR11MB3256.namprd11.prod.outlook.com
- ([fe80::ac1e:2d22:3f90:4dc%7]) with mapi id 15.20.3890.032; Fri, 5 Mar 2021
- 20:46:14 +0000
-From: "Moore, Robert" <robert.moore@intel.com>
-To: "Moore, Robert" <robert.moore@intel.com>, "weidongcui@gmail.com"
-	<weidongcui@gmail.com>
-Thread-Topic: [PATCH] Enable ACPI_ADR_SPACE_PCI_CONFIG in
- acpi_gbl_default_address_spaces only when ACPI_PCI_CONFIGURED is defined
-Thread-Index: AQHW/pI3ruT7cwkxjEOUSsZ8OrOy5apyuR4AgAF306CAAANRAIAABwjQgAHIQiA=
-Date: Fri, 5 Mar 2021 20:46:14 +0000
-Message-ID: <BYAPR11MB3256B80EC10AF4965083CCD087969@BYAPR11MB3256.namprd11.prod.outlook.com>
-References: <20210209031744.26474-1-weidongcui@gmail.com>
- <MWHPR11MB1599D81078925FFD128E954EF0989@MWHPR11MB1599.namprd11.prod.outlook.com>
- <BYAPR11MB325658379DB73F6EEDD6C76F87979@BYAPR11MB3256.namprd11.prod.outlook.com>
- <CADFYyO73g8LkgwZv4m5N2bXq0XcZru4m9+K0uudCLmcp7yewpQ@mail.gmail.com>
- <BYAPR11MB3256FD804E3F3CE584B6D3B387979@BYAPR11MB3256.namprd11.prod.outlook.com>
-In-Reply-To: <BYAPR11MB3256FD804E3F3CE584B6D3B387979@BYAPR11MB3256.namprd11.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-dlp-version: 11.5.1.3
-dlp-product: dlpe-windows
-dlp-reaction: no-action
-authentication-results: intel.com; dkim=none (message not signed)
- header.d=none;intel.com; dmarc=none action=none header.from=intel.com;
-x-originating-ip: [134.134.136.194]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 890d839d-8cdf-4014-a31a-08d8e017b7ae
-x-ms-traffictypediagnostic: BYAPR11MB3608:
-x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <BYAPR11MB3608E878E81A3328DC0ABCF387969@BYAPR11MB3608.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:1303;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: PLXcau5YDA+uOlkmjXr9Y3dMJ1KuvyW7J8adNIRZezZ0PLBA4IEkAUGLiYbKdtbR4nOM/igNNjzWfUKI+Zm7yjUo/pfJcfYO+0qgNQNyXOic61BFddCR/HYmteTAx7F3uq6IazChn99/7qIckDMI95axDvToMKvND1dj5VtuBZHYgNQnVaOC5CHxAsL3fJa5KdDcR89ogIB+J5Qm6NkcLPziM4CD7g6XTW1gAben34rnz5ElxYwbJavdyTNb7S48qE3QuVMu0aBB81KpcVsYxteV9fTjWs0DlaMgEF+6S61HHjEPizs0Z5kq4dgeXkKrwkf8xoEFgZfnipA4V7Tvq80+Mpk28RcNGYJLsB8UeRIT6m1ngxYWwo82ThAl+uiRGq6PyZiiTCH19l584/QQei2D8TpMqoGGYHu/ltbquBWOWbWcYc2XT5jBlpKUH8635MV3aBPIh1n2QxJdQnN7RfkGR7icExQyCsXgS0NnHPIG61i+kpAkJouDtQ/iuRCTw7mBiDkpw1wO1mGustq8cQ==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(366004)(346002)(376002)(396003)(39860400002)(136003)(186003)(33656002)(8676002)(5660300002)(26005)(83380400001)(4326008)(6506007)(76116006)(8936002)(86362001)(66556008)(64756008)(66476007)(66946007)(71200400001)(66446008)(110136005)(316002)(2906002)(53546011)(54906003)(7696005)(52536014)(478600001)(55016002)(9686003);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata: =?us-ascii?Q?Wyy2UlXir79RGYukGul6zS8kJ5aCjuNLDa4PWu51HRK6EpH16ZqyUryQk2pe?=
- =?us-ascii?Q?gYOWec2BYey8gDNqnMksbym/SoHLDeErBRELJqvft+TcwGZNH8EFwYBtZe2O?=
- =?us-ascii?Q?Grmxlr+7IcQ1+GVg/fd07gkmBE6jMZ2Pk4JiFy4yXMm/+A3lcAhFaAh7gCCg?=
- =?us-ascii?Q?W/F/YSAO2iG/FqnH/2nxxucGc7ILTJL4LeG/qRBXkWf64ZixWe1ciGDRSfLK?=
- =?us-ascii?Q?ov7MDa4ONQnburzBsVf+yzvDbARz2trK2nx26YotGtHG5582mygUAYLKnWkg?=
- =?us-ascii?Q?pXm27mRBC+TKwiQ4y4XOT+DjOB7MHl53y8IG+IPut/fjlHL6UzAVDCufjwdU?=
- =?us-ascii?Q?3vpC5v7rWGOAG9iiLn058zLMVwZHCJCDn6Q0q8M8B/r05Pc3Puay2cGdIQxU?=
- =?us-ascii?Q?IpFqCCm1a8H0McTrHXrJ6UM/p++w5/LWebz20GW7Z/mRbwpcQNWzlHX0ZZqB?=
- =?us-ascii?Q?mRxzQV6oVaNg63SVKj6+qp7FwGWoZJdCXSqlM/jS7B1JlkqAiuy8HCcIDlE7?=
- =?us-ascii?Q?ml4BsbbC/9/5Vi+YlDfB8R/zgU1Ai9IO1jjUHz+rSDNCAY66f6ALg+SlndQl?=
- =?us-ascii?Q?2nwXXSYeEsH6G/T4qZXVpRnRh6XYGwYuLzJmRsWwclUX9k1bfWwgANV53cTk?=
- =?us-ascii?Q?efUULz/7i4SqIswhA0Emdnj5dwGB85VN9W9vO6GPKejkXd+WkfhEeQeet41n?=
- =?us-ascii?Q?rPuTngfwqWgQfva/g6/Z0r88BAi9VtaJvlDd78/KPJWUuz0E2TKLcYtt1hcU?=
- =?us-ascii?Q?rykNIy1fN0QLx6YXpIFpD2xRvfidCaJ7DVRDuh76q6CJEOH3CE7qhiLLh7qB?=
- =?us-ascii?Q?Enxd8bcSPlfh8it3iezcQFUp+RsK++hk18rId5oiM79A9YMLHQ9rEwhxKaYi?=
- =?us-ascii?Q?qpIcNtuA1TTywq13pep1K+ORrQemGIiNe5e8XA81fMaM7eQyWhxJm45+cmw6?=
- =?us-ascii?Q?VaRB8CPxx91DH3xoJ4IAxfyHgQKlSJUksVhazNw29jP7WAAIyPQsJOiRQSpM?=
- =?us-ascii?Q?3NJq2JkccdO9vXSXXTOqgwEH8ExKwFZMgucaA22H6AeLvNTF9+ytXNZCgpsN?=
- =?us-ascii?Q?zwkWqNKrlIUQWkLjuHJg9ogcQDOVRarwHA43YFBL3OnO8vubiipa1GhjTuSY?=
- =?us-ascii?Q?7MTuhMNjdBJrmf6e5GRPutRL5W8PfAbtLlnFBKGDx3fjtDxYhvyjrK/mARbz?=
- =?us-ascii?Q?S/Ly0qpvUlypN0ziYkwznAVBX11nHEb6v3NPb0UMqSQ1ZjhVQ9M8TLxEJDNX?=
- =?us-ascii?Q?G5I3T6PcALaUlivde6aH93DBkjRkLoyU3HuWiNkCpaOb80/JYzekL+dw5Drr?=
- =?us-ascii?Q?AiZPxEgV5LjA5YeZKTRNdv1D?=
-Content-Type: text/plain; charset="us-ascii"
+X-IronPort-AV: E=Sophos;i="5.81,230,1610438400";
+   d="scan'208";a="402504422"
+Received: from lkp-server01.sh.intel.com (HELO 3e992a48ca98) ([10.239.97.150])
+  by fmsmga008.fm.intel.com with ESMTP; 07 Mar 2021 06:22:49 -0800
+Received: from kbuild by 3e992a48ca98 with local (Exim 4.92)
+	(envelope-from <lkp@intel.com>)
+	id 1lIuIy-0000R7-PN; Sun, 07 Mar 2021 14:22:48 +0000
+Date: Sun, 07 Mar 2021 22:22:06 +0800
+From: kernel test robot <lkp@intel.com>
+To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Message-ID: <6044e18e.bJjTnUBj+uJ5MB4v%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3256.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 890d839d-8cdf-4014-a31a-08d8e017b7ae
-X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Mar 2021 20:46:14.2191
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: YWYAU3XCGtNNG02WyTqsEMAGhgqZCpUQcmAbKFokrBBe41yBsuEm0EhqQXXaQhV3L6rnPhSoxSpsPLWt06ARBQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR11MB3608
-X-OriginatorOrg: intel.com
-Message-ID-Hash: 6FEW6IABIKKSWM6SE6HJYK7SFQKVGLGF
-X-Message-ID-Hash: 6FEW6IABIKKSWM6SE6HJYK7SFQKVGLGF
-X-MailFrom: robert.moore@intel.com
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
-CC: "Kaneda, Erik" <erik.kaneda@intel.com>, "Wysocki, Rafael J" <rafael.j.wysocki@intel.com>, Xinyang Ge <aegiryy@gmail.com>, "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>, "devel@acpica.org" <devel@acpica.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Message-ID-Hash: AFPT6YX3P4PPN4VITXPSJ46QUCKIUVQD
+X-Message-ID-Hash: AFPT6YX3P4PPN4VITXPSJ46QUCKIUVQD
+X-MailFrom: lkp@intel.com
+X-Mailman-Rule-Hits: nonmember-moderation
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
+CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH] Enable ACPI_ADR_SPACE_PCI_CONFIG in acpi_gbl_default_address_spaces only when ACPI_PCI_CONFIGURED is defined
+Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS 5c476073a9df062a501edf9ea7b11ccc53c27bf7
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/6FEW6IABIKKSWM6SE6HJYK7SFQKVGLGF/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/AFPT6YX3P4PPN4VITXPSJ46QUCKIUVQD/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-After giving this some thought, I think we can #define ACPI_PCI_CONFIGURED in the global configuration file (I think it is acconfig.h) - and document why and when it should be removed.
-Bob
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
+branch HEAD: 5c476073a9df062a501edf9ea7b11ccc53c27bf7  Merge branches 'acpi-drivers' and 'acpi-bus' into linux-next
 
+elapsed time: 721m
 
------Original Message-----
-From: Moore, Robert <robert.moore@intel.com> 
-Sent: Thursday, March 04, 2021 9:37 AM
-To: weidongcui@gmail.com
-Cc: Kaneda, Erik <erik.kaneda@intel.com>; Wysocki, Rafael J <rafael.j.wysocki@intel.com>; Xinyang Ge <aegiryy@gmail.com>; linux-acpi@vger.kernel.org; devel@acpica.org; linux-kernel@vger.kernel.org
-Subject: [Devel] Re: [PATCH] Enable ACPI_ADR_SPACE_PCI_CONFIG in acpi_gbl_default_address_spaces only when ACPI_PCI_CONFIGURED is defined
+configs tested: 140
+configs skipped: 2
 
+The following configs have been built successfully.
+More configs may be tested in the coming days.
 
+gcc tested configs:
+arm                                 defconfig
+arm64                            allyesconfig
+arm64                               defconfig
+arm                              allyesconfig
+arm                              allmodconfig
+sh                        sh7763rdp_defconfig
+powerpc                          g5_defconfig
+xtensa                    smp_lx200_defconfig
+csky                             alldefconfig
+arm                         orion5x_defconfig
+powerpc                      pasemi_defconfig
+arc                              allyesconfig
+powerpc                    klondike_defconfig
+sh                            titan_defconfig
+arm                       aspeed_g4_defconfig
+mips                      malta_kvm_defconfig
+arm                         lubbock_defconfig
+mips                            e55_defconfig
+powerpc                      ppc44x_defconfig
+powerpc                    ge_imp3a_defconfig
+arm                         hackkit_defconfig
+arc                 nsimosci_hs_smp_defconfig
+arc                         haps_hs_defconfig
+powerpc                      arches_defconfig
+sh                          rsk7264_defconfig
+arm                         bcm2835_defconfig
+mips                     decstation_defconfig
+powerpc                 mpc8560_ads_defconfig
+arm                          pcm027_defconfig
+arm                          lpd270_defconfig
+riscv                    nommu_k210_defconfig
+sparc                            allyesconfig
+mips                        maltaup_defconfig
+sh                        sh7785lcr_defconfig
+mips                  maltasmvp_eva_defconfig
+powerpc                     ep8248e_defconfig
+powerpc                     sbc8548_defconfig
+parisc                generic-32bit_defconfig
+powerpc                     tqm8555_defconfig
+sh                          r7780mp_defconfig
+powerpc                      bamboo_defconfig
+parisc                generic-64bit_defconfig
+arc                           tb10x_defconfig
+ia64                                defconfig
+sparc                       sparc64_defconfig
+mips                           ci20_defconfig
+s390                       zfcpdump_defconfig
+mips                     cu1000-neo_defconfig
+arm                        keystone_defconfig
+sh                           se7705_defconfig
+nios2                            alldefconfig
+sh                   sh7724_generic_defconfig
+xtensa                    xip_kc705_defconfig
+m68k                            q40_defconfig
+mips                           rs90_defconfig
+arm                          pxa3xx_defconfig
+arc                      axs103_smp_defconfig
+mips                  decstation_64_defconfig
+powerpc                     tqm8560_defconfig
+microblaze                          defconfig
+mips                         tb0287_defconfig
+powerpc                     tqm8541_defconfig
+sh                          landisk_defconfig
+mips                       rbtx49xx_defconfig
+arm                       versatile_defconfig
+arm                          pxa910_defconfig
+mips                 decstation_r4k_defconfig
+mips                         tb0219_defconfig
+powerpc                     redwood_defconfig
+m68k                          sun3x_defconfig
+sh                        apsh4ad0a_defconfig
+arm                        shmobile_defconfig
+sh                           se7724_defconfig
+powerpc                       holly_defconfig
+powerpc                          allmodconfig
+ia64                             allyesconfig
+ia64                             allmodconfig
+m68k                             allmodconfig
+m68k                                defconfig
+m68k                             allyesconfig
+nios2                               defconfig
+nds32                             allnoconfig
+nds32                               defconfig
+nios2                            allyesconfig
+csky                                defconfig
+alpha                               defconfig
+alpha                            allyesconfig
+xtensa                           allyesconfig
+h8300                            allyesconfig
+arc                                 defconfig
+sh                               allmodconfig
+parisc                              defconfig
+s390                             allyesconfig
+s390                             allmodconfig
+parisc                           allyesconfig
+s390                                defconfig
+i386                             allyesconfig
+sparc                               defconfig
+i386                               tinyconfig
+i386                                defconfig
+mips                             allyesconfig
+mips                             allmodconfig
+powerpc                          allyesconfig
+powerpc                           allnoconfig
+i386                 randconfig-a005-20210307
+i386                 randconfig-a003-20210307
+i386                 randconfig-a002-20210307
+i386                 randconfig-a004-20210307
+i386                 randconfig-a006-20210307
+i386                 randconfig-a001-20210307
+x86_64               randconfig-a013-20210307
+x86_64               randconfig-a016-20210307
+x86_64               randconfig-a015-20210307
+x86_64               randconfig-a014-20210307
+x86_64               randconfig-a012-20210307
+x86_64               randconfig-a011-20210307
+i386                 randconfig-a016-20210307
+i386                 randconfig-a012-20210307
+i386                 randconfig-a013-20210307
+i386                 randconfig-a011-20210307
+i386                 randconfig-a015-20210307
+i386                 randconfig-a014-20210307
+riscv                            allyesconfig
+riscv                    nommu_virt_defconfig
+riscv                             allnoconfig
+riscv                               defconfig
+riscv                          rv32_defconfig
+riscv                            allmodconfig
+x86_64                           allyesconfig
+x86_64                    rhel-7.6-kselftests
+x86_64                              defconfig
+x86_64                               rhel-8.3
+x86_64                      rhel-8.3-kbuiltin
+x86_64                                  kexec
 
------Original Message-----
-From: Weidong Cui <weidongcui@gmail.com>
-Sent: Thursday, March 04, 2021 9:06 AM
-To: Moore, Robert <robert.moore@intel.com>
-Cc: Kaneda, Erik <erik.kaneda@intel.com>; Wysocki, Rafael J <rafael.j.wysocki@intel.com>; Xinyang Ge <aegiryy@gmail.com>; linux-acpi@vger.kernel.org; devel@acpica.org; linux-kernel@vger.kernel.org; Len Brown <lenb@kernel.org>
-Subject: Re: [PATCH] Enable ACPI_ADR_SPACE_PCI_CONFIG in acpi_gbl_default_address_spaces only when ACPI_PCI_CONFIGURED is defined
+clang tested configs:
+x86_64               randconfig-a006-20210307
+x86_64               randconfig-a001-20210307
+x86_64               randconfig-a004-20210307
+x86_64               randconfig-a005-20210307
+x86_64               randconfig-a002-20210307
+x86_64               randconfig-a003-20210307
 
-> Well, I don't like the fact that PCI_CONFIGURED would have to be defined by each current host:
->
-> > +#ifdef ACPI_PCI_CONFIGURED
->
-> I would rather the logic be reversed:
->
-> > +#ifdef ACPI_PCI_NOT_CONFIGURED
-
-Thank you for the comments, Erik and Bob!
-
-ACPI_PCI_CONFIGURED is defined in aclinux.h (see below) and used in several places in evhandler.c and exregion.c.
-I'm not sure why we want to introduce ACPI_PCI_NOT_CONFIGURED.  Bob, I don't understand your concerns about "have to be defined by each current host".  Can you please shed some light on it?
-
-It is required in aclinux.h, and thus it is required in every host-dependent configuration file (acfreebsd.h, acmacosx.h, acnetbsd.h, achaiku.h, etc.) I would rather not force these host-specific header files to change.
-Bob
-
-
-#ifdef CONFIG_PCI
-#define ACPI_PCI_CONFIGURED
-#endif
-
-> -----Original Message-----
-> From: Kaneda, Erik <erik.kaneda@intel.com>
-> Sent: Wednesday, March 03, 2021 10:29 AM
-> To: Weidong Cui <weidongcui@gmail.com>; Moore, Robert 
-> <robert.moore@intel.com>; Wysocki, Rafael J 
-> <rafael.j.wysocki@intel.com>
-> Cc: Xinyang Ge <aegiryy@gmail.com>; linux-acpi@vger.kernel.org; 
-> devel@acpica.org; linux-kernel@vger.kernel.org; Len Brown 
-> <lenb@kernel.org>
-> Subject: RE: [PATCH] Enable ACPI_ADR_SPACE_PCI_CONFIG in 
-> acpi_gbl_default_address_spaces only when ACPI_PCI_CONFIGURED is 
-> defined
->
-> This looks good to me. Bob, do you have any comments?
->
-> Erik
->
-> > -----Original Message-----
-> > From: Weidong Cui <weidongcui@gmail.com>
-> > Sent: Monday, February 8, 2021 7:18 PM
-> > To: Moore, Robert <robert.moore@intel.com>; Kaneda, Erik 
-> > <erik.kaneda@intel.com>; Wysocki, Rafael J 
-> > <rafael.j.wysocki@intel.com>; Len Brown <lenb@kernel.org>
-> > Cc: Weidong Cui <weidongcui@gmail.com>; Xinyang Ge 
-> > <aegiryy@gmail.com>; linux-acpi@vger.kernel.org; devel@acpica.org;
-> > linux- kernel@vger.kernel.org
-> > Subject: [PATCH] Enable ACPI_ADR_SPACE_PCI_CONFIG in 
-> > acpi_gbl_default_address_spaces only when ACPI_PCI_CONFIGURED is 
-> > defined
-> >
-> > Signed-off-by: Weidong Cui <weidongcui@gmail.com>
-> > Signed-off-by: Xinyang Ge <aegiryy@gmail.com>
-> > ---
-> >  drivers/acpi/acpica/evhandler.c | 2 ++
-> >  include/acpi/acconfig.h         | 4 ++++
-> >  2 files changed, 6 insertions(+)
-> >
-> > diff --git a/drivers/acpi/acpica/evhandler.c 
-> > b/drivers/acpi/acpica/evhandler.c index 5884eba04..4c25ad433 100644
-> > --- a/drivers/acpi/acpica/evhandler.c
-> > +++ b/drivers/acpi/acpica/evhandler.c
-> > @@ -26,7 +26,9 @@ acpi_ev_install_handler(acpi_handle obj_handle,
-> >  u8 acpi_gbl_default_address_spaces[ACPI_NUM_DEFAULT_SPACES] = {
-> >       ACPI_ADR_SPACE_SYSTEM_MEMORY,
-> >       ACPI_ADR_SPACE_SYSTEM_IO,
-> > +#ifdef ACPI_PCI_CONFIGURED
-> >       ACPI_ADR_SPACE_PCI_CONFIG,
-> > +#endif
-> >       ACPI_ADR_SPACE_DATA_TABLE
-> >  };
-> >
-> > diff --git a/include/acpi/acconfig.h b/include/acpi/acconfig.h index
-> > a225eff49..790999028 100644
-> > --- a/include/acpi/acconfig.h
-> > +++ b/include/acpi/acconfig.h
-> > @@ -162,7 +162,11 @@
-> >  /* Maximum space_ids for Operation Regions */
-> >
-> >  #define ACPI_MAX_ADDRESS_SPACE          255
-> > +#ifdef ACPI_PCI_CONFIGURED
-> >  #define ACPI_NUM_DEFAULT_SPACES         4
-> > +#else
-> > +#define ACPI_NUM_DEFAULT_SPACES         3
-> > +#endif
-> >
-> >  /* Array sizes.  Used for range checking also */
-> >
-> > --
-> > 2.24.3 (Apple Git-128)
->
-_______________________________________________
-Devel mailing list -- devel@acpica.org
-To unsubscribe send an email to devel-leave@acpica.org %(web_page_url)slistinfo%(cgiext)s/%(_internal_name)s
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
