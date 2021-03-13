@@ -2,59 +2,51 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D0A2B3377F0
-	for <lists+devel-acpica@lfdr.de>; Thu, 11 Mar 2021 16:36:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 15FD5339C80
+	for <lists+devel-acpica@lfdr.de>; Sat, 13 Mar 2021 08:15:58 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 453B3100F2276;
-	Thu, 11 Mar 2021 07:36:51 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.210.49; helo=mail-ot1-f49.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	by ml01.01.org (Postfix) with ESMTP id 3F9D4100EF265;
+	Fri, 12 Mar 2021 23:15:56 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.31; helo=mga06.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 1E5FA100F2275
-	for <devel@acpica.org>; Thu, 11 Mar 2021 07:36:48 -0800 (PST)
-Received: by mail-ot1-f49.google.com with SMTP id m1so1734847ote.10
-        for <devel@acpica.org>; Thu, 11 Mar 2021 07:36:48 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=uwY2wNfbKjFx3CHjkfJmwtEhpX43qQBYMFJEAlc1V6Y=;
-        b=VSY5TfTiicEEasFb1N8mJW+hXnMWaGOX1JamyR6OTr+4EtE6fVJO+dGM90plTd6pEv
-         TxwQ43Ln3in7+CXbDS3aRkZaxmWV6hlRo3/CAMQnEGw7+2qH7ZQNouJJHwR/TvstLhpg
-         CE/Mjy8HUv4yow4WFPfdKWeXS1ivDu/xo5OSVbCaw4LADBzUrmhdftapgrpH4X1GawbT
-         KD1fddXhABR6ZoQLxPD1S9c62BPuyMKq+6J8bE4on2aHxdyl7LvZkvA7iquNuhgEA23c
-         AftaUBKqW0eL4ugImt5Ix6FeJrpN40R80UKBq1ewnDjimK8c8Ebt+4HQQrqgzdmF0z+O
-         UWqw==
-X-Gm-Message-State: AOAM530wLPV6vg7W4PolK9SALhwEIxj/utJ0/cSCYVu+OQWFe29XaaeN
-	ystTGsjVsdijmMxUHHiBwY3Iyqqk/ld1HPKxvxo=
-X-Google-Smtp-Source: ABdhPJwUt9Q6ZZJCSQpdeTp+0T+zFZMHpiXszgp78Tff9vWJiX7Jv6h8C2PFGGBuNvCTnbBuhQIm8qTvykxW277eA5o=
-X-Received: by 2002:a05:6830:1e03:: with SMTP id s3mr7541034otr.321.1615477002714;
- Thu, 11 Mar 2021 07:36:42 -0800 (PST)
+	by ml01.01.org (Postfix) with ESMTPS id 1F863100EF250
+	for <devel@acpica.org>; Fri, 12 Mar 2021 23:15:53 -0800 (PST)
+IronPort-SDR: wdsJoSZQInR/By0WaGHsZUHrLrzXfDbQh461rsWr/+6HBxBHKbFzayTak43vdO9xDpCiOIx1bg
+ Gm6vvrn9p0hg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9921"; a="250290959"
+X-IronPort-AV: E=Sophos;i="5.81,245,1610438400";
+   d="scan'208";a="250290959"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Mar 2021 23:15:53 -0800
+IronPort-SDR: n+xzo1uxc/WbYHxcN01yEu/1HoU7YFgnsohc1aMoSj3cHu/zHOEZAK3se6ZBAnjZ+juVuWM5KV
+ VbqTWSqeZxgA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.81,245,1610438400";
+   d="scan'208";a="387572143"
+Received: from lkp-server02.sh.intel.com (HELO ce64c092ff93) ([10.239.97.151])
+  by orsmga002.jf.intel.com with ESMTP; 12 Mar 2021 23:15:51 -0800
+Received: from kbuild by ce64c092ff93 with local (Exim 4.92)
+	(envelope-from <lkp@intel.com>)
+	id 1lKyV4-0001tu-Ms; Sat, 13 Mar 2021 07:15:50 +0000
+Date: Sat, 13 Mar 2021 15:15:12 +0800
+From: kernel test robot <lkp@intel.com>
+To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Message-ID: <604c6680.9ASwrqJeUl3Ji5mc%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-References: <1614802160-29362-1-git-send-email-george.kennedy@oracle.com>
- <CAJZ5v0j3=82x1hV9SCdinJQPkDXmJd9BFoqvNxNHSb6iS8PHVQ@mail.gmail.com>
- <9c3bc1b2-bb8d-194d-6faf-e4d7d346dc9b@oracle.com> <CAJZ5v0j8udd0R6A1wwpNvZL5Dr1pRcdiZr2if5y50o7OkHOMqg@mail.gmail.com>
- <1ae44491-4404-6873-4ee6-6cf58c1ae6fb@redhat.com> <CAJZ5v0gC+60n0-UkMw8h5JPBc6grQtD1ambSOCAHV2HLm886yQ@mail.gmail.com>
- <CAJZ5v0g_ztenDY-ER6A0fKD-ZHhLfF3zQdRYYxQb5jSXudd8xQ@mail.gmail.com>
- <e8593eae-40b8-bc9a-78db-529d28d2be88@redhat.com> <YEkgP0G94uQBGDa9@linux.ibm.com>
- <0d05364c-4881-d78a-9721-bd15f5eb822b@redhat.com>
-In-Reply-To: <0d05364c-4881-d78a-9721-bd15f5eb822b@redhat.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Thu, 11 Mar 2021 16:36:31 +0100
-Message-ID: <CAJZ5v0jOpNJrOt5xn-1YkSB9Q15NZS2cxmsGKAU945YNbs+hOw@mail.gmail.com>
-To: David Hildenbrand <david@redhat.com>, Mike Rapoport <rppt@linux.ibm.com>
-Message-ID-Hash: OYDUNILL3IOOEQDFWKD32WXHQF6QT247
-X-Message-ID-Hash: OYDUNILL3IOOEQDFWKD32WXHQF6QT247
-X-MailFrom: rjwysocki@gmail.com
+Message-ID-Hash: RAPRZTY7TTJOBMGW7MTWIZJ52RGDLFS2
+X-Message-ID-Hash: RAPRZTY7TTJOBMGW7MTWIZJ52RGDLFS2
+X-MailFrom: lkp@intel.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: "Rafael J. Wysocki" <rafael@kernel.org>, George Kennedy <george.kennedy@oracle.com>, Erik Kaneda <erik.kaneda@intel.com>, Rafael Wysocki <rafael.j.wysocki@intel.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Dan Carpenter <dan.carpenter@oracle.com>, Dhaval Giani <dhaval.giani@oracle.com>, Andrew Morton <akpm@linux-foundation.org>, Vlastimil Babka <vbabka@suse.cz>, Oscar Salvador <osalvador@suse.de>, Wei Yang <richard.weiyang@linux.alibaba.com>, Pankaj Gupta <pankaj.gupta.linux@gmail.com>, Michal Hocko <mhocko@suse.com>
+CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH 1/1] ACPI: fix acpi table use after free
+Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS 42326a293954f11eadf31161b8315bf6dc2279da
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/OYDUNILL3IOOEQDFWKD32WXHQF6QT247/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/RAPRZTY7TTJOBMGW7MTWIZJ52RGDLFS2/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -63,95 +55,149 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Wed, Mar 10, 2021 at 8:47 PM David Hildenbrand <david@redhat.com> wrote:
->
-> >>>>> The same could be reproduced via zone shuffling with a little luck.
-> >>>>
-> >>>> But nobody does that in practice.
-> >>>>
-> >>
-> >> Dan will most certainly object. And I don't know what makes you speak in
-> >> absolute words here.
-> >>
-> >>>> This would be relatively straightforward to address if ACPICA was not
-> >>>> involved in it, but unfortunately that's not the case.
-> >>>>
-> >>>> Changing this part of ACPICA is risky, because such changes may affect
-> >>>> other OSes using it, so that requires some serious consideration.
-> >>>> Alternatively, the previous memory allocation order in Linux could be
-> >>>> restored.
-> >>>
-> >>> Of course, long-term this needs to be addressed in the ACPI
-> >>> initialization code, because it clearly is not robust enough, but in
-> >>> the meantime there's practical breakage observable in the field, so
-> >>> what can be done about that?
-> >>
-> >> *joke* enable zone shuffling.
-> >>
-> >> No seriously, fix the latent BUG. What again is problematic about excluding
-> >> these pages from the page allcoator, for example, via memblock_reserve()?
-> >>
-> >> @Mike?
-> >
-> > There is some care that should be taken to make sure we get the order
-> > right, but I don't see a fundamental issue here.
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
+branch HEAD: 42326a293954f11eadf31161b8315bf6dc2279da  Merge branch 'pm-opp' into linux-next
 
-Me neither.
+elapsed time: 722m
 
-> > If I understand correctly, Rafael's concern is about changing the parts of
-> > ACPICA that should be OS agnostic, so I think we just need another place to
-> > call memblock_reserve() rather than acpi_tb_install_table_with_override().
+configs tested: 125
+configs skipped: 2
 
-Something like this.
+The following configs have been built successfully.
+More configs may be tested in the coming days.
 
-There is also the problem that memblock_reserve() needs to be called
-for all of the tables early enough, which will require some reordering
-of the early init code.
+gcc tested configs:
+arm                                 defconfig
+arm64                            allyesconfig
+arm64                               defconfig
+arm                              allyesconfig
+arm                              allmodconfig
+h8300                       h8s-sim_defconfig
+arm                       imx_v4_v5_defconfig
+powerpc                     tqm8541_defconfig
+m68k                       m5475evb_defconfig
+powerpc64                        alldefconfig
+arm                             mxs_defconfig
+h8300                     edosk2674_defconfig
+sh                 kfr2r09-romimage_defconfig
+arm                          iop32x_defconfig
+arm                          badge4_defconfig
+arc                    vdk_hs38_smp_defconfig
+riscv                             allnoconfig
+powerpc                 mpc85xx_cds_defconfig
+sh                                  defconfig
+powerpc64                           defconfig
+xtensa                          iss_defconfig
+sh                            hp6xx_defconfig
+sh                     sh7710voipgw_defconfig
+xtensa                         virt_defconfig
+m68k                        m5407c3_defconfig
+csky                             alldefconfig
+sh                           sh2007_defconfig
+sh                          r7785rp_defconfig
+mips                    maltaup_xpa_defconfig
+arm                         assabet_defconfig
+arm                          ixp4xx_defconfig
+arm                          pxa168_defconfig
+m68k                          hp300_defconfig
+powerpc                 linkstation_defconfig
+powerpc                      walnut_defconfig
+csky                                defconfig
+powerpc                         ps3_defconfig
+arm                         axm55xx_defconfig
+arm                          moxart_defconfig
+sh                             shx3_defconfig
+mips                           gcw0_defconfig
+m68k                             alldefconfig
+sh                             espt_defconfig
+powerpc                       eiger_defconfig
+arm                          simpad_defconfig
+xtensa                  cadence_csp_defconfig
+arm                       imx_v6_v7_defconfig
+mips                          malta_defconfig
+mips                        jmr3927_defconfig
+mips                       capcella_defconfig
+m68k                       bvme6000_defconfig
+nios2                         10m50_defconfig
+sparc                       sparc64_defconfig
+arc                           tb10x_defconfig
+mips                         tb0226_defconfig
+mips                     cu1830-neo_defconfig
+riscv                            allyesconfig
+sh                        edosk7705_defconfig
+m68k                                defconfig
+ia64                             allmodconfig
+ia64                                defconfig
+ia64                             allyesconfig
+m68k                             allmodconfig
+m68k                             allyesconfig
+nios2                               defconfig
+arc                              allyesconfig
+nds32                             allnoconfig
+nds32                               defconfig
+nios2                            allyesconfig
+alpha                               defconfig
+alpha                            allyesconfig
+xtensa                           allyesconfig
+h8300                            allyesconfig
+arc                                 defconfig
+sh                               allmodconfig
+parisc                              defconfig
+s390                             allyesconfig
+s390                             allmodconfig
+parisc                           allyesconfig
+s390                                defconfig
+i386                             allyesconfig
+sparc                            allyesconfig
+sparc                               defconfig
+i386                               tinyconfig
+i386                                defconfig
+mips                             allyesconfig
+mips                             allmodconfig
+powerpc                          allyesconfig
+powerpc                          allmodconfig
+powerpc                           allnoconfig
+i386                 randconfig-a001-20210312
+i386                 randconfig-a005-20210312
+i386                 randconfig-a002-20210312
+i386                 randconfig-a003-20210312
+i386                 randconfig-a004-20210312
+i386                 randconfig-a006-20210312
+x86_64               randconfig-a011-20210312
+x86_64               randconfig-a016-20210312
+x86_64               randconfig-a013-20210312
+x86_64               randconfig-a014-20210312
+x86_64               randconfig-a015-20210312
+x86_64               randconfig-a012-20210312
+i386                 randconfig-a013-20210312
+i386                 randconfig-a016-20210312
+i386                 randconfig-a011-20210312
+i386                 randconfig-a015-20210312
+i386                 randconfig-a014-20210312
+i386                 randconfig-a012-20210312
+riscv                    nommu_k210_defconfig
+riscv                    nommu_virt_defconfig
+riscv                               defconfig
+riscv                          rv32_defconfig
+riscv                            allmodconfig
+x86_64                           allyesconfig
+x86_64                    rhel-7.6-kselftests
+x86_64                              defconfig
+x86_64                               rhel-8.3
+x86_64                      rhel-8.3-kbuiltin
+x86_64                                  kexec
 
-> > Since the reservation should be done early in x86::setup_arch() (and
-> > probably in arm64::setup_arch()) we might just have a function that parses
-> > table headers and reserves them, similarly to how we parse the tables
-> > during KASLR setup.
+clang tested configs:
+x86_64               randconfig-a001-20210312
+x86_64               randconfig-a003-20210312
+x86_64               randconfig-a002-20210312
+x86_64               randconfig-a004-20210312
+x86_64               randconfig-a006-20210312
+x86_64               randconfig-a005-20210312
 
-Right.
-
->
-> FWIW, something like below would hide our latent BUG again properly (lol).
-> But I guess I don't have to express how ugly and wrong that is. Not to mention
-> what happens if memblock decides to allocate that memory area earlier
-> for some other user (including CMA, ...).
-
-Fair enough.
-
-> diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-> index 3e4b29ee2b1e..ec71b7c63dbe 100644
-> --- a/mm/page_alloc.c
-> +++ b/mm/page_alloc.c
-> @@ -1566,6 +1566,21 @@ void __free_pages_core(struct page *page, unsigned int order)
->
->          atomic_long_add(nr_pages, &page_zone(page)->managed_pages);
->
-> +       /*
-> +        * BUG ALERT: x86-64 ACPI code has latent BUGs where ACPI tables
-> +        * that must not get allocated/modified will get exposed to the buddy
-> +        * as free pages; anybody can allocate and use them once in the free
-> +        * lists.
-> +        *
-> +        * Instead of fixing the BUG, revert the change to the
-> +        * freeing/allocation order during boot that revealed it and cross
-> +        * fingers that everything will be fine.
-> +        */
-> +       if (system_state < SYSTEM_RUNNING) {
-> +               __free_pages_ok(page, order, FPI_NONE);
-> +               return;
-> +       }
-> +
->          /*
->           * Bypass PCP and place fresh pages right to the tail, primarily
->           * relevant for memory onlining.
->
->
-> --
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
