@@ -2,53 +2,63 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id E668B344846
-	for <lists+devel-acpica@lfdr.de>; Mon, 22 Mar 2021 15:55:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A0B034487C
+	for <lists+devel-acpica@lfdr.de>; Mon, 22 Mar 2021 16:02:52 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 49719100EBB82;
-	Mon, 22 Mar 2021 07:55:56 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.167.172; helo=mail-oi1-f172.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
+	by ml01.01.org (Postfix) with ESMTP id E760B100EBB82;
+	Mon, 22 Mar 2021 08:02:50 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2607:f8b0:4864:20::52b; helo=mail-pg1-x52b.google.com; envelope-from=andy.shevchenko@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 030FE100EBB80
-	for <devel@acpica.org>; Mon, 22 Mar 2021 07:55:53 -0700 (PDT)
-Received: by mail-oi1-f172.google.com with SMTP id m13so13320386oiw.13
-        for <devel@acpica.org>; Mon, 22 Mar 2021 07:55:54 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTPS id 9E752100EBB80
+	for <devel@acpica.org>; Mon, 22 Mar 2021 08:02:49 -0700 (PDT)
+Received: by mail-pg1-x52b.google.com with SMTP id e33so8792971pgm.13
+        for <devel@acpica.org>; Mon, 22 Mar 2021 08:02:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=gevBJGtuhfbcYhKJ9JR81B9fz9ohjjKDV5B4FvK7CJ4=;
+        b=mLX/Ev+jbyaa2D0U8NpOi89oc8T/SNEr9n0az6f6tsV7CGP2NDNQEL66wLtajWGbTJ
+         35RnbrNwrxAwyIThGp9vz+i3IQD8jPthfUJO1oBHZBs4t3lx2v666iiVhbuN3QG+2r5X
+         8MXYK06e/+X1/tGhflAqo6u0fjU6BJKIxhZz8QCV1xJj2D8pF2xzwHw0RM6fEVScRYVU
+         DAkZS7jGkoOf+cHjBvZt5h6wR2/p5QZRP67EDIaEihdxy1rTMCW3nOPOqo+lkGgMsICM
+         D+9US0mS1nEDNRFED2NV5qaXIGalo9MmeCdjNCmrItCSigGDtM3oXEXlla+DI6bafxUL
+         +iBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=mxhecs8h6ZrGlDWUuj5bDqeQpBWOSi4ONB8w9TpH/nY=;
-        b=P2o8sSXqfBDLPdEaJyNNLiT2gpSuZNC9v0byie9QVmH9SguxgH9Rll6/vrf2fZp4AU
-         uM6hk+50umqfwb4EF0Gv4ZzdEvIADNaT8+3dytOSgXhIIY8bGhaXrzhHdpoBPgQ4EXjv
-         pKAPKdGcA/PJ6qXIyKYMjDecA2IXCW+2DYRk0dklvQtbcBPJmaMsP/6jhHYQpPnGJfsm
-         TVYXeBDWNKkai8jwYArwEP6zNp0b/bo7rXpPigfZqHhJhYZkkTEpGDCLQcgng0KUZ1MB
-         Cc7z2fvFhnpSlLJ6SWCSDwGUzG1b2mjiofBbNGAlfCuRsWpmBRq1AjWFkl1cHUzvkTAR
-         tFGw==
-X-Gm-Message-State: AOAM531KgmCxXt34p0y2Z8kVBzBSoByQ6yGgRmBa668sKewWR7eUIiZ0
-	rtZeUiDSnov2XLCwU2kZZNxGnil0Nyf8RLODnio=
-X-Google-Smtp-Source: ABdhPJw66pk6+5GZDef3lvjkVkTy9aKd9QT2qIUf/6D9x/U9xW7Bye/wZJ/B+qC1gl98yq1sdqo0XWdbe8FLkDEWJr0=
-X-Received: by 2002:a05:6808:24b:: with SMTP id m11mr56488oie.157.1616424952837;
- Mon, 22 Mar 2021 07:55:52 -0700 (PDT)
+        bh=gevBJGtuhfbcYhKJ9JR81B9fz9ohjjKDV5B4FvK7CJ4=;
+        b=hAJZzGSKCDCSTEU62JxnvFWub2/w9SkegY+2C4h1Py5zaRyY9DZi6wUs4/pfw/4aRa
+         z2Ltf9xkx0Y42axc8PimlHFdwhhwmspUaaQbc623h7I14Dfn1lHvUOGsoxy/owusP1+J
+         L/3Bb0fiRmhxDvsbMZuAIEAvUaC8j1Jx0Oaxa3sQAnC3kU/zt/Rn8tGc6gHUCauPMX0Q
+         a8sBq1as+l2VkYaPDBfrbyApPSXybq5XObe7b6ISFWzGgP033UomgAWOOhy5xd0bL4mr
+         5v/0pIc95vZ7ZhDOxE17pmrxDQz6m3KE1x+OuNwAn5Y3HOBzG0tXnxjMgkbK5dYPc5Xr
+         4gmg==
+X-Gm-Message-State: AOAM532hQXbm+Un4WUIulUKIclABhQu6qKTN5fh2uovc1T2UUS1Ng1ht
+	qQTNZt83/hSmqd9KteFFwwEsRleg9JKbkEwulGk=
+X-Google-Smtp-Source: ABdhPJz3Rhyw6UesM6IMn2STqQuI0esZDTE13C/dJ1f1Tt/1J+jY3/29L9dLOxZ3n1aTuiiDdf+p2oj3yY6GGn4y/rU=
+X-Received: by 2002:a63:ce15:: with SMTP id y21mr77083pgf.4.1616425369102;
+ Mon, 22 Mar 2021 08:02:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210319192109.40041-1-andriy.shevchenko@linux.intel.com>
-In-Reply-To: <20210319192109.40041-1-andriy.shevchenko@linux.intel.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Mon, 22 Mar 2021 15:55:37 +0100
-Message-ID: <CAJZ5v0gcqKiXKzEj6u7vq_1Y9pYBdSGA6yT3q6JPVgW4djSiaQ@mail.gmail.com>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Message-ID-Hash: 35NE2DX5QYI3KPJTK5SIEIF4K5UHFF7K
-X-Message-ID-Hash: 35NE2DX5QYI3KPJTK5SIEIF4K5UHFF7K
-X-MailFrom: rjwysocki@gmail.com
-X-Mailman-Rule-Hits: nonmember-moderation
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, "Rafael J. Wysocki" <rjw@rjwysocki.net>, Erik Kaneda <erik.kaneda@intel.com>
+References: <20210319192109.40041-1-andriy.shevchenko@linux.intel.com> <CAJZ5v0gcqKiXKzEj6u7vq_1Y9pYBdSGA6yT3q6JPVgW4djSiaQ@mail.gmail.com>
+In-Reply-To: <CAJZ5v0gcqKiXKzEj6u7vq_1Y9pYBdSGA6yT3q6JPVgW4djSiaQ@mail.gmail.com>
+From: Andy Shevchenko <andy.shevchenko@gmail.com>
+Date: Mon, 22 Mar 2021 17:02:33 +0200
+Message-ID: <CAHp75VeVhHhkzPVdGRa9inLJtW0QF=dDp3jB-U1xvKWRY_pbyw@mail.gmail.com>
+To: "Rafael J. Wysocki" <rafael@kernel.org>
+Message-ID-Hash: TQHFOTPE4IEHHNPVJKQEUCAVM2L6YVIF
+X-Message-ID-Hash: TQHFOTPE4IEHHNPVJKQEUCAVM2L6YVIF
+X-MailFrom: andy.shevchenko@gmail.com
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
+CC: Andy Shevchenko <andriy.shevchenko@linux.intel.com>, "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, "Rafael J. Wysocki" <rjw@rjwysocki.net>, Erik Kaneda <erik.kaneda@intel.com>
 X-Mailman-Version: 3.1.1
 Precedence: list
 Subject: [Devel] Re: [PATCH v3 1/1] ACPI: scan: Use unique number for instance_no
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/35NE2DX5QYI3KPJTK5SIEIF4K5UHFF7K/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/TQHFOTPE4IEHHNPVJKQEUCAVM2L6YVIF/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -57,81 +67,53 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Fri, Mar 19, 2021 at 8:21 PM Andy Shevchenko
-<andriy.shevchenko@linux.intel.com> wrote:
+On Mon, Mar 22, 2021 at 4:57 PM Rafael J. Wysocki <rafael@kernel.org> wrote:
 >
-> The decrementation of acpi_device_bus_id->instance_no
-> in acpi_device_del() is incorrect, because it may cause
-> a duplicate instance number to be allocated next time
-> a device with the same acpi_device_bus_id is added.
->
-> Replace above mentioned approach by using IDA framework.
->
-> Fixes: e49bd2dd5a50 ("ACPI: use PNPID:instance_no as bus_id of ACPI device")
-> Fixes: ca9dc8d42b30 ("ACPI / scan: Fix acpi_bus_id_list bookkeeping")
-> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-> ---
-> v3: rewrote commit message once again as proposed by Rafael in v1
->  drivers/acpi/internal.h |  4 +++-
->  drivers/acpi/scan.c     | 32 +++++++++++++++++++++++++++-----
->  include/acpi/acpi_bus.h |  1 +
->  3 files changed, 31 insertions(+), 6 deletions(-)
->
-> diff --git a/drivers/acpi/internal.h b/drivers/acpi/internal.h
-> index e6a5d997241c..417eb768d710 100644
-> --- a/drivers/acpi/internal.h
-> +++ b/drivers/acpi/internal.h
-> @@ -9,6 +9,8 @@
->  #ifndef _ACPI_INTERNAL_H_
->  #define _ACPI_INTERNAL_H_
->
-> +#include <linux/idr.h>
-> +
->  #define PREFIX "ACPI: "
->
->  int early_acpi_osi_init(void);
-> @@ -98,7 +100,7 @@ extern struct list_head acpi_bus_id_list;
->
->  struct acpi_device_bus_id {
->         const char *bus_id;
-> -       unsigned int instance_no;
-> +       struct ida instance_ida;
->         struct list_head node;
->  };
->
-> diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
-> index a184529d8fa4..4b445b169ad4 100644
-> --- a/drivers/acpi/scan.c
-> +++ b/drivers/acpi/scan.c
-> @@ -479,9 +479,8 @@ static void acpi_device_del(struct acpi_device *device)
->         list_for_each_entry(acpi_device_bus_id, &acpi_bus_id_list, node)
->                 if (!strcmp(acpi_device_bus_id->bus_id,
->                             acpi_device_hid(device))) {
-> -                       if (acpi_device_bus_id->instance_no > 0)
-> -                               acpi_device_bus_id->instance_no--;
-> -                       else {
-> +                       ida_simple_remove(&acpi_device_bus_id->instance_ida, device->pnp.instance_no);
-> +                       if (ida_is_empty(&acpi_device_bus_id->instance_ida)) {
->                                 list_del(&acpi_device_bus_id->node);
->                                 kfree_const(acpi_device_bus_id->bus_id);
->                                 kfree(acpi_device_bus_id);
-> @@ -631,6 +630,20 @@ static struct acpi_device_bus_id *acpi_device_bus_id_match(const char *dev_id)
->         return NULL;
->  }
->
-> +static int acpi_device_set_name(struct acpi_device *device,
-> +                               struct acpi_device_bus_id *acpi_device_bus_id)
-> +{
-> +       int result;
-> +
-> +       result = ida_simple_get(&acpi_device_bus_id->instance_ida, 0, 255, GFP_KERNEL);
+> On Fri, Mar 19, 2021 at 8:21 PM Andy Shevchenko
+> <andriy.shevchenko@linux.intel.com> wrote:
+> >
+> > The decrementation of acpi_device_bus_id->instance_no
+> > in acpi_device_del() is incorrect, because it may cause
+> > a duplicate instance number to be allocated next time
+> > a device with the same acpi_device_bus_id is added.
+> >
+> > Replace above mentioned approach by using IDA framework.
 
-This is ida_alloc_range(ida, start, (end) - 1, gfp), so I think it
-should be 256 above, instead of 255.
+...
 
-While at it, though, there can be more than 256 CPU devices easily on
-contemporary systems, so I would use a greater number here.  Maybe
-4096 and define a symbol for it?
+> > +       result = ida_simple_get(&acpi_device_bus_id->instance_ida, 0, 255, GFP_KERNEL);
+>
+> This is ida_alloc_range(ida, start, (end) - 1, gfp), so I think it
+> should be 256 above, instead of 255.
+
+Ah, good catch!
+
+
+> While at it, though, there can be more than 256 CPU devices easily on
+> contemporary systems, so I would use a greater number here.  Maybe
+> 4096 and define a symbol for it?
+
+I was thinking about it, but there is a problem with the device name,
+since it will break a lot of code,
+And taking into account that currently we don't change the behaviour
+it is good enough per se as a fix.
+
+That said, we may extend by an additional patch with a logic like this:
+
+res = ida_get(4096)
+if (res < 0)
+  return res;
+if (res >= 256)
+ use %04x
+else
+ use %02x
+
+Would it make sense to you?
+
+
+-- 
+With Best Regards,
+Andy Shevchenko
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
