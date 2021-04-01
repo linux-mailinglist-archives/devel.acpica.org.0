@@ -1,78 +1,78 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2DD4935208B
-	for <lists+devel-acpica@lfdr.de>; Thu,  1 Apr 2021 22:25:28 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 68C4835212B
+	for <lists+devel-acpica@lfdr.de>; Thu,  1 Apr 2021 22:56:40 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 1DCBA100EBB7D;
-	Thu,  1 Apr 2021 13:25:25 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.24; helo=mga09.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+	by ml01.01.org (Postfix) with ESMTP id E2924100F226B;
+	Thu,  1 Apr 2021 13:56:38 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.115; helo=mga14.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 037CD100EBBBD
-	for <devel@acpica.org>; Thu,  1 Apr 2021 13:25:23 -0700 (PDT)
-IronPort-SDR: CL/mW4HP+G1aVLGjULpZM8dryWUnp1xxsN+MSLFSvqbGvjgkMtEadB+TmtCdsGcFiWmIvrN6jR
- WOZTeziqD3EA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9941"; a="192429201"
+	by ml01.01.org (Postfix) with ESMTPS id 161DC100EBB7D
+	for <devel@acpica.org>; Thu,  1 Apr 2021 13:56:36 -0700 (PDT)
+IronPort-SDR: AWoirEuMtcxsXaiuYE2gOznXEp7zVsR4VZWbobxxqyeiBVIRDyIEuMMkXs8leVlzjnW1H0mpC0
+ kzZZtAgLVoRg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9941"; a="191810280"
 X-IronPort-AV: E=Sophos;i="5.81,296,1610438400";
-   d="scan'208";a="192429201"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Apr 2021 13:25:23 -0700
-IronPort-SDR: oak1saS3sX4A3UHmIKI2CDjgUvq+NNB5SoBX5TETWeMNDEZIpvPGpMDvZmT8wOcYkoKlVl6qwh
- 21wXnsoSkKYw==
+   d="scan'208";a="191810280"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Apr 2021 13:56:36 -0700
+IronPort-SDR: l2G45vT3KsP+Tg4vZG9N9PnREK9DL4Or50kcxpmIdZ1KqB3PyS7SZnZ5238WpoGRK9qGojFRfE
+ Wr6Cnn15NK7g==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.81,296,1610438400";
-   d="scan'208";a="412859731"
-Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
-  by fmsmga008.fm.intel.com with ESMTP; 01 Apr 2021 13:25:21 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
+   d="scan'208";a="419361306"
+Received: from fmsmsx604.amr.corp.intel.com ([10.18.126.84])
+  by orsmga008.jf.intel.com with ESMTP; 01 Apr 2021 13:56:35 -0700
+Received: from fmsmsx609.amr.corp.intel.com (10.18.126.89) by
+ fmsmsx604.amr.corp.intel.com (10.18.126.84) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2106.2; Thu, 1 Apr 2021 13:25:21 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2106.2; Thu, 1 Apr 2021 13:25:20 -0700
-Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ 15.1.2106.2; Thu, 1 Apr 2021 13:56:35 -0700
+Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
+ fmsmsx609.amr.corp.intel.com (10.18.126.89) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2106.2
- via Frontend Transport; Thu, 1 Apr 2021 13:25:20 -0700
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (104.47.55.174)
- by edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
+ via Frontend Transport; Thu, 1 Apr 2021 13:56:35 -0700
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (104.47.70.102)
+ by edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2106.2; Thu, 1 Apr 2021 13:25:20 -0700
+ 15.1.2106.2; Thu, 1 Apr 2021 13:56:34 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ChED46RZNh5qIwHVSQPulfzWwiiCpQa2kaN+3vLJ/dqwvkO5U/RlNjBpM/qpF9MseM8nkCF/vhHgXlH6Ywz+YMSEha6aRys/1JgJmVuLDZxqFXaUZiktnfm5zEkF5EC6yoF9AJIRiHR9OoBIbOpzva6SARULm1nfdeAoz2aqQYQJe6YtPnZuZpP+Lmlj0kEgZxe1SFhjwZfK3QWwSGn/EH4zp1uxotYYbWC5DWpx863vkdGnUh894PRv+f2pDOnZ/Z6o3cNzzEh9AKNhCOkV/9YPQ8gpeWpMVhAJCq6Q6dQIuvAabq2o4kmoRngvuGyOiq/Vi4E563enulKhSBstNg==
+ b=eQ/tL5o8bTSvsPkkQkKtmSfvfci1tYDadPLPF3PBxOOVQOODeRSsLkxGOqoxT3dQYOMp43yBWkJhV8R6dFAXftWqBEhWMnq9zEuutCUve7gMZPsnk2bM4hTjKwyoToKUuTxOxfGdP1UjQs07ZCy7/XWmE22Fd7sdtwTLvOh7ejwb6AuXfz5Na3TJ8sTVP0lhN9XHAETDg6abvnbNtxMoxOG9DQ0bMtjOpJ1/09GqSak4b4GTYEwPIMyorE5cpRFz7mQpiaalSNCbpbpsG02PTPWkexooTOz+YSvc1Jl96HRaofBKqnSAP9hiuWRAj8Hu5piOTKXRwJkPs83jzkngfw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=eBAd/qgAu1CxHCu0zMb5z15stSbrYN1KWdtOfsg1vO4=;
- b=Yt76HxGAiqpejGa+VtCxenzOMiUAH06imqhsayCQH1/tYHm9Er/6jbDDN3jmFLzeEa3wsJKUboKF2DtB7USoORmNTnsH9kI2nDSyI89QM7wScbUZ20isWCwC+/+rKG8IgYrtp9JX1fvM/TR4X59Y+OdIdzbmRUbMkqCKAhYxLhnI5U/tZJ6ixLHKDh8iPPMlqRj1KpzHSoDH2gZhYlZiE7c+sYsweuUUHiE47TiwSaRPSHfbrv4ti8DZpxrcRUoFRVgiFeWpkXOJuuSr4XNfY53j854Gv5aDCKai85Iw/zIqTAgVWj3JDuKqMkNUlLUXQrRnS3zIIHzlZkP9THsXww==
+ bh=xyi0xbbzEk3E7aD3Y7CCveexZmipzdksoERN5RFzsR0=;
+ b=isQjGbu7Xc3wEh79k7oR0Tek3rWEJorbcMh0Wg5FcXMU4x0IA1gKjykznz1Ew/Toc9C5mDnddZa8jlddUqy1i9tJLUlbNzdNQtDqD2jO6ivx2xcH6JJskaCMuh+SJDrVbq4Im100JWvQaIWX7CfbG5aMAoYds3YnNxJ8R+31VoHqq7DvGNuUBBueb19vJYcBaY6/bkgx3R0xX832yq3Pfc0gh4Or6q5vwZT5nxhH2nbfoRJPEWt0bf8Td/2MAQVIQrRrUSeeysSKA+LOp57C+4Y+tA56DbrVX2+4V5sLPsf0M8Fi3yEpf3T6Fi+p6KLHLuF43/VJDgVAE9jhCGEinQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
  s=selector2-intel-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=eBAd/qgAu1CxHCu0zMb5z15stSbrYN1KWdtOfsg1vO4=;
- b=YynUEYwI0/4/u0+iuuS+ivRuiVhf5f2hxxjw62UYBvBjzztNP2f9OI4fbc6fezfoxrbXg20sbpLz3bxOt3f8RLxXPB3nW67ZkN14C3cFildfBRq/IzYCHBykFt6fdeX9tVXlT4qvUGQuleZBSBKNvMC41CBoGeKqBif75RKBjAU=
+ bh=xyi0xbbzEk3E7aD3Y7CCveexZmipzdksoERN5RFzsR0=;
+ b=Juf4IB2dKFiyuUk764w8GfaMtfnd/MvTz9wra+ynbEbbLvHpj1sgHTedxBjthHemH+yo+WLYjDhWPSbWPSr5yeUX4b3V8m7YME4HDz11L7eqdmuwhaaKUi8kzhC5LI3Q/go1uAKLpqugENu5DASiUhj4hcCVC9xkqr7rolAxbxY=
 Received: from BYAPR11MB3256.namprd11.prod.outlook.com (2603:10b6:a03:76::19)
- by BYAPR11MB3032.namprd11.prod.outlook.com (2603:10b6:a03:8f::21) with
+ by BY5PR11MB3910.namprd11.prod.outlook.com (2603:10b6:a03:185::13) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3999.28; Thu, 1 Apr
- 2021 20:25:16 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3999.27; Thu, 1 Apr
+ 2021 20:56:32 +0000
 Received: from BYAPR11MB3256.namprd11.prod.outlook.com
  ([fe80::41e6:b61:67ef:2712]) by BYAPR11MB3256.namprd11.prod.outlook.com
  ([fe80::41e6:b61:67ef:2712%5]) with mapi id 15.20.3977.033; Thu, 1 Apr 2021
- 20:25:15 +0000
+ 20:56:32 +0000
 From: "Moore, Robert" <robert.moore@intel.com>
-To: acpica.org list <devel@acpica.org>
-Thread-Topic: ACPICA version 20210331 released
-Thread-Index: AdcnNQiz7LgNJMoWRZK/8skpJ8/veQ==
-Date: Thu, 1 Apr 2021 20:25:15 +0000
-Message-ID: <BYAPR11MB3256674E208EC828B488AD3D877B9@BYAPR11MB3256.namprd11.prod.outlook.com>
+To: Jianmin Lv <lvjianmin@loongson.cn>, "Kaneda, Erik"
+	<erik.kaneda@intel.com>, "Wysocki, Rafael J" <rafael.j.wysocki@intel.com>,
+	Len Brown <lenb@kernel.org>
+Thread-Topic: [PATCH] ACPICA: Events: support fixed pcie wake event
+Thread-Index: AQHXJu9jxEF7iGMf1Ea4RLAMgiSl4qqgJNvg
+Date: Thu, 1 Apr 2021 20:56:32 +0000
+Message-ID: <BYAPR11MB3256C7F3C17D14C1DF544430877B9@BYAPR11MB3256.namprd11.prod.outlook.com>
+References: <1617278736-7400-1-git-send-email-lvjianmin@loongson.cn>
+In-Reply-To: <1617278736-7400-1-git-send-email-lvjianmin@loongson.cn>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -80,64 +80,66 @@ X-MS-TNEF-Correlator:
 dlp-version: 11.5.1.3
 dlp-product: dlpe-windows
 dlp-reaction: no-action
-authentication-results: acpica.org; dkim=none (message not signed)
- header.d=none;acpica.org; dmarc=none action=none header.from=intel.com;
+authentication-results: loongson.cn; dkim=none (message not signed)
+ header.d=none;loongson.cn; dmarc=none action=none header.from=intel.com;
 x-originating-ip: [134.134.136.194]
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: f304eb8f-d585-4f93-f1ff-08d8f54c42bc
-x-ms-traffictypediagnostic: BYAPR11MB3032:
-x-microsoft-antispam-prvs: <BYAPR11MB303204D5AD8DB1BA7917578B877B9@BYAPR11MB3032.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:7691;
+x-ms-office365-filtering-correlation-id: 76556335-91db-4e16-9dfc-08d8f550a11f
+x-ms-traffictypediagnostic: BY5PR11MB3910:
+x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <BY5PR11MB391074CFD7431124DFAF371C877B9@BY5PR11MB3910.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:6108;
 x-ms-exchange-senderadcheck: 1
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 6OVxXUqeK8Q4Z9d3aqKQZpai9rWkEjuoyAb7j8+E6Cg1XP51YspbNKGytRlUZf4j6FOLHoG7bw4qSnrzfVLxSiBwHlF0SM3PDcV9HJluVVhdBUpR5fA15oxzOiKzTyMbkldv3x93kNodMYblueRPQZjSk36oIUKzWDacF1AQ/RJ32Anv+sj8sMEruM1Ag1fPgtdZZwGgAmw2Iq8yZ4n6yse7Zjf2CVL7tikGNaC5xgcoDCWEA/1mVFtKfA0SJdX3g40EMcC1/y5j8SJS37skfQwZA4diox0aobgy+yrgJDhZmsLZBcQnU8yODjx40eZAr4zv45NVPDPAaGIcu8d83icu1RIj2TfzRwIUgGE94KYfCawJiR4mKOxvWh0JiJAtQbRvn40R2Abfn+nlVyiJTKruOzr6SKTkEwBLdB/ooJy/+CnaXBzWuB1cCS/riwPbkG/6qqsY4khYb56oGP1g5JKIWEeB4uCb89Pf8v3wDRFjugiPZR05YRp1M6t2gfUVOsaBvfGs63fsyqT7sAP+fvGTHlpG+CeffAdAcK36gE7SxKQnpYqP4IcCm4I9AVti+Vc70Uuke9rHJeXdIN/pzp9Hdg2N88jZJFZvM5T/isCfR66mw9KS8Jquu9DmuW++IvGokjpZ8wojtAR0jQTAoBp9WFUoKsd4x4PrZw7b+oTa8/U/Tsn6r9z5k2GIbAOWRprOD+ukPDoUUOdgTHZdhT3rMKICQOKWR/lhEHa1nQQ=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(136003)(346002)(366004)(39860400002)(376002)(396003)(38100700001)(8676002)(55016002)(7116003)(9686003)(71200400001)(8936002)(478600001)(6916009)(7696005)(966005)(26005)(186003)(2906002)(5660300002)(76116006)(316002)(66556008)(66946007)(66446008)(52536014)(66476007)(64756008)(6506007)(83380400001)(33656002)(86362001);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata: =?us-ascii?Q?s1bsfW5oQ8dNZrA2XjcGXouxoiadHZaGbs7HZoNKyzcjDqvTYKu5GOu8kmOl?=
- =?us-ascii?Q?8OG7P0lltaWZ+rOHS9fPNgkg1Z5MP7cQQXJ111NuabZ5/9ojYuaWB0N6BD5e?=
- =?us-ascii?Q?EwgDHZHepzBxPN8fIa19vtYZv/ic0Cw4Oi5KaRYvPwlVf5fTIAtvKpfyuz4M?=
- =?us-ascii?Q?9Vtdh5x/TDASLe6QPpgC15z9dAyG+MhEjGb8u3+tGIOv4KrfggcTFbdZX/8P?=
- =?us-ascii?Q?wQvIwuRihzqFZkiOEYLGpGeJ7wNo4noxYXdixAn6A5ce3CzZskC8x7lNXNx+?=
- =?us-ascii?Q?GKCVQQOkyocbxAlYDy/3nknyTI1xdbvzqeTzmGSldGSSRGCs+73UTRnZoPC1?=
- =?us-ascii?Q?yxmNUzgqru0ztfXgBkYU8EaBOA1urK3x/aNmPnyxs3ke0BoyoE2YHNrA0W+O?=
- =?us-ascii?Q?8TK6XYDt2FGGOypdDRc8YxXRh4oaWfuoHrmlWcWkz+LFyaVDzI5BEtXS6+6h?=
- =?us-ascii?Q?7qVDq4pXuWAxzbN/QWDM5BH72XT4zYhgS40RWF0E6kXedOZDVZz4Pw+IDoLq?=
- =?us-ascii?Q?CglAUpUlwH3zoumNDfWcgU0iYTFBu0eRxGPlw3YIQC36RLysLttF/U7sILzT?=
- =?us-ascii?Q?PLnwUvNy7dFyb6i3zgUv1IMjE9b3qd6Jm/F9Af/fPpNrtws7UjUUTM1rTJdi?=
- =?us-ascii?Q?sWeMEhDoEPEF7JgMhjXgDvxHGAyof9q5c+5sfjf+WfigfYJP6ac/n+0ugQqI?=
- =?us-ascii?Q?UdVu6PPUGV/3pv8WGa87RY0QbWpxF9vdOAQx98FnxhAnRyzHZ/aUFspwZMwI?=
- =?us-ascii?Q?ZjWJXkXgnfXqHAUShgfRGp3iHYO2NUJ6snE+tk6dbPsxT30we1S7cltM1MkI?=
- =?us-ascii?Q?1Sd9jk/2TMMqBDHR7azWM0RkqRaE67TOhSHspIGdarUKJVlMzZ8gE7ZJsYMp?=
- =?us-ascii?Q?rZVrJnnwkpdYBz3NCSqSL44qZouzmc0gD5PfDfGLCFHvjzH/3XQtjhwETTPt?=
- =?us-ascii?Q?Gfb61Ur8uHkz0DsdO5/cbmF8YgT2ZNQDp7tlicji/2GttA/OVZSGB/CBhpUW?=
- =?us-ascii?Q?SbM/TMY7vOwmuS0UE67mMuVFMeWonKcqjuGjm6GcW1oPXn2d+PHWgIxbMDtR?=
- =?us-ascii?Q?QhRDxt+hxySOghpjhvn6AvZiJ1wsmzpJNqzRvxVm+BjhIZ5QhTWe6W+4eExN?=
- =?us-ascii?Q?lFalPR+FFqX6SE8haIdiVwC3j2cg8+dPqrfhSnd/saDpakmkXw1qFZmMsMx0?=
- =?us-ascii?Q?CkFtfG5sV+Db+BsYBiyg5lh97l+1qvCvn6Bgav+dsiQ6rXCxnQG5TvdIws5E?=
- =?us-ascii?Q?00lA6OQ4+yjOUIFRI+5t/7YFCWFm2raEJoQdSb/5JifXtSd33HCnr70w7kTW?=
- =?us-ascii?Q?LUkhTrRqnjKlkunCBAe024VC?=
-x-ms-exchange-transport-forked: True
+x-microsoft-antispam-message-info: 9VSKmVPKZ4VRHVHwWblbKB+23WNWUfxzz0qfoJBxzBtsQAc0U4S6ruUo5kypXRrqrdF7Nv/YIw1DLgaTlNh8CW+9iwhSKAt26p0QMuCJymIQ07fpiiBo3MzGlrkgWotiOAMNSsOAw9hSrJpZcDhdZB9JFZ8PEJ/6QuEGc8Z0BJ+P+2fcsfQR/t+lshFVxrP/+n6yCjjIN+dMiRehgkbFXwV34HbSuGXyTfDhVcCeSVwbmuaj86xwXRPC6wt8FsucOek0A548uCi7//Z8thWuVke3+kDjfkMf8+f+3Cbgcvdofhy3ApzYdfe3HXc7lkmDcKpWecbJfzmqcB4qcpoorcNK1re7dP07GTmkNmYlPHk8ok7B+0BXVMpj7lvSMLAbGNDiPfFHVpBZwBHFqQWbWyVyYAWAPb8lvmdS9AjMpoqCEwX8CAjXp/j5lyngC/YKQlj85Gc4zQfSJlRh67rHjDjBDueuugTFUsaZdgM02MugeaYxUqaMU2vSBlQ0g8IsQaA3tFmRKtU8BfwudVL7eS4hDCeoGDz2ZpFAVO1RrFw6e6ytpEDLXJX/3EbbbsLcT0M8DshlHzz3UDc+VjoqRC5fhVJqFNR3NGXgKZ3jba9PTnxIJEWYw2yavk49TveEZaxBDXx/AREdJJ0zuyT/xNhR5BzKhtPdBKvpeLOeV7Y=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(366004)(39860400002)(396003)(346002)(136003)(376002)(66446008)(66556008)(64756008)(26005)(8936002)(53546011)(66946007)(4326008)(2906002)(71200400001)(186003)(55016002)(9686003)(38100700001)(5660300002)(6506007)(66476007)(478600001)(7696005)(110136005)(8676002)(54906003)(52536014)(76116006)(33656002)(86362001)(83380400001)(316002);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata: =?us-ascii?Q?pbEUt54ZQFtTROM9j/UdIp+8VvXS7Q6ZV9FfQWARG6We8DYn/zkgFDy3gHLZ?=
+ =?us-ascii?Q?vb9f3FvY8TWebEtQhv8/FOE+6iE40lbw/M1fJqzou5glvHTQ8Wi/W64hXXij?=
+ =?us-ascii?Q?ROEoGt1gbZoppZPjbLosilIWt4z6Av2OD+igrqEm918Z/bLSvP8HLjKIqQ55?=
+ =?us-ascii?Q?FepxkqmeLlbUe52SxOSAC6ExJn5U9THxOTGOBRt0cZPoLv2KKKGaX+iMFCbt?=
+ =?us-ascii?Q?4r97qhlW6/2+at3cAHAfKCUqn/UYADWm2Y8omWyvKKfVPfYRbU/kIPzXyLTF?=
+ =?us-ascii?Q?gYWmjW61ltE2ncZT0pZa8M7Tv0T/WQOJche6JXTDMzDdU6MekBYW4uFW5I/n?=
+ =?us-ascii?Q?VWJgf++IoYTzSgvuKeO3bfaJUdqYFAjF6DVAFAqj6EyV32X2RFGwIzgK+W/l?=
+ =?us-ascii?Q?nUZXqq6W6G3KyoDoBx/ivqzCji1KemzeXzrDd2xk4SDtl7K4K+siFw/ZEJIU?=
+ =?us-ascii?Q?R8EQ+YtWtQNRzy72YnOkuOewJvG4Fs6fw59P0hdeTJb9DVX0PifOqClZiLPC?=
+ =?us-ascii?Q?cIfWpc7yzFJ9X+XY31+4YHlzb3o8vcavW76LlXbbkc2xjgY+LpoTNH4T8x28?=
+ =?us-ascii?Q?C7QSW/36O7kaDo0VKhlu/mkn9F71Ff6K0JAsBSISuLspBPpgskE34HWXNUuj?=
+ =?us-ascii?Q?325jluuuC0OssjdsSbxsqfuTtd7+cB88t+2K4PD0DHrisXIZOswySLgbn7TE?=
+ =?us-ascii?Q?SJDtxYjcII6fnz6OlQaQgJz9PzgasOEsjwhOpDty/ai114M628Butlhir9jo?=
+ =?us-ascii?Q?Kmv4vBKbDaUchw4uzvXsh/kcOltWuISbJOFYWKYF2EkuW1Smcqn8q9S/OYsO?=
+ =?us-ascii?Q?j+4p9N3hxw9p31JXsWIskZ0WD48ZOOcX/9kaWlh2+7lOFImfLe2meZ86WWsb?=
+ =?us-ascii?Q?cLRs15bIxvulIOetMO1hpPW9dV4Z62wb2zF+VIcMVrnbGnCfkiGHS9FH6IrM?=
+ =?us-ascii?Q?iYAeRMKdpf36wXRBoDgZfqygkdVOSTsQylkQYemfCbYX7kow/kQWIuXKSNO3?=
+ =?us-ascii?Q?SJ/b9vb12VaCjzOu4Zp3v7rcfUitSZPxJbq2JfELXKrMJ3BLxuYDgreg2oum?=
+ =?us-ascii?Q?sWcjAKqwyiXmU3cUR6Yck3zY2VDHPvqU+YzyqM6wOi4T2AA7Y9KFQR8p38Ag?=
+ =?us-ascii?Q?axM35hVFljk5seujku0GxVyec2wAUl+i7SVfyN0tONlpxrY6OMOtCWv08s8a?=
+ =?us-ascii?Q?XyRGMNwkdS0QNwfTXgJn8oiMBa8/P0X79EzxH7FKpL2Tvt56pFoR7//Gks4w?=
+ =?us-ascii?Q?8g+HiaMTZ7TPiCcC35H2ev1vW+/KlCK+ITOuiKPl7VzK3pl1AwsrIs9G8DaZ?=
+ =?us-ascii?Q?j6iXYDJEKO5WdKi90uj6okea?=
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3256.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f304eb8f-d585-4f93-f1ff-08d8f54c42bc
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Apr 2021 20:25:15.7984
+X-MS-Exchange-CrossTenant-Network-Message-Id: 76556335-91db-4e16-9dfc-08d8f550a11f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Apr 2021 20:56:32.1148
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: N8VIaA9soseblVznD7AHpFCw2FClTtSXYRiHY8r1dkAZ7WSrUEWWnJ6AC/SlzukeuwEjkX3gXlmatmWAEmtR9g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR11MB3032
+X-MS-Exchange-CrossTenant-userprincipalname: HQgT7mpRanI/RtFeFrXtbpG3uMp7ujI1DoLjwhIh9OhHYTZcIDa1Y1Fg1upzQKksL/NnLNA6atGs7FKiHiyDzw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR11MB3910
 X-OriginatorOrg: intel.com
-Message-ID-Hash: JIJRABDX3TW4BDBVXRT5IG2GPBJXWQEI
-X-Message-ID-Hash: JIJRABDX3TW4BDBVXRT5IG2GPBJXWQEI
+Message-ID-Hash: 6L5Z4V2LEJI2RCNWI4KE5F2BP6IYWML7
+X-Message-ID-Hash: 6L5Z4V2LEJI2RCNWI4KE5F2BP6IYWML7
 X-MailFrom: robert.moore@intel.com
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
+CC: "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>, "devel@acpica.org" <devel@acpica.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] ACPICA version 20210331 released
+Subject: [Devel] Re: [PATCH] ACPICA: Events: support fixed pcie wake event
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/JIJRABDX3TW4BDBVXRT5IG2GPBJXWQEI/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/6L5Z4V2LEJI2RCNWI4KE5F2BP6IYWML7/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -145,36 +147,99 @@ List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Transfer-Encoding: 7bit
 
-31 March 2021. Summary of changes for version 20210331:
+Can you send/point us to the spec that this change is based upon?
+Thanks,
+Bob
 
-This release is available at https://acpica.org/downloads, and includes all ACPI 6.4 support
 
-1) ACPICA kernel-resident subsystem:
-ACPI 6.4: iASL: deprecate DDBHandleObj keyword
-Always create namespace nodes using AcpiNsCreateNode(). ACPICA is allocating an object using kmalloc(), but then frees it
-using kmem_cache_free(<"Acpi-Namespace" kmem_cache>). This is wrong.
-Fixed a race condition in generic serial bus operation region handler. Fixed by Hans de Goede.
+-----Original Message-----
+From: Jianmin Lv <lvjianmin@loongson.cn> 
+Sent: Thursday, April 01, 2021 5:06 AM
+To: Moore, Robert <robert.moore@intel.com>; Kaneda, Erik <erik.kaneda@intel.com>; Wysocki, Rafael J <rafael.j.wysocki@intel.com>; Len Brown <lenb@kernel.org>
+Cc: linux-acpi@vger.kernel.org; devel@acpica.org; linux-kernel@vger.kernel.org; lvjianmin <lvjianmin@loongson.cn>
+Subject: [PATCH] ACPICA: Events: support fixed pcie wake event
 
-2) iASL Compiler/Disassembler and ACPICA tools:
+From: lvjianmin <lvjianmin@loongson.cn>
 
-ACPI 6.4: NFIT: add Location Cookie field
-ACPI 6.4: HMAT: add new fields/flags
-ACPI 6.4: Add new flags in SRAT
-ACPI 6.4: add SDEV secure access components
-ACPI 6.4: add Csi2Bus resource template
-ACPI 6.4: add support for PHAT table
-ACPI 6.4: add support for PMTT table
-Add disassembly support for the IVRS table. Compilation of the table is not yet complete.
-Fixed a potential infinite loop due to type mismatch. The for-loop is using a UINT8 counter and comparing the upper
-limit against a UINT32 AslGbl_ExpectedMessagesIndex maximum. In
-the case where AslGbl_ExpectedMessagesIndex is > 255 the counter i
-will wrap around to zero and the loop will never exit. I suspect
-the AslGbl_ExpectedMessagesIndex is never that high, but fixing
-this does future proof the code and cleans up static analysis
-warnings.Colin King.
-iASL/TableCompiler: update it with IORT table E.b revision changes.
-iASL/TableCompiler: Add compilation support for the VIOT table. Signed-off-by: Jean-Philippe Brucker.
-iASL/TableCompiler: Add compilation support for CEDT table. Also, update the CEDT template.
+Some chipsets support fixed pcie wake event which is defined in the PM1 block, such as LS7A1000 of Loongson company, so we add code to handle it.
+
+Signed-off-by: lvjianmin <lvjianmin@loongson.cn>
+
+diff --git a/drivers/acpi/acpica/evevent.c b/drivers/acpi/acpica/evevent.c index 35385148fedb..08ba368beb2d 100644
+--- a/drivers/acpi/acpica/evevent.c
++++ b/drivers/acpi/acpica/evevent.c
+@@ -185,6 +185,10 @@ u32 acpi_ev_fixed_event_detect(void)
+ 		return (int_status);
+ 	}
+ 
++	if (fixed_enable & ACPI_BITMASK_PCIEXP_WAKE_DISABLE)
++		fixed_enable &= ~ACPI_BITMASK_PCIEXP_WAKE_DISABLE;
++	else
++		fixed_enable |= ACPI_BITMASK_PCIEXP_WAKE_DISABLE;
+ 	ACPI_DEBUG_PRINT((ACPI_DB_INTERRUPTS,
+ 			  "Fixed Event Block: Enable %08X Status %08X\n",
+ 			  fixed_enable, fixed_status));
+@@ -250,8 +254,8 @@ static u32 acpi_ev_fixed_event_dispatch(u32 event)
+ 	if (!acpi_gbl_fixed_event_handlers[event].handler) {
+ 		(void)acpi_write_bit_register(acpi_gbl_fixed_event_info[event].
+ 					      enable_register_id,
+-					      ACPI_DISABLE_EVENT);
+-
++						event == ACPI_EVENT_PCIE_WAKE ?
++						ACPI_ENABLE_EVENT : ACPI_DISABLE_EVENT);
+ 		ACPI_ERROR((AE_INFO,
+ 			    "No installed handler for fixed event - %s (%u), disabling",
+ 			    acpi_ut_get_event_name(event), event)); diff --git a/drivers/acpi/acpica/hwsleep.c b/drivers/acpi/acpica/hwsleep.c index 14baa13bf848..7e7ea4c2e914 100644
+--- a/drivers/acpi/acpica/hwsleep.c
++++ b/drivers/acpi/acpica/hwsleep.c
+@@ -312,6 +312,18 @@ acpi_status acpi_hw_legacy_wake(u8 sleep_state)
+ 				    [ACPI_EVENT_SLEEP_BUTTON].
+ 				    status_register_id, ACPI_CLEAR_STATUS);
+ 
++	/* Enable pcie wake event if support */
++	if ((acpi_gbl_FADT.flags & ACPI_FADT_PCI_EXPRESS_WAKE)) {
++		(void)
++		acpi_write_bit_register(acpi_gbl_fixed_event_info
++				[ACPI_EVENT_PCIE_WAKE].
++				enable_register_id, ACPI_DISABLE_EVENT);
++		(void)
++		acpi_write_bit_register(acpi_gbl_fixed_event_info
++				[ACPI_EVENT_PCIE_WAKE].
++				status_register_id, ACPI_CLEAR_STATUS);
++	}
++
+ 	acpi_hw_execute_sleep_method(METHOD_PATHNAME__SST, ACPI_SST_WORKING);
+ 	return_ACPI_STATUS(status);
+ }
+diff --git a/drivers/acpi/acpica/utglobal.c b/drivers/acpi/acpica/utglobal.c index 59a48371a7bc..68baf16d8a02 100644
+--- a/drivers/acpi/acpica/utglobal.c
++++ b/drivers/acpi/acpica/utglobal.c
+@@ -186,6 +186,10 @@ struct acpi_fixed_event_info acpi_gbl_fixed_event_info[ACPI_NUM_FIXED_EVENTS] =
+ 					ACPI_BITREG_RT_CLOCK_ENABLE,
+ 					ACPI_BITMASK_RT_CLOCK_STATUS,
+ 					ACPI_BITMASK_RT_CLOCK_ENABLE},
++	/* ACPI_EVENT_PCIE_WAKE		*/ {ACPI_BITREG_PCIEXP_WAKE_STATUS,
++					ACPI_BITREG_PCIEXP_WAKE_DISABLE,
++					ACPI_BITMASK_PCIEXP_WAKE_STATUS,
++					ACPI_BITMASK_PCIEXP_WAKE_DISABLE},
+ };
+ #endif				/* !ACPI_REDUCED_HARDWARE */
+ 
+diff --git a/include/acpi/actypes.h b/include/acpi/actypes.h index 92c71dfce0d5..0b6c72033487 100644
+--- a/include/acpi/actypes.h
++++ b/include/acpi/actypes.h
+@@ -714,7 +714,8 @@ typedef u32 acpi_event_type;
+ #define ACPI_EVENT_POWER_BUTTON         2
+ #define ACPI_EVENT_SLEEP_BUTTON         3
+ #define ACPI_EVENT_RTC                  4
+-#define ACPI_EVENT_MAX                  4
++#define ACPI_EVENT_PCIE_WAKE            5
++#define ACPI_EVENT_MAX                  5
+ #define ACPI_NUM_FIXED_EVENTS           ACPI_EVENT_MAX + 1
+ 
+ /*
+--
+2.27.0
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
