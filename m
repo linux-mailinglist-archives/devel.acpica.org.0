@@ -2,244 +2,295 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68C4835212B
-	for <lists+devel-acpica@lfdr.de>; Thu,  1 Apr 2021 22:56:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 61B4035247A
+	for <lists+devel-acpica@lfdr.de>; Fri,  2 Apr 2021 02:33:28 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id E2924100F226B;
-	Thu,  1 Apr 2021 13:56:38 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.115; helo=mga14.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+	by ml01.01.org (Postfix) with ESMTP id 424CA100EBBBD;
+	Thu,  1 Apr 2021 17:33:26 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.136; helo=mga12.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 161DC100EBB7D
-	for <devel@acpica.org>; Thu,  1 Apr 2021 13:56:36 -0700 (PDT)
-IronPort-SDR: AWoirEuMtcxsXaiuYE2gOznXEp7zVsR4VZWbobxxqyeiBVIRDyIEuMMkXs8leVlzjnW1H0mpC0
- kzZZtAgLVoRg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9941"; a="191810280"
-X-IronPort-AV: E=Sophos;i="5.81,296,1610438400";
-   d="scan'208";a="191810280"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Apr 2021 13:56:36 -0700
-IronPort-SDR: l2G45vT3KsP+Tg4vZG9N9PnREK9DL4Or50kcxpmIdZ1KqB3PyS7SZnZ5238WpoGRK9qGojFRfE
- Wr6Cnn15NK7g==
+	by ml01.01.org (Postfix) with ESMTPS id B2C94100EF265
+	for <devel@acpica.org>; Thu,  1 Apr 2021 17:33:23 -0700 (PDT)
+IronPort-SDR: OnvMtzfBvbJl07aWTr39GtAfKMf75CQ9nPpkQkQYrpZoMwEY3XzxMXmtmstIg5Y2fPNACirJiS
+ bQWF5deBScsg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9941"; a="171776825"
+X-IronPort-AV: E=Sophos;i="5.81,298,1610438400";
+   d="scan'208";a="171776825"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Apr 2021 17:33:23 -0700
+IronPort-SDR: bBCSzCcJM3pHGlGAiPHV58G8GSwJLLzko45xOWEVI05LohvedQwnP2GDRqq0zdODNC1VIT7l1z
+ 2SIiVpGviRUQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.81,296,1610438400";
-   d="scan'208";a="419361306"
-Received: from fmsmsx604.amr.corp.intel.com ([10.18.126.84])
-  by orsmga008.jf.intel.com with ESMTP; 01 Apr 2021 13:56:35 -0700
-Received: from fmsmsx609.amr.corp.intel.com (10.18.126.89) by
- fmsmsx604.amr.corp.intel.com (10.18.126.84) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2106.2; Thu, 1 Apr 2021 13:56:35 -0700
-Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
- fmsmsx609.amr.corp.intel.com (10.18.126.89) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2106.2
- via Frontend Transport; Thu, 1 Apr 2021 13:56:35 -0700
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (104.47.70.102)
- by edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2106.2; Thu, 1 Apr 2021 13:56:34 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=eQ/tL5o8bTSvsPkkQkKtmSfvfci1tYDadPLPF3PBxOOVQOODeRSsLkxGOqoxT3dQYOMp43yBWkJhV8R6dFAXftWqBEhWMnq9zEuutCUve7gMZPsnk2bM4hTjKwyoToKUuTxOxfGdP1UjQs07ZCy7/XWmE22Fd7sdtwTLvOh7ejwb6AuXfz5Na3TJ8sTVP0lhN9XHAETDg6abvnbNtxMoxOG9DQ0bMtjOpJ1/09GqSak4b4GTYEwPIMyorE5cpRFz7mQpiaalSNCbpbpsG02PTPWkexooTOz+YSvc1Jl96HRaofBKqnSAP9hiuWRAj8Hu5piOTKXRwJkPs83jzkngfw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xyi0xbbzEk3E7aD3Y7CCveexZmipzdksoERN5RFzsR0=;
- b=isQjGbu7Xc3wEh79k7oR0Tek3rWEJorbcMh0Wg5FcXMU4x0IA1gKjykznz1Ew/Toc9C5mDnddZa8jlddUqy1i9tJLUlbNzdNQtDqD2jO6ivx2xcH6JJskaCMuh+SJDrVbq4Im100JWvQaIWX7CfbG5aMAoYds3YnNxJ8R+31VoHqq7DvGNuUBBueb19vJYcBaY6/bkgx3R0xX832yq3Pfc0gh4Or6q5vwZT5nxhH2nbfoRJPEWt0bf8Td/2MAQVIQrRrUSeeysSKA+LOp57C+4Y+tA56DbrVX2+4V5sLPsf0M8Fi3yEpf3T6Fi+p6KLHLuF43/VJDgVAE9jhCGEinQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
- s=selector2-intel-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xyi0xbbzEk3E7aD3Y7CCveexZmipzdksoERN5RFzsR0=;
- b=Juf4IB2dKFiyuUk764w8GfaMtfnd/MvTz9wra+ynbEbbLvHpj1sgHTedxBjthHemH+yo+WLYjDhWPSbWPSr5yeUX4b3V8m7YME4HDz11L7eqdmuwhaaKUi8kzhC5LI3Q/go1uAKLpqugENu5DASiUhj4hcCVC9xkqr7rolAxbxY=
-Received: from BYAPR11MB3256.namprd11.prod.outlook.com (2603:10b6:a03:76::19)
- by BY5PR11MB3910.namprd11.prod.outlook.com (2603:10b6:a03:185::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3999.27; Thu, 1 Apr
- 2021 20:56:32 +0000
-Received: from BYAPR11MB3256.namprd11.prod.outlook.com
- ([fe80::41e6:b61:67ef:2712]) by BYAPR11MB3256.namprd11.prod.outlook.com
- ([fe80::41e6:b61:67ef:2712%5]) with mapi id 15.20.3977.033; Thu, 1 Apr 2021
- 20:56:32 +0000
-From: "Moore, Robert" <robert.moore@intel.com>
-To: Jianmin Lv <lvjianmin@loongson.cn>, "Kaneda, Erik"
-	<erik.kaneda@intel.com>, "Wysocki, Rafael J" <rafael.j.wysocki@intel.com>,
-	Len Brown <lenb@kernel.org>
-Thread-Topic: [PATCH] ACPICA: Events: support fixed pcie wake event
-Thread-Index: AQHXJu9jxEF7iGMf1Ea4RLAMgiSl4qqgJNvg
-Date: Thu, 1 Apr 2021 20:56:32 +0000
-Message-ID: <BYAPR11MB3256C7F3C17D14C1DF544430877B9@BYAPR11MB3256.namprd11.prod.outlook.com>
-References: <1617278736-7400-1-git-send-email-lvjianmin@loongson.cn>
-In-Reply-To: <1617278736-7400-1-git-send-email-lvjianmin@loongson.cn>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-dlp-version: 11.5.1.3
-dlp-product: dlpe-windows
-dlp-reaction: no-action
-authentication-results: loongson.cn; dkim=none (message not signed)
- header.d=none;loongson.cn; dmarc=none action=none header.from=intel.com;
-x-originating-ip: [134.134.136.194]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 76556335-91db-4e16-9dfc-08d8f550a11f
-x-ms-traffictypediagnostic: BY5PR11MB3910:
-x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <BY5PR11MB391074CFD7431124DFAF371C877B9@BY5PR11MB3910.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:6108;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 9VSKmVPKZ4VRHVHwWblbKB+23WNWUfxzz0qfoJBxzBtsQAc0U4S6ruUo5kypXRrqrdF7Nv/YIw1DLgaTlNh8CW+9iwhSKAt26p0QMuCJymIQ07fpiiBo3MzGlrkgWotiOAMNSsOAw9hSrJpZcDhdZB9JFZ8PEJ/6QuEGc8Z0BJ+P+2fcsfQR/t+lshFVxrP/+n6yCjjIN+dMiRehgkbFXwV34HbSuGXyTfDhVcCeSVwbmuaj86xwXRPC6wt8FsucOek0A548uCi7//Z8thWuVke3+kDjfkMf8+f+3Cbgcvdofhy3ApzYdfe3HXc7lkmDcKpWecbJfzmqcB4qcpoorcNK1re7dP07GTmkNmYlPHk8ok7B+0BXVMpj7lvSMLAbGNDiPfFHVpBZwBHFqQWbWyVyYAWAPb8lvmdS9AjMpoqCEwX8CAjXp/j5lyngC/YKQlj85Gc4zQfSJlRh67rHjDjBDueuugTFUsaZdgM02MugeaYxUqaMU2vSBlQ0g8IsQaA3tFmRKtU8BfwudVL7eS4hDCeoGDz2ZpFAVO1RrFw6e6ytpEDLXJX/3EbbbsLcT0M8DshlHzz3UDc+VjoqRC5fhVJqFNR3NGXgKZ3jba9PTnxIJEWYw2yavk49TveEZaxBDXx/AREdJJ0zuyT/xNhR5BzKhtPdBKvpeLOeV7Y=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(366004)(39860400002)(396003)(346002)(136003)(376002)(66446008)(66556008)(64756008)(26005)(8936002)(53546011)(66946007)(4326008)(2906002)(71200400001)(186003)(55016002)(9686003)(38100700001)(5660300002)(6506007)(66476007)(478600001)(7696005)(110136005)(8676002)(54906003)(52536014)(76116006)(33656002)(86362001)(83380400001)(316002);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata: =?us-ascii?Q?pbEUt54ZQFtTROM9j/UdIp+8VvXS7Q6ZV9FfQWARG6We8DYn/zkgFDy3gHLZ?=
- =?us-ascii?Q?vb9f3FvY8TWebEtQhv8/FOE+6iE40lbw/M1fJqzou5glvHTQ8Wi/W64hXXij?=
- =?us-ascii?Q?ROEoGt1gbZoppZPjbLosilIWt4z6Av2OD+igrqEm918Z/bLSvP8HLjKIqQ55?=
- =?us-ascii?Q?FepxkqmeLlbUe52SxOSAC6ExJn5U9THxOTGOBRt0cZPoLv2KKKGaX+iMFCbt?=
- =?us-ascii?Q?4r97qhlW6/2+at3cAHAfKCUqn/UYADWm2Y8omWyvKKfVPfYRbU/kIPzXyLTF?=
- =?us-ascii?Q?gYWmjW61ltE2ncZT0pZa8M7Tv0T/WQOJche6JXTDMzDdU6MekBYW4uFW5I/n?=
- =?us-ascii?Q?VWJgf++IoYTzSgvuKeO3bfaJUdqYFAjF6DVAFAqj6EyV32X2RFGwIzgK+W/l?=
- =?us-ascii?Q?nUZXqq6W6G3KyoDoBx/ivqzCji1KemzeXzrDd2xk4SDtl7K4K+siFw/ZEJIU?=
- =?us-ascii?Q?R8EQ+YtWtQNRzy72YnOkuOewJvG4Fs6fw59P0hdeTJb9DVX0PifOqClZiLPC?=
- =?us-ascii?Q?cIfWpc7yzFJ9X+XY31+4YHlzb3o8vcavW76LlXbbkc2xjgY+LpoTNH4T8x28?=
- =?us-ascii?Q?C7QSW/36O7kaDo0VKhlu/mkn9F71Ff6K0JAsBSISuLspBPpgskE34HWXNUuj?=
- =?us-ascii?Q?325jluuuC0OssjdsSbxsqfuTtd7+cB88t+2K4PD0DHrisXIZOswySLgbn7TE?=
- =?us-ascii?Q?SJDtxYjcII6fnz6OlQaQgJz9PzgasOEsjwhOpDty/ai114M628Butlhir9jo?=
- =?us-ascii?Q?Kmv4vBKbDaUchw4uzvXsh/kcOltWuISbJOFYWKYF2EkuW1Smcqn8q9S/OYsO?=
- =?us-ascii?Q?j+4p9N3hxw9p31JXsWIskZ0WD48ZOOcX/9kaWlh2+7lOFImfLe2meZ86WWsb?=
- =?us-ascii?Q?cLRs15bIxvulIOetMO1hpPW9dV4Z62wb2zF+VIcMVrnbGnCfkiGHS9FH6IrM?=
- =?us-ascii?Q?iYAeRMKdpf36wXRBoDgZfqygkdVOSTsQylkQYemfCbYX7kow/kQWIuXKSNO3?=
- =?us-ascii?Q?SJ/b9vb12VaCjzOu4Zp3v7rcfUitSZPxJbq2JfELXKrMJ3BLxuYDgreg2oum?=
- =?us-ascii?Q?sWcjAKqwyiXmU3cUR6Yck3zY2VDHPvqU+YzyqM6wOi4T2AA7Y9KFQR8p38Ag?=
- =?us-ascii?Q?axM35hVFljk5seujku0GxVyec2wAUl+i7SVfyN0tONlpxrY6OMOtCWv08s8a?=
- =?us-ascii?Q?XyRGMNwkdS0QNwfTXgJn8oiMBa8/P0X79EzxH7FKpL2Tvt56pFoR7//Gks4w?=
- =?us-ascii?Q?8g+HiaMTZ7TPiCcC35H2ev1vW+/KlCK+ITOuiKPl7VzK3pl1AwsrIs9G8DaZ?=
- =?us-ascii?Q?j6iXYDJEKO5WdKi90uj6okea?=
-Content-Type: text/plain; charset="us-ascii"
+X-IronPort-AV: E=Sophos;i="5.81,298,1610438400";
+   d="scan'208";a="412942651"
+Received: from lkp-server01.sh.intel.com (HELO 69d8fcc516b7) ([10.239.97.150])
+  by fmsmga008.fm.intel.com with ESMTP; 01 Apr 2021 17:33:21 -0700
+Received: from kbuild by 69d8fcc516b7 with local (Exim 4.92)
+	(envelope-from <lkp@intel.com>)
+	id 1lS7kW-0006mz-Kv; Fri, 02 Apr 2021 00:33:20 +0000
+Date: Fri, 02 Apr 2021 08:32:21 +0800
+From: kernel test robot <lkp@intel.com>
+To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Message-ID: <60666615.oPGdrOaZwSnTidEZ%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3256.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 76556335-91db-4e16-9dfc-08d8f550a11f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Apr 2021 20:56:32.1148
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: HQgT7mpRanI/RtFeFrXtbpG3uMp7ujI1DoLjwhIh9OhHYTZcIDa1Y1Fg1upzQKksL/NnLNA6atGs7FKiHiyDzw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR11MB3910
-X-OriginatorOrg: intel.com
-Message-ID-Hash: 6L5Z4V2LEJI2RCNWI4KE5F2BP6IYWML7
-X-Message-ID-Hash: 6L5Z4V2LEJI2RCNWI4KE5F2BP6IYWML7
-X-MailFrom: robert.moore@intel.com
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
-CC: "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>, "devel@acpica.org" <devel@acpica.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Message-ID-Hash: TKIOUM6HUCSIMNSIMSVMVMWFLLP55JWU
+X-Message-ID-Hash: TKIOUM6HUCSIMNSIMSVMVMWFLLP55JWU
+X-MailFrom: lkp@intel.com
+X-Mailman-Rule-Hits: nonmember-moderation
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
+CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH] ACPICA: Events: support fixed pcie wake event
+Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS 85f34ae663986081df77a1df26e08fd1978573a3
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/6L5Z4V2LEJI2RCNWI4KE5F2BP6IYWML7/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/TKIOUM6HUCSIMNSIMSVMVMWFLLP55JWU/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-Can you send/point us to the spec that this change is based upon?
-Thanks,
-Bob
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
+branch HEAD: 85f34ae663986081df77a1df26e08fd1978573a3  Merge branches 'acpi-scan' and 'acpi-processor-fixes' into linux-next
 
+elapsed time: 721m
 
------Original Message-----
-From: Jianmin Lv <lvjianmin@loongson.cn> 
-Sent: Thursday, April 01, 2021 5:06 AM
-To: Moore, Robert <robert.moore@intel.com>; Kaneda, Erik <erik.kaneda@intel.com>; Wysocki, Rafael J <rafael.j.wysocki@intel.com>; Len Brown <lenb@kernel.org>
-Cc: linux-acpi@vger.kernel.org; devel@acpica.org; linux-kernel@vger.kernel.org; lvjianmin <lvjianmin@loongson.cn>
-Subject: [PATCH] ACPICA: Events: support fixed pcie wake event
+configs tested: 218
+configs skipped: 2
 
-From: lvjianmin <lvjianmin@loongson.cn>
+The following configs have been built successfully.
+More configs may be tested in the coming days.
 
-Some chipsets support fixed pcie wake event which is defined in the PM1 block, such as LS7A1000 of Loongson company, so we add code to handle it.
+gcc tested configs:
+arm                                 defconfig
+arm64                            allyesconfig
+arm64                               defconfig
+arm                              allyesconfig
+arm                              allmodconfig
+x86_64                           allyesconfig
+riscv                            allmodconfig
+i386                             allyesconfig
+riscv                            allyesconfig
+sh                          rsk7203_defconfig
+arc                    vdk_hs38_smp_defconfig
+s390                             allmodconfig
+arm                           h5000_defconfig
+m68k                         amcore_defconfig
+arm                       spear13xx_defconfig
+arm                           viper_defconfig
+um                            kunit_defconfig
+xtensa                  cadence_csp_defconfig
+xtensa                generic_kc705_defconfig
+sh                            titan_defconfig
+arm                      footbridge_defconfig
+arm                             ezx_defconfig
+arm                        trizeps4_defconfig
+alpha                            alldefconfig
+arm                           sama5_defconfig
+sh                         apsh4a3a_defconfig
+arm                           omap1_defconfig
+m68k                            q40_defconfig
+arm                       netwinder_defconfig
+powerpc                       ppc64_defconfig
+xtensa                       common_defconfig
+mips                 decstation_r4k_defconfig
+powerpc                   bluestone_defconfig
+sh                          rsk7264_defconfig
+powerpc                      ppc64e_defconfig
+mips                         tb0226_defconfig
+powerpc                     tqm8548_defconfig
+sh                           se7619_defconfig
+m68k                             alldefconfig
+powerpc                 mpc8560_ads_defconfig
+sh                          r7785rp_defconfig
+xtensa                  audio_kc705_defconfig
+arm                        vexpress_defconfig
+mips                     cu1830-neo_defconfig
+mips                     cu1000-neo_defconfig
+mips                      pistachio_defconfig
+powerpc                 mpc836x_mds_defconfig
+mips                             allmodconfig
+riscv                          rv32_defconfig
+mips                malta_kvm_guest_defconfig
+sh                        edosk7760_defconfig
+sh                  sh7785lcr_32bit_defconfig
+powerpc                     redwood_defconfig
+parisc                generic-32bit_defconfig
+mips                            gpr_defconfig
+powerpc                     tqm8540_defconfig
+sh                     magicpanelr2_defconfig
+arm                       omap2plus_defconfig
+arm                        spear6xx_defconfig
+arm                          pcm027_defconfig
+arm                        oxnas_v6_defconfig
+m68k                         apollo_defconfig
+arc                           tb10x_defconfig
+arm                            dove_defconfig
+arm                        multi_v7_defconfig
+powerpc                  mpc866_ads_defconfig
+powerpc               mpc834x_itxgp_defconfig
+m68k                          atari_defconfig
+x86_64                           alldefconfig
+arm                          exynos_defconfig
+mips                        nlm_xlp_defconfig
+arm                         shannon_defconfig
+powerpc                      acadia_defconfig
+powerpc                     mpc512x_defconfig
+sh                   rts7751r2dplus_defconfig
+arm                             pxa_defconfig
+mips                        workpad_defconfig
+nios2                         10m50_defconfig
+arm                          iop32x_defconfig
+ia64                             alldefconfig
+sh                          r7780mp_defconfig
+m68k                          sun3x_defconfig
+ia64                         bigsur_defconfig
+h8300                            alldefconfig
+arm                         nhk8815_defconfig
+m68k                          hp300_defconfig
+powerpc                 mpc8540_ads_defconfig
+m68k                        mvme16x_defconfig
+arc                        nsim_700_defconfig
+arm                         lpc32xx_defconfig
+powerpc                     tqm8560_defconfig
+sh                          landisk_defconfig
+arm                      integrator_defconfig
+powerpc                 mpc836x_rdk_defconfig
+sh                                  defconfig
+arm                           corgi_defconfig
+arm                            pleb_defconfig
+mips                          malta_defconfig
+arm                        magician_defconfig
+ia64                      gensparse_defconfig
+arm                         cm_x300_defconfig
+sh                   sh7724_generic_defconfig
+powerpc                   lite5200b_defconfig
+arm                          imote2_defconfig
+arm                     eseries_pxa_defconfig
+arm                     am200epdkit_defconfig
+h8300                    h8300h-sim_defconfig
+sh                          lboxre2_defconfig
+powerpc                    ge_imp3a_defconfig
+sh                         ap325rxa_defconfig
+powerpc                     ep8248e_defconfig
+arm                         orion5x_defconfig
+mips                        qi_lb60_defconfig
+mips                       rbtx49xx_defconfig
+arm                           tegra_defconfig
+powerpc                       maple_defconfig
+powerpc                     rainier_defconfig
+sh                        dreamcast_defconfig
+mips                            e55_defconfig
+mips                        vocore2_defconfig
+powerpc                 mpc8315_rdb_defconfig
+riscv                               defconfig
+s390                                defconfig
+arm                         socfpga_defconfig
+powerpc                 linkstation_defconfig
+m68k                           sun3_defconfig
+ia64                            zx1_defconfig
+powerpc                       eiger_defconfig
+arm                          ixp4xx_defconfig
+arm                       cns3420vb_defconfig
+m68k                        mvme147_defconfig
+arm                              alldefconfig
+mips                         tb0219_defconfig
+mips                malta_qemu_32r6_defconfig
+m68k                       m5208evb_defconfig
+mips                       capcella_defconfig
+powerpc                 mpc837x_rdb_defconfig
+sh                           se7751_defconfig
+sh                             sh03_defconfig
+riscv             nommu_k210_sdcard_defconfig
+sh                            shmin_defconfig
+arm                          lpd270_defconfig
+sh                           se7750_defconfig
+riscv                    nommu_k210_defconfig
+arm                         lpc18xx_defconfig
+arm                          moxart_defconfig
+s390                             allyesconfig
+sh                              ul2_defconfig
+powerpc64                        alldefconfig
+arc                        nsimosci_defconfig
+ia64                             allmodconfig
+ia64                                defconfig
+ia64                             allyesconfig
+m68k                             allmodconfig
+m68k                                defconfig
+m68k                             allyesconfig
+nios2                               defconfig
+arc                              allyesconfig
+nds32                             allnoconfig
+nds32                               defconfig
+nios2                            allyesconfig
+csky                                defconfig
+alpha                               defconfig
+alpha                            allyesconfig
+xtensa                           allyesconfig
+h8300                            allyesconfig
+arc                                 defconfig
+sh                               allmodconfig
+parisc                              defconfig
+parisc                           allyesconfig
+sparc                            allyesconfig
+sparc                               defconfig
+i386                                defconfig
+mips                             allyesconfig
+powerpc                          allyesconfig
+powerpc                          allmodconfig
+powerpc                           allnoconfig
+i386                 randconfig-a006-20210401
+i386                 randconfig-a003-20210401
+i386                 randconfig-a001-20210401
+i386                 randconfig-a004-20210401
+i386                 randconfig-a002-20210401
+i386                 randconfig-a005-20210401
+i386                 randconfig-a006-20210402
+i386                 randconfig-a003-20210402
+i386                 randconfig-a001-20210402
+i386                 randconfig-a004-20210402
+i386                 randconfig-a005-20210402
+i386                 randconfig-a002-20210402
+x86_64               randconfig-a014-20210401
+x86_64               randconfig-a015-20210401
+x86_64               randconfig-a011-20210401
+x86_64               randconfig-a013-20210401
+x86_64               randconfig-a012-20210401
+x86_64               randconfig-a016-20210401
+i386                 randconfig-a014-20210401
+i386                 randconfig-a011-20210401
+i386                 randconfig-a016-20210401
+i386                 randconfig-a012-20210401
+i386                 randconfig-a013-20210401
+i386                 randconfig-a015-20210401
+riscv                    nommu_virt_defconfig
+riscv                             allnoconfig
+um                               allmodconfig
+um                                allnoconfig
+um                               allyesconfig
+um                                  defconfig
+x86_64                    rhel-8.3-kselftests
+x86_64                              defconfig
+x86_64                               rhel-8.3
+x86_64                      rhel-8.3-kbuiltin
+x86_64                                  kexec
 
-Signed-off-by: lvjianmin <lvjianmin@loongson.cn>
+clang tested configs:
+x86_64               randconfig-a004-20210401
+x86_64               randconfig-a005-20210401
+x86_64               randconfig-a003-20210401
+x86_64               randconfig-a001-20210401
+x86_64               randconfig-a002-20210401
+x86_64               randconfig-a006-20210401
 
-diff --git a/drivers/acpi/acpica/evevent.c b/drivers/acpi/acpica/evevent.c index 35385148fedb..08ba368beb2d 100644
---- a/drivers/acpi/acpica/evevent.c
-+++ b/drivers/acpi/acpica/evevent.c
-@@ -185,6 +185,10 @@ u32 acpi_ev_fixed_event_detect(void)
- 		return (int_status);
- 	}
- 
-+	if (fixed_enable & ACPI_BITMASK_PCIEXP_WAKE_DISABLE)
-+		fixed_enable &= ~ACPI_BITMASK_PCIEXP_WAKE_DISABLE;
-+	else
-+		fixed_enable |= ACPI_BITMASK_PCIEXP_WAKE_DISABLE;
- 	ACPI_DEBUG_PRINT((ACPI_DB_INTERRUPTS,
- 			  "Fixed Event Block: Enable %08X Status %08X\n",
- 			  fixed_enable, fixed_status));
-@@ -250,8 +254,8 @@ static u32 acpi_ev_fixed_event_dispatch(u32 event)
- 	if (!acpi_gbl_fixed_event_handlers[event].handler) {
- 		(void)acpi_write_bit_register(acpi_gbl_fixed_event_info[event].
- 					      enable_register_id,
--					      ACPI_DISABLE_EVENT);
--
-+						event == ACPI_EVENT_PCIE_WAKE ?
-+						ACPI_ENABLE_EVENT : ACPI_DISABLE_EVENT);
- 		ACPI_ERROR((AE_INFO,
- 			    "No installed handler for fixed event - %s (%u), disabling",
- 			    acpi_ut_get_event_name(event), event)); diff --git a/drivers/acpi/acpica/hwsleep.c b/drivers/acpi/acpica/hwsleep.c index 14baa13bf848..7e7ea4c2e914 100644
---- a/drivers/acpi/acpica/hwsleep.c
-+++ b/drivers/acpi/acpica/hwsleep.c
-@@ -312,6 +312,18 @@ acpi_status acpi_hw_legacy_wake(u8 sleep_state)
- 				    [ACPI_EVENT_SLEEP_BUTTON].
- 				    status_register_id, ACPI_CLEAR_STATUS);
- 
-+	/* Enable pcie wake event if support */
-+	if ((acpi_gbl_FADT.flags & ACPI_FADT_PCI_EXPRESS_WAKE)) {
-+		(void)
-+		acpi_write_bit_register(acpi_gbl_fixed_event_info
-+				[ACPI_EVENT_PCIE_WAKE].
-+				enable_register_id, ACPI_DISABLE_EVENT);
-+		(void)
-+		acpi_write_bit_register(acpi_gbl_fixed_event_info
-+				[ACPI_EVENT_PCIE_WAKE].
-+				status_register_id, ACPI_CLEAR_STATUS);
-+	}
-+
- 	acpi_hw_execute_sleep_method(METHOD_PATHNAME__SST, ACPI_SST_WORKING);
- 	return_ACPI_STATUS(status);
- }
-diff --git a/drivers/acpi/acpica/utglobal.c b/drivers/acpi/acpica/utglobal.c index 59a48371a7bc..68baf16d8a02 100644
---- a/drivers/acpi/acpica/utglobal.c
-+++ b/drivers/acpi/acpica/utglobal.c
-@@ -186,6 +186,10 @@ struct acpi_fixed_event_info acpi_gbl_fixed_event_info[ACPI_NUM_FIXED_EVENTS] =
- 					ACPI_BITREG_RT_CLOCK_ENABLE,
- 					ACPI_BITMASK_RT_CLOCK_STATUS,
- 					ACPI_BITMASK_RT_CLOCK_ENABLE},
-+	/* ACPI_EVENT_PCIE_WAKE		*/ {ACPI_BITREG_PCIEXP_WAKE_STATUS,
-+					ACPI_BITREG_PCIEXP_WAKE_DISABLE,
-+					ACPI_BITMASK_PCIEXP_WAKE_STATUS,
-+					ACPI_BITMASK_PCIEXP_WAKE_DISABLE},
- };
- #endif				/* !ACPI_REDUCED_HARDWARE */
- 
-diff --git a/include/acpi/actypes.h b/include/acpi/actypes.h index 92c71dfce0d5..0b6c72033487 100644
---- a/include/acpi/actypes.h
-+++ b/include/acpi/actypes.h
-@@ -714,7 +714,8 @@ typedef u32 acpi_event_type;
- #define ACPI_EVENT_POWER_BUTTON         2
- #define ACPI_EVENT_SLEEP_BUTTON         3
- #define ACPI_EVENT_RTC                  4
--#define ACPI_EVENT_MAX                  4
-+#define ACPI_EVENT_PCIE_WAKE            5
-+#define ACPI_EVENT_MAX                  5
- #define ACPI_NUM_FIXED_EVENTS           ACPI_EVENT_MAX + 1
- 
- /*
---
-2.27.0
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
