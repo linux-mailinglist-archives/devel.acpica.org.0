@@ -2,51 +2,55 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id DEDFF368A8B
-	for <lists+devel-acpica@lfdr.de>; Fri, 23 Apr 2021 03:55:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 71A7E369233
+	for <lists+devel-acpica@lfdr.de>; Fri, 23 Apr 2021 14:34:10 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 3DD94100EBBD7;
-	Thu, 22 Apr 2021 18:55:53 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.24; helo=mga09.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	by ml01.01.org (Postfix) with ESMTP id A3E50100EAB5E;
+	Fri, 23 Apr 2021 05:34:08 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.221.49; helo=mail-wr1-f49.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 64571100EBBCB
-	for <devel@acpica.org>; Thu, 22 Apr 2021 18:55:51 -0700 (PDT)
-IronPort-SDR: hV47x6/Cvjp4M425ati0PROtqkR9AFncWycHralxV7OrUM6Rw2YTbV7u7PcW+jo26HIW7FRTTl
- mVjkxIyelVwA==
-X-IronPort-AV: E=McAfee;i="6200,9189,9962"; a="196114997"
-X-IronPort-AV: E=Sophos;i="5.82,241,1613462400";
-   d="scan'208";a="196114997"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Apr 2021 18:55:50 -0700
-IronPort-SDR: 1U74NBZ4Qs6fnYuQz9QjZJS44FrL0tGp8De7xs3R6A+GPS73SHioUJ/5MoFK5vlLMnWsROT2v2
- jHRxnRFVqiSg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.82,244,1613462400";
-   d="scan'208";a="453442702"
-Received: from lkp-server01.sh.intel.com (HELO a48ff7ddd223) ([10.239.97.150])
-  by FMSMGA003.fm.intel.com with ESMTP; 22 Apr 2021 18:55:49 -0700
-Received: from kbuild by a48ff7ddd223 with local (Exim 4.92)
-	(envelope-from <lkp@intel.com>)
-	id 1lZl2q-0004Si-Ii; Fri, 23 Apr 2021 01:55:48 +0000
-Date: Fri, 23 Apr 2021 09:55:24 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <6082290c.8tE3XiqQkHFyfVke%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTPS id 1DC39100EF25B
+	for <devel@acpica.org>; Fri, 23 Apr 2021 05:34:05 -0700 (PDT)
+Received: by mail-wr1-f49.google.com with SMTP id c4so9338398wrt.8
+        for <devel@acpica.org>; Fri, 23 Apr 2021 05:34:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CnDAq/wf30SK+v97SSEfI5TLrb0FjfVhYtu1LvUj2FE=;
+        b=MVIpY8KfYhYlqaxg2o/64hW5a6SKmtcTs6scqwLCe1hImFnu3/twSZWivKPObnGeXT
+         p9s4WKSAPQpyYcTbKCXaeZSsrQJQTYVI3EVdniq1VNs0ZDxXz3RRtKEfse13tJLyY8GC
+         F1os1VMy3ZxGBGMYe8gX523/iLyx09u9UP9/J8cn3LTTB+5yfckg+mAZtCbnpzHQncO2
+         hsXsar2AbnBgfv0ARmpbOwVcSjntUfXqsRTq47W8r92Z1rC1u6I2sj8/bg4Hx7QCz705
+         ryYeNV4DyLaTCHa/0B9AKwU7xLIkV4gOalTR+NeXaTPjCYfbHF99l6LbLmdvC/TDsHhp
+         Mo5A==
+X-Gm-Message-State: AOAM532RWtdpff6Q3yaFJ/vV2CWRftmjduG6Jzg36xvaWxbFGJ7/fKDp
+	Wai1CGr1ZI25vmkOKyC749EkGeoNiFhFNPkfEIk=
+X-Google-Smtp-Source: ABdhPJwUJTJmvjUsLOs2czySsDSbXe3xbOjXToTSowi772RhmQrLzizFciArf9giECNlBWi3zp1t0vSsxQZjJSzMDJ4=
+X-Received: by 2002:adf:9d81:: with SMTP id p1mr4606469wre.247.1619181244219;
+ Fri, 23 Apr 2021 05:34:04 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID-Hash: ACL6UR4C5U2TZSXPMN7ASO22YECDGHZ7
-X-Message-ID-Hash: ACL6UR4C5U2TZSXPMN7ASO22YECDGHZ7
-X-MailFrom: lkp@intel.com
+References: <20210422214708.716164-1-sathyanarayanan.kuppuswamy@linux.intel.com>
+ <20210422214708.716164-2-sathyanarayanan.kuppuswamy@linux.intel.com>
+In-Reply-To: <20210422214708.716164-2-sathyanarayanan.kuppuswamy@linux.intel.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Fri, 23 Apr 2021 14:33:53 +0200
+Message-ID: <CAJZ5v0itaKL58ieMB6ER47GVns7Ukvd_7VNBAxkktWB5cDv-SQ@mail.gmail.com>
+To: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Erik Kaneda <erik.kaneda@intel.com>
+Message-ID-Hash: ZY6FNCK7TN54GSNGJYNYV756K6SC63YY
+X-Message-ID-Hash: ZY6FNCK7TN54GSNGJYNYV756K6SC63YY
+X-MailFrom: rjwysocki@gmail.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+CC: Rafael J Wysocki <rjw@rjwysocki.net>, Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, "H . Peter Anvin" <hpa@zytor.com>, Peter Zijlstra <peterz@infradead.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, the arch/x86 maintainers <x86@kernel.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS 07ca763aa24938bc9d16edae9174df3edfe20ef0
+Subject: [Devel] Re: [PATCH v2 1/3] ACPICA: ACPI 6.4: MADT: add Multiprocessor Wakeup Mailbox Structure
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/ACL6UR4C5U2TZSXPMN7ASO22YECDGHZ7/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/ZY6FNCK7TN54GSNGJYNYV756K6SC63YY/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -55,120 +59,52 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-branch HEAD: 07ca763aa24938bc9d16edae9174df3edfe20ef0  Merge branch 'pm-sleep' into bleeding-edge
+On Thu, Apr 22, 2021 at 11:47 PM Kuppuswamy Sathyanarayanan
+<sathyanarayanan.kuppuswamy@linux.intel.com> wrote:
+>
+> ACPICA commit f1ee04207a212f6c519441e7e25397649ebc4cea
+>
+> Add Multiprocessor Wakeup Mailbox Structure definition. It is useful
+> in parsing MADT Wake table.
+>
+> Link: https://github.com/acpica/acpica/commit/f1ee0420
+> Signed-off-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
 
-elapsed time: 724m
+I'm expecting to receive this patch from Erik at one point, so I'm
+guessing that it's been added to this series for reference.
 
-configs tested: 96
-configs skipped: 2
-
-The following configs have been built successfully.
-More configs may be tested in the coming days.
-
-gcc tested configs:
-arm                                 defconfig
-arm64                            allyesconfig
-arm64                               defconfig
-arm                              allyesconfig
-arm                              allmodconfig
-x86_64                           allyesconfig
-riscv                            allmodconfig
-i386                             allyesconfig
-riscv                            allyesconfig
-arm                      footbridge_defconfig
-h8300                    h8300h-sim_defconfig
-xtensa                              defconfig
-powerpc                  iss476-smp_defconfig
-powerpc                       maple_defconfig
-arm                       aspeed_g5_defconfig
-m68k                       m5275evb_defconfig
-xtensa                  audio_kc705_defconfig
-arc                     nsimosci_hs_defconfig
-sh                          kfr2r09_defconfig
-sh                        sh7763rdp_defconfig
-csky                             alldefconfig
-powerpc                     kmeter1_defconfig
-powerpc                         ps3_defconfig
-mips                            ar7_defconfig
-arm                           stm32_defconfig
-s390                             alldefconfig
-ia64                         bigsur_defconfig
-ia64                             allmodconfig
-ia64                                defconfig
-ia64                             allyesconfig
-m68k                             allmodconfig
-m68k                                defconfig
-m68k                             allyesconfig
-nds32                               defconfig
-nios2                            allyesconfig
-csky                                defconfig
-alpha                               defconfig
-alpha                            allyesconfig
-nios2                               defconfig
-arc                              allyesconfig
-nds32                             allnoconfig
-xtensa                           allyesconfig
-h8300                            allyesconfig
-arc                                 defconfig
-sh                               allmodconfig
-parisc                              defconfig
-s390                             allyesconfig
-s390                             allmodconfig
-parisc                           allyesconfig
-s390                                defconfig
-sparc                            allyesconfig
-sparc                               defconfig
-i386                                defconfig
-mips                             allyesconfig
-mips                             allmodconfig
-powerpc                          allyesconfig
-powerpc                          allmodconfig
-powerpc                           allnoconfig
-x86_64               randconfig-a004-20210421
-x86_64               randconfig-a002-20210421
-x86_64               randconfig-a001-20210421
-x86_64               randconfig-a005-20210421
-x86_64               randconfig-a006-20210421
-x86_64               randconfig-a003-20210421
-i386                 randconfig-a005-20210421
-i386                 randconfig-a002-20210421
-i386                 randconfig-a001-20210421
-i386                 randconfig-a006-20210421
-i386                 randconfig-a004-20210421
-i386                 randconfig-a003-20210421
-i386                 randconfig-a012-20210421
-i386                 randconfig-a014-20210421
-i386                 randconfig-a011-20210421
-i386                 randconfig-a013-20210421
-i386                 randconfig-a015-20210421
-i386                 randconfig-a016-20210421
-riscv                    nommu_k210_defconfig
-riscv                    nommu_virt_defconfig
-riscv                             allnoconfig
-riscv                               defconfig
-riscv                          rv32_defconfig
-um                               allmodconfig
-um                                allnoconfig
-um                               allyesconfig
-um                                  defconfig
-x86_64                    rhel-8.3-kselftests
-x86_64                              defconfig
-x86_64                               rhel-8.3
-x86_64                      rhel-8.3-kbuiltin
-x86_64                                  kexec
-
-clang tested configs:
-x86_64               randconfig-a015-20210421
-x86_64               randconfig-a016-20210421
-x86_64               randconfig-a011-20210421
-x86_64               randconfig-a014-20210421
-x86_64               randconfig-a013-20210421
-x86_64               randconfig-a012-20210421
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+> ---
+>  include/acpi/actbl2.h | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
+>
+> diff --git a/include/acpi/actbl2.h b/include/acpi/actbl2.h
+> index b2362600b9ff..7dce422f6119 100644
+> --- a/include/acpi/actbl2.h
+> +++ b/include/acpi/actbl2.h
+> @@ -733,6 +733,20 @@ struct acpi_madt_multiproc_wakeup {
+>         u64 base_address;
+>  };
+>
+> +#define ACPI_MULTIPROC_WAKEUP_MB_OS_SIZE       2032
+> +#define ACPI_MULTIPROC_WAKEUP_MB_FIRMWARE_SIZE 2048
+> +
+> +struct acpi_madt_multiproc_wakeup_mailbox {
+> +       u16 command;
+> +       u16 reserved;           /* reserved - must be zero */
+> +       u32 apic_id;
+> +       u64 wakeup_vector;
+> +       u8 reserved_os[ACPI_MULTIPROC_WAKEUP_MB_OS_SIZE];       /* reserved for OS use */
+> +       u8 reserved_firmware[ACPI_MULTIPROC_WAKEUP_MB_FIRMWARE_SIZE];   /* reserved for firmware use */
+> +};
+> +
+> +#define ACPI_MP_WAKE_COMMAND_WAKEUP    1
+> +
+>  /*
+>   * Common flags fields for MADT subtables
+>   */
+> --
+> 2.25.1
+>
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
