@@ -2,58 +2,52 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35D2037A4D8
-	for <lists+devel-acpica@lfdr.de>; Tue, 11 May 2021 12:45:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 698FC37F67C
+	for <lists+devel-acpica@lfdr.de>; Thu, 13 May 2021 13:11:25 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 5F45E100EC1D5;
-	Tue, 11 May 2021 03:45:31 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.167.175; helo=mail-oi1-f175.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	by ml01.01.org (Postfix) with ESMTP id CB1EB100EAB61;
+	Thu, 13 May 2021 04:11:22 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.20; helo=mga02.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 0DFF9100EC1C8
-	for <devel@acpica.org>; Tue, 11 May 2021 03:45:29 -0700 (PDT)
-Received: by mail-oi1-f175.google.com with SMTP id i81so18632048oif.6
-        for <devel@acpica.org>; Tue, 11 May 2021 03:45:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=G6u/v5pBgRg/r9/xunKJA/aeWT5HHENr+pYBgEABwaM=;
-        b=A2YuLV5g5g9wUQHiYXNtJcpgphThBW/cKFjIe4zWXVLvW2ZN++dItnVDjja6ysu9/R
-         wzInZxD4koUqxriVBKwgBHKxiT0je83Pz28PGlmoCUDT3wuHdLCyd4dF+zw/HtwmilFe
-         mM47i50hJaUQMfl+pU6EGkDoQrST5R2ok9jppm19m8S6ydQNWPFGXdFedYI3I0+m1GmD
-         7/Ys1G/+2eax0UKmT5qtzCxw+5c5PO6EzZuufnPfNHmYLyQDpqXQ/mFfThr1Xx4Fs7CB
-         wvLhPFuZprmGgUmocC+WAQ8T1R9RlgmDhouqNw8WjM3tC3Ct7a8Ph1yhrZSGmG6OM1fw
-         3B6w==
-X-Gm-Message-State: AOAM533RDsINRYJcJxAf8edT5KMQSk59W392Gy7bpwwgdOsglCQ1yaZu
-	dCFMez2A5X86/TapUA3v02FSWC8cG6GrliT5nWo=
-X-Google-Smtp-Source: ABdhPJwdZXJ1ob0LZQ7EGgUCIILvcrD+X3ZUrC0FuYdEvHrdhEo5dPSceGjRdF/CLveke651T/GDoEkrNARhJEq2tH8=
-X-Received: by 2002:a05:6808:90d:: with SMTP id w13mr6972892oih.71.1620729928220;
- Tue, 11 May 2021 03:45:28 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTPS id 680D4100EBBBD
+	for <devel@acpica.org>; Thu, 13 May 2021 04:11:20 -0700 (PDT)
+IronPort-SDR: LMidjb7whGbp4MCzuHWTH50WdQERi/Sg38gl5qsTLxGswbmJYPCca7eb0xM7pIQvivw6NA8hAv
+ rmYwk7sqQmLw==
+X-IronPort-AV: E=McAfee;i="6200,9189,9982"; a="187049806"
+X-IronPort-AV: E=Sophos;i="5.82,296,1613462400";
+   d="scan'208";a="187049806"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 May 2021 04:11:19 -0700
+IronPort-SDR: JWHF/MYfY5cUJpF4NGgN7H+0mEQtLOxDNOsSU+bf0ejclwyD0ETM4zF7zHz53eoPPMYCIqkwo9
+ 0nP4HHj+UXGw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.82,296,1613462400";
+   d="scan'208";a="471679295"
+Received: from lkp-server01.sh.intel.com (HELO ddd90b05c979) ([10.239.97.150])
+  by orsmga001.jf.intel.com with ESMTP; 13 May 2021 04:11:18 -0700
+Received: from kbuild by ddd90b05c979 with local (Exim 4.92)
+	(envelope-from <lkp@intel.com>)
+	id 1lh9FN-0000Cr-Be; Thu, 13 May 2021 11:11:17 +0000
+Date: Thu, 13 May 2021 19:10:43 +0800
+From: kernel test robot <lkp@intel.com>
+To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Message-ID: <609d0933.In58xE9iaHXYBtos%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-References: <20210426023941.729334-1-sathyanarayanan.kuppuswamy@linux.intel.com>
- <20210426023941.729334-4-sathyanarayanan.kuppuswamy@linux.intel.com>
- <97e14cdc-ea98-18b8-0c89-db52440a7716@linux.intel.com> <CAJZ5v0gsqyXSr+Kw603333PZ=gnsBizNhyLAcu588OChEHT=AQ@mail.gmail.com>
- <4fa40e7a-bcb2-db0f-8dc5-28728b14377d@linux.intel.com> <20210510172237.GU4032392@tassilo.jf.intel.com>
- <CAJZ5v0iFsBWwXhqtLbTMicBSFme0HCvg+2xgtMgpkFMupk_Rkw@mail.gmail.com> <bc14b461-6431-c5ce-7117-854af8454900@linux.intel.com>
-In-Reply-To: <bc14b461-6431-c5ce-7117-854af8454900@linux.intel.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Tue, 11 May 2021 12:45:17 +0200
-Message-ID: <CAJZ5v0hFfVCm25wUCetOm4YdZKwt5h2jknN9ad1nnpxuR16KkQ@mail.gmail.com>
-To: "Kuppuswamy, Sathyanarayanan" <sathyanarayanan.kuppuswamy@linux.intel.com>
-Message-ID-Hash: BRHUQ6T4J33SRE3BSI2ACGIWXP7EP7TM
-X-Message-ID-Hash: BRHUQ6T4J33SRE3BSI2ACGIWXP7EP7TM
-X-MailFrom: rjwysocki@gmail.com
+Message-ID-Hash: JYRVOU6V2A5YLJGTYWA22A2MYVN6DF7Q
+X-Message-ID-Hash: JYRVOU6V2A5YLJGTYWA22A2MYVN6DF7Q
+X-MailFrom: lkp@intel.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: "Rafael J. Wysocki" <rafael@kernel.org>, Andi Kleen <ak@linux.intel.com>, Rafael J Wysocki <rjw@rjwysocki.net>, Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, "H . Peter Anvin" <hpa@zytor.com>, Peter Zijlstra <peterz@infradead.org>, Erik Kaneda <erik.kaneda@intel.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, the arch/x86 maintainers <x86@kernel.org>, Sean Christopherson <sean.j.christopherson@intel.com>
+CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH v3 3/3] x86/acpi, x86/boot: Add multiprocessor wake-up support
+Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS 63ab1d0f590ff7fe3234589aa977b5777661d091
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <>
-List-Archive: <>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/JYRVOU6V2A5YLJGTYWA22A2MYVN6DF7Q/>
+List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
@@ -61,86 +55,89 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Mon, May 10, 2021 at 11:15 PM Kuppuswamy, Sathyanarayanan
-<sathyanarayanan.kuppuswamy@linux.intel.com> wrote:
->
->
->
-> On 5/10/21 10:24 AM, Rafael J. Wysocki wrote:
-> > The wakeup function can return an error when it is called for the
-> > second time on the same CPU.
->
-> To do this, we can only maintain the wakeup status of the CPUs. Can
-> you check whether following physid_mask based status maintenance is
-> acceptable?
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
+branch HEAD: 63ab1d0f590ff7fe3234589aa977b5777661d091  Merge branch 'acpi-dptf' into bleeding-edge
 
-It would work for me except for a couple of nits below.
+elapsed time: 1272m
 
-> --- a/arch/x86/kernel/acpi/boot.c
-> +++ b/arch/x86/kernel/acpi/boot.c
-> @@ -67,6 +67,7 @@ static u64 acpi_lapic_addr __initdata = APIC_DEFAULT_PHYS_BASE;
->
->   static struct acpi_madt_multiproc_wakeup_mailbox *acpi_mp_wake_mailbox;
->   static u64 acpi_mp_wake_mailbox_paddr;
-> +static physid_mask_t apic_id_wakemap = PHYSID_MASK_NONE;
->
->   #ifdef CONFIG_X86_IO_APIC
->   /*
-> @@ -347,6 +348,13 @@ static int acpi_wakeup_cpu(int apicid, unsigned long start_ip)
->
->          acpi_mp_wake_mailbox_init();
->
-> +       /* Check if the given CPU (apicid) is already awake */
+configs tested: 67
+configs skipped: 2
 
-The reason why is that the wakeup mechanism used here is only usable
-once per CPU by the spec, so I would add this information to the
-comment.  Maybe something like "According to the ACPI specification
-(ACPI 6.4, Section ...), the mailbox-based wakeup mechanism cannot be
-used more than once for the same CPU, so avoid doing that."
+The following configs have been built successfully.
+More configs may be tested in the coming days.
 
-> +       if (physid_isset(apicid, apic_id_wakemap)) {
-> +               pr_err("APIC ID %x is already awake, so failed to wakeup\n",
-> +                               apicid);
+gcc tested configs:
+arm                                 defconfig
+arm64                            allyesconfig
+arm64                               defconfig
+arm                              allyesconfig
+arm                              allmodconfig
+ia64                             allmodconfig
+ia64                                defconfig
+ia64                             allyesconfig
+x86_64                            allnoconfig
+m68k                             allmodconfig
+m68k                                defconfig
+m68k                             allyesconfig
+nios2                               defconfig
+arc                              allyesconfig
+nds32                             allnoconfig
+nds32                               defconfig
+nios2                            allyesconfig
+csky                                defconfig
+alpha                               defconfig
+alpha                            allyesconfig
+xtensa                           allyesconfig
+h8300                            allyesconfig
+arc                                 defconfig
+sh                               allmodconfig
+parisc                              defconfig
+s390                             allyesconfig
+s390                             allmodconfig
+parisc                           allyesconfig
+s390                                defconfig
+i386                             allyesconfig
+sparc                            allyesconfig
+sparc                               defconfig
+i386                                defconfig
+mips                             allyesconfig
+mips                             allmodconfig
+powerpc                          allyesconfig
+powerpc                          allmodconfig
+powerpc                           allnoconfig
+i386                 randconfig-a003-20210512
+i386                 randconfig-a001-20210512
+i386                 randconfig-a005-20210512
+i386                 randconfig-a004-20210512
+i386                 randconfig-a002-20210512
+i386                 randconfig-a006-20210512
+i386                 randconfig-a016-20210512
+i386                 randconfig-a014-20210512
+i386                 randconfig-a011-20210512
+i386                 randconfig-a015-20210512
+i386                 randconfig-a012-20210512
+i386                 randconfig-a013-20210512
+riscv                    nommu_k210_defconfig
+riscv                            allyesconfig
+riscv                    nommu_virt_defconfig
+riscv                             allnoconfig
+riscv                               defconfig
+riscv                          rv32_defconfig
+riscv                            allmodconfig
+um                               allmodconfig
+um                                allnoconfig
+um                               allyesconfig
+um                                  defconfig
+x86_64                           allyesconfig
+x86_64                    rhel-8.3-kselftests
+x86_64                              defconfig
+x86_64                               rhel-8.3
+x86_64                      rhel-8.3-kbuiltin
+x86_64                                  kexec
 
-And I would reword the message like this "CPU already awake (APIC ID
-%x), skipping wakeup\n".
-
-> +               return -EINVAL;
-> +       }
-> +
->          if (!acpi_mp_wake_mailbox)
-
-Note, though, that instead of having this additional flag, you may as
-well create a mask that is fully populated initially and clear the IDs
-of the woken-up CPUs in it.  Then, you'd only need one check here
-instead of two.
-
->                  return -EINVAL;
->
-> @@ -374,8 +382,18 @@ static int acpi_wakeup_cpu(int apicid, unsigned long start_ip)
->          while (READ_ONCE(acpi_mp_wake_mailbox->command) && timeout--)
->                  cpu_relax();
->
-> -       /* If timedout, return error */
-> -       return timeout ? 0 : -EIO;
-> +       if (timeout) {
-> +               /*
-> +                * If the CPU wakeup process is successful, store the
-> +                * status in apic_id_wakemap to prevent re-wakeup
-> +                * requests.
-> +                */
-> +               physid_set(apicid, apic_id_wakemap);
-> +               return 0;
-> +       }
-> +
-> +       /* If timed out (timeout == 0), return error */
-> +       return -EIO;
->   }
->
->
-> --
-> Sathyanarayanan Kuppuswamy
-> Linux Kernel Developer
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
