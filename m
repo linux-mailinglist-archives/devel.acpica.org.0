@@ -1,56 +1,54 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 860A038B655
-	for <lists+devel-acpica@lfdr.de>; Thu, 20 May 2021 20:55:31 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CFD2038B6E4
+	for <lists+devel-acpica@lfdr.de>; Thu, 20 May 2021 21:13:51 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id DF0CD100ED4BA;
-	Thu, 20 May 2021 11:55:28 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.210.49; helo=mail-ot1-f49.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
+	by ml01.01.org (Postfix) with ESMTP id 7AC56100ED4BA;
+	Thu, 20 May 2021 12:13:50 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.167.176; helo=mail-oi1-f176.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 7098E100EF271
-	for <devel@acpica.org>; Thu, 20 May 2021 11:55:27 -0700 (PDT)
-Received: by mail-ot1-f49.google.com with SMTP id i14-20020a9d624e0000b029033683c71999so4614083otk.5
-        for <devel@acpica.org>; Thu, 20 May 2021 11:55:27 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTPS id 30700100EF271
+	for <devel@acpica.org>; Thu, 20 May 2021 12:13:48 -0700 (PDT)
+Received: by mail-oi1-f176.google.com with SMTP id s19so17396934oic.7
+        for <devel@acpica.org>; Thu, 20 May 2021 12:13:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=4rhnX4Y+eZgYOMeyuWthaw1sadq3182LEXhMCXR+I6M=;
-        b=jVcptw2VbGG+cuD/Iu03ydrn/607WRsovh/zYP6hO+rsEm/+xu4PrOxGEW4jYKVKU/
-         OSWni0T1xt+fCN6ZjA0HGmoTJhx6szK+xq9BUN6ERmsEK35V7tNnjtyhOzqxTHLYrMji
-         DThKxgahn5xRQm6X+ZCBUZ9MUqbg48+f4ePL4WPl2xNDe7aig1I0DkfaS0KE+YREt1Kv
-         hYDBHCsubEcvwMfJZHYOKbVPPLd0iCUfhalm9T+l1I+vD2J2L20BrmZT9dJNNtVvI/jH
-         hq/RPbzWDaeWmxeX9c1x9bxmxBa9gyMD/+DjIwWRhVy0BnZF5ljnt+u8JXB66pDErfag
-         vi1Q==
-X-Gm-Message-State: AOAM533IMeFqx1vgk4J/KO/Ie8n+i7Flwx3q8AyOj4nxa6kZ4c6zAH16
-	aBOrI+/fYAEc/AAOFS0od0phbdpUANv5qojSRdU=
-X-Google-Smtp-Source: ABdhPJxv0ky80jFTVK8qLg50KX4XfRpIa0/2SCS8joVGuRdFlpjMA6BtV5bOxJTGoCZsnR1EqkSxRlQFmPk5Kra/dTM=
-X-Received: by 2002:a9d:5a7:: with SMTP id 36mr5059433otd.321.1621536925339;
- Thu, 20 May 2021 11:55:25 -0700 (PDT)
+        bh=8clB6TpIVCho94JnVEq2KjWI71LnxqVBb8WHhQLjztY=;
+        b=bKl55A2gU8meI2MhWHzrcdJuyR7vLdZ7TlVWi44dlDWyVa0fCPD0M5+GvNTyHz9Dde
+         CNOM+o/l44x4F+WWtcQFqRYhbBfMExfY7uN2jkhB9NxnGMfJOGLW8NplkVJq8eree00X
+         g4p7UeMi3OStZbolFR5Yv72z7/6PV4+yLlANBadu/s3efmCIhMZeNWhxlXXslal9lzTQ
+         MH3t1UVuecfmzDhuUQ3/HUVczV7YioWzSEZdUY9EOGV/mVIsVH+y+gY31Sq8WHA7zWwr
+         aDBWMkWlI1bx7BLs67qdcukWamLXGDS7cSbH1mLYMJzGXYLJYp0QfFbdY2jnsg/IOnYF
+         WxuQ==
+X-Gm-Message-State: AOAM533XJHVaI7wlj0NvZh+lClfzRONxKGeQYu9rdc4CGLyqIuStFPJP
+	TdvRPIdGgjH2QBPEyssNTf7VYBUoesLhvYEEUVA=
+X-Google-Smtp-Source: ABdhPJzR2IDcCbVrUe2qyMRRXhFKtU5QzQLchWh+Q6eTtGKEBvB1s/MT5NhCnUIeIhPUC4pL2HbJM1ILhZWMi4V6nKE=
+X-Received: by 2002:aca:1910:: with SMTP id l16mr4152216oii.69.1621538027288;
+ Thu, 20 May 2021 12:13:47 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210520140928.3252671-1-djrscally@gmail.com> <20210520140928.3252671-3-djrscally@gmail.com>
- <CAJZ5v0hoDswjr+7r4uf6jZvV3t+-UDtEA0V7A_MvdT_34XrbJA@mail.gmail.com>
-In-Reply-To: <CAJZ5v0hoDswjr+7r4uf6jZvV3t+-UDtEA0V7A_MvdT_34XrbJA@mail.gmail.com>
+References: <20210519210253.3578025-1-andy.shevchenko@gmail.com>
+In-Reply-To: <20210519210253.3578025-1-andy.shevchenko@gmail.com>
 From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Thu, 20 May 2021 20:55:14 +0200
-Message-ID: <CAJZ5v0hdSi4BcZvhkyrtcBQqRL8CHtOtwUeYW7EnWL2zvKhDZw@mail.gmail.com>
-To: Daniel Scally <djrscally@gmail.com>
-Message-ID-Hash: XZKLEBVLEXW4WQA5RSITTM6I34FYU3V3
-X-Message-ID-Hash: XZKLEBVLEXW4WQA5RSITTM6I34FYU3V3
+Date: Thu, 20 May 2021 21:13:36 +0200
+Message-ID: <CAJZ5v0in=qEtVULLF=RwBTiFqiRK-DyPfD4F6uUAqeUfPFB8QQ@mail.gmail.com>
+To: Andy Shevchenko <andy.shevchenko@gmail.com>
+Message-ID-Hash: 3YF7U373YAMJCOCGL6JJUEXY7RHWPYMF
+X-Message-ID-Hash: 3YF7U373YAMJCOCGL6JJUEXY7RHWPYMF
 X-MailFrom: rjwysocki@gmail.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Wolfram Sang <wsa@kernel.org>, Lee Jones <lee.jones@linaro.org>, Hans de Goede <hdegoede@redhat.com>, Maximilian Luz <luzmaximilian@gmail.com>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, Linux ARM <linux-arm-kernel@lists.infradead.org>, "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>, linux-i2c <linux-i2c@vger.kernel.org>, Platform Driver <platform-driver-x86@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Mika Westerberg <mika.westerberg@linux.intel.com>, Russell King <linux@armlinux.org.uk>, Linus Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski <bgolaszewski@baylibre.com>, Mark Gross <mgross@linux.intel.com>, Erik Kaneda <erik.kaneda@intel.com>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>, Kieran Bingham <kieran.bingham@ideasonboard.com>, Andy Sh
- evchenko <andy.shevchenko@gmail.com>
+CC: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>, Daniel Scally <djrscally@gmail.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Linux Media Mailing List <linux-media@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, "Rafael J. Wysocki" <rjw@rjwysocki.net>, Yong Zhi <yong.zhi@intel.com>, Sakari Ailus <sakari.ailus@linux.intel.com>, Bingbu Cao <bingbu.cao@intel.com>, Tianshu Qiu <tian.shu.qiu@intel.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, Erik Kaneda <erik.kaneda@intel.com>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH v4 2/8] ACPI: scan: Add function to fetch dependent of acpi device
+Subject: [Devel] Re: [PATCH v1 1/1] ACPI: utils: Fix reference counting in for_each_acpi_dev_match()
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/XZKLEBVLEXW4WQA5RSITTM6I34FYU3V3/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/3YF7U373YAMJCOCGL6JJUEXY7RHWPYMF/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -59,115 +57,118 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Thu, May 20, 2021 at 8:33 PM Rafael J. Wysocki <rafael@kernel.org> wrote:
+On Wed, May 19, 2021 at 11:19 PM Andy Shevchenko
+<andy.shevchenko@gmail.com> wrote:
 >
-> On Thu, May 20, 2021 at 4:11 PM Daniel Scally <djrscally@gmail.com> wrote:
-> >
-> > In some ACPI tables we encounter, devices use the _DEP method to assert
-> > a dependence on other ACPI devices as opposed to the OpRegions that the
-> > specification intends. We need to be able to find those devices "from"
-> > the dependee, so add a callback and a wrapper to walk over the
-> > acpi_dep_list and return the dependent ACPI device.
-> >
-> > Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-> > Signed-off-by: Daniel Scally <djrscally@gmail.com>
-> > ---
-> > Changes since v3:
-> >
-> >         Both new functions were renamed.
-> >
-> >  drivers/acpi/scan.c     | 38 ++++++++++++++++++++++++++++++++++++++
-> >  include/acpi/acpi_bus.h |  1 +
-> >  2 files changed, 39 insertions(+)
-> >
-> > diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
-> > index 195635c3462b..1a76fbdfa669 100644
-> > --- a/drivers/acpi/scan.c
-> > +++ b/drivers/acpi/scan.c
-> > @@ -2105,6 +2105,21 @@ static void acpi_bus_attach(struct acpi_device *device, bool first_pass)
-> >                 device->handler->hotplug.notify_online(device);
-> >  }
-> >
-> > +static int acpi_return_dep_dev(struct acpi_dep_data *dep, void *data)
+> Currently it's possible to iterate over the dangling pointer in case the device
+> suddenly disappears. This may happen becase callers put it at the end of a loop.
 >
-> What about calling this acpi_get_first_consumer_cb()?
+> Instead, let's move that call inside acpi_dev_get_next_match_dev().
 
-Or acpi_dev_get_first_consumer_dev_cb() if you want to be super-precise?
+Not really.
 
+> Fixes: 803abec64ef9 ("media: ipu3-cio2: Add cio2-bridge to ipu3-cio2 driver")
+> Fixes: bf263f64e804 ("media: ACPI / bus: Add acpi_dev_get_next_match_dev() and helper macro")
+> Cc: Daniel Scally <djrscally@gmail.com>
+> Cc: Sakari Ailus <sakari.ailus@linux.intel.com>
+> Signed-off-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+> ---
+>  drivers/acpi/utils.c                       | 5 +----
+>  drivers/media/pci/intel/ipu3/cio2-bridge.c | 8 +++-----
+>  include/acpi/acpi_bus.h                    | 5 -----
+>  3 files changed, 4 insertions(+), 14 deletions(-)
 >
-> > +{
-> > +       struct acpi_device *adev;
-> > +       int ret;
-> > +
-> > +       ret = acpi_bus_get_device(dep->consumer, &adev);
-> > +       if (ret)
-> > +               /* If we don't find an adev then we want to continue parsing */
-> > +               return 0;
-> > +
-> > +       *(struct acpi_device **)data = adev;
+> diff --git a/drivers/acpi/utils.c b/drivers/acpi/utils.c
+> index 3b54b8fd7396..ccfc484dbffd 100644
+> --- a/drivers/acpi/utils.c
+> +++ b/drivers/acpi/utils.c
+> @@ -846,10 +846,6 @@ EXPORT_SYMBOL(acpi_dev_present);
+>   * Return the next match of ACPI device if another matching device was present
+>   * at the moment of invocation, or NULL otherwise.
+>   *
+> - * FIXME: The function does not tolerate the sudden disappearance of @adev, e.g.
+> - * in the case of a hotplug event. That said, the caller should ensure that
+> - * this will never happen.
+> - *
+>   * The caller is responsible for invoking acpi_dev_put() on the returned device.
+>   *
+>   * See additional information in acpi_dev_present() as well.
+> @@ -866,6 +862,7 @@ acpi_dev_get_next_match_dev(struct acpi_device *adev, const char *hid, const cha
+>         match.hrv = hrv;
 >
-> And it can do the get_device() here, can't it?
->
-> So maybe use acpi_bus_get_acpi_device() instead of
-> acpi_bus_get_device()?  Would be simpler.
->
-> > +
-> > +       return 1;
-> > +}
-> > +
-> >  static int acpi_scan_clear_dep(struct acpi_dep_data *dep, void *data)
-> >  {
-> >         struct acpi_device *adev;
-> > @@ -2168,6 +2183,29 @@ void acpi_dev_clear_dependencies(struct acpi_device *supplier)
-> >  }
-> >  EXPORT_SYMBOL_GPL(acpi_dev_clear_dependencies);
-> >
-> > +/**
-> > + * acpi_dev_get_dependent_dev - Return ACPI device dependent on @supplier
->
-> And what about calling this acpi_get_first_consumer() ?
+>         dev = bus_find_device(&acpi_bus_type, start, &match, acpi_dev_match_cb);
+> +       acpi_dev_put(adev);
 
-Or acpi_dev_get_first_consumer_dev() (in analogy with the above)?
+What's the point?
 
-> > + * @supplier: Pointer to the dependee device
-> > + *
-> > + * Returns the first &struct acpi_device which declares itself dependent on
-> > + * @supplier via the _DEP buffer, parsed from the acpi_dep_list.
-> > + *
-> > + * The caller is responsible for putting the reference to adev when it is no
-> > + * longer needed.
-> > + */
-> > +struct acpi_device *acpi_dev_get_dependent_dev(struct acpi_device *supplier)
-> > +{
-> > +       struct acpi_device *adev = NULL;
-> > +
-> > +       acpi_walk_dep_device_list(supplier->handle, acpi_return_dep_dev, &adev);
-> > +
-> > +       if (adev)
-> > +               get_device(&adev->dev);
-> > +
-> > +       return adev;
-> > +}
-> > +EXPORT_SYMBOL_GPL(acpi_dev_get_dependent_dev);
-> > +
-> >  /**
-> >   * acpi_bus_scan - Add ACPI device node objects in a given namespace scope.
-> >   * @handle: Root of the namespace scope to scan.
-> > diff --git a/include/acpi/acpi_bus.h b/include/acpi/acpi_bus.h
-> > index 0b2c4f170f4d..68d378207704 100644
-> > --- a/include/acpi/acpi_bus.h
-> > +++ b/include/acpi/acpi_bus.h
-> > @@ -692,6 +692,7 @@ static inline bool acpi_device_can_poweroff(struct acpi_device *adev)
-> >  bool acpi_dev_hid_uid_match(struct acpi_device *adev, const char *hid2, const char *uid2);
-> >
-> >  void acpi_dev_clear_dependencies(struct acpi_device *supplier);
-> > +struct acpi_device *acpi_dev_get_dependent_dev(struct acpi_device *supplier);
-> >  struct acpi_device *
-> >  acpi_dev_get_next_match_dev(struct acpi_device *adev, const char *hid, const char *uid, s64 hrv);
-> >  struct acpi_device *
-> > --
-> > 2.25.1
-> >
+The caller may as well put it after this returns, can't it?
+
+And what if the caller still wants to do something with adev after this returns?
+
+>         return dev ? to_acpi_device(dev) : NULL;
+>  }
+>  EXPORT_SYMBOL(acpi_dev_get_next_match_dev);
+
+The original changelog is somewhat unclear.  It should say that it is
+required to reference-count the start-point device before passing it
+to this function, but beyond that I don't see a bug here.
+
+> diff --git a/drivers/media/pci/intel/ipu3/cio2-bridge.c b/drivers/media/pci/intel/ipu3/cio2-bridge.c
+> index e8511787c1e4..477417261b6e 100644
+> --- a/drivers/media/pci/intel/ipu3/cio2-bridge.c
+> +++ b/drivers/media/pci/intel/ipu3/cio2-bridge.c
+> @@ -178,13 +178,11 @@ static int cio2_bridge_connect_sensor(const struct cio2_sensor_config *cfg,
+>
+>                 if (bridge->n_sensors >= CIO2_NUM_PORTS) {
+>                         dev_err(&cio2->dev, "Exceeded available CIO2 ports\n");
+> -                       cio2_bridge_unregister_sensors(bridge);
+>                         ret = -EINVAL;
+> -                       goto err_out;
+> +                       goto err_put_adev;
+>                 }
+>
+>                 sensor = &bridge->sensors[bridge->n_sensors];
+> -               sensor->adev = adev;
+>                 strscpy(sensor->name, cfg->hid, sizeof(sensor->name));
+>
+>                 ret = cio2_bridge_read_acpi_buffer(adev, "SSDB",
+> @@ -214,6 +212,7 @@ static int cio2_bridge_connect_sensor(const struct cio2_sensor_config *cfg,
+>                         goto err_free_swnodes;
+>                 }
+>
+> +               sensor->adev = acpi_dev_get(adev);
+>                 adev->fwnode.secondary = fwnode;
+>
+>                 dev_info(&cio2->dev, "Found supported sensor %s\n",
+> @@ -227,8 +226,7 @@ static int cio2_bridge_connect_sensor(const struct cio2_sensor_config *cfg,
+>  err_free_swnodes:
+>         software_node_unregister_nodes(sensor->swnodes);
+>  err_put_adev:
+> -       acpi_dev_put(sensor->adev);
+> -err_out:
+> +       acpi_dev_put(adev);
+>         return ret;
+>  }
+>
+> diff --git a/include/acpi/acpi_bus.h b/include/acpi/acpi_bus.h
+> index 3a82faac5767..bff6a11bb21f 100644
+> --- a/include/acpi/acpi_bus.h
+> +++ b/include/acpi/acpi_bus.h
+> @@ -698,11 +698,6 @@ acpi_dev_get_first_match_dev(const char *hid, const char *uid, s64 hrv);
+>   * @hrv: Hardware Revision of the device, pass -1 to not check _HRV
+>   *
+>   * The caller is responsible for invoking acpi_dev_put() on the returned device.
+> - *
+> - * FIXME: Due to above requirement there is a window that may invalidate @adev
+> - * and next iteration will use a dangling pointer, e.g. in the case of a
+> - * hotplug event. That said, the caller should ensure that this will never
+> - * happen.
+>   */
+>  #define for_each_acpi_dev_match(adev, hid, uid, hrv)                   \
+>         for (adev = acpi_dev_get_first_match_dev(hid, uid, hrv);        \
+> --
+> 2.31.1
+>
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
