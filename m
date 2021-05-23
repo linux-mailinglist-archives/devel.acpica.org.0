@@ -2,53 +2,51 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 48F1F38B7AD
-	for <lists+devel-acpica@lfdr.de>; Thu, 20 May 2021 21:41:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5226638D7EE
+	for <lists+devel-acpica@lfdr.de>; Sun, 23 May 2021 02:09:30 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id D2D4B100ED4BA;
-	Thu, 20 May 2021 12:41:03 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.167.175; helo=mail-oi1-f175.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	by ml01.01.org (Postfix) with ESMTP id 4990A100EC1CC;
+	Sat, 22 May 2021 17:09:27 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.126; helo=mga18.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id DD647100EF271
-	for <devel@acpica.org>; Thu, 20 May 2021 12:41:01 -0700 (PDT)
-Received: by mail-oi1-f175.google.com with SMTP id x15so17443642oic.13
-        for <devel@acpica.org>; Thu, 20 May 2021 12:41:01 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=K1iin/fsWDM3w5QyDMVs0rUZIL7VQZLTGcYt+0lEbCQ=;
-        b=OzwCwPGBz/1d+sseMs/sLVLQPYPVJVuxVevNk2k0bM3FK5ODJVHWzY+pr9i0TqE3TX
-         wNXQco9ZKHfbknfo6KAvxd/+Wwm4kO/Mg0V1qX4g7DIf9ehEs1/PslGFtm8EaH26c1/G
-         kXdV+A6NM5nUqpBbKpG2CoibiiWUg11M4/qXs9QK3y6mmOYjPH5cbKnHiJ8hXF0ttOsR
-         fOt4AsnB1GrZ6LR5BZ1hE/AEWFuVP0Q9TW0ilKNZE4LmrDo7+zIfvyXqoSb016BcYKrz
-         FxqHTkuiYG9AF2eRrhtjtcKq34rXxf1+Y1uHU/2y16mpWf4oEgOVm56CujZjWrEjQAbM
-         qq1A==
-X-Gm-Message-State: AOAM533nec0IeSoHx+55s0YAwbOxmOpyJlFkjGFbG+ngoCNADPUjHOfv
-	PCpLgZfUV7uYN/IcvZoVY0nzcCg/w2ph3tjq6x5M68UD
-X-Google-Smtp-Source: ABdhPJwlLcanJ8ZpS/SGjqVaANYZucjsh3Cy2+yy0vt8wVmKq3yOMqnXSOAC2qLMGX83z3ynXSbHNO1JHSA7oR8D/po=
-X-Received: by 2002:aca:380a:: with SMTP id f10mr4623632oia.157.1621539661194;
- Thu, 20 May 2021 12:41:01 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTPS id 35B38100ED4AB
+	for <devel@acpica.org>; Sat, 22 May 2021 17:09:25 -0700 (PDT)
+IronPort-SDR: ZqA4X4OPPAlsLXJ2aISeu1hOI61uUmRkbR+UusiqoLLcK6LM3ARxHTtz5cVFFNIQF11d2t1x8U
+ C9MCgejkWPYA==
+X-IronPort-AV: E=McAfee;i="6200,9189,9992"; a="189100155"
+X-IronPort-AV: E=Sophos;i="5.82,319,1613462400";
+   d="scan'208";a="189100155"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 May 2021 17:09:24 -0700
+IronPort-SDR: yV2f5aDrb+xCzK8uEAFZ4IPsDjjcYjHTpqSfkimcagNmiCXoUwVY7BrgayjWsq5s9EIb1ag/DP
+ 1ixJTM/IkDSA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.82,319,1613462400";
+   d="scan'208";a="434795421"
+Received: from lkp-server02.sh.intel.com (HELO 1ec8406c5392) ([10.239.97.151])
+  by orsmga007.jf.intel.com with ESMTP; 22 May 2021 17:09:22 -0700
+Received: from kbuild by 1ec8406c5392 with local (Exim 4.92)
+	(envelope-from <lkp@intel.com>)
+	id 1lkbgI-0000Zh-6G; Sun, 23 May 2021 00:09:22 +0000
+Date: Sun, 23 May 2021 08:08:40 +0800
+From: kernel test robot <lkp@intel.com>
+To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Message-ID: <60a99d08.Ml+JurPK4xvHBwre%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-References: <20210519210253.3578025-1-andy.shevchenko@gmail.com> <CAJZ5v0in=qEtVULLF=RwBTiFqiRK-DyPfD4F6uUAqeUfPFB8QQ@mail.gmail.com>
-In-Reply-To: <CAJZ5v0in=qEtVULLF=RwBTiFqiRK-DyPfD4F6uUAqeUfPFB8QQ@mail.gmail.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Thu, 20 May 2021 21:40:50 +0200
-Message-ID: <CAJZ5v0hsDpGtLHPQvcnof3c1LBnhoZSwWyHJdj1mOov9gV_W8A@mail.gmail.com>
-To: Andy Shevchenko <andy.shevchenko@gmail.com>
-Message-ID-Hash: BAIWN44DPKHV7GBJCU6ERPMX6XPKTXMF
-X-Message-ID-Hash: BAIWN44DPKHV7GBJCU6ERPMX6XPKTXMF
-X-MailFrom: rjwysocki@gmail.com
+Message-ID-Hash: LCKBXXWZ4DHNMZN2AJ34OQS6W5HLI7ZJ
+X-Message-ID-Hash: LCKBXXWZ4DHNMZN2AJ34OQS6W5HLI7ZJ
+X-MailFrom: lkp@intel.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>, Daniel Scally <djrscally@gmail.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Linux Media Mailing List <linux-media@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, "Rafael J. Wysocki" <rjw@rjwysocki.net>, Yong Zhi <yong.zhi@intel.com>, Sakari Ailus <sakari.ailus@linux.intel.com>, Bingbu Cao <bingbu.cao@intel.com>, Tianshu Qiu <tian.shu.qiu@intel.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, Erik Kaneda <erik.kaneda@intel.com>
+CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH v1 1/1] ACPI: utils: Fix reference counting in for_each_acpi_dev_match()
+Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS 3e96bfcd74d28fa143840d41e24403eb50d45c38
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/BAIWN44DPKHV7GBJCU6ERPMX6XPKTXMF/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/LCKBXXWZ4DHNMZN2AJ34OQS6W5HLI7ZJ/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -57,58 +55,113 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Thu, May 20, 2021 at 9:13 PM Rafael J. Wysocki <rafael@kernel.org> wrote:
->
-> On Wed, May 19, 2021 at 11:19 PM Andy Shevchenko
-> <andy.shevchenko@gmail.com> wrote:
-> >
-> > Currently it's possible to iterate over the dangling pointer in case the device
-> > suddenly disappears. This may happen becase callers put it at the end of a loop.
-> >
-> > Instead, let's move that call inside acpi_dev_get_next_match_dev().
->
-> Not really.
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
+branch HEAD: 3e96bfcd74d28fa143840d41e24403eb50d45c38  Merge branch 'acpi-ec' into bleeding-edge
 
-OK, I see what you want to achieve and the macro is actually buggy,
-because it leaves unbalanced references behind.
+elapsed time: 756m
 
-> > Fixes: 803abec64ef9 ("media: ipu3-cio2: Add cio2-bridge to ipu3-cio2 driver")
-> > Fixes: bf263f64e804 ("media: ACPI / bus: Add acpi_dev_get_next_match_dev() and helper macro")
-> > Cc: Daniel Scally <djrscally@gmail.com>
-> > Cc: Sakari Ailus <sakari.ailus@linux.intel.com>
-> > Signed-off-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-> > ---
-> >  drivers/acpi/utils.c                       | 5 +----
-> >  drivers/media/pci/intel/ipu3/cio2-bridge.c | 8 +++-----
-> >  include/acpi/acpi_bus.h                    | 5 -----
-> >  3 files changed, 4 insertions(+), 14 deletions(-)
-> >
-> > diff --git a/drivers/acpi/utils.c b/drivers/acpi/utils.c
-> > index 3b54b8fd7396..ccfc484dbffd 100644
-> > --- a/drivers/acpi/utils.c
-> > +++ b/drivers/acpi/utils.c
-> > @@ -846,10 +846,6 @@ EXPORT_SYMBOL(acpi_dev_present);
-> >   * Return the next match of ACPI device if another matching device was present
-> >   * at the moment of invocation, or NULL otherwise.
-> >   *
-> > - * FIXME: The function does not tolerate the sudden disappearance of @adev, e.g.
-> > - * in the case of a hotplug event. That said, the caller should ensure that
-> > - * this will never happen.
-> > - *
-> >   * The caller is responsible for invoking acpi_dev_put() on the returned device.
-> >   *
-> >   * See additional information in acpi_dev_present() as well.
+configs tested: 89
+configs skipped: 2
 
-But the kerneldoc really needs to say that the caller is required to
-obtain a reference on adev before passing it here, because that
-reference will be dropped and the object pointed to by adev may not be
-present any more after this returns.
+The following configs have been built successfully.
+More configs may be tested in the coming days.
 
-> > @@ -866,6 +862,7 @@ acpi_dev_get_next_match_dev(struct acpi_device *adev, const char *hid, const cha
-> >         match.hrv = hrv;
-> >
-> >         dev = bus_find_device(&acpi_bus_type, start, &match, acpi_dev_match_cb);
-> > +       acpi_dev_put(adev);
+gcc tested configs:
+arm                                 defconfig
+arm64                            allyesconfig
+arm64                               defconfig
+arm                              allyesconfig
+arm                              allmodconfig
+h8300                       h8s-sim_defconfig
+mips                           gcw0_defconfig
+arm                          pxa910_defconfig
+openrisc                    or1ksim_defconfig
+m68k                            q40_defconfig
+sh                        sh7763rdp_defconfig
+powerpc                      katmai_defconfig
+powerpc                     stx_gp3_defconfig
+sh                     magicpanelr2_defconfig
+x86_64                            allnoconfig
+ia64                             allmodconfig
+ia64                                defconfig
+ia64                             allyesconfig
+m68k                             allmodconfig
+m68k                                defconfig
+m68k                             allyesconfig
+nios2                               defconfig
+arc                              allyesconfig
+nds32                             allnoconfig
+nds32                               defconfig
+nios2                            allyesconfig
+csky                                defconfig
+alpha                               defconfig
+alpha                            allyesconfig
+xtensa                           allyesconfig
+h8300                            allyesconfig
+arc                                 defconfig
+sh                               allmodconfig
+parisc                              defconfig
+s390                             allyesconfig
+s390                             allmodconfig
+parisc                           allyesconfig
+s390                                defconfig
+i386                             allyesconfig
+sparc                            allyesconfig
+sparc                               defconfig
+i386                                defconfig
+mips                             allyesconfig
+mips                             allmodconfig
+powerpc                          allyesconfig
+powerpc                          allmodconfig
+powerpc                           allnoconfig
+i386                 randconfig-a001-20210522
+i386                 randconfig-a005-20210522
+i386                 randconfig-a002-20210522
+i386                 randconfig-a004-20210522
+i386                 randconfig-a003-20210522
+i386                 randconfig-a006-20210522
+i386                 randconfig-a016-20210522
+i386                 randconfig-a011-20210522
+i386                 randconfig-a015-20210522
+i386                 randconfig-a012-20210522
+i386                 randconfig-a014-20210522
+i386                 randconfig-a013-20210522
+x86_64               randconfig-a001-20210522
+x86_64               randconfig-a006-20210522
+x86_64               randconfig-a005-20210522
+x86_64               randconfig-a003-20210522
+x86_64               randconfig-a004-20210522
+x86_64               randconfig-a002-20210522
+riscv                    nommu_k210_defconfig
+riscv                            allyesconfig
+riscv                    nommu_virt_defconfig
+riscv                             allnoconfig
+riscv                               defconfig
+riscv                          rv32_defconfig
+riscv                            allmodconfig
+um                               allmodconfig
+um                                allnoconfig
+um                               allyesconfig
+um                                  defconfig
+x86_64                           allyesconfig
+x86_64                    rhel-8.3-kselftests
+x86_64                              defconfig
+x86_64                               rhel-8.3
+x86_64                      rhel-8.3-kbuiltin
+x86_64                                  kexec
+
+clang tested configs:
+x86_64               randconfig-b001-20210522
+x86_64               randconfig-a013-20210522
+x86_64               randconfig-a014-20210522
+x86_64               randconfig-a012-20210522
+x86_64               randconfig-a016-20210522
+x86_64               randconfig-a015-20210522
+x86_64               randconfig-a011-20210522
+
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
