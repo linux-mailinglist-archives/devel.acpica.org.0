@@ -1,178 +1,169 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4BE5F39C075
-	for <lists+devel-acpica@lfdr.de>; Fri,  4 Jun 2021 21:33:12 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A054B39DCDB
+	for <lists+devel-acpica@lfdr.de>; Mon,  7 Jun 2021 14:45:51 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 3FA5D100ED4A4;
-	Fri,  4 Jun 2021 12:33:10 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.43; helo=mga05.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	by ml01.01.org (Postfix) with ESMTP id 498BB100EF271;
+	Mon,  7 Jun 2021 05:45:49 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.210.54; helo=mail-ot1-f54.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id D0AD2100EF265
-	for <devel@acpica.org>; Fri,  4 Jun 2021 12:33:07 -0700 (PDT)
-IronPort-SDR: oHAqa960T0AlBRcr4AtELWpSTMlm0HcCU8HLkMZebVT8uzK3E64K6mBcp33HuHHtbS6vjZGyEQ
- i7VVaPfWNE3g==
-X-IronPort-AV: E=McAfee;i="6200,9189,10005"; a="289985866"
-X-IronPort-AV: E=Sophos;i="5.83,248,1616482800";
-   d="scan'208";a="289985866"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jun 2021 12:33:07 -0700
-IronPort-SDR: lp35BAsgprhPE9gfgKVZGth7pHkSNrjdxDf9OSxH0Ieg2BvJWHrvRD+4YZwUBoc5laGvNLJm+O
- AR01sfv2C+CQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.83,248,1616482800";
-   d="scan'208";a="417854560"
-Received: from orsmsx605.amr.corp.intel.com ([10.22.229.18])
-  by orsmga002.jf.intel.com with ESMTP; 04 Jun 2021 12:33:07 -0700
-Received: from orsmsx607.amr.corp.intel.com (10.22.229.20) by
- ORSMSX605.amr.corp.intel.com (10.22.229.18) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2242.4; Fri, 4 Jun 2021 12:33:06 -0700
-Received: from orsmsx602.amr.corp.intel.com (10.22.229.15) by
- ORSMSX607.amr.corp.intel.com (10.22.229.20) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2242.4; Fri, 4 Jun 2021 12:33:06 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2242.4
- via Frontend Transport; Fri, 4 Jun 2021 12:33:06 -0700
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (104.47.70.101)
- by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2242.4; Fri, 4 Jun 2021 12:33:05 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=b/W1ZZ1w6bgi5E5PPvch9CUqcCdobvKtefufCLRY2DacigHifc2ApheQPMAozKwf9DRzoTRa3apqyE7Xj94xmg8rg3Ce0M7b2xoE2YyH6nnpCrxGGeLDtNEUI1t9A1MJvB8QCaTpJmnm9l9RszEuLRsNB3cq5MRlLlLx3cA4vIsKqp8GXpRCWK9GQOiaLNwzorNK5fMJx0zmBrri3wgqz+ZfkwCjK7tpiaktYzYw5B4qCzc+R4eBM1s1+XLmWoJx8hmy0HHPVNCrSb2YwW4dpJ2/8Nbf/gbIHO1g9J2slrOB5gMg4OkT4H7+yqNMif7hYpx9VljrqcpppAFFV9Vudw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=FxG2xLeRocSIWDaInUSeeXIV69a2pOL6fNC6IsNvrD4=;
- b=iYXqCRpCMXfpXns60a8ddvc0wGOmvj1I4uKyrB0s2ClwvM6Ij4NEFqVTndS878e4QGgmrk2aYMn03He6mOZtLvbZj6uaSvY7wDz6XN3BNHTmQnl/Fq6OXWeuVPIrzICbS2KLoOG3P0jmqNBYZBH7zMWXGk1Y3ghgdndciZ2GKUmGoDdRosodtvXymhtx8vkxAEc3cTqmSuWVXQO3rxk2hN1xHrBJpsZDL//MWZkYlOSlgFm+u8FaSMgIToyQDaS/6wtgLku5/4m1LwDoUUbj3zzrOSm09lBpR3+7AOmR2ipx0CRA9crJaBf9Vc9KDT4ZeOLkTU835sHW9B46Ws6cgw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
- s=selector2-intel-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=FxG2xLeRocSIWDaInUSeeXIV69a2pOL6fNC6IsNvrD4=;
- b=NJcS3a2EYr81vejgOTLte4hIypzVUto1sNj7OrPeNs73r6AQb2Gmu0/oY7ysIocvCyAhqChMt5B54gK/ALRZjk9AXTrG/tzJwsE7IuzYgoFPRNw4D0FC5uSLR60S42d7RQVUCdPsjfcIQ4A882c1J0fWEb8K45VcHk3Ws/I/2kY=
-Received: from BYAPR11MB3256.namprd11.prod.outlook.com (2603:10b6:a03:76::19)
- by SJ0PR11MB5088.namprd11.prod.outlook.com (2603:10b6:a03:2df::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4195.24; Fri, 4 Jun
- 2021 19:33:05 +0000
-Received: from BYAPR11MB3256.namprd11.prod.outlook.com
- ([fe80::4837:76cf:ebf6:ff2e]) by BYAPR11MB3256.namprd11.prod.outlook.com
- ([fe80::4837:76cf:ebf6:ff2e%7]) with mapi id 15.20.4173.030; Fri, 4 Jun 2021
- 19:33:05 +0000
-From: "Moore, Robert" <robert.moore@intel.com>
-To: acpica.org list <devel@acpica.org>
-Thread-Topic: ACPICA version 20210604 released
-Thread-Index: AddZeBJeRxp/qJ9oSsysT+IPE8UFWg==
-Date: Fri, 4 Jun 2021 19:33:05 +0000
-Message-ID: <BYAPR11MB3256F9C9067344F0AEBE40F4873B9@BYAPR11MB3256.namprd11.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-dlp-version: 11.5.1.3
-dlp-product: dlpe-windows
-dlp-reaction: no-action
-authentication-results: acpica.org; dkim=none (message not signed)
- header.d=none;acpica.org; dmarc=none action=none header.from=intel.com;
-x-originating-ip: [134.134.136.194]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: ff86688c-0a47-4d30-fc7d-08d9278f9342
-x-ms-traffictypediagnostic: SJ0PR11MB5088:
-x-microsoft-antispam-prvs: <SJ0PR11MB50888EDC84137AF87A62EB9C873B9@SJ0PR11MB5088.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8882;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 73cRnSmG/+4hkon7b26n4K2VSIpFp+BTtwZfpMyuVouklPwsBco1HLmqSlDId3ifa07+H5vNUxQ1lI5brzbgjmecU78qOkfLSHdQuu3s/ifwKgQUUEE/0fcJWiqbpdkc/AoT1TnG/BDt2FgkLW5tk/v0AYwU1+mQvMhhXAlNNFsioCX8IoKpicnSKs/Df7qLDHeVtr//N7zUoJy9f8Bqd8KtJpNEQmwUExl8tcczd3Y7A35xReMeW+7E6q3nwRCvh0b53DeFOWKph6/9PL9JLu8elYrRQvgPWFBvmn5qW/K+YWeVRJrkwOl4mUtcPR5fWXOj78NADQIvZBJXt9l4Ol199P2eBvg7a/WIpWWvrSEWQ4xwmFGfMkoEJHslr66ThIFKzDcBk1sjGzkc7pkfYV4We41MOB9YsJvUy+vCXZSSQqquOTcevFRzu1lHcFLcEnYpITB0tW4L29QUoSzSkcVM17KKrGJXmi4m+zJxkKrmZ8C+GsCot11XBVNP9No0Ps2DP99YXdEJ2wJpSMY0BpqI7TQz63Hl6DCHuhVvtUg7IWgsih8eA6RAt90OrCPWe1/InWcLRHYbje6AsyRKoakcSlrEgnbSdwjtfeTfUQXTIFhKdLyPqHwsW33vUvmEALThVG8pwydnhkonGSz3fb8t8Vgz0pXU4Z9Z1Dxa9sZ1sBhLwiO0+9yh2DX9pnaRrWo0WvrtGXGwF73NWRIg+mSsTob/+xYCE3fsVxIvwYc=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(136003)(346002)(376002)(396003)(39860400002)(366004)(186003)(83380400001)(7696005)(2906002)(26005)(316002)(86362001)(6506007)(8676002)(8936002)(5660300002)(52536014)(7116003)(76116006)(66946007)(966005)(478600001)(64756008)(66556008)(66446008)(71200400001)(66476007)(122000001)(38100700002)(33656002)(55016002)(6916009)(9686003);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata: =?us-ascii?Q?ddCzqtzMNCNfKO176t9GgOAVao3d2qfXVRj6+EMZ6+8VaN622Ck/EtPKH+Mv?=
- =?us-ascii?Q?FqLAZPt2VY5g2SRnScpb/68kXTDKig/zhVv6YbgWiKz2978R9mIj8kUDMG09?=
- =?us-ascii?Q?Hprrupf9qf+d0Y/7n/tdnExjVaAbHFnAf3smqcMcl3xo/6CGnfkqxVHLbMkz?=
- =?us-ascii?Q?YIUZQlpxjHPEniWJfjvMXlieKM4PX4s2zuHkCD+m1CZyvKsngqEWRrdvUThr?=
- =?us-ascii?Q?77ABIkQdy+3r303namVDSAM20A1Q79Vudh8IAXYftsxDV5lAUQ3u2mIVjhOa?=
- =?us-ascii?Q?gqPdV1GzN/Gsg8ro8qyZojA8VCttowYk4GtXd6lv+A5GP/2Fgw+gPUT3qERD?=
- =?us-ascii?Q?o7LoztQ/gEnkCXr9BQB9oByD9HI5FqPpvFddwK22z5jVF2MNi7GdFV6CYsog?=
- =?us-ascii?Q?24g6Xh9h5hPTGL+8pgvovis79ZTpYh39eWOC0qF1orY2XXTGX9zidxyhoCwz?=
- =?us-ascii?Q?Rp1hhk3r/bRDFXO/gwravEtCdzGAFcu5e6AlONKVjs0KFIS3HowXC6BVjkuA?=
- =?us-ascii?Q?2s+z6avouadYezAvkaSOxR9rG4QZmCfuhEgbMYUQ711iT9NiR6AKtQtZPYKu?=
- =?us-ascii?Q?+YcXFLfo3qdPxZ4N3eWTdEgfp+aQ5y4uaS4Mf3yVC5T3q65+sQYY2l47enSE?=
- =?us-ascii?Q?nmK+6Gyb6YVF/96FJjKdUjT0c/4BdYOK1MOYjrpJRVw9YkcQ2nYUmokL5P7y?=
- =?us-ascii?Q?TAICAwPoYLrRm6bBHpw4QfRLTDPxThozsVGaPYBdjgs79NR2MBDXPeqO4A72?=
- =?us-ascii?Q?/SA63NzJPIUZ/bKaC6tFqVxvcL2IX4Q176tbmsQ+9X2lXcw2VYD04MWteh3A?=
- =?us-ascii?Q?5UVt7pUY5rOQE84MqtXxqBlNG/BIEooCDso+iPjk2IYzhgoWqA8F4qHvB45S?=
- =?us-ascii?Q?yixtxTmFDYpQg+avgago0srwKXu0brKsyPGLC8ICnuSJczsvsdJGhSQAyU7Y?=
- =?us-ascii?Q?iMJn8qsjzScHj2kMHYouezEZlkrFRqaIecolBCtI7Q9IDBnfT2y5YKXR0qlu?=
- =?us-ascii?Q?MPTu2RrWm1h1k/e8jgSEuXi7Zq9ro1JZdY2N51m54Raa9kD3ajfUtNEzHJYv?=
- =?us-ascii?Q?9ZhBrj/EaylRdj2DnNrqisdNdWaOgordXdrUvX35Gyi4TzvZK3/GTasTkd+P?=
- =?us-ascii?Q?G51F2uGgd02h4CHXIztbsfEH4HavylSjU4/nflbQ52dNUUywsYQWGyzD3K+2?=
- =?us-ascii?Q?cCxp1S67X6VLYbK1l5upky5LIR8vbSo3vgrQGmPCThsmeXXyduOamFibGZzB?=
- =?us-ascii?Q?UW8V/5yej1OX8tqv5Ac86Q5hOSEat91bz+IudxwT55zmwzIYuelz2BjZi2tj?=
- =?us-ascii?Q?NbREzQZ2V1MOMp1Ze0sXTOFX?=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="us-ascii"
+	by ml01.01.org (Postfix) with ESMTPS id 92A11100EF25B
+	for <devel@acpica.org>; Mon,  7 Jun 2021 05:45:46 -0700 (PDT)
+Received: by mail-ot1-f54.google.com with SMTP id 69-20020a9d0a4b0000b02902ed42f141e1so16572500otg.2
+        for <devel@acpica.org>; Mon, 07 Jun 2021 05:45:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Ne/p4NOGCwVSG6gGyVyzO7r+FfStromPMY+PxpPNydI=;
+        b=ff7sDHHWeiK++OTYwPkGdzTzUC1/K8do3mI2MO6xG3nNkLLPQgMRdHFLMVRPv/YIuf
+         oRDoqtb8Qr2zKVNj1YfO7eV4A79hmm6mQHC3rNCPolPZ2+UeKDktEU0AA4PSAoP2jPyi
+         W+rSBte4doFv5l42qxD4R/TAKJVXiCazhhm1GulU6J4w2CVYshKgKJqFiTNHvONOIHs0
+         7Vkt8xYBjhDNBpIoSFhcZdnXTfMhSWDBlgPnrKzg5K5+sM0LGrQP6b8XvsVb6ENb9sfk
+         vgyb6Wgmp57ys+WDkAsRZ5G2oZKype8+DwjCh5d8D1yvT6rDGq2E2Sz23tg1KZ7G4v/d
+         /Klw==
+X-Gm-Message-State: AOAM5334YlqawrgIeQ2oXCUCC+N3YUp7jkGlNpYk7g/6HdNOvaWcTlSd
+	xkMRLaPNRJNfEj2NM9jh+fSENCSv232HyzfU5n4=
+X-Google-Smtp-Source: ABdhPJy+PE0k4m3sO4C/+M2oB5Dp8/vHSk6ur8aGkSkM/rVZq77o5QtmrOm/ZEAzeGQHKTEXMYlTP/dDBrFFSjW8XnE=
+X-Received: by 2002:a9d:3e53:: with SMTP id h19mr13451517otg.260.1623069943825;
+ Mon, 07 Jun 2021 05:45:43 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3256.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ff86688c-0a47-4d30-fc7d-08d9278f9342
-X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Jun 2021 19:33:05.2803
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: mSdTbVLV0Aq2G/qgFtFrBdJC150AtMPCr7lCWCTvf1lYeXdl7HfuS3kalVUUQAozUtZ+e/s0qlbtxDq+nr37Ng==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB5088
-X-OriginatorOrg: intel.com
-Message-ID-Hash: AMZT7XOO2HPVPMACSBAU5ELTVFEHDKAR
-X-Message-ID-Hash: AMZT7XOO2HPVPMACSBAU5ELTVFEHDKAR
-X-MailFrom: robert.moore@intel.com
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
+References: <20210604165047.13243-1-andriy.shevchenko@linux.intel.com> <20210604165047.13243-3-andriy.shevchenko@linux.intel.com>
+In-Reply-To: <20210604165047.13243-3-andriy.shevchenko@linux.intel.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Mon, 7 Jun 2021 14:45:32 +0200
+Message-ID: <CAJZ5v0hk8BiDt5e_P=KXkj3datr_WTCUe7k2u_TkFUPjWm79Aw@mail.gmail.com>
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Message-ID-Hash: EWMUQGH5YGL4JX6NXVPDO5GYQJIVEQWI
+X-Message-ID-Hash: EWMUQGH5YGL4JX6NXVPDO5GYQJIVEQWI
+X-MailFrom: rjwysocki@gmail.com
+X-Mailman-Rule-Hits: nonmember-moderation
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
+CC: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, "Rafael J. Wysocki" <rjw@rjwysocki.net>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Erik Kaneda <erik.kaneda@intel.com>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] ACPICA version 20210604 released
+Subject: [Devel] Re: [PATCH v3 3/3] device property: Unify access to of_node
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/AMZT7XOO2HPVPMACSBAU5ELTVFEHDKAR/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/EWMUQGH5YGL4JX6NXVPDO5GYQJIVEQWI/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-04 June 2021. Summary of changes for version 20210604:
+On Fri, Jun 4, 2021 at 6:50 PM Andy Shevchenko
+<andriy.shevchenko@linux.intel.com> wrote:
+>
+> Historically we have a few variants how we access dev->fwnode
+> and dev->of_node. Some of the functions during development
+> gained different versions of the getters. Unify access to of_node
+> and as a side change slightly refactor ACPI specific branches.
+>
+> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> ---
+> v3: no changes
+> v2: no changes
+>  drivers/base/property.c  | 29 +++++++++++++----------------
+>  include/linux/property.h |  2 +-
+>  2 files changed, 14 insertions(+), 17 deletions(-)
+>
+> diff --git a/drivers/base/property.c b/drivers/base/property.c
+> index c26370aacdc6..d0874f6c29bb 100644
+> --- a/drivers/base/property.c
+> +++ b/drivers/base/property.c
+> @@ -759,13 +759,8 @@ EXPORT_SYMBOL_GPL(fwnode_get_next_available_child_node);
+>  struct fwnode_handle *device_get_next_child_node(struct device *dev,
+>                                                  struct fwnode_handle *child)
+>  {
+> -       struct acpi_device *adev = ACPI_COMPANION(dev);
+> -       struct fwnode_handle *fwnode = NULL, *next;
+> -
+> -       if (dev->of_node)
+> -               fwnode = of_fwnode_handle(dev->of_node);
+> -       else if (adev)
+> -               fwnode = acpi_fwnode_handle(adev);
+> +       const struct fwnode_handle *fwnode = dev_fwnode(dev);
+> +       struct fwnode_handle *next;
+>
+>         /* Try to find a child in primary fwnode */
+>         next = fwnode_get_next_child_node(fwnode, child);
+> @@ -868,28 +863,31 @@ EXPORT_SYMBOL_GPL(device_get_child_node_count);
+>
+>  bool device_dma_supported(struct device *dev)
+>  {
+> +       const struct fwnode_handle *fwnode = dev_fwnode(dev);
+> +
+>         /* For DT, this is always supported.
+>          * For ACPI, this depends on CCA, which
+>          * is determined by the acpi_dma_supported().
+>          */
+> -       if (IS_ENABLED(CONFIG_OF) && dev->of_node)
+> +       if (is_of_node(fwnode))
+>                 return true;
+>
+> -       return acpi_dma_supported(ACPI_COMPANION(dev));
+> +       return acpi_dma_supported(to_acpi_device_node(fwnode));
+>  }
+>  EXPORT_SYMBOL_GPL(device_dma_supported);
+>
+>  enum dev_dma_attr device_get_dma_attr(struct device *dev)
+>  {
+> +       const struct fwnode_handle *fwnode = dev_fwnode(dev);
+>         enum dev_dma_attr attr = DEV_DMA_NOT_SUPPORTED;
+>
+> -       if (IS_ENABLED(CONFIG_OF) && dev->of_node) {
+> -               if (of_dma_is_coherent(dev->of_node))
+> +       if (is_of_node(fwnode)) {
+> +               if (of_dma_is_coherent(to_of_node(fwnode)))
+>                         attr = DEV_DMA_COHERENT;
+>                 else
+>                         attr = DEV_DMA_NON_COHERENT;
+>         } else
+> -               attr = acpi_get_dma_attr(ACPI_COMPANION(dev));
+> +               attr = acpi_get_dma_attr(to_acpi_device_node(fwnode));
+>
+>         return attr;
+>  }
+> @@ -1007,14 +1005,13 @@ EXPORT_SYMBOL(device_get_mac_address);
+>   * Returns Linux IRQ number on success. Other values are determined
+>   * accordingly to acpi_/of_ irq_get() operation.
+>   */
+> -int fwnode_irq_get(struct fwnode_handle *fwnode, unsigned int index)
+> +int fwnode_irq_get(const struct fwnode_handle *fwnode, unsigned int index)
+>  {
+> -       struct device_node *of_node = to_of_node(fwnode);
+>         struct resource res;
+>         int ret;
+>
+> -       if (IS_ENABLED(CONFIG_OF) && of_node)
+> -               return of_irq_get(of_node, index);
+> +       if (is_of_node(fwnode))
+> +               return of_irq_get(to_of_node(fwnode), index);
+>
+>         ret = acpi_irq_get(ACPI_HANDLE_FWNODE(fwnode), index, &res);
+>         if (ret)
+> diff --git a/include/linux/property.h b/include/linux/property.h
+> index 0d876316e61d..073e680c35e2 100644
+> --- a/include/linux/property.h
+> +++ b/include/linux/property.h
+> @@ -119,7 +119,7 @@ struct fwnode_handle *device_get_named_child_node(struct device *dev,
+>  struct fwnode_handle *fwnode_handle_get(struct fwnode_handle *fwnode);
+>  void fwnode_handle_put(struct fwnode_handle *fwnode);
+>
+> -int fwnode_irq_get(struct fwnode_handle *fwnode, unsigned int index);
+> +int fwnode_irq_get(const struct fwnode_handle *fwnode, unsigned int index);
+>
+>  unsigned int device_get_child_node_count(struct device *dev);
+>
+> --
 
-This release is available at https://acpica.org/downloads
-
-1) ACPICA kernel-resident subsystem:
-
-Cleaned up (delete) the context mutex during local address handler object deletion.
-
-Fixed a memory leak caused by the _CID repair function.
-
-Added support for PlatformRtMechanism OperationRegion handler. Adds a new utility function, AcpiUtConvertUuidToString. Writing a buffer to a PlatformRtMechanism fieldunit invokes a bidirectional transaction. The input buffer contains 26 bytes containing 9 bytes of status, a command byte and a 16-byte UUID. This change will simply pass this incoming buffer to a handler registered by the OS.
-
-2) iASL Compiler/Disassembler and ACPICA tools:
-
-Added full support for the PRMT ACPI table (Platform Runtime Mechanism Table). Includes support in the iASL compiler, the disassembler, and the template generator.
-
-Added full support for the BDAT (BIOS Data ACPI Table) ACPI table.
-
-Added full support for the RGRT (Regulatory Graphics Resource Table) ACPI table.
-
-Added full support for the SVKL (Storage Volume Key Location Table) ACPI table. Header file support from Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>.
-
-Completed full support for the IVRS (I/O Virtualization Reporting Structure) ACPI table. Added compiler support for IVRS, updated disassembler support. Adds a new utility, UtIsIdInteger, to determine if a HID/CID is an integer or a string.
-
-Headers: Added more structs to the CEDT table: CXL fixed memory window structure.
-
-ACPI 6.4: MADT: added Multiprocessor Wakeup Mailbox Structure.
-
+Applied as 5.14 material along with the [1-2/3], thanks!
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
