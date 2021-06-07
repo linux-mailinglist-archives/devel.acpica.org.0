@@ -1,54 +1,54 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A054B39DCDB
-	for <lists+devel-acpica@lfdr.de>; Mon,  7 Jun 2021 14:45:51 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [198.145.21.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id E0D1639DF67
+	for <lists+devel-acpica@lfdr.de>; Mon,  7 Jun 2021 16:52:59 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 498BB100EF271;
-	Mon,  7 Jun 2021 05:45:49 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.210.54; helo=mail-ot1-f54.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
+	by ml01.01.org (Postfix) with ESMTP id 586AE100ED48C;
+	Mon,  7 Jun 2021 07:52:58 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.167.172; helo=mail-oi1-f172.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 92A11100EF25B
-	for <devel@acpica.org>; Mon,  7 Jun 2021 05:45:46 -0700 (PDT)
-Received: by mail-ot1-f54.google.com with SMTP id 69-20020a9d0a4b0000b02902ed42f141e1so16572500otg.2
-        for <devel@acpica.org>; Mon, 07 Jun 2021 05:45:46 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTPS id BB1C7100EF276
+	for <devel@acpica.org>; Mon,  7 Jun 2021 07:52:56 -0700 (PDT)
+Received: by mail-oi1-f172.google.com with SMTP id d21so18288824oic.11
+        for <devel@acpica.org>; Mon, 07 Jun 2021 07:52:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Ne/p4NOGCwVSG6gGyVyzO7r+FfStromPMY+PxpPNydI=;
-        b=ff7sDHHWeiK++OTYwPkGdzTzUC1/K8do3mI2MO6xG3nNkLLPQgMRdHFLMVRPv/YIuf
-         oRDoqtb8Qr2zKVNj1YfO7eV4A79hmm6mQHC3rNCPolPZ2+UeKDktEU0AA4PSAoP2jPyi
-         W+rSBte4doFv5l42qxD4R/TAKJVXiCazhhm1GulU6J4w2CVYshKgKJqFiTNHvONOIHs0
-         7Vkt8xYBjhDNBpIoSFhcZdnXTfMhSWDBlgPnrKzg5K5+sM0LGrQP6b8XvsVb6ENb9sfk
-         vgyb6Wgmp57ys+WDkAsRZ5G2oZKype8+DwjCh5d8D1yvT6rDGq2E2Sz23tg1KZ7G4v/d
-         /Klw==
-X-Gm-Message-State: AOAM5334YlqawrgIeQ2oXCUCC+N3YUp7jkGlNpYk7g/6HdNOvaWcTlSd
-	xkMRLaPNRJNfEj2NM9jh+fSENCSv232HyzfU5n4=
-X-Google-Smtp-Source: ABdhPJy+PE0k4m3sO4C/+M2oB5Dp8/vHSk6ur8aGkSkM/rVZq77o5QtmrOm/ZEAzeGQHKTEXMYlTP/dDBrFFSjW8XnE=
-X-Received: by 2002:a9d:3e53:: with SMTP id h19mr13451517otg.260.1623069943825;
- Mon, 07 Jun 2021 05:45:43 -0700 (PDT)
+        bh=vFKKKRb67LGq4j/7jOKF7wGRXnfTmyHqm4pxSTe6iqE=;
+        b=Jfn2zqH92VbnO/AqTtrcOTLbulCX8i4EgFWeMQG8acZpXGhj1ojc1zaX2Ok1aGin5z
+         l4AGJtNRum1O312fASfc5lIFcvtPru44pOeA6cD24dRHBjmyjZzxGM3XTfQu705EZ+O1
+         UmHuw9JzrkDQJxfjTSYOdUEUbY5pksFg3xHzb6UlCV3hzhaFMy7/lP/+F1cGsR++jNA2
+         WrlntqFezYOKHMkLE4kDGR0HWCubVPHsMhbxrwNaKHuYoQ1U/A87EM4OQuUMQ1srjP+r
+         s0hyTUwcgAqVHL0PP4+HxvJdaY0EYsm6pzQTs4gEDk/8weeZqOtgb4zBnKCVBKViEMq9
+         0RPw==
+X-Gm-Message-State: AOAM533/jw/110uwiT52B3aTYrkLqKrFSJKSxUDTC57tenWFp/2ECJ/N
+	hosmvTaUeolJVo4xLZCH7NkEhohfvij0/8tYfBA=
+X-Google-Smtp-Source: ABdhPJwuRWOyfnhsiiN2oAZTElAD/OIy6HNxvm4F6pIar5hcDOtjzrcZfAXKJpjv2/tbxAHYxWHt/mSVGktoFLA+unc=
+X-Received: by 2002:aca:b406:: with SMTP id d6mr11602849oif.71.1623077574350;
+ Mon, 07 Jun 2021 07:52:54 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210604165047.13243-1-andriy.shevchenko@linux.intel.com> <20210604165047.13243-3-andriy.shevchenko@linux.intel.com>
-In-Reply-To: <20210604165047.13243-3-andriy.shevchenko@linux.intel.com>
+References: <20210603224007.120560-1-djrscally@gmail.com> <20210603224007.120560-3-djrscally@gmail.com>
+In-Reply-To: <20210603224007.120560-3-djrscally@gmail.com>
 From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Mon, 7 Jun 2021 14:45:32 +0200
-Message-ID: <CAJZ5v0hk8BiDt5e_P=KXkj3datr_WTCUe7k2u_TkFUPjWm79Aw@mail.gmail.com>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Message-ID-Hash: EWMUQGH5YGL4JX6NXVPDO5GYQJIVEQWI
-X-Message-ID-Hash: EWMUQGH5YGL4JX6NXVPDO5GYQJIVEQWI
+Date: Mon, 7 Jun 2021 16:52:43 +0200
+Message-ID: <CAJZ5v0j8pLo3pjuByYxJue9mr4TOGieYTHm8tghNQgk+LphL=w@mail.gmail.com>
+To: Daniel Scally <djrscally@gmail.com>
+Message-ID-Hash: O4NQI64DXYPN3ZUP6CJ3P4QN6RD4B6MX
+X-Message-ID-Hash: O4NQI64DXYPN3ZUP6CJ3P4QN6RD4B6MX
 X-MailFrom: rjwysocki@gmail.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, "Rafael J. Wysocki" <rjw@rjwysocki.net>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Erik Kaneda <erik.kaneda@intel.com>
+CC: "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Lee Jones <lee.jones@linaro.org>, Hans de Goede <hdegoede@redhat.com>, Maximilian Luz <luzmaximilian@gmail.com>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>, linux-i2c <linux-i2c@vger.kernel.org>, Platform Driver <platform-driver-x86@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Mika Westerberg <mika.westerberg@linux.intel.com>, Linus Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski <bgolaszewski@baylibre.com>, Wolfram Sang <wsa@kernel.org>, Mark Gross <mgross@linux.intel.com>, Erik Kaneda <erik.kaneda@intel.com>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>, Kieran Bingham <kieran.bingham@ideasonboard.com>, Andy Shevchenko <andy.shevchenko@gmail.com>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH v3 3/3] device property: Unify access to of_node
+Subject: [Devel] Re: [PATCH v5 2/6] ACPI: scan: Add function to fetch dependent of acpi device
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/EWMUQGH5YGL4JX6NXVPDO5GYQJIVEQWI/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/O4NQI64DXYPN3ZUP6CJ3P4QN6RD4B6MX/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -57,113 +57,97 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Fri, Jun 4, 2021 at 6:50 PM Andy Shevchenko
-<andriy.shevchenko@linux.intel.com> wrote:
+On Fri, Jun 4, 2021 at 12:41 AM Daniel Scally <djrscally@gmail.com> wrote:
 >
-> Historically we have a few variants how we access dev->fwnode
-> and dev->of_node. Some of the functions during development
-> gained different versions of the getters. Unify access to of_node
-> and as a side change slightly refactor ACPI specific branches.
+> In some ACPI tables we encounter, devices use the _DEP method to assert
+> a dependence on other ACPI devices as opposed to the OpRegions that the
+> specification intends. We need to be able to find those devices "from"
+> the dependee, so add a callback and a wrapper to walk over the
+> acpi_dep_list and return the dependent ACPI device.
 >
-> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+> Signed-off-by: Daniel Scally <djrscally@gmail.com>
 > ---
-> v3: no changes
-> v2: no changes
->  drivers/base/property.c  | 29 +++++++++++++----------------
->  include/linux/property.h |  2 +-
->  2 files changed, 14 insertions(+), 17 deletions(-)
+> Changes since v5:
 >
-> diff --git a/drivers/base/property.c b/drivers/base/property.c
-> index c26370aacdc6..d0874f6c29bb 100644
-> --- a/drivers/base/property.c
-> +++ b/drivers/base/property.c
-> @@ -759,13 +759,8 @@ EXPORT_SYMBOL_GPL(fwnode_get_next_available_child_node);
->  struct fwnode_handle *device_get_next_child_node(struct device *dev,
->                                                  struct fwnode_handle *child)
->  {
-> -       struct acpi_device *adev = ACPI_COMPANION(dev);
-> -       struct fwnode_handle *fwnode = NULL, *next;
-> -
-> -       if (dev->of_node)
-> -               fwnode = of_fwnode_handle(dev->of_node);
-> -       else if (adev)
-> -               fwnode = acpi_fwnode_handle(adev);
-> +       const struct fwnode_handle *fwnode = dev_fwnode(dev);
-> +       struct fwnode_handle *next;
+>         - Functions renamed
 >
->         /* Try to find a child in primary fwnode */
->         next = fwnode_get_next_child_node(fwnode, child);
-> @@ -868,28 +863,31 @@ EXPORT_SYMBOL_GPL(device_get_child_node_count);
+>  drivers/acpi/scan.c     | 35 +++++++++++++++++++++++++++++++++++
+>  include/acpi/acpi_bus.h |  1 +
+>  2 files changed, 36 insertions(+)
 >
->  bool device_dma_supported(struct device *dev)
->  {
-> +       const struct fwnode_handle *fwnode = dev_fwnode(dev);
+> diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
+> index 195635c3462b..9af64c34e286 100644
+> --- a/drivers/acpi/scan.c
+> +++ b/drivers/acpi/scan.c
+> @@ -2105,6 +2105,20 @@ static void acpi_bus_attach(struct acpi_device *device, bool first_pass)
+>                 device->handler->hotplug.notify_online(device);
+>  }
+>
+> +static int acpi_dev_get_first_consumer_dev_cb(struct acpi_dep_data *dep, void *data)
+> +{
+> +       struct acpi_device *adev;
 > +
->         /* For DT, this is always supported.
->          * For ACPI, this depends on CCA, which
->          * is determined by the acpi_dma_supported().
->          */
-> -       if (IS_ENABLED(CONFIG_OF) && dev->of_node)
-> +       if (is_of_node(fwnode))
->                 return true;
->
-> -       return acpi_dma_supported(ACPI_COMPANION(dev));
-> +       return acpi_dma_supported(to_acpi_device_node(fwnode));
->  }
->  EXPORT_SYMBOL_GPL(device_dma_supported);
->
->  enum dev_dma_attr device_get_dma_attr(struct device *dev)
+> +       adev = acpi_bus_get_acpi_device(dep->consumer);
+> +       if (!adev)
+> +               /* If we don't find an adev then we want to continue parsing */
+> +               return 0;
+> +
+> +       *(struct acpi_device **)data = adev;
+> +
+> +       return 1;
+> +}
+> +
+>  static int acpi_scan_clear_dep(struct acpi_dep_data *dep, void *data)
 >  {
-> +       const struct fwnode_handle *fwnode = dev_fwnode(dev);
->         enum dev_dma_attr attr = DEV_DMA_NOT_SUPPORTED;
->
-> -       if (IS_ENABLED(CONFIG_OF) && dev->of_node) {
-> -               if (of_dma_is_coherent(dev->of_node))
-> +       if (is_of_node(fwnode)) {
-> +               if (of_dma_is_coherent(to_of_node(fwnode)))
->                         attr = DEV_DMA_COHERENT;
->                 else
->                         attr = DEV_DMA_NON_COHERENT;
->         } else
-> -               attr = acpi_get_dma_attr(ACPI_COMPANION(dev));
-> +               attr = acpi_get_dma_attr(to_acpi_device_node(fwnode));
->
->         return attr;
+>         struct acpi_device *adev;
+> @@ -2168,6 +2182,27 @@ void acpi_dev_clear_dependencies(struct acpi_device *supplier)
 >  }
-> @@ -1007,14 +1005,13 @@ EXPORT_SYMBOL(device_get_mac_address);
->   * Returns Linux IRQ number on success. Other values are determined
->   * accordingly to acpi_/of_ irq_get() operation.
->   */
-> -int fwnode_irq_get(struct fwnode_handle *fwnode, unsigned int index)
-> +int fwnode_irq_get(const struct fwnode_handle *fwnode, unsigned int index)
->  {
-> -       struct device_node *of_node = to_of_node(fwnode);
->         struct resource res;
->         int ret;
+>  EXPORT_SYMBOL_GPL(acpi_dev_clear_dependencies);
 >
-> -       if (IS_ENABLED(CONFIG_OF) && of_node)
-> -               return of_irq_get(of_node, index);
-> +       if (is_of_node(fwnode))
-> +               return of_irq_get(to_of_node(fwnode), index);
+> +/**
+> + * acpi_dev_get_first_consumer_dev - Return ACPI device dependent on @supplier
+> + * @supplier: Pointer to the dependee device
+> + *
+> + * Returns the first &struct acpi_device which declares itself dependent on
+> + * @supplier via the _DEP buffer, parsed from the acpi_dep_list.
+> + *
+> + * The caller is responsible for putting the reference to adev when it is no
+> + * longer needed.
+> + */
+> +struct acpi_device *acpi_dev_get_first_consumer_dev(struct acpi_device *supplier)
+> +{
+> +       struct acpi_device *adev = NULL;
+> +
+> +       acpi_walk_dep_device_list(supplier->handle,
+> +                                 acpi_dev_get_first_consumer_dev_cb, &adev);
+> +
+> +       return adev;
+> +}
+> +EXPORT_SYMBOL_GPL(acpi_dev_get_first_consumer_dev);
+> +
+>  /**
+>   * acpi_bus_scan - Add ACPI device node objects in a given namespace scope.
+>   * @handle: Root of the namespace scope to scan.
+> diff --git a/include/acpi/acpi_bus.h b/include/acpi/acpi_bus.h
+> index 0b2c4f170f4d..4bed30e61c5b 100644
+> --- a/include/acpi/acpi_bus.h
+> +++ b/include/acpi/acpi_bus.h
+> @@ -692,6 +692,7 @@ static inline bool acpi_device_can_poweroff(struct acpi_device *adev)
+>  bool acpi_dev_hid_uid_match(struct acpi_device *adev, const char *hid2, const char *uid2);
 >
->         ret = acpi_irq_get(ACPI_HANDLE_FWNODE(fwnode), index, &res);
->         if (ret)
-> diff --git a/include/linux/property.h b/include/linux/property.h
-> index 0d876316e61d..073e680c35e2 100644
-> --- a/include/linux/property.h
-> +++ b/include/linux/property.h
-> @@ -119,7 +119,7 @@ struct fwnode_handle *device_get_named_child_node(struct device *dev,
->  struct fwnode_handle *fwnode_handle_get(struct fwnode_handle *fwnode);
->  void fwnode_handle_put(struct fwnode_handle *fwnode);
->
-> -int fwnode_irq_get(struct fwnode_handle *fwnode, unsigned int index);
-> +int fwnode_irq_get(const struct fwnode_handle *fwnode, unsigned int index);
->
->  unsigned int device_get_child_node_count(struct device *dev);
->
+>  void acpi_dev_clear_dependencies(struct acpi_device *supplier);
+> +struct acpi_device *acpi_dev_get_first_consumer_dev(struct acpi_device *supplier);
+>  struct acpi_device *
+>  acpi_dev_get_next_match_dev(struct acpi_device *adev, const char *hid, const char *uid, s64 hrv);
+>  struct acpi_device *
 > --
 
-Applied as 5.14 material along with the [1-2/3], thanks!
+Applied as 5.14 material along the [1/6].
+
+I'll expose a branch containing the 2 patches to pull from later this week.
+
+Thanks!
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
