@@ -1,52 +1,65 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 584623A7E68
-	for <lists+devel-acpica@lfdr.de>; Tue, 15 Jun 2021 14:50:53 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF8CD3AA2E8
+	for <lists+devel-acpica@lfdr.de>; Wed, 16 Jun 2021 20:08:34 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 9629E100EC1DA;
-	Tue, 15 Jun 2021 05:50:49 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.43; helo=mga05.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	by ml01.01.org (Postfix) with ESMTP id 9E715100EBBD7;
+	Wed, 16 Jun 2021 11:08:32 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2607:f8b0:4864:20::434; helo=mail-pf1-x434.google.com; envelope-from=andy.shevchenko@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 837E8100EC1CE
-	for <devel@acpica.org>; Tue, 15 Jun 2021 05:50:47 -0700 (PDT)
-IronPort-SDR: 81hzenmGqU+wbgPp+YuYi2jzH+jMsuHcsW+fTqcI5Gc3c7yNRGWGf2swA88vVbxXocVU3sB0d7
- DcntO6iqvrcQ==
-X-IronPort-AV: E=McAfee;i="6200,9189,10015"; a="291614606"
-X-IronPort-AV: E=Sophos;i="5.83,275,1616482800";
-   d="scan'208";a="291614606"
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2021 05:50:46 -0700
-IronPort-SDR: vS+9HGsqJY+jTnhSAu1snQ6Dbko2xkRPpESpYJA/t93X7zd2P5qrI+CrkQ6Ud8mSgY0PJVzIGQ
- 90vcTbu+OPPA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.83,275,1616482800";
-   d="scan'208";a="415395031"
-Received: from lkp-server01.sh.intel.com (HELO 4aae0cb4f5b5) ([10.239.97.150])
-  by fmsmga007.fm.intel.com with ESMTP; 15 Jun 2021 05:50:45 -0700
-Received: from kbuild by 4aae0cb4f5b5 with local (Exim 4.92)
-	(envelope-from <lkp@intel.com>)
-	id 1lt8Wi-0000QX-71; Tue, 15 Jun 2021 12:50:44 +0000
-Date: Tue, 15 Jun 2021 20:50:35 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <60c8a21b.k+Zxaz9bcVlv3Uh1%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTPS id 8B436100EBBBD
+	for <devel@acpica.org>; Wed, 16 Jun 2021 11:08:30 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id u18so2826207pfk.11
+        for <devel@acpica.org>; Wed, 16 Jun 2021 11:08:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=6ycID7DbnSZP9eaDdKUdtHxmB+2/7XuKoHI3CIq/KZU=;
+        b=Jusjd8nRH1tNzqbReIyRyGMqdNOZovEla8AilFx6u2cRXOUefONqtH9QpYSdpHp3u+
+         3+Vd0OqbzSyY/oNBvhzpfDvCobe4xCjl3J+EiSn+bCHq9Vv7xpC52u85U5i4MYpxl94J
+         cr0vR3tVDddfem3jhtkQh1m6cYHCmdRbHoSrQfLyakbg+PYxBG6iE7MVET2hnKABr3MM
+         XtCI7TOy4jZrIsCCpbHaIC0hSuJMoyTxuqe4dA8UqiVBhXPrBZToVXJ/XsFZahvdvUtU
+         okUOsnkEuh4UZeS44dMwNFAoWjlMGsjKemltQ5vmZvC0yihNdlbajQ0zOkJS9zXE/feB
+         BJwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6ycID7DbnSZP9eaDdKUdtHxmB+2/7XuKoHI3CIq/KZU=;
+        b=Ft60Z+Io+ywzj5wCr8C5Jf4Wtv5NbitdQAnhc89+Za/AQ2AxsZOpa4DCdEfJyNgf3B
+         KEx0wtovMtyUVZkJXpNgJJrFuGGZhXsqgVE9DXRYXyhHCBfdeTyWTJrgsgiRryBmSpml
+         kCQknWKVUDox90qyho5qK+QR2k6KuGFJ+/SwTaRUEFKs2P5yKzbMoc4U2jcjknWfdisz
+         WgkxZOdyaAY+A6cTN/lENhEd+bTJaQs04bYFuGWrGMTi4Prk8IQAyt6hqI1ro+Vtwt4Y
+         uxFurtZYN/YpppR+ClN+lZK2rYTeOKSGg97Zs+/6NeYu5XFqIDmQ1XhRsmuYVuHsKBBk
+         wpuA==
+X-Gm-Message-State: AOAM531XLXixEf2wLSDx6mhOrc/70I6EYakG4sJcwm9Xh8qw2Urul0m0
+	rgUqcDOmtaGOM0fyXBZRVnAxJyHTjKmAlcaphuo=
+X-Google-Smtp-Source: ABdhPJw1QqhinOwO4jllcnvXxgpVFMS7su2PcbZWi0JnPyMT+n+Bj40r0AGZmLY6UjTJJqLlDf8lVpVVfdQrNbCTlz0=
+X-Received: by 2002:a63:4145:: with SMTP id o66mr889626pga.4.1623866907518;
+ Wed, 16 Jun 2021 11:08:27 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID-Hash: M2K2SRTVP7G233JHNFIQJ3CYUMC3KJU7
-X-Message-ID-Hash: M2K2SRTVP7G233JHNFIQJ3CYUMC3KJU7
-X-MailFrom: lkp@intel.com
-X-Mailman-Rule-Hits: nonmember-moderation
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+References: <20210603224007.120560-1-djrscally@gmail.com> <20210603224007.120560-6-djrscally@gmail.com>
+ <ea322abe-fa78-bbc3-b4c5-b372a4f28235@redhat.com>
+In-Reply-To: <ea322abe-fa78-bbc3-b4c5-b372a4f28235@redhat.com>
+From: Andy Shevchenko <andy.shevchenko@gmail.com>
+Date: Wed, 16 Jun 2021 21:08:11 +0300
+Message-ID: <CAHp75VccZbv8+u-jO8wYSsyQrw+Bd_zeDa==aiTvkh=fteuT3w@mail.gmail.com>
+To: Hans de Goede <hdegoede@redhat.com>
+Message-ID-Hash: FR2J6W3HNTDUQ27H6GJXNP6P6HE6IUAI
+X-Message-ID-Hash: FR2J6W3HNTDUQ27H6GJXNP6P6HE6IUAI
+X-MailFrom: andy.shevchenko@gmail.com
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
+CC: Daniel Scally <djrscally@gmail.com>, "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Lee Jones <lee.jones@linaro.org>, Maximilian Luz <luzmaximilian@gmail.com>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>, linux-i2c <linux-i2c@vger.kernel.org>, Platform Driver <platform-driver-x86@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Mika Westerberg <mika.westerberg@linux.intel.com>, Linus Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski <bgolaszewski@baylibre.com>, Wolfram Sang <wsa@kernel.org>, Mark Gross <mgross@linux.intel.com>, Erik Kaneda <erik.kaneda@intel.com>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>, kieran.bingham@ideasonboard.com
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS f345fb812cc54748b0668e0aeb285aa119fcb10d
+Subject: [Devel] Re: [PATCH v5 5/6] platform/x86: Add intel_skl_int3472 driver
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/M2K2SRTVP7G233JHNFIQJ3CYUMC3KJU7/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/FR2J6W3HNTDUQ27H6GJXNP6P6HE6IUAI/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -55,113 +68,43 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-branch HEAD: f345fb812cc54748b0668e0aeb285aa119fcb10d  Merge branch 'acpi-processor' into bleeding-edge
+On Wed, Jun 16, 2021 at 8:58 PM Hans de Goede <hdegoede@redhat.com> wrote:
+> On 6/4/21 12:40 AM, Daniel Scally wrote:
+> > ACPI devices with _HID INT3472 are currently matched to the tps68470
+> > driver, however this does not cover all situations in which that _HID
+> > occurs. We've encountered three possibilities:
+> >
+> > 1. On Chrome OS devices, an ACPI device with _HID INT3472 (representing
+> > a physical TPS68470 device) that requires a GPIO and OpRegion driver
+> > 2. On devices designed for Windows, an ACPI device with _HID INT3472
+> > (again representing a physical TPS68470 device) which requires GPIO,
+> > Clock and Regulator drivers.
+> > 3. On other devices designed for Windows, an ACPI device with _HID
+> > INT3472 which does **not** represent a physical TPS68470, and is instead
+> > used as a dummy device to group some system GPIO lines which are meant
+> > to be consumed by the sensor that is dependent on this entry.
+> >
+> > This commit adds a new module, registering a platform driver to deal
+> > with the 3rd scenario plus an i2c driver to deal with #1 and #2, by
+> > querying the CLDB buffer found against INT3472 entries to determine
+> > which is most appropriate.
+> >
+> > Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+> > Signed-off-by: Daniel Scally <djrscally@gmail.com>
+>
+> Thank you for your patch, I've applied this patch to my review-hans
+> branch:
+> https://git.kernel.org/pub/scm/linux/kernel/git/pdx86/platform-drivers-x86.git/log/?h=review-hans
+>
+> I've fixed up the missing static marking of skl_int3472_tps68470_calc_type()
+> spotted by lkp@intel.com while applying the patch to my tree.
 
-elapsed time: 1255m
+Are you going to apply patch 6 as well?
+IIRC it's acked by Lee.
 
-configs tested: 89
-configs skipped: 2
-
-The following configs have been built successfully.
-More configs may be tested in the coming days.
-
-gcc tested configs:
-arm                                 defconfig
-arm64                            allyesconfig
-arm64                               defconfig
-arm                              allyesconfig
-arm                              allmodconfig
-powerpc                      chrp32_defconfig
-nios2                         10m50_defconfig
-arm                           omap1_defconfig
-csky                                defconfig
-sh                     magicpanelr2_defconfig
-powerpc                 mpc8272_ads_defconfig
-powerpc                      walnut_defconfig
-m68k                        mvme16x_defconfig
-arm                         mv78xx0_defconfig
-arm                            dove_defconfig
-mips                      maltasmvp_defconfig
-x86_64                            allnoconfig
-ia64                             allmodconfig
-ia64                                defconfig
-ia64                             allyesconfig
-m68k                             allmodconfig
-m68k                                defconfig
-m68k                             allyesconfig
-nios2                               defconfig
-arc                              allyesconfig
-nds32                             allnoconfig
-nds32                               defconfig
-nios2                            allyesconfig
-alpha                               defconfig
-alpha                            allyesconfig
-xtensa                           allyesconfig
-h8300                            allyesconfig
-arc                                 defconfig
-sh                               allmodconfig
-parisc                              defconfig
-s390                             allyesconfig
-s390                             allmodconfig
-parisc                           allyesconfig
-s390                                defconfig
-i386                             allyesconfig
-sparc                            allyesconfig
-sparc                               defconfig
-i386                                defconfig
-mips                             allyesconfig
-mips                             allmodconfig
-powerpc                          allyesconfig
-powerpc                          allmodconfig
-powerpc                           allnoconfig
-i386                 randconfig-a002-20210613
-i386                 randconfig-a006-20210613
-i386                 randconfig-a001-20210613
-i386                 randconfig-a004-20210613
-i386                 randconfig-a005-20210613
-i386                 randconfig-a003-20210613
-i386                 randconfig-a015-20210613
-i386                 randconfig-a013-20210613
-i386                 randconfig-a016-20210613
-i386                 randconfig-a014-20210613
-i386                 randconfig-a012-20210613
-i386                 randconfig-a011-20210613
-riscv                    nommu_k210_defconfig
-riscv                            allyesconfig
-riscv                    nommu_virt_defconfig
-riscv                             allnoconfig
-riscv                               defconfig
-riscv                          rv32_defconfig
-riscv                            allmodconfig
-um                           x86_64_defconfig
-um                             i386_defconfig
-um                            kunit_defconfig
-x86_64                           allyesconfig
-x86_64                    rhel-8.3-kselftests
-x86_64                              defconfig
-x86_64                               rhel-8.3
-x86_64                      rhel-8.3-kbuiltin
-x86_64                                  kexec
-
-clang tested configs:
-x86_64               randconfig-b001-20210614
-x86_64               randconfig-a015-20210613
-x86_64               randconfig-a011-20210613
-x86_64               randconfig-a014-20210613
-x86_64               randconfig-a012-20210613
-x86_64               randconfig-a013-20210613
-x86_64               randconfig-a016-20210613
-x86_64               randconfig-a001-20210614
-x86_64               randconfig-a004-20210614
-x86_64               randconfig-a002-20210614
-x86_64               randconfig-a003-20210614
-x86_64               randconfig-a006-20210614
-x86_64               randconfig-a005-20210614
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+-- 
+With Best Regards,
+Andy Shevchenko
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
