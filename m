@@ -1,209 +1,101 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id B25443B3C0F
-	for <lists+devel-acpica@lfdr.de>; Fri, 25 Jun 2021 07:18:40 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B67563B4821
+	for <lists+devel-acpica@lfdr.de>; Fri, 25 Jun 2021 19:20:41 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 36140100EB835;
-	Thu, 24 Jun 2021 22:18:37 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.120; helo=mga04.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	by ml01.01.org (Postfix) with ESMTP id 69A88100EC1DA;
+	Fri, 25 Jun 2021 10:20:39 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.167.181; helo=mail-oi1-f181.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id F1B71100EB831
-	for <devel@acpica.org>; Thu, 24 Jun 2021 22:18:33 -0700 (PDT)
-IronPort-SDR: b6HsDi8aiufT4tYYr09ZfNy6lLuVEAU/JcXRFNmfCZ/7xu8QPCqUcupltVNUbFHs3/Vh6LEA32
- +QKJ8kOnISZA==
-X-IronPort-AV: E=McAfee;i="6200,9189,10025"; a="205783687"
-X-IronPort-AV: E=Sophos;i="5.83,298,1616482800";
-   d="scan'208";a="205783687"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jun 2021 22:18:33 -0700
-IronPort-SDR: V6EPCRFObLOM6ic/Jip5MuxB+q+VncrqH2kPNN5YOYqZJ0uEgPhyu8UtDgRZKPBbkwlQe2UpCZ
- 3fsIzWxR8vug==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.83,298,1616482800";
-   d="scan'208";a="455322984"
-Received: from lkp-server01.sh.intel.com (HELO 4aae0cb4f5b5) ([10.239.97.150])
-  by fmsmga008.fm.intel.com with ESMTP; 24 Jun 2021 22:18:32 -0700
-Received: from kbuild by 4aae0cb4f5b5 with local (Exim 4.92)
-	(envelope-from <lkp@intel.com>)
-	id 1lweEZ-0006vY-06; Fri, 25 Jun 2021 05:18:31 +0000
-Date: Fri, 25 Jun 2021 13:18:02 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <60d5670a.UijW7MuUaohvYlvE%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTPS id 29D91100EF27E
+	for <devel@acpica.org>; Fri, 25 Jun 2021 10:20:37 -0700 (PDT)
+Received: by mail-oi1-f181.google.com with SMTP id s23so12064140oiw.9
+        for <devel@acpica.org>; Fri, 25 Jun 2021 10:20:36 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=iQHYTvyd4a0AyeWeHM8/s+AdYzRSjG7DUNNZmMzSrVs=;
+        b=NP9K06UXLtvwQ3qp4Ix36sqxTvQ9zKLWJS35g9SqZ/RrRcLjKc6PtJbF20sSrad5hy
+         PgehJAPLx4NJjwXvb3L/6s21teVTzyCSFTYnc7NO1OJ39YWj4dd5CpL+y/Y0wolRI5Jh
+         gQDGT5/kEbW5ePHt1k/NDg0vbgbj1gNpW/E+gC4Snpowdl6jL523YAAW0Y8H0lub0RUx
+         4MNVDVaAmKhmpJH3FYaQr8Ty9NMJ5gMBt8lSQud6z9n8JVlO4cAc2FppZh0ZEcH3wbGo
+         wxXC+IL5SpavTuaW2eyZpmMDPyyq6q5WlhmQFQGsHT0FoXJo/2hINcPDzZjHOMcR5Eth
+         55PA==
+X-Gm-Message-State: AOAM530h42kGz4RrStkpmzcsjpi4Ct/MfHdZnOE+6ROyScF70VfpjtLd
+	/iiN8cZUJ1en/8eYFTybTiXu4DxP2V8M17r2XPk=
+X-Google-Smtp-Source: ABdhPJwviMtRjL4//xOjfoZkWyYtshQCaFM/jcVobJ3k3NM5Bk3nG1/Kf8yQOqfOuO5JQTsz5UFALVRC33pbcmDXe/w=
+X-Received: by 2002:aca:f0d5:: with SMTP id o204mr9019606oih.71.1624641633957;
+ Fri, 25 Jun 2021 10:20:33 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID-Hash: ACDUZFTCC335DPNGZAATQREP4GTBKJCB
-X-Message-ID-Hash: ACDUZFTCC335DPNGZAATQREP4GTBKJCB
-X-MailFrom: lkp@intel.com
+References: <20210621200459.3558199-1-mw@semihalf.com> <CAPv3WKctDU7WOxHzeHc49-G_h42qX-pUpinJN2CVHNoRH86QHw@mail.gmail.com>
+ <CAPv3WKf=ufj-RbqOKm3cjOQcG1PDAEAkVLdLQUkRK94=_vtj9w@mail.gmail.com>
+In-Reply-To: <CAPv3WKf=ufj-RbqOKm3cjOQcG1PDAEAkVLdLQUkRK94=_vtj9w@mail.gmail.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Fri, 25 Jun 2021 19:20:23 +0200
+Message-ID: <CAJZ5v0j9eTL476N7FJ+-m0VpbCdtOQZkZBtgvQ__3U1Jvs_cPg@mail.gmail.com>
+To: Marcin Wojtas <mw@semihalf.com>
+Message-ID-Hash: AO37LFXKDXVFSZHBFWQ2YLSLN5TEGVM5
+X-Message-ID-Hash: AO37LFXKDXVFSZHBFWQ2YLSLN5TEGVM5
+X-MailFrom: rjwysocki@gmail.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+CC: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Grzegorz Jaszczyk <jaz@semihalf.com>, Grzegorz Bernacki <gjb@semihalf.com>, upstream@semihalf.com, Samer El-Haj-Mahmoud <Samer.El-Haj-Mahmoud@arm.com>, Jon Nettleton <jon@solid-run.com>, Tomasz Nowicki <tn@semihalf.com>, "Rafael J. Wysocki" <rjw@rjwysocki.net>, Erik Kaneda <erik.kaneda@intel.com>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS 3304616e985fa1c05e1a111375480fc88d71a574
+Subject: [Devel] Re: [PATCH] ACPI: SPCR: Add new 16550-compatible Serial Port Subtype
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/ACDUZFTCC335DPNGZAATQREP4GTBKJCB/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/AO37LFXKDXVFSZHBFWQ2YLSLN5TEGVM5/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-branch HEAD: 3304616e985fa1c05e1a111375480fc88d71a574  Merge branch 'pm-cpufreq' into linux-next
-
-elapsed time: 745m
-
-configs tested: 130
-configs skipped: 4
-
-The following configs have been built successfully.
-More configs may be tested in the coming days.
-
-gcc tested configs:
-arm                                 defconfig
-arm64                            allyesconfig
-arm64                               defconfig
-arm                              allyesconfig
-arm                              allmodconfig
-arm                             rpc_defconfig
-arm                        magician_defconfig
-mips                      maltasmvp_defconfig
-powerpc                      ppc44x_defconfig
-s390                                defconfig
-alpha                            alldefconfig
-m68k                          amiga_defconfig
-powerpc                     ep8248e_defconfig
-mips                        omega2p_defconfig
-arm                         s5pv210_defconfig
-mips                  maltasmvp_eva_defconfig
-arm                        spear6xx_defconfig
-sh                             espt_defconfig
-mips                        qi_lb60_defconfig
-h8300                            alldefconfig
-powerpc                     akebono_defconfig
-mips                        workpad_defconfig
-xtensa                generic_kc705_defconfig
-sh                          urquell_defconfig
-sh                         ecovec24_defconfig
-sh                        edosk7760_defconfig
-powerpc                      katmai_defconfig
-powerpc                 mpc834x_mds_defconfig
-arc                        nsimosci_defconfig
-arm                        clps711x_defconfig
-arm                        multi_v5_defconfig
-m68k                        m5307c3_defconfig
-m68k                         amcore_defconfig
-xtensa                          iss_defconfig
-arm                       multi_v4t_defconfig
-powerpc               mpc834x_itxgp_defconfig
-powerpc                 mpc8313_rdb_defconfig
-arm                   milbeaut_m10v_defconfig
-arm                           tegra_defconfig
-powerpc                           allnoconfig
-powerpc                     sbc8548_defconfig
-arm                         palmz72_defconfig
-m68k                        mvme147_defconfig
-arm                          ixp4xx_defconfig
-arm                          pxa910_defconfig
-powerpc                     ppa8548_defconfig
-x86_64                            allnoconfig
-ia64                             allmodconfig
-ia64                                defconfig
-ia64                             allyesconfig
-m68k                             allmodconfig
-m68k                                defconfig
-m68k                             allyesconfig
-nios2                               defconfig
-arc                              allyesconfig
-nds32                             allnoconfig
-nds32                               defconfig
-nios2                            allyesconfig
-csky                                defconfig
-alpha                               defconfig
-alpha                            allyesconfig
-xtensa                           allyesconfig
-h8300                            allyesconfig
-arc                                 defconfig
-sh                               allmodconfig
-parisc                              defconfig
-s390                             allyesconfig
-s390                             allmodconfig
-parisc                           allyesconfig
-i386                             allyesconfig
-sparc                            allyesconfig
-sparc                               defconfig
-i386                                defconfig
-mips                             allyesconfig
-mips                             allmodconfig
-powerpc                          allyesconfig
-powerpc                          allmodconfig
-i386                 randconfig-a001-20210622
-i386                 randconfig-a002-20210622
-i386                 randconfig-a003-20210622
-i386                 randconfig-a006-20210622
-i386                 randconfig-a005-20210622
-i386                 randconfig-a004-20210622
-i386                 randconfig-a002-20210623
-i386                 randconfig-a001-20210623
-i386                 randconfig-a003-20210623
-i386                 randconfig-a006-20210623
-i386                 randconfig-a005-20210623
-i386                 randconfig-a004-20210623
-x86_64               randconfig-a012-20210622
-x86_64               randconfig-a016-20210622
-x86_64               randconfig-a015-20210622
-x86_64               randconfig-a014-20210622
-x86_64               randconfig-a013-20210622
-x86_64               randconfig-a011-20210622
-i386                 randconfig-a011-20210623
-i386                 randconfig-a014-20210623
-i386                 randconfig-a013-20210623
-i386                 randconfig-a015-20210623
-i386                 randconfig-a012-20210623
-i386                 randconfig-a016-20210623
-i386                 randconfig-a011-20210622
-i386                 randconfig-a014-20210622
-i386                 randconfig-a013-20210622
-i386                 randconfig-a015-20210622
-i386                 randconfig-a016-20210622
-i386                 randconfig-a012-20210622
-riscv                    nommu_k210_defconfig
-riscv                            allyesconfig
-riscv                    nommu_virt_defconfig
-riscv                             allnoconfig
-riscv                               defconfig
-riscv                          rv32_defconfig
-riscv                            allmodconfig
-x86_64                    rhel-8.3-kselftests
-um                           x86_64_defconfig
-um                             i386_defconfig
-um                            kunit_defconfig
-x86_64                           allyesconfig
-x86_64                              defconfig
-x86_64                               rhel-8.3
-x86_64                      rhel-8.3-kbuiltin
-x86_64                                  kexec
-
-clang tested configs:
-x86_64               randconfig-b001-20210622
-x86_64               randconfig-a002-20210622
-x86_64               randconfig-a001-20210622
-x86_64               randconfig-a005-20210622
-x86_64               randconfig-a003-20210622
-x86_64               randconfig-a004-20210622
-x86_64               randconfig-a006-20210622
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
-_______________________________________________
-Devel mailing list -- devel@acpica.org
-To unsubscribe send an email to devel-leave@acpica.org
-%(web_page_url)slistinfo%(cgiext)s/%(_internal_name)s
+T24gRnJpLCBKdW4gMjUsIDIwMjEgYXQgNzoxOCBQTSBNYXJjaW4gV29qdGFzIDxtd0BzZW1paGFs
+Zi5jb20+IHdyb3RlOg0KPg0KPiBIaSwNCj4NCj4gcG9uLiwgMjEgY3plIDIwMjEgbyAyMjowNiBN
+YXJjaW4gV29qdGFzIDxtd0BzZW1paGFsZi5jb20+IG5hcGlzYcWCKGEpOg0KPiA+DQo+ID4gQXBv
+bG9naWVzIGZvciB0aGUgcGF0Y2ggcHJlZml4LCBvZiBjb3Vyc2UgaXQncyBhIGZpcnN0IHZlcnNp
+b24gYW5kDQo+ID4gdW5yZWxhdGVkIHRvIHRoZSBuZXR3b3JraW5nIHN1YnN5c3RlbS4NCj4gPg0K
+PiA+IEJlc3QgcmVnYXJkcywNCj4gPiBNYXJjaW4NCj4gPg0KPiA+DQo+ID4gcG9uLiwgMjEgY3pl
+IDIwMjEgbyAyMjowNSBNYXJjaW4gV29qdGFzIDxtd0BzZW1paGFsZi5jb20+IG5hcGlzYcWCKGEp
+Og0KPiA+ID4NCj4gPiA+IFRoZSBNaWNyb3NvZnQgRGVidWcgUG9ydCBUYWJsZSAyIChEQkcyKSBz
+cGVjaWZpY2F0aW9uIHJldmlzaW9uDQo+ID4gPiBNYXkgMzEsIDIwMTcgYWRkcyBzdXBwb3J0IGZv
+ciAxNjU1MC1jb21wYXRpYmxlIFNlcmlhbCBQb3J0DQo+ID4gPiBTdWJ0eXBlIHdpdGggcGFyYW1l
+dGVycyBkZWZpbmVkIGluIEdlbmVyaWMgQWRkcmVzcyBTdHJ1Y3R1cmUgKEdBUykgWzFdDQo+ID4g
+Pg0KPiA+ID4gQWRkIGl0cyBzdXBwb3J0IGluIFNQQ1IgcGFyc2luZyByb3V0aW5lLg0KPiA+ID4N
+Cj4gPiA+IFsxXSBodHRwczovL2RvY3MubWljcm9zb2Z0LmNvbS9lbi11cy93aW5kb3dzLWhhcmR3
+YXJlL2RyaXZlcnMvYnJpbmd1cC9hY3BpLWRlYnVnLXBvcnQtdGFibGUNCj4gPiA+DQo+ID4gPiBT
+aWduZWQtb2ZmLWJ5OiBNYXJjaW4gV29qdGFzIDxtd0BzZW1paGFsZi5jb20+DQo+ID4gPiAtLS0N
+Cj4gPiA+ICBpbmNsdWRlL2FjcGkvYWN0YmwxLmggfCAxICsNCj4gPiA+ICBkcml2ZXJzL2FjcGkv
+c3Bjci5jICAgfCAxICsNCj4gPiA+ICAyIGZpbGVzIGNoYW5nZWQsIDIgaW5zZXJ0aW9ucygrKQ0K
+PiA+ID4NCj4gPiA+IGRpZmYgLS1naXQgYS9pbmNsdWRlL2FjcGkvYWN0YmwxLmggYi9pbmNsdWRl
+L2FjcGkvYWN0YmwxLmgNCj4gPiA+IGluZGV4IGNlNTk5MDNjMjY5NS4uZjc0NjAxMmViYThkIDEw
+MDY0NA0KPiA+ID4gLS0tIGEvaW5jbHVkZS9hY3BpL2FjdGJsMS5oDQo+ID4gPiArKysgYi9pbmNs
+dWRlL2FjcGkvYWN0YmwxLmgNCj4gPiA+IEBAIC00OTgsNiArNDk4LDcgQEAgc3RydWN0IGFjcGlf
+ZGJnMl9kZXZpY2Ugew0KPiA+ID4gICNkZWZpbmUgQUNQSV9EQkcyX0FSTV9TQlNBX0dFTkVSSUMg
+IDB4MDAwRQ0KPiA+ID4gICNkZWZpbmUgQUNQSV9EQkcyX0FSTV9EQ0MgICAgICAgICAgIDB4MDAw
+Rg0KPiA+ID4gICNkZWZpbmUgQUNQSV9EQkcyX0JDTTI4MzUgICAgICAgICAgIDB4MDAxMA0KPiA+
+ID4gKyNkZWZpbmUgQUNQSV9EQkcyXzE2NTUwX1dJVEhfR0FTICAgIDB4MDAxMg0KPiA+ID4NCj4g
+PiA+ICAjZGVmaW5lIEFDUElfREJHMl8xMzk0X1NUQU5EQVJEICAgICAweDAwMDANCj4gPiA+DQo+
+ID4gPiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9hY3BpL3NwY3IuYyBiL2RyaXZlcnMvYWNwaS9zcGNy
+LmMNCj4gPiA+IGluZGV4IDg4NDYwYmFjZDVhZS4uMjVjMmQwYmU5NTNlIDEwMDY0NA0KPiA+ID4g
+LS0tIGEvZHJpdmVycy9hY3BpL3NwY3IuYw0KPiA+ID4gKysrIGIvZHJpdmVycy9hY3BpL3NwY3Iu
+Yw0KPiA+ID4gQEAgLTEzNiw2ICsxMzYsNyBAQCBpbnQgX19pbml0IGFjcGlfcGFyc2Vfc3Bjcihi
+b29sIGVuYWJsZV9lYXJseWNvbiwgYm9vbCBlbmFibGVfY29uc29sZSkNCj4gPiA+ICAgICAgICAg
+ICAgICAgICBicmVhazsNCj4gPiA+ICAgICAgICAgY2FzZSBBQ1BJX0RCRzJfMTY1NTBfQ09NUEFU
+SUJMRToNCj4gPiA+ICAgICAgICAgY2FzZSBBQ1BJX0RCRzJfMTY1NTBfU1VCU0VUOg0KPiA+ID4g
+KyAgICAgICBjYXNlIEFDUElfREJHMl8xNjU1MF9XSVRIX0dBUzoNCj4gPiA+ICAgICAgICAgICAg
+ICAgICB1YXJ0ID0gInVhcnQiOw0KPiA+ID4gICAgICAgICAgICAgICAgIGJyZWFrOw0KPiA+ID4g
+ICAgICAgICBkZWZhdWx0Og0KPiA+ID4gLS0NCj4NCj4gRG8geW91IGhhdmUgYW55IGNvbW1lbnRz
+IC8gcmVtYXJrcyB0byB0aGUgcGF0Y2g/DQoNClllcywgSSBkbywgYnV0IEkgd2lsbCBnZXQgYmFj
+ayB0byB5b3UgbmV4dCB3ZWVrLg0KDQpUaGFua3MhCl9fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fCkRldmVsIG1haWxpbmcgbGlzdCAtLSBkZXZlbEBhY3BpY2Eu
+b3JnClRvIHVuc3Vic2NyaWJlIHNlbmQgYW4gZW1haWwgdG8gZGV2ZWwtbGVhdmVAYWNwaWNhLm9y
+ZwolKHdlYl9wYWdlX3VybClzbGlzdGluZm8lKGNnaWV4dClzLyUoX2ludGVybmFsX25hbWUpcw==
