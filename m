@@ -2,78 +2,73 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 520213C1B10
-	for <lists+devel-acpica@lfdr.de>; Thu,  8 Jul 2021 23:35:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 360D93C2617
+	for <lists+devel-acpica@lfdr.de>; Fri,  9 Jul 2021 16:38:45 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id D1765100EBB61;
-	Thu,  8 Jul 2021 14:35:37 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.151; helo=mga17.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+	by ml01.01.org (Postfix) with ESMTP id 9B0DF100EBBCB;
+	Fri,  9 Jul 2021 07:38:43 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.120; helo=mga04.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 86462100EBBA2
-	for <devel@acpica.org>; Thu,  8 Jul 2021 14:35:35 -0700 (PDT)
-X-IronPort-AV: E=McAfee;i="6200,9189,10039"; a="189979708"
-X-IronPort-AV: E=Sophos;i="5.84,225,1620716400";
-   d="scan'208";a="189979708"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jul 2021 14:35:31 -0700
+	by ml01.01.org (Postfix) with ESMTPS id D4CBB100ED48C
+	for <devel@acpica.org>; Fri,  9 Jul 2021 07:38:41 -0700 (PDT)
+X-IronPort-AV: E=McAfee;i="6200,9189,10039"; a="207884572"
+X-IronPort-AV: E=Sophos;i="5.84,226,1620716400";
+   d="scan'208";a="207884572"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jul 2021 07:38:34 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.84,225,1620716400";
-   d="scan'208";a="458048302"
-Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
-  by orsmga008.jf.intel.com with ESMTP; 08 Jul 2021 14:35:31 -0700
-Received: from fmsmsx607.amr.corp.intel.com (10.18.126.87) by
- fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
+X-IronPort-AV: E=Sophos;i="5.84,226,1620716400";
+   d="scan'208";a="488065044"
+Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
+  by FMSMGA003.fm.intel.com with ESMTP; 09 Jul 2021 07:38:32 -0700
+Received: from orsmsx608.amr.corp.intel.com (10.22.229.21) by
+ ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2242.10; Thu, 8 Jul 2021 14:35:30 -0700
-Received: from fmsmsx609.amr.corp.intel.com (10.18.126.89) by
- fmsmsx607.amr.corp.intel.com (10.18.126.87) with Microsoft SMTP Server
+ 15.1.2242.10; Fri, 9 Jul 2021 07:38:32 -0700
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ orsmsx608.amr.corp.intel.com (10.22.229.21) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2242.10; Thu, 8 Jul 2021 14:35:30 -0700
-Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
- fmsmsx609.amr.corp.intel.com (10.18.126.89) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2242.10 via Frontend Transport; Thu, 8 Jul 2021 14:35:30 -0700
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (104.47.58.175)
- by edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
+ 15.1.2242.10 via Frontend Transport; Fri, 9 Jul 2021 07:38:32 -0700
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (104.47.70.108)
+ by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2242.4; Thu, 8 Jul 2021 14:35:30 -0700
+ 15.1.2242.4; Fri, 9 Jul 2021 07:38:32 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=S1E1AzghEr5AjLSymhuFjBYb8fQtAS7NLVD3BbidmivnYEZBIRPsfPSvfLltp1G0v4q7XLcKw7e8xV57Kpeb/bvdOPP8k1uOIpwvI+afklbmU3Dn1cfBVJE5CRe5YJow1EEtmyXGphRVGvU/eksuvuuEijBsthv4yv3sX0z618AOtC9T291yWVVOJL079/cvi/di/JtqMzBYpVRUr9xQPoPaX/KaSR/Il2lPWGSa09OFVzqfgNl78B94NmfttzEXjQD7QxvdVpETvTJLfbVQVKyLKuUr5o8k0XiaU94SrtcQFWu6z0dkd23ujyP+Xe9fV1ZocaBGScLFInDBzVZ+Zg==
+ b=QQVotHgM14fOgBTqWEMKfaExU8aWx6yX7Uw0ZjU4903LUKlFLFTAvy4x74c8q0TWtPwuS4TpeMh8GEu2qERkZal9lEtxFjOprWT/JaUj/1t9vT7JyKhUzkbebHjx1jhDCtq5O9OC6Y8xm8TKQt0GtDC+i8Yrnu+AwCktI7T/6xnw7BqL8UAELcilXggIoTUk+as/ttvnH3Np/GJconHGQyiBOFLJQ6q8y05WRKarMSqhhsa/aAhtQs17JKnQ9fvDVdv21QasfeidGlYCLfN3va/W2CGfK5v7lpZabCcI+J+JP95c9wCW6UjWHzgF/Iak39oNRhtmGsGuxGcNRyhRCQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Gv0i3V4OQQs7xuIYe7y4iDWN7CPxQ5usNIRYyPZok78=;
- b=Zvv4despS41SzbLRSP9l35RjMRIcuiQNQGV9K45bWqn5Guxp66bTFSwIOcMiAZcX1/EQ49NzM7z7sO0eVTCOryZS8lyQh9qzYSa3huhooaed283Xba8ENa5rc2n12ZK5yqD+w1hDEgiNUehFiGeUsuid0yBaeul0mqVnc4KwVe5B8nn5nwsSu7AVjgv9I7WusUUmOKVl+/1galzcH235wHpkorl7rrnhcPRD78KgE/Q1iDQfFJ/s+wspe2qZOHyfNm64h677e0YCwpWZuIHCKXj6gBJ25cow+svAA5apLwhDkxNxo6RxSlcHTh4c31TkNr/wgksxGKQjR5aAJkaJRQ==
+ bh=qEuLkWXuReMYZ4l1TulUZGC/8uriRVz24/VIvXscVVQ=;
+ b=j0TBhaV01wuzFItrpoXkfYkatim7cvotHJpjE6SuyjXhbTClTIX2Xz22+tthZ2u46I/qgk38S1zIMlwCza85VSDAZb44QgEOO89gzx5ygUg8NlcnFBgiqt8JOzR8A3N+/wXNN19nC0JrE+oJL8BvgFGKSMBMyj2zH1xyU8al4dOtpepPSZwOJxCGtlPfarMpzdMPKfDJUs9kE+NN/QUH9BHZRnxNaKa3Twh4Jt3FqQlXWKnHIkHA2Q4OVqIKyCEyngxYmClOhi51tfI6dDAPoHV8xnNUTJHVRkNb2HFhwtGxJ+FJv7CHtNbH4xALrThPQ2mSP9ZfpQh4oQcHjOGcAA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
  s=selector2-intel-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Gv0i3V4OQQs7xuIYe7y4iDWN7CPxQ5usNIRYyPZok78=;
- b=oVtmoqHxUOwkA6VCzYgNtQTegxqOhzBJcR7MtC/OniZ8gN4cvZ7DvQDdsNQpwO4zTuJZTZUhsC4MUBVBoJs+xAshuAt2qJ4ttXpU7KOvTUwhTUNpxkto6HH2n1sV2LUgIqWub1NMOcfFxQnzwCP1w2FAGVDBGPWdhJyAI/m8wCQ=
+ bh=qEuLkWXuReMYZ4l1TulUZGC/8uriRVz24/VIvXscVVQ=;
+ b=Z9cQhXkUiz3sqwiD8mjve7r3DRfzlaSU3k7zu0UwawBheJGCghlKoEMbia7+QGs+lA1UWLhhzal0qoQq/ZtPIgguD/mMRYdiru/EP1+YdVtQtyp/OmEyzLFE+I4UurFULv8HaFSNAdVoQYTuh8Ti2S+P5MgllHmZQpL7sgzx1mQ=
 Received: from BYAPR11MB3256.namprd11.prod.outlook.com (2603:10b6:a03:76::19)
- by SJ0PR11MB5069.namprd11.prod.outlook.com (2603:10b6:a03:2ad::6) with
+ by BY5PR11MB4353.namprd11.prod.outlook.com (2603:10b6:a03:1b9::17) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4308.21; Thu, 8 Jul
- 2021 21:35:28 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4308.20; Fri, 9 Jul
+ 2021 14:38:27 +0000
 Received: from BYAPR11MB3256.namprd11.prod.outlook.com
  ([fe80::f1f3:ba46:dd24:f466]) by BYAPR11MB3256.namprd11.prod.outlook.com
- ([fe80::f1f3:ba46:dd24:f466%7]) with mapi id 15.20.4287.035; Thu, 8 Jul 2021
- 21:35:28 +0000
+ ([fe80::f1f3:ba46:dd24:f466%7]) with mapi id 15.20.4308.023; Fri, 9 Jul 2021
+ 14:38:27 +0000
 From: "Moore, Robert" <robert.moore@intel.com>
-To: Huacai Chen <chenhuacai@loongson.cn>, "Rafael J . Wysocki"
-	<rjw@rjwysocki.net>, Len Brown <lenb@kernel.org>, Erik Kaneda
-	<erik.kaneda@intel.com>
-Thread-Topic: [PATCH 2/3] ACPICA: MADT: Add LoongArch APICs support
-Thread-Index: AQHXcZtKDJ5NIaum80mIdx2iRldsxqs5nrNA
-Date: Thu, 8 Jul 2021 21:35:28 +0000
-Message-ID: <BYAPR11MB3256468A574CA349AB8D1F0087199@BYAPR11MB3256.namprd11.prod.outlook.com>
-References: <20210705124206.1228958-1-chenhuacai@loongson.cn>
- <20210705124206.1228958-3-chenhuacai@loongson.cn>
-In-Reply-To: <20210705124206.1228958-3-chenhuacai@loongson.cn>
+To: gushengxian <gushengxian507419@gmail.com>, "erik.kaneda@intel.com"
+	<erik.kaneda@intel.com>, "Wysocki, Rafael J" <rafael.j.wysocki@intel.com>,
+	"lenb@kernel.org" <lenb@kernel.org>
+Thread-Topic: [PATCH] ACPICA: fix if condition
+Thread-Index: AQHXb+uPd/4bSt1baE6I7fGiwm5vRKs6wEAQ
+Date: Fri, 9 Jul 2021 14:38:27 +0000
+Message-ID: <BYAPR11MB32562B564676F3A00DAC5B1C87189@BYAPR11MB3256.namprd11.prod.outlook.com>
+References: <20210703091218.650202-1-gushengxian507419@gmail.com>
+In-Reply-To: <20210703091218.650202-1-gushengxian507419@gmail.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -81,65 +76,66 @@ X-MS-TNEF-Correlator:
 dlp-version: 11.5.1.3
 dlp-product: dlpe-windows
 dlp-reaction: no-action
-authentication-results: loongson.cn; dkim=none (message not signed)
- header.d=none;loongson.cn; dmarc=none action=none header.from=intel.com;
+authentication-results: gmail.com; dkim=none (message not signed)
+ header.d=none;gmail.com; dmarc=none action=none header.from=intel.com;
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 7fa46329-30d5-43b6-30ac-08d942584e59
-x-ms-traffictypediagnostic: SJ0PR11MB5069:
+x-ms-office365-filtering-correlation-id: fe1f095c-52dc-4089-39cf-08d942e736fb
+x-ms-traffictypediagnostic: BY5PR11MB4353:
+x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
 x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <SJ0PR11MB50697431182D43B79179390187199@SJ0PR11MB5069.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:1332;
+x-microsoft-antispam-prvs: <BY5PR11MB4353EB73C00D36619325C5B887189@BY5PR11MB4353.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:1443;
 x-ms-exchange-senderadcheck: 1
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 50TQgIqy/UJzJa194Xq4wY+jqIZjzO42gtZcZSNU7+cZ4Q/t2dC/mhQ5xTcW+0zENTKwqSLXtfj/eh3uk0FLQIa7Re5lOr8BSqGupofup4446MT/LYpjMU/33Do6JfDeIKVYPINMcoXi16H1A0lorZ4sAs+trKbpxhh5CAIqFtBczacc4WvCgSTydV6wwB2h7XYGRsO+fZVHPp0hlad0WoxMfWvusLsxAszlBYbawL/imPRxs1yAlGbcQxFClVdHZhSqQPu7+qetqDxrY3q+wk3NJnXjCLkfQmdWWjfBjdRjF3VcrniVhaBuM8wV0xmipi/vGnW6oiL/VlPPZhMnU8UjZvbvSJtg1NxCRNT053UtCYGQq/M8XXHcRPX8x7PLdLjOrI6MM3IB/QR5DwN7iVNt5QCL0oZesKB6rNWiAA2DkxHBv4PLXIQW5exj5IroUy2ylGqmQHRaAnl1HleNAbFPE2MUl7F4wlBnaotb4ruZvpOuLWl5ki8VKIbPcVUBBNNJXI0RhzZEK1XAYxrRJ6Vr87k0OI9fgnqkQPqdAqfL8Yz+7G4t7sBX6QRwAPwKgWlwGIsc6+Rgjk1mftj19tMF8wN8eneJ0BzuYWnRqrZ8AFJFqdBgJNMPyYFsLsIQ7o6q0I2CCEIT1ynRkFeeXUJ52amXmgU8UaqP5d74WSRlvLRVwkrCqtbkZC/s0NhRoru6fIv85tdi0bknoaFUZJtbmfpnyBBIC+5wDnGLnYY=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(366004)(346002)(376002)(39860400002)(396003)(136003)(83380400001)(71200400001)(478600001)(54906003)(186003)(316002)(16799955002)(4326008)(122000001)(966005)(110136005)(6636002)(86362001)(66556008)(2906002)(66446008)(38100700002)(53546011)(33656002)(6506007)(55016002)(9686003)(64756008)(8676002)(5660300002)(8936002)(7696005)(52536014)(66946007)(26005)(76116006)(66476007);DIR:OUT;SFP:1102;
+x-microsoft-antispam-message-info: GqJVYtKtixCoQbEfE4oROltDjcRykXnLkL4Y2bN5R7Ded/nLjCgLVJcTQVzpq5He52ZUe+dXHIJbq8TPdJKARbxnfBSvG094XQbnK2ZmMu494ofo1J6B/bM5dRE0zWd+/l7Au4/2wUr8SFiXnlY6RLInVNv+K5lZm0PCg9GFRrZrGfot2bldhqWru8bZwIzxnEgvIImn4L5uFbWXmX9B2tUbFkN3Gpn7IDc5u+Kk+or5DRoI5UYhNuOdmCJrM/HqiOHVbNtalZR2FwrHMWBppIE/8x9IECw2qO9zAI0R+stFajXeAFz/DOu4xbz6yR3KM7eCq5k+YW3I93lmz04WSnJAwbrk3+lC2gmUrlM0KDvdbdqrJw02SfnRxATSP9prNEaIm0FvBAhH/YVycmTy271pD6jQ+ob3WZIDSYnOwMPqG2KNG3Y0rRQyDcleQU+MDw8H+dRNjfLjBEuBboaTdXkEaN9+BQaSEWv3dzF8YBWMBwV4V23yjlP+cPMoBncc7naDNTkfUpL/qvPSnBE4lMcTG2sa7sgSLYyUzTw0Ess4BPySs9BKJaYLrdOTjSWCKBaLbsYvZn84S3rpcA+G800LJzT/DOqdOJ5tZx6gcTA8WNgLmItDN7o8+I7VVFmJ6bRKqyYVnC3s3ukP6wkjcQ==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(376002)(136003)(346002)(366004)(39860400002)(396003)(9686003)(66476007)(52536014)(53546011)(83380400001)(76116006)(66556008)(66946007)(26005)(5660300002)(71200400001)(66446008)(4326008)(38100700002)(7696005)(478600001)(64756008)(4744005)(55016002)(122000001)(2906002)(186003)(6506007)(86362001)(8676002)(33656002)(110136005)(54906003)(316002)(8936002);DIR:OUT;SFP:1102;
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?zBOESd8deWw+6GoBxv6TjXmqAJMRvITcq9XDcoANlI+ViuA166oxK21iV8Un?=
- =?us-ascii?Q?jIFOXuWuIBHYG/F6lQFSVCTuO+NAnIw2vvBQeaCQ+f95xaH/SHS4jGB2bKYP?=
- =?us-ascii?Q?uMcvXz3c0GZxPSLN1n2RXaGP9D8Le89/ciDwvWhMNub4Ta1Rb6bLJ0QzTe03?=
- =?us-ascii?Q?kk5+vXgRLASEjLe8adb9EqAaTcVvcRSBZivNopkPVEL7hfHMKZUpm94lobx8?=
- =?us-ascii?Q?2hwE1FHt50CK21413RUPDh/oMy3T/KvacFwPH1Pi0cz7VEyzDUgwEQ+gccvA?=
- =?us-ascii?Q?gKSpKEWQHl4rdA+JkI5lMQXVYNSoUTS2Efqio7nbvqTIaQ5GkbbcUFDAkd28?=
- =?us-ascii?Q?5+MwDxHFIpjVNTeUT/k59gBaGPtaLQ+UzWEcqpOl+E4QH4H10pxRopK3GK+R?=
- =?us-ascii?Q?GRp2jfhVHAgYuPHINhbzdUYKfKCSQw4i9BJfDn26smisK+bCbzu1j9uBtQV4?=
- =?us-ascii?Q?FyqimgRUy9MIEEM6PwQk+yyJsXGh3DD26Eqy+7HkAKqcRK0pYtCtvwSZ+7uA?=
- =?us-ascii?Q?vkgTitQSe3fd4aPG8VRTkvoC2JDDjcTZuhpcJMoGTpwvuAYLSzb0Lop2vsHZ?=
- =?us-ascii?Q?vPhPWtbBiM/jpu6SVS1PuoW3I0ms48mDZGxq9ObWZWUPX5UEv0ZZn5jEafye?=
- =?us-ascii?Q?U7uWIZN5PaEg9C91bSWPzyTW+8S7JtdBCgZfAI59aZdGXq+IMMqxUtM3RWtm?=
- =?us-ascii?Q?Qhw8zvcxZyrTK7LE330jE/qFXF+dVeR+V+4FBXco9ZkUfJaWk3aOFoVX6jmQ?=
- =?us-ascii?Q?yk2UQ6mcZan2BWLeSya3NZkpoFPOGcpRBaSjV86ERQt1hol2FCgkiWyDuUYU?=
- =?us-ascii?Q?+fOs37+g1ojw0YZMf3RTn9FyrQ27lz3cuiNz+LvIop9RNdK11NBGKP+Itlpu?=
- =?us-ascii?Q?0er7v8B8Gq03kL56e6Y0iqawHjNeRg8v6rYfcxOESC6OjaiFJETnnA0VHxzJ?=
- =?us-ascii?Q?IKymmcGy147l1Dke9VkuQ48V6j9aN9XGnUH3czXcUimIl6uLoNWgr5gvZO2j?=
- =?us-ascii?Q?/+irVXQTxGCr4FRkJujxAgs5u7U5P1S5yLDf4tP9ecQ4jOiEz+TnaZl/ABvF?=
- =?us-ascii?Q?767O6pEKi2Irj62o8KXMgO98er8HG4rsDYaWriavUQ5QwW2YJ1M3EAJ41tmo?=
- =?us-ascii?Q?fEkXyZFP3NfqXvi2Jq/ksXoI56Mnr2tgUrBYoPpMRd0gwGsCcQ8OMCspf13r?=
- =?us-ascii?Q?NxqHcI7YAaHpYDNo1P3M6nC3D8QdbsNELfECAF9MMSpZTI5zU9j/3IkjBYN0?=
- =?us-ascii?Q?LXi8mAuLwEsfb0NkAsKlCRlDZiUif4e13smVCnDtJgy4WyIwprHAx25lTbIS?=
- =?us-ascii?Q?wW3HpX6mhBPKzSv89rk9JcyP?=
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?Bn5YWb7228Q43HyKbiPoCMW9nwlL0mzrvT20QN4HOJH6DZk2V1yNtw2IwSkW?=
+ =?us-ascii?Q?yvyI5I6mlAGpGsbdDdB5D4eayBqk7NyiTR3oIA3atMR4KamZA00yBg9+7VNT?=
+ =?us-ascii?Q?hcaA/iP3M3paVlPAcxVpXVlU6OhDkwMVWNm7sM3d9eiLpPhUB5MUcx/RrAuu?=
+ =?us-ascii?Q?GceT1qrxzOQSfN6rbkqCZ85K8MgcTqmyrKOlsP5dkGvvPum2l1Q7JCPxmGk5?=
+ =?us-ascii?Q?jwXdGJ2vGbVotb7gZegeUdOg1nkUrzD1YZbYqrb3kYbd9ASKwQOT2axxpHB4?=
+ =?us-ascii?Q?nQlzyjlz+pPyoCyaOvlhQvAtvFbMJsofe6L0pfz/z2/ryk2byAQLXIg6xIfq?=
+ =?us-ascii?Q?zptE7RoF3qmCfcMY+AkvwiIU25j1F5q5CKL/Bd8J7BJYXXSiPFgrpJGfmhJ+?=
+ =?us-ascii?Q?EJF7VXUseg+OWUJPZ2GCLu5I7x6b3VKMmII3EhAeFgSi6jh0xrVDGIwtDGwJ?=
+ =?us-ascii?Q?2cCrrCabzJdogSeLLPt8yW89T2Qq1l1fiqyErLQwhoydwY5SbvVsakIJ2uAe?=
+ =?us-ascii?Q?9tIUzw9WdXJkzl+aYthbyfj2F8XYIaKIBJY69Npn5thnRv54zPR7CoKxGJpB?=
+ =?us-ascii?Q?jEtiRels7Z2SegoAbb6ADOJSG0wqL9gFH1jUpJCGXrRLzKAtDMf7r3LRcxsm?=
+ =?us-ascii?Q?v/X4+MgEo68mUKqYZvIvxtnEdVz4T4KBYd7kIJEMoRJR6oOiQhlBL4PIt/r2?=
+ =?us-ascii?Q?cI1e79BYKgBY3GYvz4+dd2SN22YxkC3UZz6AAc3Vcd60e7fWWmJsGQGlAJu+?=
+ =?us-ascii?Q?3aX67xYglxN0X5+4y0D7LKTK9Tkp/yjkIRog3fpbNFoizOMOJ5ySm2Op40QQ?=
+ =?us-ascii?Q?rOZPTA0ekDg11dy61yJrYI7PtAOhQ+MXCvCuQWsGaC6PhHeFcm6xrWd5heJJ?=
+ =?us-ascii?Q?WQZHHRrlAP5LS9Mp03QtpiOzBAgG23yKsGOKrXJOlmnoVor9V4o6yW1s7r84?=
+ =?us-ascii?Q?yuDD0rmo0Ww587s0iZ2aDaWmANa1Lpwg9wemUc5ug3ZJmlNj91i3O2Nw3azW?=
+ =?us-ascii?Q?36+eWvlHkFcbmibNtKDf6QR32h1UGhtn8AVcsmDvsBltGlBG3MqIeqYsOjQ9?=
+ =?us-ascii?Q?NDEfoysorYXe3cWuBvZoK4homGK1gtH0+VEdtfv56TaUvZkWIRc4iTUsgaDA?=
+ =?us-ascii?Q?A0TvtljSdsMVUejXsG6PTcMdk8qb/exPRZom/9RMWwcKo7j3miChMW6lylro?=
+ =?us-ascii?Q?XSDIx0nQPSUWVkdzMXG2H8svdr6pCXS/ICStRSqSQ3CdeYlmi/NugPRLIrhh?=
+ =?us-ascii?Q?coJHDk0HNTlvX7aPvtjRaIGE+AlALJ+NdmA7Bz/5BwPqIJp2r95f2+EHYy6G?=
+ =?us-ascii?Q?uPGHWELy7wioxVdgcIsf1ThH?=
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3256.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7fa46329-30d5-43b6-30ac-08d942584e59
-X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Jul 2021 21:35:28.7619
+X-MS-Exchange-CrossTenant-Network-Message-Id: fe1f095c-52dc-4089-39cf-08d942e736fb
+X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Jul 2021 14:38:27.5839
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 7vbul8rozMCm43mR0o2ObHS36F4x+NhM46gDex2xTZ54RxrLlASltu+2XpnTsqmwm+eE50SDNKQxLRH+XhstQw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB5069
+X-MS-Exchange-CrossTenant-userprincipalname: K2zvYEgXCZyE2FyJoWWHHO0q4Cr8pYtzxeILXU3fYJRJwYGb04u2bs0P+VDRXmhXaErtjS+pMYFDiIynMuNV3Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR11MB4353
 X-OriginatorOrg: intel.com
-Message-ID-Hash: OAWPW4A2LBZLNDSC45DNTIOFQOJNYJB7
-X-Message-ID-Hash: OAWPW4A2LBZLNDSC45DNTIOFQOJNYJB7
+Message-ID-Hash: 33DHHN6JDELC45VSYIJPPZJ5SML5BSBK
+X-Message-ID-Hash: 33DHHN6JDELC45VSYIJPPZJ5SML5BSBK
 X-MailFrom: robert.moore@intel.com
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
-CC: "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>, "devel@acpica.org" <devel@acpica.org>, Xuefeng Li <lixuefeng@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>, Jianmin Lv <lvjianmin@loongson.cn>
+CC: "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>, "devel@acpica.org" <devel@acpica.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, gushengxian <gushengxian@yulong.com>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH 2/3] ACPICA: MADT: Add LoongArch APICs support
+Subject: [Devel] Re: [PATCH] ACPICA: fix if condition
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/OAWPW4A2LBZLNDSC45DNTIOFQOJNYJB7/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/33DHHN6JDELC45VSYIJPPZJ5SML5BSBK/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -147,187 +143,41 @@ List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Transfer-Encoding: 7bit
 
-For legal reasons, we can't pre-release any upcoming ACPI spec changes in ACPICA.
+Got it,
+Thanks.
+
 
 -----Original Message-----
-From: Huacai Chen <chenhuacai@loongson.cn> 
-Sent: Monday, July 05, 2021 5:42 AM
-To: Rafael J . Wysocki <rjw@rjwysocki.net>; Len Brown <lenb@kernel.org>; Moore, Robert <robert.moore@intel.com>; Erik Kaneda <erik.kaneda@intel.com>
-Cc: linux-acpi@vger.kernel.org; devel@acpica.org; Xuefeng Li <lixuefeng@loongson.cn>; Jiaxun Yang <jiaxun.yang@flygoat.com>; Huacai Chen <chenhuacai@loongson.cn>; Jianmin Lv <lvjianmin@loongson.cn>
-Subject: [PATCH 2/3] ACPICA: MADT: Add LoongArch APICs support
+From: gushengxian <gushengxian507419@gmail.com> 
+Sent: Saturday, July 03, 2021 2:12 AM
+To: Moore, Robert <robert.moore@intel.com>; erik.kaneda@intel.com; Wysocki, Rafael J <rafael.j.wysocki@intel.com>; lenb@kernel.org
+Cc: linux-acpi@vger.kernel.org; devel@acpica.org; linux-kernel@vger.kernel.org; gushengxian <gushengxian@yulong.com>
+Subject: [PATCH] ACPICA: fix if condition
 
-LoongArch-specific interrupt controllers (similar to APIC) are added in the next revision of ACPI Specification (current revision is 6.4), which including CORE_PIC (CPUINTC), LIO_PIC (LIOINTC), EIO_PIC (EIOINTC), HT_PIC (HTVECINTC), BIO_PIC (PCHINTC), LPC_PIC (PCHLPC) and MSI_PIC (PCHMSI). This patch add their definition and handlings.
+From: gushengxian <gushengxian@yulong.com>
 
-Reference: https://mantis.uefi.org/mantis/view.php?id=2203
-Signed-off-by: Jianmin Lv <lvjianmin@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fix if condition.
+
+Signed-off-by: gushengxian <gushengxian@yulong.com>
 ---
- drivers/acpi/tables.c |  10 ++++
- include/acpi/actbl2.h | 123 +++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 132 insertions(+), 1 deletion(-)
+ drivers/acpi/acpica/dswexec.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/tables.c b/drivers/acpi/tables.c index a37a1532a575..5943ae4f76bb 100644
---- a/drivers/acpi/tables.c
-+++ b/drivers/acpi/tables.c
-@@ -208,6 +208,16 @@ void acpi_table_print_madt_entry(struct acpi_subtable_header *header)
- 		}
- 		break;
- 
-+	case ACPI_MADT_TYPE_CORE_PIC:
-+		{
-+			struct acpi_madt_core_pic *p =
-+			    (struct acpi_madt_core_pic *)header;
-+			pr_debug("CORE PIC (processor_id[0x%02x] core_id[0x%02x] %s)\n",
-+				 p->processor_id, p->core_id,
-+				 (p->flags & ACPI_MADT_ENABLED) ? "enabled" : "disabled");
-+		}
-+		break;
-+
- 	default:
- 		pr_warn("Found unsupported MADT entry (type = 0x%x)\n",
- 			header->type);
-diff --git a/include/acpi/actbl2.h b/include/acpi/actbl2.h index 2069ac38a4e2..fd6d0b440c4b 100644
---- a/include/acpi/actbl2.h
-+++ b/include/acpi/actbl2.h
-@@ -571,7 +571,14 @@ enum acpi_madt_type {
- 	ACPI_MADT_TYPE_GENERIC_REDISTRIBUTOR = 14,
- 	ACPI_MADT_TYPE_GENERIC_TRANSLATOR = 15,
- 	ACPI_MADT_TYPE_MULTIPROC_WAKEUP = 16,
--	ACPI_MADT_TYPE_RESERVED = 17	/* 17 and greater are reserved */
-+	ACPI_MADT_TYPE_CORE_PIC = 17,
-+	ACPI_MADT_TYPE_LIO_PIC = 18,
-+	ACPI_MADT_TYPE_HT_PIC = 19,
-+	ACPI_MADT_TYPE_EIO_PIC = 20,
-+	ACPI_MADT_TYPE_MSI_PIC = 21,
-+	ACPI_MADT_TYPE_BIO_PIC = 22,
-+	ACPI_MADT_TYPE_LPC_PIC = 23,
-+	ACPI_MADT_TYPE_RESERVED = 24	/* 24 and greater are reserved */
- };
- 
- /*
-@@ -801,6 +808,120 @@ struct acpi_madt_multiproc_wakeup_mailbox {
- 
- #define ACPI_MP_WAKE_COMMAND_WAKEUP    1
- 
-+/* Values for Version field above */
-+
-+enum acpi_madt_core_pic_version {
-+	ACPI_MADT_CORE_PIC_VERSION_NONE = 0,
-+	ACPI_MADT_CORE_PIC_VERSION_V1 = 1,
-+	ACPI_MADT_CORE_PIC_VERSION_RESERVED = 2	/* 2 and greater are reserved */
-+};
-+
-+enum acpi_madt_lio_pic_version {
-+	ACPI_MADT_LIO_PIC_VERSION_NONE = 0,
-+	ACPI_MADT_LIO_PIC_VERSION_V1 = 1,
-+	ACPI_MADT_LIO_PIC_VERSION_RESERVED = 2	/* 2 and greater are reserved */
-+};
-+
-+enum acpi_madt_eio_pic_version {
-+	ACPI_MADT_EIO_PIC_VERSION_NONE = 0,
-+	ACPI_MADT_EIO_PIC_VERSION_V1 = 1,
-+	ACPI_MADT_EIO_PIC_VERSION_RESERVED = 2	/* 2 and greater are reserved */
-+};
-+
-+enum acpi_madt_ht_pic_version {
-+	ACPI_MADT_HT_PIC_VERSION_NONE = 0,
-+	ACPI_MADT_HT_PIC_VERSION_V1 = 1,
-+	ACPI_MADT_HT_PIC_VERSION_RESERVED = 2	/* 2 and greater are reserved */
-+};
-+
-+enum acpi_madt_bio_pic_version {
-+	ACPI_MADT_BIO_PIC_VERSION_NONE = 0,
-+	ACPI_MADT_BIO_PIC_VERSION_V1 = 1,
-+	ACPI_MADT_BIO_PIC_VERSION_RESERVED = 2	/* 2 and greater are reserved */
-+};
-+
-+enum acpi_madt_msi_pic_version {
-+	ACPI_MADT_MSI_PIC_VERSION_NONE = 0,
-+	ACPI_MADT_MSI_PIC_VERSION_V1 = 1,
-+	ACPI_MADT_MSI_PIC_VERSION_RESERVED = 2	/* 2 and greater are reserved */
-+};
-+
-+enum acpi_madt_lpc_pic_version {
-+	ACPI_MADT_LPC_PIC_VERSION_NONE = 0,
-+	ACPI_MADT_LPC_PIC_VERSION_V1 = 1,
-+	ACPI_MADT_LPC_PIC_VERSION_RESERVED = 2	/* 2 and greater are reserved */
-+};
-+
-+/* Core Interrupt Controller */
-+
-+struct acpi_madt_core_pic {
-+	struct acpi_subtable_header header;
-+	u32 processor_id;
-+	u32 core_id;
-+	u32 flags;
-+	u8 version;
-+};
-+
-+/* Legacy I/O Interrupt Controller */
-+
-+struct acpi_madt_lio_pic {
-+	struct acpi_subtable_header header;
-+	u64 address;
-+	u16 size;
-+	u8 cascade[2];
-+	u32 cascade_map[2];
-+	u8 version;
-+};
-+
-+/* Extend I/O Interrupt Controller */
-+
-+struct acpi_madt_eio_pic {
-+	struct acpi_subtable_header header;
-+	u8 cascade;
-+	u8 version;
-+};
-+
-+/* HT Interrupt Controller */
-+
-+struct acpi_madt_ht_pic {
-+	struct acpi_subtable_header header;
-+	u64 address;
-+	u16 size;
-+	u8 cascade[8];
-+	u8 version;
-+};
-+
-+/* Bridge I/O Interrupt Controller */
-+
-+struct acpi_madt_bio_pic {
-+	struct acpi_subtable_header header;
-+	u64 address;
-+	u16 size;
-+	u16 id;
-+	u16 gsi_base;
-+	u8 version;
-+};
-+
-+/* MSI Interrupt Controller */
-+
-+struct acpi_madt_msi_pic {
-+	struct acpi_subtable_header header;
-+	u64 msg_address;
-+	u32 start;
-+	u32 count;
-+	u8 version;
-+};
-+
-+/* LPC Interrupt Controller */
-+
-+struct acpi_madt_lpc_pic {
-+	struct acpi_subtable_header header;
-+	u64 address;
-+	u16 size;
-+	u8 cascade;
-+	u8 version;
-+};
-+
- /*
-  * Common flags fields for MADT subtables
-  */
+diff --git a/drivers/acpi/acpica/dswexec.c b/drivers/acpi/acpica/dswexec.c index 41ba7773fd10..c4cd61469e1f 100644
+--- a/drivers/acpi/acpica/dswexec.c
++++ b/drivers/acpi/acpica/dswexec.c
+@@ -561,8 +561,7 @@ acpi_status acpi_ds_exec_end_op(struct acpi_walk_state *walk_state)
+ 								op->common.
+ 								node->object,
+ 								NULL);
+-				if ACPI_FAILURE
+-					(status) {
++				if (ACPI_FAILURE(status)) {
+ 					ACPI_EXCEPTION((AE_INFO, status,
+ 							"While writing to buffer field"));
+ 					}
 --
-2.27.0
+2.25.1
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
