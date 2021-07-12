@@ -2,182 +2,170 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 360D93C2617
-	for <lists+devel-acpica@lfdr.de>; Fri,  9 Jul 2021 16:38:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 67BCA3C628C
+	for <lists+devel-acpica@lfdr.de>; Mon, 12 Jul 2021 20:21:58 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 9B0DF100EBBCB;
-	Fri,  9 Jul 2021 07:38:43 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.120; helo=mga04.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+	by ml01.01.org (Postfix) with ESMTP id C7B45100EB342;
+	Mon, 12 Jul 2021 11:21:56 -0700 (PDT)
+Received-SPF: None (mailfrom) identity=mailfrom; client-ip=134.134.136.126; helo=mga18.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=<UNKNOWN> 
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id D4CBB100ED48C
-	for <devel@acpica.org>; Fri,  9 Jul 2021 07:38:41 -0700 (PDT)
-X-IronPort-AV: E=McAfee;i="6200,9189,10039"; a="207884572"
-X-IronPort-AV: E=Sophos;i="5.84,226,1620716400";
-   d="scan'208";a="207884572"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jul 2021 07:38:34 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.84,226,1620716400";
-   d="scan'208";a="488065044"
-Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
-  by FMSMGA003.fm.intel.com with ESMTP; 09 Jul 2021 07:38:32 -0700
-Received: from orsmsx608.amr.corp.intel.com (10.22.229.21) by
- ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2242.10; Fri, 9 Jul 2021 07:38:32 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx608.amr.corp.intel.com (10.22.229.21) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2242.10 via Frontend Transport; Fri, 9 Jul 2021 07:38:32 -0700
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (104.47.70.108)
- by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2242.4; Fri, 9 Jul 2021 07:38:32 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=QQVotHgM14fOgBTqWEMKfaExU8aWx6yX7Uw0ZjU4903LUKlFLFTAvy4x74c8q0TWtPwuS4TpeMh8GEu2qERkZal9lEtxFjOprWT/JaUj/1t9vT7JyKhUzkbebHjx1jhDCtq5O9OC6Y8xm8TKQt0GtDC+i8Yrnu+AwCktI7T/6xnw7BqL8UAELcilXggIoTUk+as/ttvnH3Np/GJconHGQyiBOFLJQ6q8y05WRKarMSqhhsa/aAhtQs17JKnQ9fvDVdv21QasfeidGlYCLfN3va/W2CGfK5v7lpZabCcI+J+JP95c9wCW6UjWHzgF/Iak39oNRhtmGsGuxGcNRyhRCQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qEuLkWXuReMYZ4l1TulUZGC/8uriRVz24/VIvXscVVQ=;
- b=j0TBhaV01wuzFItrpoXkfYkatim7cvotHJpjE6SuyjXhbTClTIX2Xz22+tthZ2u46I/qgk38S1zIMlwCza85VSDAZb44QgEOO89gzx5ygUg8NlcnFBgiqt8JOzR8A3N+/wXNN19nC0JrE+oJL8BvgFGKSMBMyj2zH1xyU8al4dOtpepPSZwOJxCGtlPfarMpzdMPKfDJUs9kE+NN/QUH9BHZRnxNaKa3Twh4Jt3FqQlXWKnHIkHA2Q4OVqIKyCEyngxYmClOhi51tfI6dDAPoHV8xnNUTJHVRkNb2HFhwtGxJ+FJv7CHtNbH4xALrThPQ2mSP9ZfpQh4oQcHjOGcAA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
- s=selector2-intel-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qEuLkWXuReMYZ4l1TulUZGC/8uriRVz24/VIvXscVVQ=;
- b=Z9cQhXkUiz3sqwiD8mjve7r3DRfzlaSU3k7zu0UwawBheJGCghlKoEMbia7+QGs+lA1UWLhhzal0qoQq/ZtPIgguD/mMRYdiru/EP1+YdVtQtyp/OmEyzLFE+I4UurFULv8HaFSNAdVoQYTuh8Ti2S+P5MgllHmZQpL7sgzx1mQ=
-Received: from BYAPR11MB3256.namprd11.prod.outlook.com (2603:10b6:a03:76::19)
- by BY5PR11MB4353.namprd11.prod.outlook.com (2603:10b6:a03:1b9::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4308.20; Fri, 9 Jul
- 2021 14:38:27 +0000
-Received: from BYAPR11MB3256.namprd11.prod.outlook.com
- ([fe80::f1f3:ba46:dd24:f466]) by BYAPR11MB3256.namprd11.prod.outlook.com
- ([fe80::f1f3:ba46:dd24:f466%7]) with mapi id 15.20.4308.023; Fri, 9 Jul 2021
- 14:38:27 +0000
-From: "Moore, Robert" <robert.moore@intel.com>
-To: gushengxian <gushengxian507419@gmail.com>, "erik.kaneda@intel.com"
-	<erik.kaneda@intel.com>, "Wysocki, Rafael J" <rafael.j.wysocki@intel.com>,
-	"lenb@kernel.org" <lenb@kernel.org>
-Thread-Topic: [PATCH] ACPICA: fix if condition
-Thread-Index: AQHXb+uPd/4bSt1baE6I7fGiwm5vRKs6wEAQ
-Date: Fri, 9 Jul 2021 14:38:27 +0000
-Message-ID: <BYAPR11MB32562B564676F3A00DAC5B1C87189@BYAPR11MB3256.namprd11.prod.outlook.com>
-References: <20210703091218.650202-1-gushengxian507419@gmail.com>
-In-Reply-To: <20210703091218.650202-1-gushengxian507419@gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-dlp-version: 11.5.1.3
-dlp-product: dlpe-windows
-dlp-reaction: no-action
-authentication-results: gmail.com; dkim=none (message not signed)
- header.d=none;gmail.com; dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: fe1f095c-52dc-4089-39cf-08d942e736fb
-x-ms-traffictypediagnostic: BY5PR11MB4353:
-x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <BY5PR11MB4353EB73C00D36619325C5B887189@BY5PR11MB4353.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:1443;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: GqJVYtKtixCoQbEfE4oROltDjcRykXnLkL4Y2bN5R7Ded/nLjCgLVJcTQVzpq5He52ZUe+dXHIJbq8TPdJKARbxnfBSvG094XQbnK2ZmMu494ofo1J6B/bM5dRE0zWd+/l7Au4/2wUr8SFiXnlY6RLInVNv+K5lZm0PCg9GFRrZrGfot2bldhqWru8bZwIzxnEgvIImn4L5uFbWXmX9B2tUbFkN3Gpn7IDc5u+Kk+or5DRoI5UYhNuOdmCJrM/HqiOHVbNtalZR2FwrHMWBppIE/8x9IECw2qO9zAI0R+stFajXeAFz/DOu4xbz6yR3KM7eCq5k+YW3I93lmz04WSnJAwbrk3+lC2gmUrlM0KDvdbdqrJw02SfnRxATSP9prNEaIm0FvBAhH/YVycmTy271pD6jQ+ob3WZIDSYnOwMPqG2KNG3Y0rRQyDcleQU+MDw8H+dRNjfLjBEuBboaTdXkEaN9+BQaSEWv3dzF8YBWMBwV4V23yjlP+cPMoBncc7naDNTkfUpL/qvPSnBE4lMcTG2sa7sgSLYyUzTw0Ess4BPySs9BKJaYLrdOTjSWCKBaLbsYvZn84S3rpcA+G800LJzT/DOqdOJ5tZx6gcTA8WNgLmItDN7o8+I7VVFmJ6bRKqyYVnC3s3ukP6wkjcQ==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(376002)(136003)(346002)(366004)(39860400002)(396003)(9686003)(66476007)(52536014)(53546011)(83380400001)(76116006)(66556008)(66946007)(26005)(5660300002)(71200400001)(66446008)(4326008)(38100700002)(7696005)(478600001)(64756008)(4744005)(55016002)(122000001)(2906002)(186003)(6506007)(86362001)(8676002)(33656002)(110136005)(54906003)(316002)(8936002);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?Bn5YWb7228Q43HyKbiPoCMW9nwlL0mzrvT20QN4HOJH6DZk2V1yNtw2IwSkW?=
- =?us-ascii?Q?yvyI5I6mlAGpGsbdDdB5D4eayBqk7NyiTR3oIA3atMR4KamZA00yBg9+7VNT?=
- =?us-ascii?Q?hcaA/iP3M3paVlPAcxVpXVlU6OhDkwMVWNm7sM3d9eiLpPhUB5MUcx/RrAuu?=
- =?us-ascii?Q?GceT1qrxzOQSfN6rbkqCZ85K8MgcTqmyrKOlsP5dkGvvPum2l1Q7JCPxmGk5?=
- =?us-ascii?Q?jwXdGJ2vGbVotb7gZegeUdOg1nkUrzD1YZbYqrb3kYbd9ASKwQOT2axxpHB4?=
- =?us-ascii?Q?nQlzyjlz+pPyoCyaOvlhQvAtvFbMJsofe6L0pfz/z2/ryk2byAQLXIg6xIfq?=
- =?us-ascii?Q?zptE7RoF3qmCfcMY+AkvwiIU25j1F5q5CKL/Bd8J7BJYXXSiPFgrpJGfmhJ+?=
- =?us-ascii?Q?EJF7VXUseg+OWUJPZ2GCLu5I7x6b3VKMmII3EhAeFgSi6jh0xrVDGIwtDGwJ?=
- =?us-ascii?Q?2cCrrCabzJdogSeLLPt8yW89T2Qq1l1fiqyErLQwhoydwY5SbvVsakIJ2uAe?=
- =?us-ascii?Q?9tIUzw9WdXJkzl+aYthbyfj2F8XYIaKIBJY69Npn5thnRv54zPR7CoKxGJpB?=
- =?us-ascii?Q?jEtiRels7Z2SegoAbb6ADOJSG0wqL9gFH1jUpJCGXrRLzKAtDMf7r3LRcxsm?=
- =?us-ascii?Q?v/X4+MgEo68mUKqYZvIvxtnEdVz4T4KBYd7kIJEMoRJR6oOiQhlBL4PIt/r2?=
- =?us-ascii?Q?cI1e79BYKgBY3GYvz4+dd2SN22YxkC3UZz6AAc3Vcd60e7fWWmJsGQGlAJu+?=
- =?us-ascii?Q?3aX67xYglxN0X5+4y0D7LKTK9Tkp/yjkIRog3fpbNFoizOMOJ5ySm2Op40QQ?=
- =?us-ascii?Q?rOZPTA0ekDg11dy61yJrYI7PtAOhQ+MXCvCuQWsGaC6PhHeFcm6xrWd5heJJ?=
- =?us-ascii?Q?WQZHHRrlAP5LS9Mp03QtpiOzBAgG23yKsGOKrXJOlmnoVor9V4o6yW1s7r84?=
- =?us-ascii?Q?yuDD0rmo0Ww587s0iZ2aDaWmANa1Lpwg9wemUc5ug3ZJmlNj91i3O2Nw3azW?=
- =?us-ascii?Q?36+eWvlHkFcbmibNtKDf6QR32h1UGhtn8AVcsmDvsBltGlBG3MqIeqYsOjQ9?=
- =?us-ascii?Q?NDEfoysorYXe3cWuBvZoK4homGK1gtH0+VEdtfv56TaUvZkWIRc4iTUsgaDA?=
- =?us-ascii?Q?A0TvtljSdsMVUejXsG6PTcMdk8qb/exPRZom/9RMWwcKo7j3miChMW6lylro?=
- =?us-ascii?Q?XSDIx0nQPSUWVkdzMXG2H8svdr6pCXS/ICStRSqSQ3CdeYlmi/NugPRLIrhh?=
- =?us-ascii?Q?coJHDk0HNTlvX7aPvtjRaIGE+AlALJ+NdmA7Bz/5BwPqIJp2r95f2+EHYy6G?=
- =?us-ascii?Q?uPGHWELy7wioxVdgcIsf1ThH?=
-Content-Type: text/plain; charset="us-ascii"
+	by ml01.01.org (Postfix) with ESMTPS id 40D91100EB341
+	for <devel@acpica.org>; Mon, 12 Jul 2021 11:21:54 -0700 (PDT)
+X-IronPort-AV: E=McAfee;i="6200,9189,10043"; a="197305553"
+X-IronPort-AV: E=Sophos;i="5.84,234,1620716400";
+   d="scan'208";a="197305553"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jul 2021 11:21:49 -0700
+X-IronPort-AV: E=Sophos;i="5.84,234,1620716400";
+   d="scan'208";a="569602150"
+Received: from smile.fi.intel.com (HELO smile) ([10.237.68.40])
+  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jul 2021 11:21:45 -0700
+Received: from andy by smile with local (Exim 4.94.2)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1m30Yl-00CK2l-Lr; Mon, 12 Jul 2021 21:21:39 +0300
+From: Andy Shevchenko <andy.shevchenko@gmail.com>
+To: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Daniel Scally <djrscally@gmail.com>,
+	linux-acpi@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-efi@vger.kernel.org,
+	linux-media@vger.kernel.org,
+	devel@acpica.org
+Date: Mon, 12 Jul 2021 21:21:21 +0300
+Message-Id: <20210712182121.2936794-1-andy.shevchenko@gmail.com>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3256.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fe1f095c-52dc-4089-39cf-08d942e736fb
-X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Jul 2021 14:38:27.5839
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: K2zvYEgXCZyE2FyJoWWHHO0q4Cr8pYtzxeILXU3fYJRJwYGb04u2bs0P+VDRXmhXaErtjS+pMYFDiIynMuNV3Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR11MB4353
-X-OriginatorOrg: intel.com
-Message-ID-Hash: 33DHHN6JDELC45VSYIJPPZJ5SML5BSBK
-X-Message-ID-Hash: 33DHHN6JDELC45VSYIJPPZJ5SML5BSBK
-X-MailFrom: robert.moore@intel.com
+Message-ID-Hash: SPEYK6OIKTA77EG7RKT2ZPC5ISGSSJZ5
+X-Message-ID-Hash: SPEYK6OIKTA77EG7RKT2ZPC5ISGSSJZ5
+X-MailFrom: andriy.shevchenko@linux.intel.com
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
-CC: "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>, "devel@acpica.org" <devel@acpica.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, gushengxian <gushengxian@yulong.com>
+CC: "Rafael J. Wysocki" <rjw@rjwysocki.net>, Ard Biesheuvel <ardb@kernel.org>, Yong Zhi <yong.zhi@intel.com>, Sakari Ailus <sakari.ailus@linux.intel.com>, Bingbu Cao <bingbu.cao@intel.com>, Tianshu Qiu <tian.shu.qiu@intel.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, Erik Kaneda <erik.kaneda@intel.com>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH] ACPICA: fix if condition
+Subject: [Devel] [PATCH v2 1/1] ACPI: utils: Fix reference counting in for_each_acpi_dev_match()
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/33DHHN6JDELC45VSYIJPPZJ5SML5BSBK/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/SPEYK6OIKTA77EG7RKT2ZPC5ISGSSJZ5/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-Got it,
-Thanks.
+Currently it's possible to iterate over the dangling pointer in case the device
+suddenly disappears. This may happen becase callers put it at the end of a loop.
 
+Instead, let's move that call inside acpi_dev_get_next_match_dev().
 
------Original Message-----
-From: gushengxian <gushengxian507419@gmail.com> 
-Sent: Saturday, July 03, 2021 2:12 AM
-To: Moore, Robert <robert.moore@intel.com>; erik.kaneda@intel.com; Wysocki, Rafael J <rafael.j.wysocki@intel.com>; lenb@kernel.org
-Cc: linux-acpi@vger.kernel.org; devel@acpica.org; linux-kernel@vger.kernel.org; gushengxian <gushengxian@yulong.com>
-Subject: [PATCH] ACPICA: fix if condition
-
-From: gushengxian <gushengxian@yulong.com>
-
-Fix if condition.
-
-Signed-off-by: gushengxian <gushengxian@yulong.com>
+Fixes: 803abec64ef9 ("media: ipu3-cio2: Add cio2-bridge to ipu3-cio2 driver")
+Fixes: bf263f64e804 ("media: ACPI / bus: Add acpi_dev_get_next_match_dev() and helper macro")
+Fixes: edbd1bc4951e ("efi/dev-path-parser: Switch to use for_each_acpi_dev_match()")
+Signed-off-by: Andy Shevchenko <andy.shevchenko@gmail.com>
 ---
- drivers/acpi/acpica/dswexec.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+v2:
+- rebased on top of v5.14-rc1 and hence added fix for EFI code
+- added kernel documentation update to point out that
+  acpi_dev_get_next_match_dev() drops a reference on the given
+  ACPI device (Rafael)
 
-diff --git a/drivers/acpi/acpica/dswexec.c b/drivers/acpi/acpica/dswexec.c index 41ba7773fd10..c4cd61469e1f 100644
---- a/drivers/acpi/acpica/dswexec.c
-+++ b/drivers/acpi/acpica/dswexec.c
-@@ -561,8 +561,7 @@ acpi_status acpi_ds_exec_end_op(struct acpi_walk_state *walk_state)
- 								op->common.
- 								node->object,
- 								NULL);
--				if ACPI_FAILURE
--					(status) {
-+				if (ACPI_FAILURE(status)) {
- 					ACPI_EXCEPTION((AE_INFO, status,
- 							"While writing to buffer field"));
- 					}
---
-2.25.1
+ drivers/acpi/utils.c                       | 7 +++----
+ drivers/firmware/efi/dev-path-parser.c     | 1 -
+ drivers/media/pci/intel/ipu3/cio2-bridge.c | 6 ++----
+ include/acpi/acpi_bus.h                    | 5 -----
+ 4 files changed, 5 insertions(+), 14 deletions(-)
+
+diff --git a/drivers/acpi/utils.c b/drivers/acpi/utils.c
+index e7ddd281afff..d5cedffeeff9 100644
+--- a/drivers/acpi/utils.c
++++ b/drivers/acpi/utils.c
+@@ -860,11 +860,9 @@ EXPORT_SYMBOL(acpi_dev_present);
+  * Return the next match of ACPI device if another matching device was present
+  * at the moment of invocation, or NULL otherwise.
+  *
+- * FIXME: The function does not tolerate the sudden disappearance of @adev, e.g.
+- * in the case of a hotplug event. That said, the caller should ensure that
+- * this will never happen.
+- *
+  * The caller is responsible for invoking acpi_dev_put() on the returned device.
++ * On the other hand the function invokes  acpi_dev_put() on the given @adev
++ * assuming that its reference counter had been increased beforehand.
+  *
+  * See additional information in acpi_dev_present() as well.
+  */
+@@ -880,6 +878,7 @@ acpi_dev_get_next_match_dev(struct acpi_device *adev, const char *hid, const cha
+ 	match.hrv = hrv;
+ 
+ 	dev = bus_find_device(&acpi_bus_type, start, &match, acpi_dev_match_cb);
++	acpi_dev_put(adev);
+ 	return dev ? to_acpi_device(dev) : NULL;
+ }
+ EXPORT_SYMBOL(acpi_dev_get_next_match_dev);
+diff --git a/drivers/firmware/efi/dev-path-parser.c b/drivers/firmware/efi/dev-path-parser.c
+index 10d4457417a4..eb9c65f97841 100644
+--- a/drivers/firmware/efi/dev-path-parser.c
++++ b/drivers/firmware/efi/dev-path-parser.c
+@@ -34,7 +34,6 @@ static long __init parse_acpi_path(const struct efi_dev_path *node,
+ 			break;
+ 		if (!adev->pnp.unique_id && node->acpi.uid == 0)
+ 			break;
+-		acpi_dev_put(adev);
+ 	}
+ 	if (!adev)
+ 		return -ENODEV;
+diff --git a/drivers/media/pci/intel/ipu3/cio2-bridge.c b/drivers/media/pci/intel/ipu3/cio2-bridge.c
+index 4657e99df033..59a36f922675 100644
+--- a/drivers/media/pci/intel/ipu3/cio2-bridge.c
++++ b/drivers/media/pci/intel/ipu3/cio2-bridge.c
+@@ -173,10 +173,8 @@ static int cio2_bridge_connect_sensor(const struct cio2_sensor_config *cfg,
+ 	int ret;
+ 
+ 	for_each_acpi_dev_match(adev, cfg->hid, NULL, -1) {
+-		if (!adev->status.enabled) {
+-			acpi_dev_put(adev);
++		if (!adev->status.enabled)
+ 			continue;
+-		}
+ 
+ 		if (bridge->n_sensors >= CIO2_NUM_PORTS) {
+ 			acpi_dev_put(adev);
+@@ -185,7 +183,6 @@ static int cio2_bridge_connect_sensor(const struct cio2_sensor_config *cfg,
+ 		}
+ 
+ 		sensor = &bridge->sensors[bridge->n_sensors];
+-		sensor->adev = adev;
+ 		strscpy(sensor->name, cfg->hid, sizeof(sensor->name));
+ 
+ 		ret = cio2_bridge_read_acpi_buffer(adev, "SSDB",
+@@ -215,6 +212,7 @@ static int cio2_bridge_connect_sensor(const struct cio2_sensor_config *cfg,
+ 			goto err_free_swnodes;
+ 		}
+ 
++		sensor->adev = acpi_dev_get(adev);
+ 		adev->fwnode.secondary = fwnode;
+ 
+ 		dev_info(&cio2->dev, "Found supported sensor %s\n",
+diff --git a/include/acpi/acpi_bus.h b/include/acpi/acpi_bus.h
+index 1ae993fee4a5..b9d434a93632 100644
+--- a/include/acpi/acpi_bus.h
++++ b/include/acpi/acpi_bus.h
+@@ -707,11 +707,6 @@ acpi_dev_get_first_match_dev(const char *hid, const char *uid, s64 hrv);
+  * @hrv: Hardware Revision of the device, pass -1 to not check _HRV
+  *
+  * The caller is responsible for invoking acpi_dev_put() on the returned device.
+- *
+- * FIXME: Due to above requirement there is a window that may invalidate @adev
+- * and next iteration will use a dangling pointer, e.g. in the case of a
+- * hotplug event. That said, the caller should ensure that this will never
+- * happen.
+  */
+ #define for_each_acpi_dev_match(adev, hid, uid, hrv)			\
+ 	for (adev = acpi_dev_get_first_match_dev(hid, uid, hrv);	\
+-- 
+2.32.0
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
