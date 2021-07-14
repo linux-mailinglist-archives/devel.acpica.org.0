@@ -1,185 +1,113 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED1A93C73D9
-	for <lists+devel-acpica@lfdr.de>; Tue, 13 Jul 2021 18:08:24 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E63D23C8469
+	for <lists+devel-acpica@lfdr.de>; Wed, 14 Jul 2021 14:27:16 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 2E8C3100EB34F;
-	Tue, 13 Jul 2021 09:08:21 -0700 (PDT)
-Received-SPF: None (mailfrom) identity=mailfrom; client-ip=134.134.136.100; helo=mga07.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	by ml01.01.org (Postfix) with ESMTP id 62777100EB35A;
+	Wed, 14 Jul 2021 05:27:15 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.210.44; helo=mail-ot1-f44.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 421B9100EB34D
-	for <devel@acpica.org>; Tue, 13 Jul 2021 09:08:15 -0700 (PDT)
-X-IronPort-AV: E=McAfee;i="6200,9189,10044"; a="274024938"
-X-IronPort-AV: E=Sophos;i="5.84,236,1620716400";
-   d="scan'208";a="274024938"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jul 2021 09:05:21 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.84,236,1620716400";
-   d="scan'208";a="503199535"
-Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
-  by fmsmga002.fm.intel.com with ESMTP; 13 Jul 2021 09:05:19 -0700
-Received: from fmsmsx609.amr.corp.intel.com (10.18.126.89) by
- fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2242.10; Tue, 13 Jul 2021 09:05:19 -0700
-Received: from fmsmsx606.amr.corp.intel.com (10.18.126.86) by
- fmsmsx609.amr.corp.intel.com (10.18.126.89) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2242.10; Tue, 13 Jul 2021 09:05:19 -0700
-Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
- fmsmsx606.amr.corp.intel.com (10.18.126.86) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2242.10 via Frontend Transport; Tue, 13 Jul 2021 09:05:19 -0700
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.100)
- by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2242.10; Tue, 13 Jul 2021 09:05:18 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=fF1GEALtLMUcG8Z1H8rK/FKAv2ydu9mrmGoy1Gv2b1wTZJaKWa0bF0dA1Vs+KpdRejonXzBVJup1UEpffHXIm/ytxFNwG2d+fFkGM3qgX4zsAgNliLzgQyOyjHKh/aC4gYHRLDhgTnEPEh7tjImL74AgDsoWXIka4vzp9mq6FXt+IuuYkaXE+Xu2V1OX9KdtmUWGK7FAo5Yewuk26gimK9uPBP+D4wtXjVL3sq9FcoYHJEgUylaWjJ1Txqgwinxsl15GhZP7WwjBVBz0ydPbqeLF3FQzYaovLF4HafAcXZwgCHVXX+yzAT3m1bqEO2y+RK2OQlverd/uPJF9yRtriA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/SDFJc6V//gx04pQEpnGwksX6C6WyT2izhWtl7Bu3Yg=;
- b=bZFcr5JyDx+DbCdHQqCqhS6zVoTTj8uWY1LlCXR3hs7wNWLHE5I6HKhVE8KtRDjPGW3LsfZow2297g2QV9sPR52rnabrYxUQOfxkRpoPYIujQAClHmtJn0VA3B8PnNkpKnOKWZ0esv2MYmAGbpPb+yuViLuugSlsYB8Fn7fpseySARTi6jD7bOS8esHGT983anZhJ27r47CrkV4pB+plp5hMJmp4Qbv+4C6ssYj1mGzT5qJVHQPHFMLblDzvOk1zEYU/T4AcFjVOANfjUKUlSH5ywLgOL4teJzjw5TrlgO7qj09cfS+khoe62oaGS1j/1SFo0P575lRr+3wbGxPoIg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
- s=selector2-intel-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/SDFJc6V//gx04pQEpnGwksX6C6WyT2izhWtl7Bu3Yg=;
- b=aJ7ZGVqVrtIgB1x3I5Yc+wH7A5Gz16cRetZwNYDtMlHfTul69OtcXrISn79A503JIPdPwlN4tK1ggBlRmkWsotHSORvSjapxBvonk4Dri31E6oHFZk6SDckrEqm2hHz2QGJoAhbfDG7AU55T9wJT8FkJYbzM3I1xGVgSnFenHwg=
-Received: from BYAPR11MB3256.namprd11.prod.outlook.com (2603:10b6:a03:76::19)
- by SJ0PR11MB5008.namprd11.prod.outlook.com (2603:10b6:a03:2d5::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4308.22; Tue, 13 Jul
- 2021 16:05:16 +0000
-Received: from BYAPR11MB3256.namprd11.prod.outlook.com
- ([fe80::f1f3:ba46:dd24:f466]) by BYAPR11MB3256.namprd11.prod.outlook.com
- ([fe80::f1f3:ba46:dd24:f466%7]) with mapi id 15.20.4308.027; Tue, 13 Jul 2021
- 16:05:16 +0000
-From: "Moore, Robert" <robert.moore@intel.com>
-To: Huilong Deng <denghuilong@cdjrlc.com>, "erik.kaneda@intel.com"
-	<erik.kaneda@intel.com>, "Wysocki, Rafael J" <rafael.j.wysocki@intel.com>,
-	"lenb@kernel.org" <lenb@kernel.org>
-Thread-Topic: [PATCH] ACPICA: macros should not use a trailing semicolon
-Thread-Index: AQHXdiCsOq9KNdYiyE+YI9k+Z5yl2qtBFWlg
-Date: Tue, 13 Jul 2021 16:05:16 +0000
-Message-ID: <BYAPR11MB3256BFA3E0749F609239FF4587149@BYAPR11MB3256.namprd11.prod.outlook.com>
-References: <20210711064552.59735-1-denghuilong@cdjrlc.com>
-In-Reply-To: <20210711064552.59735-1-denghuilong@cdjrlc.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-dlp-version: 11.5.1.3
-dlp-product: dlpe-windows
-dlp-reaction: no-action
-authentication-results: cdjrlc.com; dkim=none (message not signed)
- header.d=none;cdjrlc.com; dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: cba8b6da-3acd-4cb7-fabe-08d946180145
-x-ms-traffictypediagnostic: SJ0PR11MB5008:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <SJ0PR11MB50083C1773EC749BC15D62F287149@SJ0PR11MB5008.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:2331;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: FLAlUg01u9S1UPy7kie4EXSPTN8BFuzBW2M+I/TbWUfM6xFHNjpCdfx72If1RGKj1HRnlRwUQB4O4fwIyql9QR33hI7MuoebVKbafRHIsyyf5brHIkWc4ASGVkxtCDdatSL9b32aOEG91Oek/pJxVdL9uTTI8A6Ov+D0+SfgrVtJAVGjK48Df1va/ArIpP7Zi7qnhxY1SH84AsCZ6sk+skxqeW6nxM36ffrLzM43UlXyZLFsQeomGO7biAWzZEyyHlFn6nrkksRjS3RLsNh5RP9taScfFFcCrols+umDUNOC/BHXaa4EHTNtYR1HVRR/AE/4x2mLfnLCO7olKmLYQfIyvyYM+Q60kUqlGLqKLkqtvplSfEyGpmanXqBQeo3kskb22u0oYRwOil6GyvsytXgXv3FLJXeRnWTVPnpPkmcVwrPuSYdCtF0/bIhLjp0ZeqFemxCM+hwNpw+JZr1DUpKLVzwbMEtRu3Up32aYvpFJmI2deIGlyShH0dSw8KqXoZP+GbR9YiARv1oy9m2TQRCh3rx6yElsXSx9fscP9Tb8Md5u/zsVltBTnBN5ISEw6fa/p91thnINd1SruqhkSzylAERQpKaRWh35JWRL9vtRKp5gtY32jZtS2LOI1Nr8nhbjfXkdX9cCTc6cQf9F5g==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(346002)(396003)(39860400002)(376002)(136003)(38100700002)(186003)(83380400001)(8676002)(110136005)(26005)(5660300002)(122000001)(71200400001)(66556008)(478600001)(76116006)(53546011)(64756008)(4744005)(66446008)(52536014)(4326008)(86362001)(6506007)(66476007)(66946007)(55016002)(8936002)(316002)(7696005)(9686003)(54906003)(2906002)(33656002);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?TLskdew53JlKXYKbqJGyJY0YXGKT3kHCiBLtbUtxd4R4aIG2AJ6jHzVo9Bn2?=
- =?us-ascii?Q?RR8griBfjQrMKa9RogF34i4t14qTkcFQopiWmew3pb9CLtXVe1W49JJZeYgk?=
- =?us-ascii?Q?aFYWLkbIaPn4T5try83VlIJPAIWQUT+XzqrUlpsrmOFT6vpz9gGc7v2UzSqb?=
- =?us-ascii?Q?LwYYmXmiR5/l6MZPfycF6s92WTLTR3dVy9bW9Jy+CnKb7OAht6WSwxfMDCjD?=
- =?us-ascii?Q?elcWBv4+swB2XV6A2Rq9ckEs4mhhKcVvFAx0LVMqKuZLNQCFzxNoR95sCOkO?=
- =?us-ascii?Q?Aj5pM40DFUqffmMifj2ziRk7I+TBvBH0qZQ7fWfJJ2KbDVSZ+cL4S+XSSsy8?=
- =?us-ascii?Q?WhUzUI4Kf1eBcgJDFggX2jpQyq4RPxDNlNXm+F2Uidnd/b9Wi+Ax1/34fa9x?=
- =?us-ascii?Q?T6zkNHqirxF4hyLr5GEtxk7VV4/Ged+l5T6aswdAOqd4/HPz1ZHZORGOmNK8?=
- =?us-ascii?Q?senUMnykcNXVOfbXd/Nuk612dT6sCwq3BT9hAUqNb3uEXEb5K0k1pPF9/SeR?=
- =?us-ascii?Q?hp16y500C+4ODFihuxHKsY0w0bT83phiwGfCEPMMS0vsiFAOIRnsw2shu6OS?=
- =?us-ascii?Q?8n9JuqySQ3Q8YQ3Wm6ZtC85vGMtuhkJLACM8b55UpfGB9eljnak3H/qH9XT6?=
- =?us-ascii?Q?Pbu/RKeDccEZSfu1Nl6iNiQjpnqyNJwQiXQS1r6XwQ10WG9p7aiYgD/ZNtev?=
- =?us-ascii?Q?IuDexKMBOYsKyePoCxh4UwvG34Fi0jeuGpNyKZj8hNwNpkv01878Rs5rRuYV?=
- =?us-ascii?Q?li1210+c1IFPcUKCuA49cPKn0ZuXYv6DiiAuEb6X2QvNp1d8dbFhIW1b6hrC?=
- =?us-ascii?Q?EM7GuJBRT2KpsvShP7MLnQPjmv3unGakVlPT2meCzlp4PQb+HyFT/fq2NeMN?=
- =?us-ascii?Q?yYotxzF+e+PJqqyklcXJFArBJVDKE683zcy1yD8llZLdQgNKRIkQq1c7vUYX?=
- =?us-ascii?Q?ja3Y36UqDZ8YfTASGzyjXzZUTq2QEJfy0jPIDyPWmtBz5PaHeNAt+TfVvi9i?=
- =?us-ascii?Q?2iqEo8f91zw4GHEjj1xD1rek9wxUzX/zP9Jp4SB56iWycgW9mR0x6joVlhHu?=
- =?us-ascii?Q?/g7whxa7fdHBnaGONBVvfZMEJqsPCrpNJOf/4bELrJ9JygnPsul6HLyS9H94?=
- =?us-ascii?Q?frGPJvusH/K+D+gvn3LLFsrQQdwsJM88+UwrEbbAWiwnGu7U8iFgL5mw00Ej?=
- =?us-ascii?Q?JfHZ5dYf5ccsMYZRisX2HipdnfER/rVnHpLypshTtKqpRJKpgQTybn2olJzs?=
- =?us-ascii?Q?UH3kbHNiV2vtSQjzA5ALsBZU7Q0MaNeCqdp6jml1320z7iOKwmvtOKrj3V7E?=
- =?us-ascii?Q?ziRdDg0jX9iCwKc95RXBXnsO?=
-Content-Type: text/plain; charset="us-ascii"
+	by ml01.01.org (Postfix) with ESMTPS id 085EC100EB34D
+	for <devel@acpica.org>; Wed, 14 Jul 2021 05:27:13 -0700 (PDT)
+Received: by mail-ot1-f44.google.com with SMTP id f93-20020a9d03e60000b02904b1f1d7c5f4so2223576otf.9
+        for <devel@acpica.org>; Wed, 14 Jul 2021 05:27:14 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Mhl126D+5KrvqHUg8Mnu6CpT2565vYX+nBypTu9pEdQ=;
+        b=GOGlgQrGrd7cESlgwfbWTSkLMfmb8TAtPW7FQt14vUZbQte9eMziNlzY+noBe0z6SH
+         jiwIQrj4lHTgUcxYIAi7BkuWCeM43y1tXyac/agPCNs9L3f04VzH8i7gNDD/8vT00dGf
+         pKoz8YkXmfANmvYMSksTMSqaYrjkzPH55n6aK9OYjtfRdM/JCrznEZOoZckXj3Vb/vFW
+         xWTgxQbsm7JpdwvIBMLMAic5lZAP/e+87jiqw+PTEFN2MxVi62acPUj0zNBIQe+Qp0rz
+         4T5UU9wnVhbCZtTG6PAmjYomEJI/LL90WaO1G7fKetq6gYOoLggjbfAvzvBLlyPf0uKE
+         Jksg==
+X-Gm-Message-State: AOAM532n9cMqw/fb61KqBAhzpNI1quiuVay1evH9l9sZgMpshP0m15mn
+	HiQcQOeEqR0ofvND1DoB7zvGuYlm09Pkh00JiJ8=
+X-Google-Smtp-Source: ABdhPJyFbDsKylVuWlvXABz7iW3sGVVm5eX1+HmtYHYKTF69l/8pIq15gHIJUzZBPfkTb2+HYbBKYrXviDCow7Axg7A=
+X-Received: by 2002:a9d:5f19:: with SMTP id f25mr8376874oti.206.1626265632099;
+ Wed, 14 Jul 2021 05:27:12 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3256.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: cba8b6da-3acd-4cb7-fabe-08d946180145
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Jul 2021 16:05:16.2779
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: q6WgmjlBT+lhpNNK/N2HGYH14uT5yHeo0TesMqBR1buXON03waqWArYTqTZeWZyoFHW9VE+zNx05b2D5TuHKKQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB5008
-X-OriginatorOrg: intel.com
-Message-ID-Hash: HBK6D2OED2H4XQFXRO4JJBGLE6JJNN32
-X-Message-ID-Hash: HBK6D2OED2H4XQFXRO4JJBGLE6JJNN32
-X-MailFrom: robert.moore@intel.com
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
-CC: "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>, "devel@acpica.org" <devel@acpica.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+References: <20210621200459.3558199-1-mw@semihalf.com>
+In-Reply-To: <20210621200459.3558199-1-mw@semihalf.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Wed, 14 Jul 2021 14:27:01 +0200
+Message-ID: <CAJZ5v0jegOF85Zvo8Oyio9cSvb_WfUCG0oNsXzWHSCTi151u0A@mail.gmail.com>
+To: Marcin Wojtas <mw@semihalf.com>
+Message-ID-Hash: QOEYXUIBERUKD5FYCIIGLHRI3CYCVEMT
+X-Message-ID-Hash: QOEYXUIBERUKD5FYCIIGLHRI3CYCVEMT
+X-MailFrom: rjwysocki@gmail.com
+X-Mailman-Rule-Hits: nonmember-moderation
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
+CC: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Grzegorz Jaszczyk <jaz@semihalf.com>, Grzegorz Bernacki <gjb@semihalf.com>, upstream@semihalf.com, Samer El-Haj-Mahmoud <Samer.El-Haj-Mahmoud@arm.com>, Jon <jon@solid-run.com>, Tomasz Nowicki <tn@semihalf.com>, "Rafael J. Wysocki" <rjw@rjwysocki.net>, Erik Kaneda <erik.kaneda@intel.com>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH] ACPICA: macros should not use a trailing semicolon
+Subject: [Devel] Re: [net-next: PATCH v3 1/1] ACPI: SPCR: Add new 16550-compatible Serial Port Subtype
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/HBK6D2OED2H4XQFXRO4JJBGLE6JJNN32/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/QOEYXUIBERUKD5FYCIIGLHRI3CYCVEMT/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-Got it, thanks.
-Bob
+Sorry for the delay.
 
+On Mon, Jun 21, 2021 at 10:05 PM Marcin Wojtas <mw@semihalf.com> wrote:
+>
+> The Microsoft Debug Port Table 2 (DBG2) specification revision
+> May 31, 2017 adds support for 16550-compatible Serial Port
+> Subtype with parameters defined in Generic Address Structure (GAS) [1]
+>
+> Add its support in SPCR parsing routine.
+>
+> [1] https://docs.microsoft.com/en-us/windows-hardware/drivers/bringup/acpi-debug-port-table
+>
+> Signed-off-by: Marcin Wojtas <mw@semihalf.com>
+> ---
+>  include/acpi/actbl1.h | 1 +
+>  drivers/acpi/spcr.c   | 1 +
+>  2 files changed, 2 insertions(+)
+>
+> diff --git a/include/acpi/actbl1.h b/include/acpi/actbl1.h
+> index ce59903c2695..f746012eba8d 100644
+> --- a/include/acpi/actbl1.h
+> +++ b/include/acpi/actbl1.h
 
------Original Message-----
-From: Huilong Deng <denghuilong@cdjrlc.com> 
-Sent: Saturday, July 10, 2021 11:46 PM
-To: Moore, Robert <robert.moore@intel.com>; erik.kaneda@intel.com; Wysocki, Rafael J <rafael.j.wysocki@intel.com>; lenb@kernel.org
-Cc: linux-acpi@vger.kernel.org; devel@acpica.org; linux-kernel@vger.kernel.org; Huilong Deng <denghuilong@cdjrlc.com>
-Subject: [PATCH] ACPICA: macros should not use a trailing semicolon
+This is an ACPICA header, so the first part of the patch should go in
+via the ACPICA upstream repository.
 
-Macros should not use a trailing semicolon.
+Can you please resend this as two patches to make it easier to process it?
 
-Signed-off-by: Huilong Deng <denghuilong@cdjrlc.com>
----
- include/acpi/acoutput.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/include/acpi/acoutput.h b/include/acpi/acoutput.h index 1b4c45815695..5a3875744678 100644
---- a/include/acpi/acoutput.h
-+++ b/include/acpi/acoutput.h
-@@ -415,7 +415,7 @@
- /* Conditional execution */
- 
- #define ACPI_DEBUG_EXEC(a)              a
--#define ACPI_DEBUG_ONLY_MEMBERS(a)      a;
-+#define ACPI_DEBUG_ONLY_MEMBERS(a)      a
- #define _VERBOSE_STRUCTURES
- 
- /* Various object display routines for debug */
---
-2.32.0
-
-
+> @@ -498,6 +498,7 @@ struct acpi_dbg2_device {
+>  #define ACPI_DBG2_ARM_SBSA_GENERIC  0x000E
+>  #define ACPI_DBG2_ARM_DCC           0x000F
+>  #define ACPI_DBG2_BCM2835           0x0010
+> +#define ACPI_DBG2_16550_WITH_GAS    0x0012
+>
+>  #define ACPI_DBG2_1394_STANDARD     0x0000
+>
+> diff --git a/drivers/acpi/spcr.c b/drivers/acpi/spcr.c
+> index 88460bacd5ae..25c2d0be953e 100644
+> --- a/drivers/acpi/spcr.c
+> +++ b/drivers/acpi/spcr.c
+> @@ -136,6 +136,7 @@ int __init acpi_parse_spcr(bool enable_earlycon, bool enable_console)
+>                 break;
+>         case ACPI_DBG2_16550_COMPATIBLE:
+>         case ACPI_DBG2_16550_SUBSET:
+> +       case ACPI_DBG2_16550_WITH_GAS:
+>                 uart = "uart";
+>                 break;
+>         default:
+> --
+> 2.29.0
+>
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
