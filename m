@@ -1,48 +1,55 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4444E3FB89A
-	for <lists+devel-acpica@lfdr.de>; Mon, 30 Aug 2021 16:57:41 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6452B3FCD1A
+	for <lists+devel-acpica@lfdr.de>; Tue, 31 Aug 2021 20:51:45 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 2031F100EC1DA;
-	Mon, 30 Aug 2021 07:57:39 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.93; helo=mga11.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	by ml01.01.org (Postfix) with ESMTP id 7B6B2100EB82A;
+	Tue, 31 Aug 2021 11:51:42 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.167.176; helo=mail-oi1-f176.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 3CF3B100ED482
-	for <devel@acpica.org>; Mon, 30 Aug 2021 07:57:36 -0700 (PDT)
-X-IronPort-AV: E=McAfee;i="6200,9189,10092"; a="215160195"
-X-IronPort-AV: E=Sophos;i="5.84,363,1620716400";
-   d="scan'208";a="215160195"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Aug 2021 07:57:35 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.84,363,1620716400";
-   d="scan'208";a="689279409"
-Received: from lkp-server01.sh.intel.com (HELO 4fbc2b3ce5aa) ([10.239.97.150])
-  by fmsmga005.fm.intel.com with ESMTP; 30 Aug 2021 07:57:34 -0700
-Received: from kbuild by 4fbc2b3ce5aa with local (Exim 4.92)
-	(envelope-from <lkp@intel.com>)
-	id 1mKij7-0005DQ-ET; Mon, 30 Aug 2021 14:57:33 +0000
-Date: Mon, 30 Aug 2021 22:57:02 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <612cf1be.T4XIgVHNfE5ffyii%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTPS id 5D607100EB829
+	for <devel@acpica.org>; Tue, 31 Aug 2021 11:51:39 -0700 (PDT)
+Received: by mail-oi1-f176.google.com with SMTP id o185so338554oih.13
+        for <devel@acpica.org>; Tue, 31 Aug 2021 11:51:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=pAl6FCn0xjGx+leNhgbAOTdlqbzJCFFy67QvDdz1xcI=;
+        b=D5WDn+885lQTsmotPFgwD8JjuAgek9sVceFj6X843216LGbcOwX9fN8tbxgIFmprtG
+         L5TMljesSJN/r7AZWPA5GtPSeD1tyWglpXHa7NV+VTF10doGrnEBUmhr3z2Jbf1qWPEM
+         q46obmNnf0XoAYovLh1KohLus1leR1XVnWcJJoPPZ3jFgXEPhYxBVRYjhaWc/1UtYwKY
+         yqnjWb4J9OhZ8w1H+/URgop84kMpKlMV2Kt4dPvJ3Rd8pdGrMFewmY1QarBLAVHoVe2H
+         a4w5ZE6pxu6lI8zvimZBt5Va3UJEOdqBMJpa5QWYTMli+CC34lhEZd2Nc2HfIS+eEkXc
+         QmWQ==
+X-Gm-Message-State: AOAM530shKcpAM7NJaJHfhJfSwOnBJDB0DTscIhlKkELHp5HpLVvsln+
+	Oe2C69QfQMHMEvcr50l6eu8E5UpnbvGMapk58TE=
+X-Google-Smtp-Source: ABdhPJwr3gSGs8wjMkRFy30kSPn37dT9HxNCFRRxYu5Qk4pPjX4Wo6oPAnpNML2i0v6TiCIvjdACwjxhdselfR+ybeg=
+X-Received: by 2002:a05:6808:10c1:: with SMTP id s1mr4132859ois.69.1630435897582;
+ Tue, 31 Aug 2021 11:51:37 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID-Hash: L5QRVX7SV2WP5GAT4X62DIR4UCHY3RQK
-X-Message-ID-Hash: L5QRVX7SV2WP5GAT4X62DIR4UCHY3RQK
-X-MailFrom: lkp@intel.com
+References: <20210813161842.222414-1-mario.limonciello@amd.com>
+ <CAJZ5v0jynpMMnMBQuyJPYfSG-6JSe5=a6wW0UtUnpGuh68CqkA@mail.gmail.com> <b116a84b-c099-5bf4-6c25-f62cea856f45@amd.com>
+In-Reply-To: <b116a84b-c099-5bf4-6c25-f62cea856f45@amd.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Tue, 31 Aug 2021 20:51:26 +0200
+Message-ID: <CAJZ5v0ibUsBCoaz=BRpe42TuiVvSy68wj4VKs+H3Q6uKxCycJQ@mail.gmail.com>
+To: "Limonciello, Mario" <mario.limonciello@amd.com>
+Message-ID-Hash: UM4IZYI7CA2SHIBYMCKHAA2BUPNGRCXS
+X-Message-ID-Hash: UM4IZYI7CA2SHIBYMCKHAA2BUPNGRCXS
+X-MailFrom: rjwysocki@gmail.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+CC: "Rafael J. Wysocki" <rafael@kernel.org>, Borislav Petkov <bp@alien8.de>, Ingo Molnar <mingo@redhat.com>, Thomas Gleixner <tglx@linutronix.de>, Alexander Deucher <Alexander.Deucher@amd.com>, Ray Huang <Ray.Huang@amd.com>, "Rafael J. Wysocki" <rjw@rjwysocki.net>, Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>, "maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT)" <x86@kernel.org>, "H. Peter Anvin" <hpa@zytor.com>, Erik Kaneda <erik.kaneda@intel.com>, "open list:SUSPEND TO RAM" <linux-pm@vger.kernel.org>, "open list:X86 ARCHITECTURE (32-BIT AND 64-BIT)" <linux-kernel@vger.kernel.org>, "open list:ACPI" <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS a93c0039d89d6f11b98f49db841515e65a5dd0ba
+Subject: [Devel] Re: [PATCH v2] x86/acpi: Don't add CPUs that are not online capable
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/L5QRVX7SV2WP5GAT4X62DIR4UCHY3RQK/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/UM4IZYI7CA2SHIBYMCKHAA2BUPNGRCXS/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -51,416 +58,115 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-branch HEAD: a93c0039d89d6f11b98f49db841515e65a5dd0ba  Merge branch 'acpi-bus' into linux-next
+Sorry for the delay.
 
-elapsed time: 4062m
+On Tue, Aug 17, 2021 at 8:41 PM Limonciello, Mario
+<mario.limonciello@amd.com> wrote:
+>
+> On 8/16/2021 09:04, Rafael J. Wysocki wrote:
+> > On Fri, Aug 13, 2021 at 6:19 PM Mario Limonciello
+> > <mario.limonciello@amd.com> wrote:
+> >>
+> >> A number of systems are showing "hotplug capable" CPUs when they
+> >> are not really hotpluggable.  This is because the MADT has extra
+> >> CPU entries to support different CPUs that may be inserted into
+> >> the socket with different numbers of cores.
+> >>
+> >> Starting with ACPI 6.3 the spec has an Online Capable bit in the
+> >> MADT used to determine whether or not a CPU is hotplug capable
+> >> when the enabled bit is not set.
+> >>
+> >> Link: https://nam11.safelinks.protection.outlook.com/?url=https%3A%2F%2Fuefi.org%2Fhtmlspecs%2FACPI_Spec_6_4_html%2F05_ACPI_Software_Programming_Model%2FACPI_Software_Programming_Model.html%3F%23local-apic-flags&amp;data=04%7C01%7Cmario.limonciello%40amd.com%7Ce6a384bf25274f88b49508d960bee40a%7C3dd8961fe4884e608e11a82d994e183d%7C0%7C0%7C637647195281368169%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C1000&amp;sdata=3MWJ5NcRVJ7TP4tJH6uQRbqfZKSqe5RHjGxGbQEP13E%3D&amp;reserved=0
+> >> Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+> >> ---
+> >>   arch/x86/kernel/acpi/boot.c | 10 ++++++++++
+> >>   include/acpi/actbl2.h       |  1 +
+> >>   2 files changed, 11 insertions(+)
+> >>
+> >> Changes from v1->v2:
+> >>   * Check the revision field in MADT to determine if it matches the
+> >>     bump from ACPI 6.3 as suggested by Hanjun Guo
+> >>   * Update description
+> >>
+> >> diff --git a/arch/x86/kernel/acpi/boot.c b/arch/x86/kernel/acpi/boot.c
+> >> index e55e0c1fad8c..bfa69a5c9c0b 100644
+> >> --- a/arch/x86/kernel/acpi/boot.c
+> >> +++ b/arch/x86/kernel/acpi/boot.c
+> >> @@ -53,6 +53,8 @@ int acpi_ioapic;
+> >>   int acpi_strict;
+> >>   int acpi_disable_cmcff;
+> >>
+> >> +bool acpi_support_online_capable;
+> >
+> > Missing static?
+>
+> Ack, thanks.
+>
+> >
+> >> +
+> >>   /* ACPI SCI override configuration */
+> >>   u8 acpi_sci_flags __initdata;
+> >>   u32 acpi_sci_override_gsi __initdata = INVALID_ACPI_IRQ;
+> >> @@ -138,6 +140,8 @@ static int __init acpi_parse_madt(struct acpi_table_header *table)
+> >>
+> >>                  pr_debug("Local APIC address 0x%08x\n", madt->address);
+> >>          }
+> >> +       if (madt->header.revision >= 5)
+> >> +               acpi_support_online_capable = true;
+> >>
+> >>          default_acpi_madt_oem_check(madt->header.oem_id,
+> >>                                      madt->header.oem_table_id);
+> >> @@ -239,6 +243,12 @@ acpi_parse_lapic(union acpi_subtable_headers * header, const unsigned long end)
+> >>          if (processor->id == 0xff)
+> >>                  return 0;
+> >>
+> >> +       /* don't register processors that can not be onlined */
+> >> +       if (acpi_support_online_capable &&
+> >> +           !(processor->lapic_flags & ACPI_MADT_ENABLED) &&
+> >> +           !(processor->lapic_flags & ACPI_MADT_ONLINE_CAPABLE))
+> >> +               return 0;
+> >> +
+> >>          /*
+> >>           * We need to register disabled CPU as well to permit
+> >>           * counting disabled CPUs. This allows us to size
+> >> diff --git a/include/acpi/actbl2.h b/include/acpi/actbl2.h
+> >> index 2069ac38a4e2..fae45e383987 100644
+> >> --- a/include/acpi/actbl2.h
+> >> +++ b/include/acpi/actbl2.h
+> >
+> > The one below is an ACPICA change and I'd prefer it to be integrated
+> > via the upstream ACPICA.
+> >
+> > Could you prepare an ACPICA pull request for just the bit below and
+> > send it via GitHub?
+>
+> Sure thing.
+> http://github.com/acpica/acpica/pull/708/
+>
+> They said they would take it later this month or next month.
+>
+> Given that, how do you want to proceed with the first part of this?
+>
+> Should I send a 2 patch series that will add the MADT bit to actbl2.h in
+> advance of their next release, or should I wait to resubmit until after
+> their next release and you've brought it into your tree?
 
-configs tested: 387
-configs skipped: 5
+If you want this to go into 5.15, I would suggest going for the first option.
 
-The following configs have been built successfully.
-More configs may be tested in the coming days.
+Knowing that the ACPICA patch is going to reach upstream at one point,
+I can put it into Linux in advance.
 
-gcc tested configs:
-arm                                 defconfig
-arm64                            allyesconfig
-arm64                               defconfig
-arm                              allyesconfig
-arm                              allmodconfig
-i386                 randconfig-c001-20210827
-i386                 randconfig-c001-20210829
-i386                 randconfig-c001-20210830
-ia64                             allmodconfig
-i386                             allyesconfig
-x86_64                           allyesconfig
-x86_64                    rhel-8.3-kselftests
-ia64                             allyesconfig
-powerpc              randconfig-c003-20210827
-um                           x86_64_defconfig
-riscv                            allyesconfig
-mips                             allyesconfig
-um                             i386_defconfig
-mips                             allmodconfig
-riscv                            allmodconfig
-powerpc                          allyesconfig
-s390                             allyesconfig
-m68k                             allmodconfig
-s390                             allmodconfig
-powerpc                          allmodconfig
-m68k                             allyesconfig
-sparc                            allyesconfig
-xtensa                           allyesconfig
-h8300                            allyesconfig
-sh                               allmodconfig
-parisc                           allyesconfig
-arc                              allyesconfig
-nios2                            allyesconfig
-alpha                            allyesconfig
-mips                 randconfig-c004-20210829
-arm                        mini2440_defconfig
-x86_64                            allnoconfig
-powerpc                      ppc44x_defconfig
-powerpc                     tqm5200_defconfig
-xtensa                    smp_lx200_defconfig
-arm                        realview_defconfig
-arm                          ep93xx_defconfig
-arm                          pxa3xx_defconfig
-mips                malta_qemu_32r6_defconfig
-mips                         cobalt_defconfig
-mips                        qi_lb60_defconfig
-sparc64                          alldefconfig
-arm                          iop32x_defconfig
-sh                           sh2007_defconfig
-arm                          ixp4xx_defconfig
-sh                           se7705_defconfig
-powerpc                        fsp2_defconfig
-sh                              ul2_defconfig
-sh                        sh7785lcr_defconfig
-sh                           se7780_defconfig
-nios2                         10m50_defconfig
-sparc                       sparc64_defconfig
-arm                     am200epdkit_defconfig
-sh                        sh7757lcr_defconfig
-powerpc                 mpc836x_mds_defconfig
-nios2                         3c120_defconfig
-sh                          rsk7264_defconfig
-arm                        spear6xx_defconfig
-arm                           h3600_defconfig
-powerpc                 mpc832x_mds_defconfig
-sh                          polaris_defconfig
-powerpc                     rainier_defconfig
-arm                             rpc_defconfig
-powerpc                     pseries_defconfig
-powerpc                 mpc8315_rdb_defconfig
-mips                           gcw0_defconfig
-sh                          rsk7269_defconfig
-mips                      fuloong2e_defconfig
-sh                        sh7763rdp_defconfig
-m68k                       m5275evb_defconfig
-arm                       spear13xx_defconfig
-arm                      footbridge_defconfig
-um                               alldefconfig
-microblaze                      mmu_defconfig
-m68k                          multi_defconfig
-powerpc                     tqm8541_defconfig
-mips                          ath25_defconfig
-arc                     nsimosci_hs_defconfig
-arm                         nhk8815_defconfig
-arm                         lpc18xx_defconfig
-mips                         mpc30x_defconfig
-mips                           ip32_defconfig
-m68k                        m5272c3_defconfig
-arm                          gemini_defconfig
-powerpc                 xes_mpc85xx_defconfig
-mips                     cu1000-neo_defconfig
-sparc                       sparc32_defconfig
-arm                           sunxi_defconfig
-mips                        workpad_defconfig
-powerpc                    amigaone_defconfig
-powerpc                     sbc8548_defconfig
-arm                         at91_dt_defconfig
-sh                ecovec24-romimage_defconfig
-powerpc                          g5_defconfig
-sh                         ecovec24_defconfig
-xtensa                         virt_defconfig
-arm                         socfpga_defconfig
-powerpc                    mvme5100_defconfig
-arm64                            alldefconfig
-powerpc                       holly_defconfig
-arm                        multi_v5_defconfig
-powerpc                     mpc512x_defconfig
-sh                           se7206_defconfig
-mips                     loongson2k_defconfig
-arm                           h5000_defconfig
-mips                     cu1830-neo_defconfig
-sh                          sdk7780_defconfig
-x86_64                           alldefconfig
-powerpc                   microwatt_defconfig
-sh                           se7724_defconfig
-arm                          pcm027_defconfig
-arm                         palmz72_defconfig
-xtensa                  audio_kc705_defconfig
-powerpc                     ksi8560_defconfig
-m68k                       m5475evb_defconfig
-sh                          kfr2r09_defconfig
-mips                      pic32mzda_defconfig
-arm                            lart_defconfig
-sh                         apsh4a3a_defconfig
-arm                       imx_v4_v5_defconfig
-mips                           xway_defconfig
-mips                        maltaup_defconfig
-openrisc                 simple_smp_defconfig
-sh                   sh7770_generic_defconfig
-sh                            migor_defconfig
-arm                          pxa168_defconfig
-s390                                defconfig
-sh                          r7780mp_defconfig
-arm                          badge4_defconfig
-mips                  decstation_64_defconfig
-powerpc                 mpc834x_mds_defconfig
-powerpc                     redwood_defconfig
-arm                           stm32_defconfig
-s390                             alldefconfig
-powerpc                      tqm8xx_defconfig
-mips                     loongson1b_defconfig
-arm                         s5pv210_defconfig
-xtensa                           alldefconfig
-sh                        edosk7705_defconfig
-mips                         tb0219_defconfig
-sh                 kfr2r09-romimage_defconfig
-powerpc                       ebony_defconfig
-sh                             espt_defconfig
-arm                        mvebu_v7_defconfig
-powerpc                      obs600_defconfig
-sh                            shmin_defconfig
-mips                           ip28_defconfig
-openrisc                  or1klitex_defconfig
-mips                      malta_kvm_defconfig
-powerpc                      cm5200_defconfig
-sh                           se7722_defconfig
-sh                           se7751_defconfig
-ia64                        generic_defconfig
-sh                          rsk7201_defconfig
-sh                         microdev_defconfig
-arm                            mmp2_defconfig
-m68k                        m5307c3_defconfig
-powerpc                mpc7448_hpc2_defconfig
-mips                        nlm_xlp_defconfig
-powerpc                        warp_defconfig
-m68k                        mvme147_defconfig
-xtensa                       common_defconfig
-mips                  cavium_octeon_defconfig
-arm                         hackkit_defconfig
-arm                      pxa255-idp_defconfig
-m68k                       bvme6000_defconfig
-mips                    maltaup_xpa_defconfig
-sh                        edosk7760_defconfig
-powerpc                  storcenter_defconfig
-powerpc                      makalu_defconfig
-powerpc                  mpc885_ads_defconfig
-powerpc                      ppc6xx_defconfig
-sh                           se7721_defconfig
-m68k                                defconfig
-mips                         db1xxx_defconfig
-arm                         vf610m4_defconfig
-xtensa                              defconfig
-um                                  defconfig
-sh                           se7750_defconfig
-powerpc                 mpc834x_itx_defconfig
-mips                            ar7_defconfig
-arc                            hsdk_defconfig
-h8300                               defconfig
-sh                          lboxre2_defconfig
-arm                         shannon_defconfig
-powerpc                     powernv_defconfig
-powerpc                    socrates_defconfig
-arm                       netwinder_defconfig
-arc                           tb10x_defconfig
-arm                        keystone_defconfig
-powerpc                      chrp32_defconfig
-arm                       multi_v4t_defconfig
-mips                         tb0226_defconfig
-m68k                             alldefconfig
-mips                       capcella_defconfig
-arm                         assabet_defconfig
-arm                      integrator_defconfig
-openrisc                         alldefconfig
-arm                           sama5_defconfig
-mips                        bcm47xx_defconfig
-arm                            dove_defconfig
-riscv                          rv32_defconfig
-powerpc                     akebono_defconfig
-arc                        vdk_hs38_defconfig
-sh                         ap325rxa_defconfig
-sh                   rts7751r2dplus_defconfig
-nds32                             allnoconfig
-alpha                               defconfig
-powerpc                      bamboo_defconfig
-powerpc                      ppc64e_defconfig
-arm                  colibri_pxa270_defconfig
-m68k                       m5249evb_defconfig
-powerpc                       ppc64_defconfig
-arm                        cerfcube_defconfig
-sparc                            alldefconfig
-parisc                generic-32bit_defconfig
-m68k                            q40_defconfig
-powerpc               mpc834x_itxgp_defconfig
-arm                    vt8500_v6_v7_defconfig
-powerpc                 mpc837x_mds_defconfig
-xtensa                  nommu_kc705_defconfig
-arc                    vdk_hs38_smp_defconfig
-arm                        vexpress_defconfig
-mips                         rt305x_defconfig
-arc                     haps_hs_smp_defconfig
-arm                        shmobile_defconfig
-mips                           rs90_defconfig
-arm                            hisi_defconfig
-powerpc                      pasemi_defconfig
-powerpc                 mpc832x_rdb_defconfig
-m68k                       m5208evb_defconfig
-arm                            pleb_defconfig
-powerpc                 mpc836x_rdk_defconfig
-arm                         s3c6400_defconfig
-arm                         lubbock_defconfig
-sh                      rts7751r2d1_defconfig
-i386                             alldefconfig
-mips                       rbtx49xx_defconfig
-arm                         bcm2835_defconfig
-sh                           se7343_defconfig
-powerpc                     kilauea_defconfig
-arm                       imx_v6_v7_defconfig
-sh                   secureedge5410_defconfig
-mips                        bcm63xx_defconfig
-microblaze                          defconfig
-openrisc                            defconfig
-powerpc                       eiger_defconfig
-mips                  maltasmvp_eva_defconfig
-sh                        apsh4ad0a_defconfig
-ia64                                defconfig
-nios2                               defconfig
-nds32                               defconfig
-csky                                defconfig
-arc                                 defconfig
-parisc                              defconfig
-sparc                               defconfig
-i386                                defconfig
-powerpc                           allnoconfig
-i386                 randconfig-a001-20210828
-i386                 randconfig-a006-20210828
-i386                 randconfig-a002-20210828
-i386                 randconfig-a005-20210828
-i386                 randconfig-a003-20210828
-i386                 randconfig-a004-20210828
-x86_64               randconfig-a014-20210827
-x86_64               randconfig-a015-20210827
-x86_64               randconfig-a016-20210827
-x86_64               randconfig-a013-20210827
-x86_64               randconfig-a012-20210827
-x86_64               randconfig-a011-20210827
-x86_64               randconfig-a014-20210830
-x86_64               randconfig-a015-20210830
-x86_64               randconfig-a013-20210830
-x86_64               randconfig-a016-20210830
-x86_64               randconfig-a012-20210830
-x86_64               randconfig-a011-20210830
-x86_64               randconfig-a014-20210829
-x86_64               randconfig-a016-20210829
-x86_64               randconfig-a015-20210829
-x86_64               randconfig-a012-20210829
-x86_64               randconfig-a013-20210829
-x86_64               randconfig-a011-20210829
-i386                 randconfig-a011-20210827
-i386                 randconfig-a016-20210827
-i386                 randconfig-a012-20210827
-i386                 randconfig-a014-20210827
-i386                 randconfig-a013-20210827
-i386                 randconfig-a015-20210827
-i386                 randconfig-a011-20210829
-i386                 randconfig-a016-20210829
-i386                 randconfig-a012-20210829
-i386                 randconfig-a014-20210829
-i386                 randconfig-a013-20210829
-i386                 randconfig-a015-20210829
-i386                 randconfig-a016-20210830
-i386                 randconfig-a011-20210830
-i386                 randconfig-a015-20210830
-i386                 randconfig-a014-20210830
-i386                 randconfig-a012-20210830
-i386                 randconfig-a013-20210830
-arc                  randconfig-r043-20210827
-riscv                randconfig-r042-20210827
-s390                 randconfig-r044-20210827
-s390                 randconfig-r044-20210830
-arc                  randconfig-r043-20210830
-riscv                randconfig-r042-20210830
-arc                  randconfig-r043-20210829
-riscv                randconfig-r042-20210829
-s390                 randconfig-r044-20210829
-riscv                    nommu_k210_defconfig
-riscv                    nommu_virt_defconfig
-riscv                             allnoconfig
-riscv                               defconfig
-x86_64                              defconfig
-x86_64                               rhel-8.3
-x86_64                                  kexec
-
-clang tested configs:
-s390                 randconfig-c005-20210829
-i386                 randconfig-c001-20210829
-arm                  randconfig-c002-20210829
-riscv                randconfig-c006-20210829
-x86_64               randconfig-c007-20210829
-powerpc              randconfig-c003-20210829
-mips                 randconfig-c004-20210829
-i386                 randconfig-c001-20210828
-s390                 randconfig-c005-20210828
-arm                  randconfig-c002-20210828
-riscv                randconfig-c006-20210828
-x86_64               randconfig-c007-20210828
-mips                 randconfig-c004-20210828
-s390                 randconfig-c005-20210827
-i386                 randconfig-c001-20210827
-arm                  randconfig-c002-20210827
-riscv                randconfig-c006-20210827
-powerpc              randconfig-c003-20210827
-x86_64               randconfig-c007-20210827
-mips                 randconfig-c004-20210827
-i386                 randconfig-c001-20210830
-s390                 randconfig-c005-20210830
-riscv                randconfig-c006-20210830
-powerpc              randconfig-c003-20210830
-mips                 randconfig-c004-20210830
-arm                  randconfig-c002-20210830
-x86_64               randconfig-c007-20210830
-x86_64               randconfig-a005-20210827
-x86_64               randconfig-a001-20210827
-x86_64               randconfig-a006-20210827
-x86_64               randconfig-a003-20210827
-x86_64               randconfig-a004-20210827
-x86_64               randconfig-a002-20210827
-x86_64               randconfig-a001-20210829
-x86_64               randconfig-a006-20210829
-x86_64               randconfig-a005-20210829
-x86_64               randconfig-a003-20210829
-x86_64               randconfig-a004-20210829
-x86_64               randconfig-a002-20210829
-x86_64               randconfig-a005-20210830
-x86_64               randconfig-a001-20210830
-x86_64               randconfig-a003-20210830
-x86_64               randconfig-a002-20210830
-x86_64               randconfig-a004-20210830
-x86_64               randconfig-a006-20210830
-i386                 randconfig-a001-20210829
-i386                 randconfig-a006-20210829
-i386                 randconfig-a005-20210829
-i386                 randconfig-a004-20210829
-i386                 randconfig-a003-20210829
-i386                 randconfig-a006-20210827
-i386                 randconfig-a001-20210827
-i386                 randconfig-a002-20210827
-i386                 randconfig-a005-20210827
-i386                 randconfig-a004-20210827
-i386                 randconfig-a003-20210827
-i386                 randconfig-a002-20210829
-i386                 randconfig-a005-20210830
-i386                 randconfig-a002-20210830
-i386                 randconfig-a003-20210830
-i386                 randconfig-a006-20210830
-i386                 randconfig-a004-20210830
-i386                 randconfig-a001-20210830
-i386                 randconfig-a011-20210828
-i386                 randconfig-a016-20210828
-i386                 randconfig-a012-20210828
-i386                 randconfig-a014-20210828
-i386                 randconfig-a013-20210828
-i386                 randconfig-a015-20210828
-hexagon              randconfig-r041-20210827
-hexagon              randconfig-r045-20210827
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+> >
+> >> @@ -808,6 +808,7 @@ struct acpi_madt_multiproc_wakeup_mailbox {
+> >>   /* MADT Local APIC flags */
+> >>
+> >>   #define ACPI_MADT_ENABLED           (1)        /* 00: Processor is usable if set */
+> >> +#define ACPI_MADT_ONLINE_CAPABLE    (2)        /* 01: System HW supports enabling processor at runtime */
+> >>
+> >>   /* MADT MPS INTI flags (inti_flags) */
+> >>
+> >> --
+>
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
