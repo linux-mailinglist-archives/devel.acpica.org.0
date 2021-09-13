@@ -2,42 +2,54 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 73B8240760A
-	for <lists+devel-acpica@lfdr.de>; Sat, 11 Sep 2021 12:14:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 71D5E408AF4
+	for <lists+devel-acpica@lfdr.de>; Mon, 13 Sep 2021 14:20:59 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id D3FF3100EBBC4;
-	Sat, 11 Sep 2021 03:14:28 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=217.140.110.172; helo=foss.arm.com; envelope-from=lorenzo.pieralisi@arm.com; receiver=<UNKNOWN> 
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by ml01.01.org (Postfix) with ESMTP id B09C4100EBBBD
-	for <devel@acpica.org>; Sat, 11 Sep 2021 03:14:26 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C8D351FB;
-	Sat, 11 Sep 2021 03:14:25 -0700 (PDT)
-Received: from lpieralisi (e121166-lin.cambridge.arm.com [10.1.196.255])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0D71D3F5A1;
-	Sat, 11 Sep 2021 03:14:23 -0700 (PDT)
-Date: Sat, 11 Sep 2021 11:14:18 +0100
-From: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-To: Ard Biesheuvel <ardb@kernel.org>
-Message-ID: <20210911101418.GA32028@lpieralisi>
-References: <20210910122820.26886-1-justin.he@arm.com>
- <20210910143223.6705-1-justin.he@arm.com>
- <CAMj1kXG6Gu=g8P902NB2b+OvzqwJQPqQewYX5UwMiXALYAFkDw@mail.gmail.com>
+	by ml01.01.org (Postfix) with ESMTP id 703AE100EBB6E;
+	Mon, 13 Sep 2021 05:20:55 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.167.171; helo=mail-oi1-f171.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	(No client certificate requested)
+	by ml01.01.org (Postfix) with ESMTPS id 50868100EBB68
+	for <devel@acpica.org>; Mon, 13 Sep 2021 05:20:52 -0700 (PDT)
+Received: by mail-oi1-f171.google.com with SMTP id w19so13731429oik.10
+        for <devel@acpica.org>; Mon, 13 Sep 2021 05:20:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6LkH8BDThjwDkIUVEv4G7HiQl/Op2m1UQzXKeVLvZVY=;
+        b=mQnVyroHDZEyKGobiubaGVFg8t/obBx6UN6zK2ti0og7/QP+6ldyqUzWj9pgqxpGVq
+         7tEPUKCZRiSYOmzDwnSOCulEpIbI6HPdFXLX+zueRi61RUVKukC440pWmL9NsfQRg74s
+         l92vqkpnfRHLfT5hQH7140pHhqqd4+dTD9boi2p6Ul0AI6in7fYlWc/fC37Xj1/L9Tif
+         Cjc7u9oiRtr5qyFsFV6RTttWuUmdGbIELuJItyftfWB+prM6bILNqAn8vY7G4XfNq4Rj
+         18WLSNsPgykdUgPE9AJdBcY8tcpOTMip54EuDgcUcNx0mJvP4rUdqU1PK7WQkntFPVec
+         6OpQ==
+X-Gm-Message-State: AOAM532xqclK2eaeet0iBvmt7PsEanxLyhcG4TOFd5IZ3GptSJgOz2j7
+	TuWh5S7fTth48uPPnwsp1QErQtfcK9wmVF0aTFM=
+X-Google-Smtp-Source: ABdhPJx/9hiTq1jXolVCkmhHWNiQy0NxIAlRexLuKACbIOgNqoBUilaDDEqAUxmlsrQtCOTDiFmH1XeeM81nR7ywEYk=
+X-Received: by 2002:aca:afcd:: with SMTP id y196mr7489386oie.71.1631535651501;
+ Mon, 13 Sep 2021 05:20:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <CAMj1kXG6Gu=g8P902NB2b+OvzqwJQPqQewYX5UwMiXALYAFkDw@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-Message-ID-Hash: 5AG2BW5TTEKOA3VKBYBLJANNUJCXVEJR
-X-Message-ID-Hash: 5AG2BW5TTEKOA3VKBYBLJANNUJCXVEJR
-X-MailFrom: lorenzo.pieralisi@arm.com
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
-CC: Jia He <justin.he@arm.com>, Will Deacon <will@kernel.org>, Erik Kaneda <erik.kaneda@intel.com>, Linux ARM <linux-arm-kernel@lists.infradead.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Catalin Marinas <catalin.marinas@arm.com>, "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>, Harb Abdulhamid <harb@amperecomputing.com>
+References: <20210909120116.150912-1-sashal@kernel.org> <20210909120116.150912-24-sashal@kernel.org>
+ <20210910074535.GA454@amd> <YTy/etsK39d/+Zhh@sashalap>
+In-Reply-To: <YTy/etsK39d/+Zhh@sashalap>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Mon, 13 Sep 2021 14:20:35 +0200
+Message-ID: <CAJZ5v0hze08S1ORK7Pwa3N5TBX5Jj=jeKqye=wv7dpzDArss3Q@mail.gmail.com>
+To: Sasha Levin <sashal@kernel.org>
+Message-ID-Hash: ZU6PE55LU7JLPXQIGMWR4RJONBYEOFOS
+X-Message-ID-Hash: ZU6PE55LU7JLPXQIGMWR4RJONBYEOFOS
+X-MailFrom: rjwysocki@gmail.com
+X-Mailman-Rule-Hits: nonmember-moderation
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
+CC: Pavel Machek <pavel@denx.de>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Stable <stable@vger.kernel.org>, "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH v2] Revert "ACPI: Add memory semantics to acpi_os_map_memory()"
+Subject: [Devel] Re: [PATCH AUTOSEL 4.4 24/35] ACPICA: iASL: Fix for WPBT table with no command-line arguments
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/5AG2BW5TTEKOA3VKBYBLJANNUJCXVEJR/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/ZU6PE55LU7JLPXQIGMWR4RJONBYEOFOS/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -46,59 +58,26 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Fri, Sep 10, 2021 at 07:28:49PM +0200, Ard Biesheuvel wrote:
-> On Fri, 10 Sept 2021 at 16:32, Jia He <justin.he@arm.com> wrote:
+On Sat, Sep 11, 2021 at 4:38 PM Sasha Levin <sashal@kernel.org> wrote:
+>
+> On Fri, Sep 10, 2021 at 09:45:36AM +0200, Pavel Machek wrote:
+> >Hi!
 > >
-> > This reverts commit 437b38c51162f8b87beb28a833c4d5dc85fa864e.
+> >> Handle the case where the Command-line Arguments table field
+> >> does not exist.
+> >>
+> >> ACPICA commit d6487164497fda170a1b1453c5d58f2be7c873d6
 > >
-> > After this commit, a boot panic is alway hit on an Ampere EMAG server
-> > with call trace as follows:
-> >  Internal error: synchronous external abort: 96000410 [#1] SMP
-> >  Modules linked in:
-> >  CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.14.0+ #462
-> >  Hardware name: MiTAC RAPTOR EV-883832-X3-0001/RAPTOR, BIOS 0.14 02/22/2019
-> >  pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> > [...snip...]
-> >  Call trace:
-> >   acpi_ex_system_memory_space_handler+0x26c/0x2c8
-> >   acpi_ev_address_space_dispatch+0x228/0x2c4
-> >   acpi_ex_access_region+0x114/0x268
-> >   acpi_ex_field_datum_io+0x128/0x1b8
-> >   acpi_ex_extract_from_field+0x14c/0x2ac
-> >   acpi_ex_read_data_from_field+0x190/0x1b8
-> >   acpi_ex_resolve_node_to_value+0x1ec/0x288
-> >   acpi_ex_resolve_to_value+0x250/0x274
-> >   acpi_ds_evaluate_name_path+0xac/0x124
-> >   acpi_ds_exec_end_op+0x90/0x410
-> >   acpi_ps_parse_loop+0x4ac/0x5d8
-> >   acpi_ps_parse_aml+0xe0/0x2c8
-> >   acpi_ps_execute_method+0x19c/0x1ac
-> >   acpi_ns_evaluate+0x1f8/0x26c
-> >   acpi_ns_init_one_device+0x104/0x140
-> >   acpi_ns_walk_namespace+0x158/0x1d0
-> >   acpi_ns_initialize_devices+0x194/0x218
-> >   acpi_initialize_objects+0x48/0x50
-> >   acpi_init+0xe0/0x498
-> >
-> > As mentioned by Lorenzo:
-> >   "We are forcing memory semantics mappings to PROT_NORMAL_NC, which
-> >   eMAG does not like at all and I'd need to understand why. It looks
-> >   like the issue happen in SystemMemory Opregion handler."
-> >
-> > Hence just revert it before everything is clear.
-> >
-> 
-> Can we try to find the root cause first? -rc1 is not even out yet, and
-> reverting it now means we can not resubmit it until the next merge
-> window.
+> >I'm not sure what is going on here, but adding unused definition will
+> >not make any difference for 4.4 users, so we don't need this in
+> >-stable...?
+>
+> Ugh, dropped, thanks!
+>
+> I wonder what this patch actually does upstream.
 
-Yes, absolutely. We need to understand where the problem is, because it
-looks like we can't map SystemMemory Opregion with NORMAL_NC if the PA
-is not in the EFI map, that's a problem (ie how can we determine the
-right memory attributes for SystemMemory Operation regions then) but
-let's not speculate and find what the issue is first.
-
-Lorenzo
+There are AML compiler changes in it, but the compiler is not included
+into the Linux kernel.
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
