@@ -2,54 +2,47 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71D5E408AF4
-	for <lists+devel-acpica@lfdr.de>; Mon, 13 Sep 2021 14:20:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 25C7F40ABA4
+	for <lists+devel-acpica@lfdr.de>; Tue, 14 Sep 2021 12:27:44 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 703AE100EBB6E;
-	Mon, 13 Sep 2021 05:20:55 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.167.171; helo=mail-oi1-f171.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	by ml01.01.org (Postfix) with ESMTP id 7A03F100EB846;
+	Tue, 14 Sep 2021 03:27:42 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.120; helo=mga04.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 50868100EBB68
-	for <devel@acpica.org>; Mon, 13 Sep 2021 05:20:52 -0700 (PDT)
-Received: by mail-oi1-f171.google.com with SMTP id w19so13731429oik.10
-        for <devel@acpica.org>; Mon, 13 Sep 2021 05:20:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=6LkH8BDThjwDkIUVEv4G7HiQl/Op2m1UQzXKeVLvZVY=;
-        b=mQnVyroHDZEyKGobiubaGVFg8t/obBx6UN6zK2ti0og7/QP+6ldyqUzWj9pgqxpGVq
-         7tEPUKCZRiSYOmzDwnSOCulEpIbI6HPdFXLX+zueRi61RUVKukC440pWmL9NsfQRg74s
-         l92vqkpnfRHLfT5hQH7140pHhqqd4+dTD9boi2p6Ul0AI6in7fYlWc/fC37Xj1/L9Tif
-         Cjc7u9oiRtr5qyFsFV6RTttWuUmdGbIELuJItyftfWB+prM6bILNqAn8vY7G4XfNq4Rj
-         18WLSNsPgykdUgPE9AJdBcY8tcpOTMip54EuDgcUcNx0mJvP4rUdqU1PK7WQkntFPVec
-         6OpQ==
-X-Gm-Message-State: AOAM532xqclK2eaeet0iBvmt7PsEanxLyhcG4TOFd5IZ3GptSJgOz2j7
-	TuWh5S7fTth48uPPnwsp1QErQtfcK9wmVF0aTFM=
-X-Google-Smtp-Source: ABdhPJx/9hiTq1jXolVCkmhHWNiQy0NxIAlRexLuKACbIOgNqoBUilaDDEqAUxmlsrQtCOTDiFmH1XeeM81nR7ywEYk=
-X-Received: by 2002:aca:afcd:: with SMTP id y196mr7489386oie.71.1631535651501;
- Mon, 13 Sep 2021 05:20:51 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTPS id D4226100EB83E
+	for <devel@acpica.org>; Tue, 14 Sep 2021 03:27:40 -0700 (PDT)
+X-IronPort-AV: E=McAfee;i="6200,9189,10106"; a="220075947"
+X-IronPort-AV: E=Sophos;i="5.85,292,1624345200";
+   d="scan'208";a="220075947"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Sep 2021 03:27:40 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.85,292,1624345200";
+   d="scan'208";a="528729290"
+Received: from lkp-server01.sh.intel.com (HELO 730d49888f40) ([10.239.97.150])
+  by fmsmga004.fm.intel.com with ESMTP; 14 Sep 2021 03:27:36 -0700
+Received: from kbuild by 730d49888f40 with local (Exim 4.92)
+	(envelope-from <lkp@intel.com>)
+	id 1mQ5f5-0008Mi-BZ; Tue, 14 Sep 2021 10:27:35 +0000
+Date: Tue, 14 Sep 2021 18:27:19 +0800
+From: kernel test robot <lkp@intel.com>
+To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Message-ID: <61407907.N8Z+IHJe/itJ9qIw%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-References: <20210909120116.150912-1-sashal@kernel.org> <20210909120116.150912-24-sashal@kernel.org>
- <20210910074535.GA454@amd> <YTy/etsK39d/+Zhh@sashalap>
-In-Reply-To: <YTy/etsK39d/+Zhh@sashalap>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Mon, 13 Sep 2021 14:20:35 +0200
-Message-ID: <CAJZ5v0hze08S1ORK7Pwa3N5TBX5Jj=jeKqye=wv7dpzDArss3Q@mail.gmail.com>
-To: Sasha Levin <sashal@kernel.org>
-Message-ID-Hash: ZU6PE55LU7JLPXQIGMWR4RJONBYEOFOS
-X-Message-ID-Hash: ZU6PE55LU7JLPXQIGMWR4RJONBYEOFOS
-X-MailFrom: rjwysocki@gmail.com
+Message-ID-Hash: HYZHFNMWS5ZDWW4UGVSSY63FPDAQVZLC
+X-Message-ID-Hash: HYZHFNMWS5ZDWW4UGVSSY63FPDAQVZLC
+X-MailFrom: lkp@intel.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: Pavel Machek <pavel@denx.de>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Stable <stable@vger.kernel.org>, "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>
+CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH AUTOSEL 4.4 24/35] ACPICA: iASL: Fix for WPBT table with no command-line arguments
+Subject: [Devel] [pm:bleeding-edge] BUILD SUCCESS b7ce7601b5d63191fa66e36621a2ed731c617f9c
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/ZU6PE55LU7JLPXQIGMWR4RJONBYEOFOS/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/HYZHFNMWS5ZDWW4UGVSSY63FPDAQVZLC/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -58,26 +51,118 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Sat, Sep 11, 2021 at 4:38 PM Sasha Levin <sashal@kernel.org> wrote:
->
-> On Fri, Sep 10, 2021 at 09:45:36AM +0200, Pavel Machek wrote:
-> >Hi!
-> >
-> >> Handle the case where the Command-line Arguments table field
-> >> does not exist.
-> >>
-> >> ACPICA commit d6487164497fda170a1b1453c5d58f2be7c873d6
-> >
-> >I'm not sure what is going on here, but adding unused definition will
-> >not make any difference for 4.4 users, so we don't need this in
-> >-stable...?
->
-> Ugh, dropped, thanks!
->
-> I wonder what this patch actually does upstream.
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
+branch HEAD: b7ce7601b5d63191fa66e36621a2ed731c617f9c  Merge branch 'pm-cpufreq' into bleeding-edge
 
-There are AML compiler changes in it, but the compiler is not included
-into the Linux kernel.
+elapsed time: 1012m
+
+configs tested: 94
+configs skipped: 3
+
+The following configs have been built successfully.
+More configs may be tested in the coming days.
+
+gcc tested configs:
+arm                                 defconfig
+arm64                            allyesconfig
+arm64                               defconfig
+arm                              allyesconfig
+arm                              allmodconfig
+arm                         hackkit_defconfig
+sh                   rts7751r2dplus_defconfig
+mips                      maltasmvp_defconfig
+mips                           ip22_defconfig
+sh                      rts7751r2d1_defconfig
+openrisc                         alldefconfig
+m68k                        mvme16x_defconfig
+powerpc                     ep8248e_defconfig
+powerpc                      arches_defconfig
+riscv                               defconfig
+arm                         lpc18xx_defconfig
+arm                           h3600_defconfig
+arm                            dove_defconfig
+powerpc                 canyonlands_defconfig
+arc                          axs103_defconfig
+ia64                             allmodconfig
+ia64                                defconfig
+ia64                             allyesconfig
+m68k                             allmodconfig
+m68k                                defconfig
+m68k                             allyesconfig
+nds32                               defconfig
+nios2                            allyesconfig
+csky                                defconfig
+alpha                               defconfig
+alpha                            allyesconfig
+xtensa                           allyesconfig
+h8300                            allyesconfig
+arc                                 defconfig
+sh                               allmodconfig
+parisc                              defconfig
+s390                             allyesconfig
+s390                             allmodconfig
+parisc                           allyesconfig
+s390                                defconfig
+i386                             allyesconfig
+sparc                            allyesconfig
+sparc                               defconfig
+i386                                defconfig
+nios2                               defconfig
+arc                              allyesconfig
+nds32                             allnoconfig
+mips                             allyesconfig
+mips                             allmodconfig
+powerpc                          allyesconfig
+powerpc                          allmodconfig
+powerpc                           allnoconfig
+x86_64               randconfig-a002-20210913
+x86_64               randconfig-a003-20210913
+x86_64               randconfig-a006-20210913
+x86_64               randconfig-a004-20210913
+x86_64               randconfig-a005-20210913
+x86_64               randconfig-a001-20210913
+i386                 randconfig-a004-20210913
+i386                 randconfig-a005-20210913
+i386                 randconfig-a002-20210913
+i386                 randconfig-a006-20210913
+i386                 randconfig-a003-20210913
+i386                 randconfig-a001-20210913
+arc                  randconfig-r043-20210913
+riscv                    nommu_k210_defconfig
+riscv                            allyesconfig
+riscv                    nommu_virt_defconfig
+riscv                             allnoconfig
+riscv                          rv32_defconfig
+riscv                            allmodconfig
+um                           x86_64_defconfig
+um                             i386_defconfig
+x86_64                           allyesconfig
+x86_64                    rhel-8.3-kselftests
+x86_64                              defconfig
+x86_64                               rhel-8.3
+x86_64                                  kexec
+
+clang tested configs:
+x86_64               randconfig-a016-20210913
+x86_64               randconfig-a013-20210913
+x86_64               randconfig-a012-20210913
+x86_64               randconfig-a011-20210913
+x86_64               randconfig-a014-20210913
+x86_64               randconfig-a015-20210913
+i386                 randconfig-a016-20210913
+i386                 randconfig-a011-20210913
+i386                 randconfig-a015-20210913
+i386                 randconfig-a012-20210913
+i386                 randconfig-a013-20210913
+i386                 randconfig-a014-20210913
+riscv                randconfig-r042-20210913
+hexagon              randconfig-r045-20210913
+s390                 randconfig-r044-20210913
+hexagon              randconfig-r041-20210913
+
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
