@@ -2,53 +2,42 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B83B40D6FE
-	for <lists+devel-acpica@lfdr.de>; Thu, 16 Sep 2021 12:04:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 16D7F40DF58
+	for <lists+devel-acpica@lfdr.de>; Thu, 16 Sep 2021 18:08:38 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id B2FA1100EB32F;
-	Thu, 16 Sep 2021 03:04:27 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.210.50; helo=mail-ot1-f50.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
-	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id AA5FB100EBBDD
-	for <devel@acpica.org>; Thu, 16 Sep 2021 03:04:24 -0700 (PDT)
-Received: by mail-ot1-f50.google.com with SMTP id y63-20020a9d22c5000000b005453f95356cso714287ota.11
-        for <devel@acpica.org>; Thu, 16 Sep 2021 03:04:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=aXboLe7jV/T9ZwIpHPlMdYn8bDy/deTb5yXB9iBxj90=;
-        b=08Le022nsc2/mhXVExv60j9LIaK65yl73xYJCa8yvVPrt0Ms+v1y8/sCMwgHApMEIL
-         VDTIMXr99RdpKeQXuFsQII4OgBAmiNfDe6Zbbk/KCtsSzTCwQeEG0fuFOvN9bu/xFXPo
-         AMhXsZxsMVTQrh2do3EKLJqiQie9jhxbDJmkPOkYu/Q83KBOS2iYOVTJXsjX9nDY/g+3
-         494ADvWz8+BUqF0NTtGnjnbxY/CGJE2eviP+0DMI1+OgD8sNkCoEExynd4KJNYYwaqip
-         JNW6g6wk0s75eWLOju8KOWPZ1FqrjR3+VnIdZrOlnEimvu5lhR1ja/HlNT0M8tClYDHj
-         cRtQ==
-X-Gm-Message-State: AOAM5318JB7nGTOROcVyl+IYwYwyU/xjuZnKaySTViAogy41Qn4e52W+
-	W+AOIKHG8fc+F04lPO7tOQiPvFmxjQAqvBzm93A=
-X-Google-Smtp-Source: ABdhPJxBB0Xwnx9NawGCWaepqPnYcPi5Bq9WcdHJgDpVXE6ei3zcoaUK3n+9QTFA40FFOX0KNdFIxuLz7hqRymSC2ng=
-X-Received: by 2002:a9d:6945:: with SMTP id p5mr3965118oto.301.1631786663910;
- Thu, 16 Sep 2021 03:04:23 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTP id 67B00100EB32F;
+	Thu, 16 Sep 2021 09:08:36 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=217.140.110.172; helo=foss.arm.com; envelope-from=lorenzo.pieralisi@arm.com; receiver=<UNKNOWN> 
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by ml01.01.org (Postfix) with ESMTP id C8932100EB32C
+	for <devel@acpica.org>; Thu, 16 Sep 2021 09:08:34 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D9DCE101E;
+	Thu, 16 Sep 2021 09:08:33 -0700 (PDT)
+Received: from lpieralisi (e121166-lin.cambridge.arm.com [10.1.196.255])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1D5453F5A1;
+	Thu, 16 Sep 2021 09:08:32 -0700 (PDT)
+Date: Thu, 16 Sep 2021 17:08:27 +0100
+From: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+To: Ard Biesheuvel <ardb@kernel.org>
+Message-ID: <20210916160827.GA4525@lpieralisi>
+References: <20210910122820.26886-1-justin.he@arm.com>
+ <20210910143223.6705-1-justin.he@arm.com>
+ <CAMj1kXG6Gu=g8P902NB2b+OvzqwJQPqQewYX5UwMiXALYAFkDw@mail.gmail.com>
 MIME-Version: 1.0
-References: <202109160821.skJVoHhq-lkp@intel.com> <YULrCIRyvuryjoGE@kuha.fi.intel.com>
-In-Reply-To: <YULrCIRyvuryjoGE@kuha.fi.intel.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Thu, 16 Sep 2021 12:04:12 +0200
-Message-ID: <CAJZ5v0idEO8LUvh+yWCV-f7Ha37thLo5fhnypMRSwEXLRd4EYQ@mail.gmail.com>
-To: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Message-ID-Hash: ZLIHMA7XGPXTP4OJGBTTXBLF76PP5C6W
-X-Message-ID-Hash: ZLIHMA7XGPXTP4OJGBTTXBLF76PP5C6W
-X-MailFrom: rjwysocki@gmail.com
-X-Mailman-Rule-Hits: nonmember-moderation
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: kernel test robot <lkp@intel.com>, Laurentiu Tudor <laurentiu.tudor@nxp.com>, kbuild-all@lists.01.org, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Linux PM <linux-pm@vger.kernel.org>, "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Content-Disposition: inline
+In-Reply-To: <CAMj1kXG6Gu=g8P902NB2b+OvzqwJQPqQewYX5UwMiXALYAFkDw@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+Message-ID-Hash: 6Y53QQFCFYHZ7BN7JGWV3K33FEAO3YZI
+X-Message-ID-Hash: 6Y53QQFCFYHZ7BN7JGWV3K33FEAO3YZI
+X-MailFrom: lorenzo.pieralisi@arm.com
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
+CC: Jia He <justin.he@arm.com>, Will Deacon <will@kernel.org>, Erik Kaneda <erik.kaneda@intel.com>, Linux ARM <linux-arm-kernel@lists.infradead.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Catalin Marinas <catalin.marinas@arm.com>, "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>, Harb Abdulhamid <harb@amperecomputing.com>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [rafael-pm:bleeding-edge 6/11] drivers/base/swnode.c:1120:17: error: too many arguments to function 'software_node_notify'
+Subject: [Devel] Re: [PATCH v2] Revert "ACPI: Add memory semantics to acpi_os_map_memory()"
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/ZLIHMA7XGPXTP4OJGBTTXBLF76PP5C6W/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/6Y53QQFCFYHZ7BN7JGWV3K33FEAO3YZI/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -57,64 +46,89 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Thu, Sep 16, 2021 at 8:58 AM Heikki Krogerus
-<heikki.krogerus@linux.intel.com> wrote:
->
-> On Thu, Sep 16, 2021 at 08:13:24AM +0800, kernel test robot wrote:
-> > tree:   https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-> > head:   9808623e1bba7d929b50865d7e2d7042cd4e5e7b
-> > commit: 810fc8571f8b70a4263266d979f97edec2804574 [6/11] software node: balance refcount for managed sw nodes
-> > config: arc-randconfig-r001-20210916 (attached as .config)
-> > compiler: arc-elf-gcc (GCC) 11.2.0
-> > reproduce (this is a W=1 build):
-> >         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-> >         chmod +x ~/bin/make.cross
-> >         # https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git/commit/?id=810fc8571f8b70a4263266d979f97edec2804574
-> >         git remote add rafael-pm https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git
-> >         git fetch --no-tags rafael-pm bleeding-edge
-> >         git checkout 810fc8571f8b70a4263266d979f97edec2804574
-> >         # save the attached .config to linux build tree
-> >         mkdir build_dir
-> >         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross O=build_dir ARCH=arc SHELL=/bin/bash drivers/
+On Fri, Sep 10, 2021 at 07:28:49PM +0200, Ard Biesheuvel wrote:
+> On Fri, 10 Sept 2021 at 16:32, Jia He <justin.he@arm.com> wrote:
 > >
-> > If you fix the issue, kindly add following tag as appropriate
-> > Reported-by: kernel test robot <lkp@intel.com>
+> > This reverts commit 437b38c51162f8b87beb28a833c4d5dc85fa864e.
 > >
-> > All errors (new ones prefixed by >>):
+> > After this commit, a boot panic is alway hit on an Ampere EMAG server
+> > with call trace as follows:
+> >  Internal error: synchronous external abort: 96000410 [#1] SMP
+> >  Modules linked in:
+> >  CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.14.0+ #462
+> >  Hardware name: MiTAC RAPTOR EV-883832-X3-0001/RAPTOR, BIOS 0.14 02/22/2019
+> >  pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+> > [...snip...]
+> >  Call trace:
+> >   acpi_ex_system_memory_space_handler+0x26c/0x2c8
+> >   acpi_ev_address_space_dispatch+0x228/0x2c4
+> >   acpi_ex_access_region+0x114/0x268
+> >   acpi_ex_field_datum_io+0x128/0x1b8
+> >   acpi_ex_extract_from_field+0x14c/0x2ac
+> >   acpi_ex_read_data_from_field+0x190/0x1b8
+> >   acpi_ex_resolve_node_to_value+0x1ec/0x288
+> >   acpi_ex_resolve_to_value+0x250/0x274
+> >   acpi_ds_evaluate_name_path+0xac/0x124
+> >   acpi_ds_exec_end_op+0x90/0x410
+> >   acpi_ps_parse_loop+0x4ac/0x5d8
+> >   acpi_ps_parse_aml+0xe0/0x2c8
+> >   acpi_ps_execute_method+0x19c/0x1ac
+> >   acpi_ns_evaluate+0x1f8/0x26c
+> >   acpi_ns_init_one_device+0x104/0x140
+> >   acpi_ns_walk_namespace+0x158/0x1d0
+> >   acpi_ns_initialize_devices+0x194/0x218
+> >   acpi_initialize_objects+0x48/0x50
+> >   acpi_init+0xe0/0x498
 > >
-> >    drivers/base/swnode.c: In function 'device_create_managed_software_node':
-> > >> drivers/base/swnode.c:1120:17: error: too many arguments to function 'software_node_notify'
-> >     1120 |                 software_node_notify(dev, KOBJ_ADD);
-> >          |                 ^~~~~~~~~~~~~~~~~~~~
-> >    In file included from drivers/base/swnode.c:14:
-> >    drivers/base/base.h:206:6: note: declared here
-> >      206 | void software_node_notify(struct device *dev);
-> >          |      ^~~~~~~~~~~~~~~~~~~~
->
-> Ah, that was modified in commit 384f5a857bae ("software nodes: Split
-> software_node_notify()").
->
-> So the patch is OK for stable, but for v5.15-rc1 it has to be changed:
->
-> diff --git a/drivers/base/swnode.c b/drivers/base/swnode.c
-> index 7bd0f3cfb7eb4..c46f6a8e14d23 100644
-> --- a/drivers/base/swnode.c
-> +++ b/drivers/base/swnode.c
-> @@ -1116,6 +1116,9 @@ int device_create_managed_software_node(struct device *dev,
->         to_swnode(fwnode)->managed = true;
->         set_secondary_fwnode(dev, fwnode);
->
-> +       if (device_is_registered(dev))
-> +               software_node_notify(dev);
-> +
->         return 0;
->  }
->  EXPORT_SYMBOL_GPL(device_create_managed_software_node);
->
->
-> Rafael, how do want to handle this?
+> > As mentioned by Lorenzo:
+> >   "We are forcing memory semantics mappings to PROT_NORMAL_NC, which
+> >   eMAG does not like at all and I'd need to understand why. It looks
+> >   like the issue happen in SystemMemory Opregion handler."
+> >
+> > Hence just revert it before everything is clear.
+> >
+> 
+> Can we try to find the root cause first? -rc1 is not even out yet, and
+> reverting it now means we can not resubmit it until the next merge
+> window.
 
-I'll fix up the commit, thanks!
+I am waiting to debug this on an eMAG but I noticed something that
+I wanted to bring up.
+
+SystemMemory Operation region handler - ie
+
+acpi_ex_system_memory_space_handler()
+
+maps the Operation Region (that AFAICS is MMIO, it is _not_ memory)
+with acpi_os_map_memory() and I believe that's what is causing this
+bug.
+
+On the other hand, acpi_os_map_generic_address(), to handle spaceid
+ACPI_ADR_SPACE_SYSTEM_MEMORY, uses acpi_os_map_iomem() that is more
+in line with my expectations.
+
+Question is: is the mapping in acpi_ex_system_memory_space_handler()
+wrong (and should be patched with acpi_os_map_iomem() ?)
+
+On x86 this should not change a thing, on ARM it would.
+
+I don't think it is right to map SystemMemory Operation regions with
+memory semantics but on the other hand, other than the EFI memory map,
+there is nothing we can do to determine what a SystemMemory Operation
+region address space actually represents.
+
+Thoughts ? Before embarking on patching
+
+acpi_ex_system_memory_space_handler()
+
+I want to make sure my understanding of the SystemMemory space is
+correct, comments welcome.
+
+I will pinpoint the trigger for this bug shortly and before doing
+anything else.
+
+Thanks,
+Lorenzo
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
