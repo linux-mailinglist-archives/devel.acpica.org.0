@@ -1,43 +1,48 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16D7F40DF58
-	for <lists+devel-acpica@lfdr.de>; Thu, 16 Sep 2021 18:08:38 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [198.145.21.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id E18A940F5F2
+	for <lists+devel-acpica@lfdr.de>; Fri, 17 Sep 2021 12:31:09 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 67B00100EB32F;
-	Thu, 16 Sep 2021 09:08:36 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=217.140.110.172; helo=foss.arm.com; envelope-from=lorenzo.pieralisi@arm.com; receiver=<UNKNOWN> 
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by ml01.01.org (Postfix) with ESMTP id C8932100EB32C
-	for <devel@acpica.org>; Thu, 16 Sep 2021 09:08:34 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D9DCE101E;
-	Thu, 16 Sep 2021 09:08:33 -0700 (PDT)
-Received: from lpieralisi (e121166-lin.cambridge.arm.com [10.1.196.255])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1D5453F5A1;
-	Thu, 16 Sep 2021 09:08:32 -0700 (PDT)
-Date: Thu, 16 Sep 2021 17:08:27 +0100
-From: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-To: Ard Biesheuvel <ardb@kernel.org>
-Message-ID: <20210916160827.GA4525@lpieralisi>
-References: <20210910122820.26886-1-justin.he@arm.com>
- <20210910143223.6705-1-justin.he@arm.com>
- <CAMj1kXG6Gu=g8P902NB2b+OvzqwJQPqQewYX5UwMiXALYAFkDw@mail.gmail.com>
+	by ml01.01.org (Postfix) with ESMTP id 26435100EB34D;
+	Fri, 17 Sep 2021 03:31:06 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.31; helo=mga06.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by ml01.01.org (Postfix) with ESMTPS id 198A0100EBBC4
+	for <devel@acpica.org>; Fri, 17 Sep 2021 03:31:03 -0700 (PDT)
+X-IronPort-AV: E=McAfee;i="6200,9189,10109"; a="283777432"
+X-IronPort-AV: E=Sophos;i="5.85,301,1624345200";
+   d="scan'208";a="283777432"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Sep 2021 03:31:02 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.85,301,1624345200";
+   d="scan'208";a="546283152"
+Received: from lkp-server01.sh.intel.com (HELO 285e7b116627) ([10.239.97.150])
+  by FMSMGA003.fm.intel.com with ESMTP; 17 Sep 2021 03:31:01 -0700
+Received: from kbuild by 285e7b116627 with local (Exim 4.92)
+	(envelope-from <lkp@intel.com>)
+	id 1mRB92-00042n-Dq; Fri, 17 Sep 2021 10:31:00 +0000
+Date: Fri, 17 Sep 2021 18:30:15 +0800
+From: kernel test robot <lkp@intel.com>
+To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Message-ID: <61446e37.+Rq0q4xx3L/VISYq%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <CAMj1kXG6Gu=g8P902NB2b+OvzqwJQPqQewYX5UwMiXALYAFkDw@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-Message-ID-Hash: 6Y53QQFCFYHZ7BN7JGWV3K33FEAO3YZI
-X-Message-ID-Hash: 6Y53QQFCFYHZ7BN7JGWV3K33FEAO3YZI
-X-MailFrom: lorenzo.pieralisi@arm.com
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
-CC: Jia He <justin.he@arm.com>, Will Deacon <will@kernel.org>, Erik Kaneda <erik.kaneda@intel.com>, Linux ARM <linux-arm-kernel@lists.infradead.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Catalin Marinas <catalin.marinas@arm.com>, "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>, Harb Abdulhamid <harb@amperecomputing.com>
+Message-ID-Hash: K6TYNE56GVIQDWNOQADBXXQ74FDC7CLL
+X-Message-ID-Hash: K6TYNE56GVIQDWNOQADBXXQ74FDC7CLL
+X-MailFrom: lkp@intel.com
+X-Mailman-Rule-Hits: nonmember-moderation
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
+CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH v2] Revert "ACPI: Add memory semantics to acpi_os_map_memory()"
+Subject: [Devel] [rafael-pm:bleeding-edge] BUILD SUCCESS 668a3514b8a3dccf147a042777d1e569badca8fa
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/6Y53QQFCFYHZ7BN7JGWV3K33FEAO3YZI/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/K6TYNE56GVIQDWNOQADBXXQ74FDC7CLL/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -46,89 +51,131 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Fri, Sep 10, 2021 at 07:28:49PM +0200, Ard Biesheuvel wrote:
-> On Fri, 10 Sept 2021 at 16:32, Jia He <justin.he@arm.com> wrote:
-> >
-> > This reverts commit 437b38c51162f8b87beb28a833c4d5dc85fa864e.
-> >
-> > After this commit, a boot panic is alway hit on an Ampere EMAG server
-> > with call trace as follows:
-> >  Internal error: synchronous external abort: 96000410 [#1] SMP
-> >  Modules linked in:
-> >  CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.14.0+ #462
-> >  Hardware name: MiTAC RAPTOR EV-883832-X3-0001/RAPTOR, BIOS 0.14 02/22/2019
-> >  pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> > [...snip...]
-> >  Call trace:
-> >   acpi_ex_system_memory_space_handler+0x26c/0x2c8
-> >   acpi_ev_address_space_dispatch+0x228/0x2c4
-> >   acpi_ex_access_region+0x114/0x268
-> >   acpi_ex_field_datum_io+0x128/0x1b8
-> >   acpi_ex_extract_from_field+0x14c/0x2ac
-> >   acpi_ex_read_data_from_field+0x190/0x1b8
-> >   acpi_ex_resolve_node_to_value+0x1ec/0x288
-> >   acpi_ex_resolve_to_value+0x250/0x274
-> >   acpi_ds_evaluate_name_path+0xac/0x124
-> >   acpi_ds_exec_end_op+0x90/0x410
-> >   acpi_ps_parse_loop+0x4ac/0x5d8
-> >   acpi_ps_parse_aml+0xe0/0x2c8
-> >   acpi_ps_execute_method+0x19c/0x1ac
-> >   acpi_ns_evaluate+0x1f8/0x26c
-> >   acpi_ns_init_one_device+0x104/0x140
-> >   acpi_ns_walk_namespace+0x158/0x1d0
-> >   acpi_ns_initialize_devices+0x194/0x218
-> >   acpi_initialize_objects+0x48/0x50
-> >   acpi_init+0xe0/0x498
-> >
-> > As mentioned by Lorenzo:
-> >   "We are forcing memory semantics mappings to PROT_NORMAL_NC, which
-> >   eMAG does not like at all and I'd need to understand why. It looks
-> >   like the issue happen in SystemMemory Opregion handler."
-> >
-> > Hence just revert it before everything is clear.
-> >
-> 
-> Can we try to find the root cause first? -rc1 is not even out yet, and
-> reverting it now means we can not resubmit it until the next merge
-> window.
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
+branch HEAD: 668a3514b8a3dccf147a042777d1e569badca8fa  Merge branch 'devprop' into bleeding-edge
 
-I am waiting to debug this on an eMAG but I noticed something that
-I wanted to bring up.
+elapsed time: 1321m
 
-SystemMemory Operation region handler - ie
+configs tested: 105
+configs skipped: 4
 
-acpi_ex_system_memory_space_handler()
+The following configs have been built successfully.
+More configs may be tested in the coming days.
 
-maps the Operation Region (that AFAICS is MMIO, it is _not_ memory)
-with acpi_os_map_memory() and I believe that's what is causing this
-bug.
+gcc tested configs:
+arm                                 defconfig
+arm64                            allyesconfig
+arm64                               defconfig
+arm                              allyesconfig
+arm                              allmodconfig
+i386                 randconfig-c001-20210916
+mips                     loongson1b_defconfig
+sh                           se7712_defconfig
+powerpc                        warp_defconfig
+arm                      integrator_defconfig
+powerpc                 mpc837x_rdb_defconfig
+s390                       zfcpdump_defconfig
+powerpc                      arches_defconfig
+m68k                       m5275evb_defconfig
+mips                        workpad_defconfig
+arm                     eseries_pxa_defconfig
+powerpc                    klondike_defconfig
+sh                           se7343_defconfig
+powerpc                 mpc837x_mds_defconfig
+mips                     loongson2k_defconfig
+powerpc                     tqm8560_defconfig
+xtensa                  cadence_csp_defconfig
+arm                        spear3xx_defconfig
+x86_64               randconfig-c001-20210916
+arm                  randconfig-c002-20210916
+ia64                             allmodconfig
+ia64                                defconfig
+ia64                             allyesconfig
+m68k                             allmodconfig
+m68k                                defconfig
+m68k                             allyesconfig
+nios2                               defconfig
+arc                              allyesconfig
+nds32                             allnoconfig
+nds32                               defconfig
+nios2                            allyesconfig
+csky                                defconfig
+alpha                               defconfig
+alpha                            allyesconfig
+xtensa                           allyesconfig
+h8300                            allyesconfig
+arc                                 defconfig
+sh                               allmodconfig
+parisc                              defconfig
+s390                             allyesconfig
+s390                             allmodconfig
+parisc                           allyesconfig
+s390                                defconfig
+i386                             allyesconfig
+sparc                            allyesconfig
+sparc                               defconfig
+i386                                defconfig
+mips                             allyesconfig
+mips                             allmodconfig
+powerpc                          allyesconfig
+powerpc                          allmodconfig
+powerpc                           allnoconfig
+x86_64               randconfig-a016-20210916
+x86_64               randconfig-a013-20210916
+x86_64               randconfig-a012-20210916
+x86_64               randconfig-a011-20210916
+x86_64               randconfig-a014-20210916
+x86_64               randconfig-a015-20210916
+i386                 randconfig-a016-20210916
+i386                 randconfig-a015-20210916
+i386                 randconfig-a011-20210916
+i386                 randconfig-a012-20210916
+i386                 randconfig-a013-20210916
+i386                 randconfig-a014-20210916
+riscv                randconfig-r042-20210916
+s390                 randconfig-r044-20210916
+arc                  randconfig-r043-20210916
+riscv                    nommu_k210_defconfig
+riscv                            allyesconfig
+riscv                    nommu_virt_defconfig
+riscv                             allnoconfig
+riscv                               defconfig
+riscv                          rv32_defconfig
+riscv                            allmodconfig
+x86_64                    rhel-8.3-kselftests
+um                           x86_64_defconfig
+um                             i386_defconfig
+x86_64                           allyesconfig
+x86_64                              defconfig
+x86_64                               rhel-8.3
+x86_64                                  kexec
 
-On the other hand, acpi_os_map_generic_address(), to handle spaceid
-ACPI_ADR_SPACE_SYSTEM_MEMORY, uses acpi_os_map_iomem() that is more
-in line with my expectations.
+clang tested configs:
+riscv                randconfig-c006-20210916
+x86_64               randconfig-c007-20210916
+mips                 randconfig-c004-20210916
+powerpc              randconfig-c003-20210916
+arm                  randconfig-c002-20210916
+i386                 randconfig-c001-20210916
+s390                 randconfig-c005-20210916
+x86_64               randconfig-a002-20210916
+x86_64               randconfig-a003-20210916
+x86_64               randconfig-a006-20210916
+x86_64               randconfig-a004-20210916
+x86_64               randconfig-a005-20210916
+x86_64               randconfig-a001-20210916
+i386                 randconfig-a004-20210916
+i386                 randconfig-a005-20210916
+i386                 randconfig-a006-20210916
+i386                 randconfig-a002-20210916
+i386                 randconfig-a003-20210916
+i386                 randconfig-a001-20210916
+hexagon              randconfig-r045-20210916
+hexagon              randconfig-r041-20210916
 
-Question is: is the mapping in acpi_ex_system_memory_space_handler()
-wrong (and should be patched with acpi_os_map_iomem() ?)
-
-On x86 this should not change a thing, on ARM it would.
-
-I don't think it is right to map SystemMemory Operation regions with
-memory semantics but on the other hand, other than the EFI memory map,
-there is nothing we can do to determine what a SystemMemory Operation
-region address space actually represents.
-
-Thoughts ? Before embarking on patching
-
-acpi_ex_system_memory_space_handler()
-
-I want to make sure my understanding of the SystemMemory space is
-correct, comments welcome.
-
-I will pinpoint the trigger for this bug shortly and before doing
-anything else.
-
-Thanks,
-Lorenzo
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
