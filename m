@@ -1,181 +1,186 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id E18A940F5F2
-	for <lists+devel-acpica@lfdr.de>; Fri, 17 Sep 2021 12:31:09 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3B2F40FFBB
+	for <lists+devel-acpica@lfdr.de>; Fri, 17 Sep 2021 21:22:07 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 26435100EB34D;
-	Fri, 17 Sep 2021 03:31:06 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.31; helo=mga06.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+	by ml01.01.org (Postfix) with ESMTP id CE7F2100EB352;
+	Fri, 17 Sep 2021 12:22:04 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.93; helo=mga11.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 198A0100EBBC4
-	for <devel@acpica.org>; Fri, 17 Sep 2021 03:31:03 -0700 (PDT)
-X-IronPort-AV: E=McAfee;i="6200,9189,10109"; a="283777432"
-X-IronPort-AV: E=Sophos;i="5.85,301,1624345200";
-   d="scan'208";a="283777432"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Sep 2021 03:31:02 -0700
+	by ml01.01.org (Postfix) with ESMTPS id 371D6100EB34D
+	for <devel@acpica.org>; Fri, 17 Sep 2021 12:22:02 -0700 (PDT)
+X-IronPort-AV: E=McAfee;i="6200,9189,10110"; a="219673538"
+X-IronPort-AV: E=Sophos;i="5.85,302,1624345200";
+   d="scan'208";a="219673538"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Sep 2021 12:22:01 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.85,301,1624345200";
-   d="scan'208";a="546283152"
-Received: from lkp-server01.sh.intel.com (HELO 285e7b116627) ([10.239.97.150])
-  by FMSMGA003.fm.intel.com with ESMTP; 17 Sep 2021 03:31:01 -0700
-Received: from kbuild by 285e7b116627 with local (Exim 4.92)
-	(envelope-from <lkp@intel.com>)
-	id 1mRB92-00042n-Dq; Fri, 17 Sep 2021 10:31:00 +0000
-Date: Fri, 17 Sep 2021 18:30:15 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <61446e37.+Rq0q4xx3L/VISYq%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+X-IronPort-AV: E=Sophos;i="5.85,302,1624345200";
+   d="scan'208";a="453389147"
+Received: from orsmsx606.amr.corp.intel.com ([10.22.229.19])
+  by orsmga002.jf.intel.com with ESMTP; 17 Sep 2021 12:22:01 -0700
+Received: from orsmsx609.amr.corp.intel.com (10.22.229.22) by
+ ORSMSX606.amr.corp.intel.com (10.22.229.19) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2242.12; Fri, 17 Sep 2021 12:22:00 -0700
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ orsmsx609.amr.corp.intel.com (10.22.229.22) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2242.12 via Frontend Transport; Fri, 17 Sep 2021 12:22:00 -0700
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (104.47.66.48) by
+ edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2242.12; Fri, 17 Sep 2021 12:22:00 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ipoNxlDQFm5cK72cxFel25+rtKqSOepI1dFIjf+bE9cEtk+8UyNwM1/0T485wmlEiPIn80hkJVWvp51MsSUc/jfhDrjVGv3fKIGnYn8f+EB+tugHWV7lChz4lrv7mAZvFN5unWqMYyGxgyrM1cTD6PM6aMRx8H8QUr4s0bRsVAMwxN+pkWTF9HO6FYW3vRVsHS83eScNJKifTYfzBEgIrUpOXx+06qVJ11JCZ0jmZvqvUsKll9gSxig4RxIatJ1hakTs3y48tVw13m/iJoF4KKbomCpV6GD2+6w/azZC3BUSTzhKdodiGUsuUKz8WRpYgWFBJqQtukZzHjvKn4qtRg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=cKcoOk3uU+sg6RJN2/Itl119x35zNBsCPYc1+/yCLX4=;
+ b=Ey5ig0uow3AfOTQMJv3dvQoqCTyCtMa6koXiCnlFOEW3uCLcng23lKLj0gw0zYuMXDH9RGg8S1CtgTrBOlIruWSOaHncT280l/GgB2FGWeOBUiQpQq/0JkLkv1X6f9pmxVJE2cDnL6VmBIowtuaChfJD+3sThNjnZxYhVLL8d+YHEm9Wqmjtab6yncbB51y7nKT4gI2FkCXIwWq73QTTn+0QEMZAvU31566A4AroUrEvurU4SUo0qif1rV1eci1Abit6H12tpbDoUN785FUP4KFE1vTB8BT2rfP0wGtOVElYYNYKZ+za/o17yqUy52b3ODjnhxsVCQqiw8JumVLMPA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
+ s=selector2-intel-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cKcoOk3uU+sg6RJN2/Itl119x35zNBsCPYc1+/yCLX4=;
+ b=LEW/4DMTfBUjxSW9A5LRjET9C4OsuoqqOrGHeamnY7C8h1i9ICUcgrFMpAQH43yHoj5b4Kl24xuuTTaT5CdHawZU+H8Dk+CjBfOOuAg6HmyUPMm9YcMIudf2hq4df6RX/Se9vLcbRPaUe5bkDW4wTpnLfLt6z4BYGy0L7wcvKVA=
+Received: from BYAPR11MB3256.namprd11.prod.outlook.com (2603:10b6:a03:76::19)
+ by SJ0PR11MB4942.namprd11.prod.outlook.com (2603:10b6:a03:2ac::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4500.14; Fri, 17 Sep
+ 2021 19:21:58 +0000
+Received: from BYAPR11MB3256.namprd11.prod.outlook.com
+ ([fe80::70c4:1ab7:9eb4:f94a]) by BYAPR11MB3256.namprd11.prod.outlook.com
+ ([fe80::70c4:1ab7:9eb4:f94a%4]) with mapi id 15.20.4523.017; Fri, 17 Sep 2021
+ 19:21:58 +0000
+From: "Moore, Robert" <robert.moore@intel.com>
+To: Pavel Machek <pavel@denx.de>, Sasha Levin <sashal@kernel.org>
+Thread-Topic: [PATCH AUTOSEL 4.4 24/35] ACPICA: iASL: Fix for WPBT table with
+ no command-line arguments
+Thread-Index: AQHXpXKCF9KSGb6OD0qdgXpS+NrCV6uc5MkAgAvCkRA=
+Date: Fri, 17 Sep 2021 19:21:57 +0000
+Message-ID: <BYAPR11MB3256A989B8F75EE3A9C885F387DD9@BYAPR11MB3256.namprd11.prod.outlook.com>
+References: <20210909120116.150912-1-sashal@kernel.org>
+ <20210909120116.150912-24-sashal@kernel.org> <20210910074535.GA454@amd>
+In-Reply-To: <20210910074535.GA454@amd>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+dlp-version: 11.6.200.16
+dlp-product: dlpe-windows
+dlp-reaction: no-action
+authentication-results: denx.de; dkim=none (message not signed)
+ header.d=none;denx.de; dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 5bc89783-3df5-4b77-07b9-08d97a106b25
+x-ms-traffictypediagnostic: SJ0PR11MB4942:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <SJ0PR11MB4942560590523CFF0495A79E87DD9@SJ0PR11MB4942.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:376;
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: uZTu/6gs+QPElpAvAAiE4ZdZrDZAhEbAYrivefxugga8S+ZPW3wppiJBJ1PpFnQqxgx4Bkqxc3tBFzHSK46wXDUjz+e9sreHrkSq609IIGdlOk0DzZaIq/aB/SSU5wCRSatuX+3WHA495Uc6jRyiHmWOrn32fvsTDtrMf+g2Qdib6DK5vmed4xU+LjMtoCUWJvoYMdSrbFsBREAyFfhBBMEEDqpbIof9M6rDSpAqJ7sVE7/J1ppg88E2iS5cpsEGx/1OLQC7GuTTMYuYMb4iUkB0Btkrj07STd51pyQqucekmlk3qfXQRjE7FNaW7EWstOECfOKvuQjG2RZI71DRXqKU3b8Cy1imCtpFY+VYPbBFmaYH9hp9xmbhjWd9t34wAaBFeiJ7jE18AC12UzKQcf1jp/vjY1QQn3G7qT/v8/PJ4HDUIcYdADTPvaygzMiECmzCHvmE6e12jYPe1XAkthMfm6la6x00jZk23ZwkY4A3Z2qIYe5lzUxGoVF2+hIMBWBVzGsCireidHUOLQRF0G8d3ZAybdASpSg3meu76t/hNTQubOV/WoUoK66EUhCUWT3e6MWZFy0X+2Xi7l/gx/PMtKxsMu+TSBWrfKBifrwM9TKMT551byo2TgM4L7O6CigSl6WTQXOhXQO0fB+WvqV18pl61rPk6nH3GoINuIpHWjymI5WPRDx54MQmmQDJQwxO6bqfWF1+dKhjd6alWw==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(396003)(136003)(366004)(376002)(346002)(39860400002)(110136005)(2906002)(64756008)(66446008)(52536014)(478600001)(7696005)(38070700005)(53546011)(6506007)(8936002)(26005)(54906003)(122000001)(316002)(33656002)(86362001)(9686003)(186003)(66946007)(8676002)(71200400001)(38100700002)(66476007)(76116006)(55016002)(66556008)(4326008)(83380400001)(5660300002);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?8PpE+frGgprpOeNmMXJeZ1Fr9e65367LVoEV3QOSFFe4AKLmr+bUE8FAG2Q5?=
+ =?us-ascii?Q?OpeMeyJqOb8Xoknzfs6jJ/fBDNpLywtSs0mUpU63G6B1HdRwVV8ReULitziT?=
+ =?us-ascii?Q?evE5jDLSXAlp7QZ30EAxEDnhs0TifR4zBb521DFtXx5liBxZ/kzazJfz7I7m?=
+ =?us-ascii?Q?Gr8V31urEtbWiKUaKQ5dQKH6AVX5tyFjYBV01tg71x/6E7+8fA2N5AgBB2gg?=
+ =?us-ascii?Q?ohdH9uW2Kcl+rbSGYSkSvImMm94abGQNNu3jQl8dn2HVDayZmjAS09VvzLv1?=
+ =?us-ascii?Q?EvnLw3VhWnMWAg9beX+giH96QtKk20hXD6+RPEqbNrntouHa7xTWBd0Pxtcj?=
+ =?us-ascii?Q?EBRctbA30cnHwWYATbjzzy7Kbf7BhHAl3kewH0VhEWdErdGUD8uOTOt2GXcY?=
+ =?us-ascii?Q?2eqI59qAXnNJb6jmPoat1ar8zS15j9zj1v4BnVBEo+jhPrR2G+LrEnTmoZlY?=
+ =?us-ascii?Q?kMgL1Hn6TfTRWQQJo+CiV8b49mF07hPVe05HbXLbFMsBOuLmE9vQaq9b6fCK?=
+ =?us-ascii?Q?a0fMTNFJ6c3lzKPIUkFHAKgXAG40ZgXbIpFGDAeAG7CK0okdJEmu+yBAwqj4?=
+ =?us-ascii?Q?eGHz/1hunn3ZhBjpsel3qQoJ9QLO5f+usu716DEIWavb4h4cljHFZ6pon601?=
+ =?us-ascii?Q?8dTeE+zVbZmdKl2hczm19yXmiUtjzFaDAiteJTzMwe1FkpIffFpOvrCZ/6ml?=
+ =?us-ascii?Q?GZqZltM7SGxdi9l0NVPHiC7E164swpY4WJsZptzcUTEEaFYRpFlz/1FguAa2?=
+ =?us-ascii?Q?ewbhbFF0C3MpS4OK19OIJlqSqyJUS8lpkFHaGbBhFzaY66oiXV2a69gcGeRJ?=
+ =?us-ascii?Q?IA2ldauYBzym/hCjWHruCrSaw8Rp+M4y8KtJNaF0X72+q4eA23fjrfWSw28g?=
+ =?us-ascii?Q?6RDilQY9NKun1f0h5XwPgvvSDHirku6+zvl4oxRahf4ng9P7ASSbkm5UzU3D?=
+ =?us-ascii?Q?y4UbiiaUvkEbXzAAMv253PMJ0q1ZomE9g1e/EemJNO4k0SuLHz7B0ACG8yEV?=
+ =?us-ascii?Q?uT0sxDmhTYiROQd/OVxIXTxJHUdPGx4OAleSOwA0HeaYZdT0CV/1Tb8Lcfn8?=
+ =?us-ascii?Q?fiRpoG9JocUACownL202LbmNPzlq+wXdZi8BF9FJBikSk/24f2VxtHJzhqWh?=
+ =?us-ascii?Q?krSEraBF6BjrRk6ICn8BmUL4Gh1f7BnBbdi2H6QUa3QenkihPEru55o7VsPE?=
+ =?us-ascii?Q?mprvNkrs6ncO5IuZA9bQrO6rKcnv8dbO24xhqoltgL4CdZRNIXKb6apiw+y3?=
+ =?us-ascii?Q?bnrYrYhH3OKKps1pdj8lPEjFCLzfKL+cr8oNZD9dma2QJYuaHejpfk/0wlYD?=
+ =?us-ascii?Q?no2RQfHEImpt0Qsw/5THLmwJ?=
+Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
-Message-ID-Hash: K6TYNE56GVIQDWNOQADBXXQ74FDC7CLL
-X-Message-ID-Hash: K6TYNE56GVIQDWNOQADBXXQ74FDC7CLL
-X-MailFrom: lkp@intel.com
-X-Mailman-Rule-Hits: nonmember-moderation
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3256.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5bc89783-3df5-4b77-07b9-08d97a106b25
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Sep 2021 19:21:58.4130
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 1R60ioapViyhP28tKQ/0QorLRiBpxzrD2WzvFud6mwHP6TfL4/rR3D44jmnpm9XSEWCVwtRx2dTsZzd3cjPGAA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB4942
+X-OriginatorOrg: intel.com
+Message-ID-Hash: 7RY62ED4OYCVJLYUG4TJ33TLI7DTLK7U
+X-Message-ID-Hash: 7RY62ED4OYCVJLYUG4TJ33TLI7DTLK7U
+X-MailFrom: robert.moore@intel.com
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
+CC: "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "stable@vger.kernel.org" <stable@vger.kernel.org>, "Wysocki, Rafael J" <rafael.j.wysocki@intel.com>, "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>, "devel@acpica.org" <devel@acpica.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [rafael-pm:bleeding-edge] BUILD SUCCESS 668a3514b8a3dccf147a042777d1e569badca8fa
+Subject: [Devel] Re: [PATCH AUTOSEL 4.4 24/35] ACPICA: iASL: Fix for WPBT table with no command-line arguments
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/K6TYNE56GVIQDWNOQADBXXQ74FDC7CLL/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/7RY62ED4OYCVJLYUG4TJ33TLI7DTLK7U/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-branch HEAD: 668a3514b8a3dccf147a042777d1e569badca8fa  Merge branch 'devprop' into bleeding-edge
+This structure is used by the iASL data table disassembler.
+Bob
 
-elapsed time: 1321m
 
-configs tested: 105
-configs skipped: 4
+-----Original Message-----
+From: Pavel Machek <pavel@denx.de> 
+Sent: Friday, September 10, 2021 12:46 AM
+To: Sasha Levin <sashal@kernel.org>
+Cc: linux-kernel@vger.kernel.org; stable@vger.kernel.org; Moore, Robert <robert.moore@intel.com>; Wysocki, Rafael J <rafael.j.wysocki@intel.com>; linux-acpi@vger.kernel.org; devel@acpica.org
+Subject: Re: [PATCH AUTOSEL 4.4 24/35] ACPICA: iASL: Fix for WPBT table with no command-line arguments
 
-The following configs have been built successfully.
-More configs may be tested in the coming days.
+Hi!
 
-gcc tested configs:
-arm                                 defconfig
-arm64                            allyesconfig
-arm64                               defconfig
-arm                              allyesconfig
-arm                              allmodconfig
-i386                 randconfig-c001-20210916
-mips                     loongson1b_defconfig
-sh                           se7712_defconfig
-powerpc                        warp_defconfig
-arm                      integrator_defconfig
-powerpc                 mpc837x_rdb_defconfig
-s390                       zfcpdump_defconfig
-powerpc                      arches_defconfig
-m68k                       m5275evb_defconfig
-mips                        workpad_defconfig
-arm                     eseries_pxa_defconfig
-powerpc                    klondike_defconfig
-sh                           se7343_defconfig
-powerpc                 mpc837x_mds_defconfig
-mips                     loongson2k_defconfig
-powerpc                     tqm8560_defconfig
-xtensa                  cadence_csp_defconfig
-arm                        spear3xx_defconfig
-x86_64               randconfig-c001-20210916
-arm                  randconfig-c002-20210916
-ia64                             allmodconfig
-ia64                                defconfig
-ia64                             allyesconfig
-m68k                             allmodconfig
-m68k                                defconfig
-m68k                             allyesconfig
-nios2                               defconfig
-arc                              allyesconfig
-nds32                             allnoconfig
-nds32                               defconfig
-nios2                            allyesconfig
-csky                                defconfig
-alpha                               defconfig
-alpha                            allyesconfig
-xtensa                           allyesconfig
-h8300                            allyesconfig
-arc                                 defconfig
-sh                               allmodconfig
-parisc                              defconfig
-s390                             allyesconfig
-s390                             allmodconfig
-parisc                           allyesconfig
-s390                                defconfig
-i386                             allyesconfig
-sparc                            allyesconfig
-sparc                               defconfig
-i386                                defconfig
-mips                             allyesconfig
-mips                             allmodconfig
-powerpc                          allyesconfig
-powerpc                          allmodconfig
-powerpc                           allnoconfig
-x86_64               randconfig-a016-20210916
-x86_64               randconfig-a013-20210916
-x86_64               randconfig-a012-20210916
-x86_64               randconfig-a011-20210916
-x86_64               randconfig-a014-20210916
-x86_64               randconfig-a015-20210916
-i386                 randconfig-a016-20210916
-i386                 randconfig-a015-20210916
-i386                 randconfig-a011-20210916
-i386                 randconfig-a012-20210916
-i386                 randconfig-a013-20210916
-i386                 randconfig-a014-20210916
-riscv                randconfig-r042-20210916
-s390                 randconfig-r044-20210916
-arc                  randconfig-r043-20210916
-riscv                    nommu_k210_defconfig
-riscv                            allyesconfig
-riscv                    nommu_virt_defconfig
-riscv                             allnoconfig
-riscv                               defconfig
-riscv                          rv32_defconfig
-riscv                            allmodconfig
-x86_64                    rhel-8.3-kselftests
-um                           x86_64_defconfig
-um                             i386_defconfig
-x86_64                           allyesconfig
-x86_64                              defconfig
-x86_64                               rhel-8.3
-x86_64                                  kexec
+> Handle the case where the Command-line Arguments table field does not 
+> exist.
+> 
+> ACPICA commit d6487164497fda170a1b1453c5d58f2be7c873d6
 
-clang tested configs:
-riscv                randconfig-c006-20210916
-x86_64               randconfig-c007-20210916
-mips                 randconfig-c004-20210916
-powerpc              randconfig-c003-20210916
-arm                  randconfig-c002-20210916
-i386                 randconfig-c001-20210916
-s390                 randconfig-c005-20210916
-x86_64               randconfig-a002-20210916
-x86_64               randconfig-a003-20210916
-x86_64               randconfig-a006-20210916
-x86_64               randconfig-a004-20210916
-x86_64               randconfig-a005-20210916
-x86_64               randconfig-a001-20210916
-i386                 randconfig-a004-20210916
-i386                 randconfig-a005-20210916
-i386                 randconfig-a006-20210916
-i386                 randconfig-a002-20210916
-i386                 randconfig-a003-20210916
-i386                 randconfig-a001-20210916
-hexagon              randconfig-r045-20210916
-hexagon              randconfig-r041-20210916
+I'm not sure what is going on here, but adding unused definition will not make any difference for 4.4 users, so we don't need this in -stable...?
 
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+Best regards,
+								Pavel
+
+> +++ b/include/acpi/actbl3.h
+> @@ -738,6 +738,10 @@ struct acpi_table_wpbt {
+>  	u16 arguments_length;
+>  };
+>  
+> +struct acpi_wpbt_unicode {
+> +	u16 *unicode_string;
+> +};
+> +
+>  /*******************************************************************************
+>   *
+>   * XENV - Xen Environment Table (ACPI 6.0)
+
+-- 
+DENX Software Engineering GmbH,      Managing Director: Wolfgang Denk
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
