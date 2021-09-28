@@ -2,188 +2,160 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D8C2416E78
-	for <lists+devel-acpica@lfdr.de>; Fri, 24 Sep 2021 11:04:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7EB8B41B6E0
+	for <lists+devel-acpica@lfdr.de>; Tue, 28 Sep 2021 21:04:47 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 9C65F100EC1EB;
-	Fri, 24 Sep 2021 02:04:20 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=217.140.110.172; helo=foss.arm.com; envelope-from=lorenzo.pieralisi@arm.com; receiver=<UNKNOWN> 
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by ml01.01.org (Postfix) with ESMTP id A8313100EF271
-	for <devel@acpica.org>; Fri, 24 Sep 2021 02:04:17 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5F12CD6E;
-	Fri, 24 Sep 2021 02:04:16 -0700 (PDT)
-Received: from lpieralisi (e121166-lin.cambridge.arm.com [10.1.196.255])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 609B13F719;
-	Fri, 24 Sep 2021 02:04:14 -0700 (PDT)
-Date: Fri, 24 Sep 2021 10:04:09 +0100
-From: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-To: "Rafael J. Wysocki" <rafael@kernel.org>
-Message-ID: <20210924090409.GA26089@lpieralisi>
-References: <20210910122820.26886-1-justin.he@arm.com>
- <20210910143223.6705-1-justin.he@arm.com>
- <20210922163336.GA24633@lpieralisi>
- <56147a0b8b9fba46@bloch.sibelius.xs4all.nl>
- <20210923094031.GA6454@lpieralisi>
- <CAJZ5v0g+OVbhuUUDrLUCfX_mVqY_e8ubgLTU98=jfjTeb4t+Pw@mail.gmail.com>
- <56147c6e73afe9f6@bloch.sibelius.xs4all.nl>
- <CAJZ5v0j7=EGbtGw+FOMwyNWoyRoaeT1cvu6si7nPVVFh307J0g@mail.gmail.com>
+	by ml01.01.org (Postfix) with ESMTP id 771EA100EA934;
+	Tue, 28 Sep 2021 12:04:45 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2607:f8b0:4864:20::931; helo=mail-ua1-x931.google.com; envelope-from=devinsteffler@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-ua1-x931.google.com (mail-ua1-x931.google.com [IPv6:2607:f8b0:4864:20::931])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	(No client certificate requested)
+	by ml01.01.org (Postfix) with ESMTPS id EF653100EA932
+	for <devel@acpica.org>; Tue, 28 Sep 2021 12:04:42 -0700 (PDT)
+Received: by mail-ua1-x931.google.com with SMTP id u11so15353472uaw.3
+        for <devel@acpica.org>; Tue, 28 Sep 2021 12:04:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=XP5AFUtDSl+1CX0fjTHOfaGQ8rqNvtzePqOLpsuBLM0=;
+        b=EpLV1exI6W7QqxMn/jubRuF9XlaDZtwt8hXkuBjdU89NbpsShtTcHcWjoMdcKl0WuT
+         dwxqoeIuzY61VY4Rmkd+/ad4rwzJ/tf/u5Tw4mY+pkxJOo2gR1vCSZD+AQDgx1W3gV51
+         Kef8IUglVOLquLwEtsh61mKnJv8VcQ/Sf3/tlApeUIci3gnBEbT9pXqzTuF1bgTEA4lB
+         vIVOG7K+X9w3VeiR38vVy0bufQi9PgBsr4c8aZ2g5KP9motp/ErEW8ULoPmoaY+yXn5Y
+         Diwc4400ssk/msWqZthoMnDCemWydG9smJd5qZ9VBMf4N/QwlIQP8/i51Wotsrlrwf6m
+         +3RQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=XP5AFUtDSl+1CX0fjTHOfaGQ8rqNvtzePqOLpsuBLM0=;
+        b=sFGIj1uRJJ4/Og4GlPbE4xFzDX7riTWG8bV/agKotSbUR5uxcpLQPi1WqQu23on1U4
+         cVLqd3Mi+qlvkcoE/SJ9cYeSWJlSQyTDgv/dtKyuQT0DzRRsHpVpYr8WmmTauFUOrjCQ
+         z/5sAaKnZHnHhFPGzwGZ3MFLS2XL0Wk9+bXpPHn0umU2vA73wsRZr3WskELPBxHITA0D
+         3uKxqm6qUyf3CDHSc8yNebJotnaHTy98//y0CVNEwY3HBTTTG+vIbv6K8DRTf0il7M/X
+         mvM2ILO5TQxPTnVW+FvHpzvoM5MqEtowbQgPM+eEHUHjs5u4OFCQK8PvlSvMl9uAnU4N
+         37Jg==
+X-Gm-Message-State: AOAM533MX7JpG8eypjygFlZaOdYqqMAHYUPIdrQvrk88ZrzRNsiBMuf2
+	XvG70U/XrGb2/5wcAmz+M1tzn0VxUavSywWitYOSKGz9oCg=
+X-Google-Smtp-Source: ABdhPJwdy9L1YLHmohPPPbIAk5iyFQFJTwYoQgdtbwpOfm4t6vWSFLC/MgiwjyrKZ9KO6i4pE6tr3eT+s7qQeLMmj/E=
+X-Received: by 2002:ab0:1047:: with SMTP id g7mr6832722uab.92.1632855880681;
+ Tue, 28 Sep 2021 12:04:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <CAJZ5v0j7=EGbtGw+FOMwyNWoyRoaeT1cvu6si7nPVVFh307J0g@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-Message-ID-Hash: S3SNG5YJSW3PAX3MAE4ZBQVPUJBQZLPM
-X-Message-ID-Hash: S3SNG5YJSW3PAX3MAE4ZBQVPUJBQZLPM
-X-MailFrom: lorenzo.pieralisi@arm.com
+From: Devin Steffler <devinsteffler@gmail.com>
+Date: Tue, 28 Sep 2021 15:04:29 -0400
+Message-ID: <CAAuRk_jLAfxp7ryhuWPORetZaqMPoNmsHYP6Y=BtkCucAyp45w@mail.gmail.com>
+To: devel@acpica.org
+Message-ID-Hash: TDIG6VX6LPEMTGQOH5EXTFIV4V4O77JU
+X-Message-ID-Hash: TDIG6VX6LPEMTGQOH5EXTFIV4V4O77JU
+X-MailFrom: devinsteffler@gmail.com
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
-CC: Mark Kettenis <mark.kettenis@xs4all.nl>, Jia He <justin.he@arm.com>, Harb Abdulhamid <harb@amperecomputing.com>, Will Deacon <will@kernel.org>, Erik Kaneda <erik.kaneda@intel.com>, Linux ARM <linux-arm-kernel@lists.infradead.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Ard Biesheuvel <ardb@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, Rafael Wysocki <rafael.j.wysocki@intel.com>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH v2] Revert "ACPI: Add memory semantics to acpi_os_map_memory()"
+Subject: [Devel] Question about ACPICA, QNX and making beeps
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/S3SNG5YJSW3PAX3MAE4ZBQVPUJBQZLPM/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/TDIG6VX6LPEMTGQOH5EXTFIV4V4O77JU/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
+Content-Type: multipart/mixed; boundary="===============4902798302677020639=="
+
+--===============4902798302677020639==
+Content-Type: multipart/alternative; boundary="000000000000bccba205cd12e29c"
+
+--000000000000bccba205cd12e29c
+Content-Type: text/plain; charset="UTF-8"
+
+Hello,
+
+I am using ACPICA to read battery information in QNX. That part is working
+great so far. However, now some code that is being used to make beeps via
+the PC speaker stopped working.
+
+Strangely, this code stops working on a few devices only after ACPICA runs.
+It works fine if I don't start ACPICA. The code is using I/O ports 0x43,
+0x42, and 0x61 to generate beeps. This seems to be an industry standard way
+to make beeps on x86 based PCs using a Programmable Interval Timer (PIT).
+
+What could my ACPICA be doing (or failing to do) that could cause the beeps
+to stop working with the code below? Is the PIT being disabled somehow? I
+guess I'll need to learn more about the PIT and how to check its status to
+see if it's being disabled after ACPICA runs.
+
+Here's example code for QNX to generate a beep using the PC speaker:
+// -----------------------------------------------
+#include <sys/neutrino.h>
+#include <hw/inout.h>
+#include <unistd.h>
+
+int main(void) {
+    ThreadCtl( _NTO_TCTL_IO, 0 ); // get I/O permissions
+
+    // start a beep
+    int freq = 1000;
+    int scale = 1193046 / freq;
+    out8(0x43, 0xb6);
+    out8(0x42, scale & 0xff);
+    out8(0x42, scale >> 8);
+    out8(0x61, in8(0x61) | 3);
+
+    // let the beep play for a second
+    delay(1000);
+
+    // stop the beep
+    out8(0x61, in8(0x61) & ~3);
+
+    return 0;
+}
+// -----------------------------------------------
+
+Thanks,
+Devin
+
+--000000000000bccba205cd12e29c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hello,</div><div><br></div>I am using ACPICA to read =
+battery information in QNX. That part is working great so far. However, now=
+ some code that is being used to make beeps via the PC speaker stopped work=
+ing.<div><br></div><div>Strangely, this code stops working on a few devices=
+ only after ACPICA runs. It works fine if I don&#39;t start ACPICA. The cod=
+e is using I/O ports 0x43, 0x42, and 0x61 to generate beeps. This seems to =
+be an industry standard way to make beeps on x86 based PCs using a Programm=
+able Interval Timer (PIT).</div><div><br></div><div>What could my ACPICA be=
+ doing (or failing to do) that could cause the beeps to stop working with t=
+he code below? Is the PIT being disabled somehow? I guess I&#39;ll need to =
+learn more about the PIT and how to check its status to see if it&#39;s bei=
+ng disabled after ACPICA runs.<br></div><div><br></div><div>Here&#39;s exam=
+ple code for QNX to generate a beep using the PC speaker:</div><div>// ----=
+-------------------------------------------<br></div><div>#include &lt;sys/=
+neutrino.h&gt;<br>#include &lt;hw/inout.h&gt;<br>#include &lt;unistd.h&gt;<=
+br><br>int main(void) {<br>=C2=A0=C2=A0=C2=A0 ThreadCtl( _NTO_TCTL_IO, 0 );=
+ // get I/O permissions<br></div><div><br></div><div>=C2=A0=C2=A0=C2=A0 // =
+start a beep<br></div><div>=C2=A0 =C2=A0 int freq =3D 1000;<br>=C2=A0 =C2=
+=A0 int scale =3D 1193046 / freq;<br>=C2=A0 =C2=A0 out8(0x43, 0xb6);<br>=C2=
+=A0 =C2=A0 out8(0x42, scale &amp; 0xff);<br>=C2=A0 =C2=A0 out8(0x42, scale =
+&gt;&gt; 8);<br>=C2=A0 =C2=A0 out8(0x61, in8(0x61) | 3);<br></div><div>=C2=
+=A0=C2=A0=C2=A0 <br></div><div>=C2=A0=C2=A0=C2=A0 // let the beep play for =
+a second<br></div><div>=C2=A0=C2=A0=C2=A0 delay(1000);<br></div><div><br></=
+div><div>=C2=A0=C2=A0=C2=A0 // stop the beep<br></div><div>=C2=A0 =C2=A0 ou=
+t8(0x61, in8(0x61) &amp; ~3);<br><br>=C2=A0=C2=A0=C2=A0 return 0;<br>}</div=
+><div>
+// ----------------------------------------------- <br></div><div><br></div=
+><div>Thanks,</div><div>Devin<br></div></div>
+
+--000000000000bccba205cd12e29c--
+
+--===============4902798302677020639==
 Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-On Thu, Sep 23, 2021 at 02:54:52PM +0200, Rafael J. Wysocki wrote:
-> On Thu, Sep 23, 2021 at 2:26 PM Mark Kettenis <mark.kettenis@xs4all.nl> wrote:
-> >
-> > > From: "Rafael J. Wysocki" <rafael@kernel.org>
-> > > Date: Thu, 23 Sep 2021 13:05:05 +0200
-> > >
-> > > On Thu, Sep 23, 2021 at 11:40 AM Lorenzo Pieralisi
-> > > <lorenzo.pieralisi@arm.com> wrote:
-> > > >
-> > > > On Thu, Sep 23, 2021 at 01:09:58AM +0200, Mark Kettenis wrote:
-> > > > > > Date: Wed, 22 Sep 2021 17:33:36 +0100
-> > > > > > From: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-> > > > > >
-> > > > > > On Fri, Sep 10, 2021 at 10:32:23PM +0800, Jia He wrote:
-> > > > > > > This reverts commit 437b38c51162f8b87beb28a833c4d5dc85fa864e.
-> > > > > > >
-> > > > > > > After this commit, a boot panic is alway hit on an Ampere EMAG server
-> > > > > > > with call trace as follows:
-> > > > > > >  Internal error: synchronous external abort: 96000410 [#1] SMP
-> > > > > > >  Modules linked in:
-> > > > > > >  CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.14.0+ #462
-> > > > > > >  Hardware name: MiTAC RAPTOR EV-883832-X3-0001/RAPTOR, BIOS 0.14 02/22/2019
-> > > > > > >  pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> > > > > > > [...snip...]
-> > > > > > >  Call trace:
-> > > > > > >   acpi_ex_system_memory_space_handler+0x26c/0x2c8
-> > > > > > >   acpi_ev_address_space_dispatch+0x228/0x2c4
-> > > > > > >   acpi_ex_access_region+0x114/0x268
-> > > > > > >   acpi_ex_field_datum_io+0x128/0x1b8
-> > > > > > >   acpi_ex_extract_from_field+0x14c/0x2ac
-> > > > > > >   acpi_ex_read_data_from_field+0x190/0x1b8
-> > > > > > >   acpi_ex_resolve_node_to_value+0x1ec/0x288
-> > > > > > >   acpi_ex_resolve_to_value+0x250/0x274
-> > > > > > >   acpi_ds_evaluate_name_path+0xac/0x124
-> > > > > > >   acpi_ds_exec_end_op+0x90/0x410
-> > > > > > >   acpi_ps_parse_loop+0x4ac/0x5d8
-> > > > > > >   acpi_ps_parse_aml+0xe0/0x2c8
-> > > > > > >   acpi_ps_execute_method+0x19c/0x1ac
-> > > > > > >   acpi_ns_evaluate+0x1f8/0x26c
-> > > > > > >   acpi_ns_init_one_device+0x104/0x140
-> > > > > > >   acpi_ns_walk_namespace+0x158/0x1d0
-> > > > > > >   acpi_ns_initialize_devices+0x194/0x218
-> > > > > > >   acpi_initialize_objects+0x48/0x50
-> > > > > > >   acpi_init+0xe0/0x498
-> > > > > > >
-> > > > > > > As mentioned by Lorenzo:
-> > > > > > >   "We are forcing memory semantics mappings to PROT_NORMAL_NC, which
-> > > > > > >   eMAG does not like at all and I'd need to understand why. It looks
-> > > > > > >   like the issue happen in SystemMemory Opregion handler."
-> > > > > > >
-> > > > > > > Hence just revert it before everything is clear.
-> > > > > > >
-> > > > > > > Fixes: 437b38c51162 ("ACPI: Add memory semantics to acpi_os_map_memory()")
-> > > > > > > Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-> > > > > > > Cc: Ard Biesheuvel <ardb@kernel.org>
-> > > > > > > Cc: Hanjun Guo <guohanjun@huawei.com>
-> > > > > > > Cc: Catalin Marinas <catalin.marinas@arm.com>
-> > > > > > > Cc: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-> > > > > > > Cc: Harb Abdulhamid <harb@amperecomputing.com>
-> > > > > > >
-> > > > > > > Signed-off-by: Jia He <justin.he@arm.com>
-> > > > > >
-> > > > > > Rewrote the commit log, please take the patch below and repost
-> > > > > > it as a v3.
-> > > > > >
-> > > > > > It would still be great if Ampere can help us understand why
-> > > > > > the NormalNC attributes trigger a sync abort on the opregion
-> > > > > > before merging it.
-> > > > >
-> > > > > To be honest, I don't think you really need an explanation from Ampere
-> > > > > here.  Mapping a part of the address space that doesn't provide memory
-> > > > > semantics with NormalNC attributes is wrong and triggering a sync
-> > > > > abort in that case is way better than silently ignoring the access.
-> > > >
-> > > > That's understood and that's what I explained in the revert commit
-> > > > log, no question about it.
-> > > >
-> > > > I was just asking to confirm if that's what's actually happening.
-> > > >
-> > > > > Putting my OpenBSD hat on (where we have our own ACPI OSPM
-> > > > > implementation) I must say that we always interpreted SystemMemory as
-> > > > > memory mapped IO and I think that is a logical choice as SystemIO is
-> > > > > used for (non-memory mapped) IO.  And I'd say that the ACPI OSPM code
-> > > > > should make sure that it uses properly aligned access to any Field
-> > > > > object that doesn't use AnyAcc as its access type.  Even on x86!  And
-> > > > > I'd say that AML that uses AnyAcc fields for SystemMemory OpRegions on
-> > > > > arm64 is buggy.
-> > > > >
-> > > > > But maybe relaxing this when the EFI memory map indicates that the
-> > > > > address space in question does provide memory semantics does make
-> > > > > sense.  That should defenitely be documented in the ACPI standard
-> > > > > though.
-> > > >
-> > > > Mapping SystemMemory Opregions as "memory" does not make sense
-> > > > at all to me. Still, that's what Linux ACPICA code does (*if*
-> > > > that's what acpi_os_map_memory() is supposed to mean).
-> > > >
-> > > > https://lore.kernel.org/linux-acpi/20210916160827.GA4525@lpieralisi
-> > >
-> > > It doesn't need to do that, though, if there are good enough arguments
-> > > to change the current behavior (and the argument here is that it may
-> > > be an MMIO region, so mapping it as memory doesn't really work, but it
-> > > also may be a region in memory - there is no rule in the spec by which
-> > > SystemMemory Opregions cannot be "memory" AFAICS) and if that change
-> > > doesn't introduce regressions in the installed base.
-> > >
-> > > > Where do we go from here, to be defined, we still have a bug
-> > > > to fix after the revert is applied.
-> > > >
-> > > > drivers/acpi/sysfs.c
-> > > >
-> > > > maps BERT error regions with acpi_os_map_memory().
-> > >
-> > > That mechanism is basically used for exporting ACPI tables to user
-> > > space and they are known to reside in memory.  Whether or not BERT
-> > > regions should be mapped in the same way is a good question.
-> >
-> > It is not inconceivable that BERT regions actually live in memory of
-> > the BMC that is exposed over a bus that doesn't implement memory
-> > semantics is it?
-> 
-> No, it isn't, which is why I think that mapping them as RAM may not be
-> a good idea in general.
-
-Should I patch acpi_data_show() to map BERT error regions (well, that's
-what acpi_data_show() is used on at the moment) as MMIO and use the
-related memcpy routine to read them then :) ?
-
-Lorenzo
-
-> At the same time, mapping the ACPI tables like the DSDT etc. as RAM is
-> always valid.
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
 %(web_page_url)slistinfo%(cgiext)s/%(_internal_name)s
+--===============4902798302677020639==--
