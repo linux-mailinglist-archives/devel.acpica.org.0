@@ -1,161 +1,209 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7EB8B41B6E0
-	for <lists+devel-acpica@lfdr.de>; Tue, 28 Sep 2021 21:04:47 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [198.145.21.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 164B241B877
+	for <lists+devel-acpica@lfdr.de>; Tue, 28 Sep 2021 22:40:02 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 771EA100EA934;
-	Tue, 28 Sep 2021 12:04:45 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2607:f8b0:4864:20::931; helo=mail-ua1-x931.google.com; envelope-from=devinsteffler@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-ua1-x931.google.com (mail-ua1-x931.google.com [IPv6:2607:f8b0:4864:20::931])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	by ml01.01.org (Postfix) with ESMTP id D07A1100EA2A2;
+	Tue, 28 Sep 2021 13:39:59 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.88; helo=mga01.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id EF653100EA932
-	for <devel@acpica.org>; Tue, 28 Sep 2021 12:04:42 -0700 (PDT)
-Received: by mail-ua1-x931.google.com with SMTP id u11so15353472uaw.3
-        for <devel@acpica.org>; Tue, 28 Sep 2021 12:04:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=XP5AFUtDSl+1CX0fjTHOfaGQ8rqNvtzePqOLpsuBLM0=;
-        b=EpLV1exI6W7QqxMn/jubRuF9XlaDZtwt8hXkuBjdU89NbpsShtTcHcWjoMdcKl0WuT
-         dwxqoeIuzY61VY4Rmkd+/ad4rwzJ/tf/u5Tw4mY+pkxJOo2gR1vCSZD+AQDgx1W3gV51
-         Kef8IUglVOLquLwEtsh61mKnJv8VcQ/Sf3/tlApeUIci3gnBEbT9pXqzTuF1bgTEA4lB
-         vIVOG7K+X9w3VeiR38vVy0bufQi9PgBsr4c8aZ2g5KP9motp/ErEW8ULoPmoaY+yXn5Y
-         Diwc4400ssk/msWqZthoMnDCemWydG9smJd5qZ9VBMf4N/QwlIQP8/i51Wotsrlrwf6m
-         +3RQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=XP5AFUtDSl+1CX0fjTHOfaGQ8rqNvtzePqOLpsuBLM0=;
-        b=sFGIj1uRJJ4/Og4GlPbE4xFzDX7riTWG8bV/agKotSbUR5uxcpLQPi1WqQu23on1U4
-         cVLqd3Mi+qlvkcoE/SJ9cYeSWJlSQyTDgv/dtKyuQT0DzRRsHpVpYr8WmmTauFUOrjCQ
-         z/5sAaKnZHnHhFPGzwGZ3MFLS2XL0Wk9+bXpPHn0umU2vA73wsRZr3WskELPBxHITA0D
-         3uKxqm6qUyf3CDHSc8yNebJotnaHTy98//y0CVNEwY3HBTTTG+vIbv6K8DRTf0il7M/X
-         mvM2ILO5TQxPTnVW+FvHpzvoM5MqEtowbQgPM+eEHUHjs5u4OFCQK8PvlSvMl9uAnU4N
-         37Jg==
-X-Gm-Message-State: AOAM533MX7JpG8eypjygFlZaOdYqqMAHYUPIdrQvrk88ZrzRNsiBMuf2
-	XvG70U/XrGb2/5wcAmz+M1tzn0VxUavSywWitYOSKGz9oCg=
-X-Google-Smtp-Source: ABdhPJwdy9L1YLHmohPPPbIAk5iyFQFJTwYoQgdtbwpOfm4t6vWSFLC/MgiwjyrKZ9KO6i4pE6tr3eT+s7qQeLMmj/E=
-X-Received: by 2002:ab0:1047:: with SMTP id g7mr6832722uab.92.1632855880681;
- Tue, 28 Sep 2021 12:04:40 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTPS id D9C04100EA2A1
+	for <devel@acpica.org>; Tue, 28 Sep 2021 13:39:57 -0700 (PDT)
+X-IronPort-AV: E=McAfee;i="6200,9189,10121"; a="247318172"
+X-IronPort-AV: E=Sophos;i="5.85,330,1624345200";
+   d="scan'208";a="247318172"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Sep 2021 13:39:57 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.85,330,1624345200";
+   d="scan'208";a="538461783"
+Received: from orsmsx605.amr.corp.intel.com ([10.22.229.18])
+  by fmsmga004.fm.intel.com with ESMTP; 28 Sep 2021 13:39:56 -0700
+Received: from orsmsx603.amr.corp.intel.com (10.22.229.16) by
+ ORSMSX605.amr.corp.intel.com (10.22.229.18) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2242.12; Tue, 28 Sep 2021 13:39:56 -0700
+Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
+ orsmsx603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2242.12 via Frontend Transport; Tue, 28 Sep 2021 13:39:56 -0700
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (104.47.66.49) by
+ edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2242.12; Tue, 28 Sep 2021 13:39:56 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ALPeMOoJz0GsV1O0TZgJnzY9vXvd+NDSHiXDmqbGW1kTUwmBR/YFQKCTDVrjE5d0mzMygoBqhXCAKclMfAlfK2mA2Ocqqg1BSw0aqM+Ecbe2xaZYG7M9vLJud96CLMnvyNnY3cIGY6dF/UEDlPGWP95AjVEYWBvA9+sb/aMtwDXksQmJAogBpvrT/Ezz2Fn+jClDIELc+TXfcdFxF79jKdwU905hzPelk829Pxr4cFE28/e942Bkq7OrpkELgL4htCjSyEDIlPWS5gSbRNwfwAdfaGKE5jIpd3UVs+0ZRMNOO6SrYm/hViZ9Tgiw0/tOHkffMrF+GwRXT2jHaucnCg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=Xc9uZEUmZ2rR+CcTGrR0M582KY+B52Av7aiwyNCv+FY=;
+ b=Iwstz869XEHT6hqv1ZEj28VYOnp6EuLVu/SCMtagbKUXaVN2TzR8oZ1If9sEukuNjamxwKY6dQYkMaMQxqcgpplItfVYXMof6JMqChbECDbHo18lBeHYPO+9SeQaLjaFhwmfTzuBtadpTra6GKRtrwNh21ctRHb94PdHTgP/pRnKswI9XM7rbB3MHW349uYJ8zcMMFiMfNEOQIg8fYhYauY6duVYvhJrRzIN67/rkE7dFdkjK9R6+ay2mCTziDvhRuxjBKW84ibMhY2gz+ORIxHRdK7tE2c4KlHAgQKEmtRQnCMBIKydRO8Or7spQ6cQ4nI+qxye+Z85XL2Ax27Dyg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
+ s=selector2-intel-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Xc9uZEUmZ2rR+CcTGrR0M582KY+B52Av7aiwyNCv+FY=;
+ b=up1YGp8OwgH2wfNrApDZSUBRlH/HYx9iwakwPhkuZ2WdA0iw9VxFv8VTVY0TaqibfUwnxKTWFbqikCnYqmz7thHcyKGAq1dSrmRL4f3lx4Cc0DoR642oMmlYs+tXC49QTskTLIlC16G9JzXa0iDsTeoUKFH+V2XOcz33Ipazb8E=
+Received: from BYAPR11MB3256.namprd11.prod.outlook.com (2603:10b6:a03:76::19)
+ by SJ0PR11MB5168.namprd11.prod.outlook.com (2603:10b6:a03:2dc::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4566.14; Tue, 28 Sep
+ 2021 20:39:55 +0000
+Received: from BYAPR11MB3256.namprd11.prod.outlook.com
+ ([fe80::754c:cbde:1a6f:4980]) by BYAPR11MB3256.namprd11.prod.outlook.com
+ ([fe80::754c:cbde:1a6f:4980%6]) with mapi id 15.20.4544.021; Tue, 28 Sep 2021
+ 20:39:55 +0000
+From: "Moore, Robert" <robert.moore@intel.com>
+To: "Wysocki, Rafael J" <rafael.j.wysocki@intel.com>, Arnd Bergmann
+	<arnd@kernel.org>
+Thread-Topic: [PATCH] ACPI: avoid NULL pointer arithmetic
+Thread-Index: AQHXs5klkVDgeHMiW0iyouULNb67HKu5uZ6AgAAw+TA=
+Date: Tue, 28 Sep 2021 20:39:55 +0000
+Message-ID: <BYAPR11MB32560CEAC6CC3C2E93FBBF9387A89@BYAPR11MB3256.namprd11.prod.outlook.com>
+References: <20210927121338.938994-1-arnd@kernel.org>
+ <92b02547-3aa5-537f-a782-7a25854d88fe@intel.com>
+In-Reply-To: <92b02547-3aa5-537f-a782-7a25854d88fe@intel.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+dlp-version: 11.6.200.16
+dlp-product: dlpe-windows
+dlp-reaction: no-action
+authentication-results: intel.com; dkim=none (message not signed)
+ header.d=none;intel.com; dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 0935c622-f5db-47a8-8a3f-08d982c02191
+x-ms-traffictypediagnostic: SJ0PR11MB5168:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <SJ0PR11MB5168EBAE256ADC6A0AA484ED87A89@SJ0PR11MB5168.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:1923;
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: NXkdC25FdJky0Bo65ccicQpWDwodyms9CKtQ7E8TC1uQ+AEqdA08ANLSjpyZCbC8X3IA+TCt4N7GIKd3OswljWJKEPOvrR0OAQZNJQnTHHylyWOwAhUh47lWEtCQn++fjx1gotY3Qc6guUU2f26ExcXc4bXycY3FHaNyih1xwJ4aEGG/JJMw1sEzHSVIi6jOghRIDXOD6X2CA2MN2exOrWN2lqWENX0c0vKAIYZv2rP59fagsPUVMzy+8jK/zULYSzykfgSZWYuV5vzihN6qB+XcEu28pMdi5HWWuJ1lq+tJ15zQUU2Ion6QmX8Oh4O2/ZyXKwOkWXwX2qD/UzfYorMxUI+NR6ZR8883Pwcoo9G0BnSa0o/olVWy7/Z/J6WR4G6ull7wnMtAP+Lbp1TEy31rH7mEqv4GD+h4fuZuxKTKx6BzjH1rIjvt3d396vbAGydd+yr/jsbxYlbdptWtZXiN9zPh9obTBqlLlc+Ca4pKHb6OfRbKi+wACYKwYc/DARKiGTyz11qlCL7E38Vz/UEkVRPE4xAP5/cNNWex7QMFJmoMVBSh0FHM0ZKMymCTSEAi/7EhP4cABqi/HbU9n0lmWXFJCYyTjX3deNcu43vbfurSo3hfFdsXwoCemqtCRujGkvIlcTCX0yFGXKGy2zriqivYbIoPCOtx8LljQpX+ZifQ1rAv938VntP6fYlcbvEtCQnUMckOiVM8ScGk1g==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(38100700002)(122000001)(38070700005)(86362001)(26005)(186003)(52536014)(4326008)(7416002)(66946007)(53546011)(71200400001)(6506007)(7696005)(66476007)(66556008)(64756008)(66446008)(76116006)(55016002)(9686003)(316002)(5660300002)(8936002)(33656002)(54906003)(2906002)(508600001)(8676002)(83380400001)(110136005);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?L3lKWnhhcTdDSUpSK2RZUUErdEI2OHY4WmdEQUhiVncvOW9lci9uOTBnWkhZ?=
+ =?utf-8?B?MEtkeVVNeExuN1hWT0ZRQTlIc3pRWWdHeHdJNkpKNGFxSGVTdzhmWndiSHBI?=
+ =?utf-8?B?blMvK0dMb29seVhJMy9WYkordWhRSlVRL2pUMnMxYVBwSTVzV3U0U3BBcDV2?=
+ =?utf-8?B?RFFiKzdGQ1FuN2FpSTRmS0JOUkFIUjBKOTZBazR2aVpsTGh2TkJIb0ZTalJx?=
+ =?utf-8?B?YnMzYzI3QkF6bXRGNTBuVWVQSG1vMHBUYTJjNS9ickZUeHZ5SG50TVdzNXhB?=
+ =?utf-8?B?c2dWaHBkM0Fxd1RhQ1JieEhMNWl5Nmhvbm1PdlYwQnEwTC9PcWh1OGFOdUpu?=
+ =?utf-8?B?Q2FHSmEzZjlldGZ4NURobUJOY1BHY0FNdEQ1UGMyaElocHNTTDd6eFhIdjBZ?=
+ =?utf-8?B?SlEwYWVYeG9GcDVmQ29UTTVubXZyL2JjUnpvanBFV1hqQ1V4U2Rpa2lNWUo3?=
+ =?utf-8?B?cnZZbmQ5S3Uyd3QwNUZJME9XUTFJcE1POCsvVG85WDMwTzJBVVhNUGZYVHgw?=
+ =?utf-8?B?WkNHYSsvYldHbDE2UDNSMXgyREdIREFmczBqdTlKRzFiN1h2R3V3V3RCc3JI?=
+ =?utf-8?B?T01yb2ZJS0ZYbnpGSExYUk1reDU4emNuYzZ3M00xelFXMVp5QTRKTXpuNVlB?=
+ =?utf-8?B?TVBrYmlKbXJCMWM3NjdxOTJIdjVyNkFrRzAxcHV6RmphbmVpcDZhcXdSWE90?=
+ =?utf-8?B?RzU2MmlaMWI5S085SEhnUXlVOEQyeHJXZlZUWm1pWCtDdXhzazZTSC9NaWVE?=
+ =?utf-8?B?WHNvbm1nVnJKcW5TcTZPT0k0S3YrQTRERHd0eGhQbS96d2hmcUM3MnRPWFFK?=
+ =?utf-8?B?d05uZ09uMDlNUXZ2bjFYWGd6RHJLMnZiWFJzL1I4dGpJeHV6d1k1Y1NCOWZS?=
+ =?utf-8?B?bEVRZU1YNE54RTNWWWhjbktxSDNjaklvZS9oSUk3bWVBcFg4MUViaStVMks3?=
+ =?utf-8?B?VlZBeXQwQ2Z2RkJ6amZCWE1va0M5ZGVPR0lSM3VsOGh3czBWUjJ4cWg4Y2pT?=
+ =?utf-8?B?ZkpxdGZ2a0ptMlRVWnFwU3kwS0twa3hVVHdsdTJJODdUVllZVHdLSzZqRlha?=
+ =?utf-8?B?ajI5Q296WWVETmJNbEVIb0d3QXR1elkwOGpaeCtPVENpQ0FqMXdOZUZUV290?=
+ =?utf-8?B?ZUFMbmIwWnVURFpQYkIycXdWQW0yMm0xT0VlN0VwRXBOdGRWbFQzNlZhalY4?=
+ =?utf-8?B?c1dBajRGZ2hrWTlSRU9lVGorWHp3YWs5b0JSU2NhdGdhNER5OUhxQXZDckR4?=
+ =?utf-8?B?dUZqTTdIMUNUT1VyUWtoNHI5a0x5dUZWekhqUlQxSWZXN0NOd1MxVlgyWXdZ?=
+ =?utf-8?B?bWEyUkNNN0MvSE1iZlNqRkE5cTBQR21hZnhVN2JpZnhscFdtc2ZXS2RUbnR2?=
+ =?utf-8?B?Q09tWlZUcy9uNEVWZ1MzdjNMMU5uT3g5QVRxa1ZreGtSdjJrU0VmOXZpR3Uv?=
+ =?utf-8?B?SVZ6QWliZFFNd1FrRlhpSkNJUHl3Y3FjYmJqMUwrVERjSWRwOVA3aTk0bkkr?=
+ =?utf-8?B?eXg4ZGdmUmlpL0RhSFNHcnJsVmM3bUFhK2pxenBLTzRQeVVab0JkVzloajNw?=
+ =?utf-8?B?NWRISlhYSm5KazNpQUlsRzhJODYxNnVmUzVZOWhPWTdFU2h1cEMvT2dRakJk?=
+ =?utf-8?B?dlU1TCtNWk03VnlTc2xhTTFxT2M1d3NkamhjdXhlek5TN054UHMvaU5Ibm9I?=
+ =?utf-8?B?NWhFalRnMFpZalFMYldpUG9qRjByM01hb3JlYW8vanBCdVBNYUZaUmFXZWli?=
+ =?utf-8?Q?9l5QI8ONHY58TooxbVAzF1ZJDi+DBq6XctmqSb/?=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-From: Devin Steffler <devinsteffler@gmail.com>
-Date: Tue, 28 Sep 2021 15:04:29 -0400
-Message-ID: <CAAuRk_jLAfxp7ryhuWPORetZaqMPoNmsHYP6Y=BtkCucAyp45w@mail.gmail.com>
-To: devel@acpica.org
-Message-ID-Hash: TDIG6VX6LPEMTGQOH5EXTFIV4V4O77JU
-X-Message-ID-Hash: TDIG6VX6LPEMTGQOH5EXTFIV4V4O77JU
-X-MailFrom: devinsteffler@gmail.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3256.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0935c622-f5db-47a8-8a3f-08d982c02191
+X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Sep 2021 20:39:55.7504
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: F6uTW1BRZBodg3Jgss4L79H46BYUKhlpzuFm1mu/cSGSZ0POzvwPhFBCbqJyM0TMHN6rc9QQlvclRmqTLEmGNQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB5168
+X-OriginatorOrg: intel.com
+Message-ID-Hash: NLOQ2W4FITZTMDBZQX4JDOWW3YIZCEMH
+X-Message-ID-Hash: NLOQ2W4FITZTMDBZQX4JDOWW3YIZCEMH
+X-MailFrom: robert.moore@intel.com
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
+CC: Arnd Bergmann <arnd@arndb.de>, Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>, "devel@acpica.org" <devel@acpica.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "llvm@lists.linux.dev" <llvm@lists.linux.dev>, "Rafael J. Wysocki" <rafael@kernel.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Question about ACPICA, QNX and making beeps
+Subject: [Devel] Re: [PATCH] ACPI: avoid NULL pointer arithmetic
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/TDIG6VX6LPEMTGQOH5EXTFIV4V4O77JU/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/NLOQ2W4FITZTMDBZQX4JDOWW3YIZCEMH/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Type: multipart/mixed; boundary="===============4902798302677020639=="
+Content-Transfer-Encoding: base64
 
---===============4902798302677020639==
-Content-Type: multipart/alternative; boundary="000000000000bccba205cd12e29c"
-
---000000000000bccba205cd12e29c
-Content-Type: text/plain; charset="UTF-8"
-
-Hello,
-
-I am using ACPICA to read battery information in QNX. That part is working
-great so far. However, now some code that is being used to make beeps via
-the PC speaker stopped working.
-
-Strangely, this code stops working on a few devices only after ACPICA runs.
-It works fine if I don't start ACPICA. The code is using I/O ports 0x43,
-0x42, and 0x61 to generate beeps. This seems to be an industry standard way
-to make beeps on x86 based PCs using a Programmable Interval Timer (PIT).
-
-What could my ACPICA be doing (or failing to do) that could cause the beeps
-to stop working with the code below? Is the PIT being disabled somehow? I
-guess I'll need to learn more about the PIT and how to check its status to
-see if it's being disabled after ACPICA runs.
-
-Here's example code for QNX to generate a beep using the PC speaker:
-// -----------------------------------------------
-#include <sys/neutrino.h>
-#include <hw/inout.h>
-#include <unistd.h>
-
-int main(void) {
-    ThreadCtl( _NTO_TCTL_IO, 0 ); // get I/O permissions
-
-    // start a beep
-    int freq = 1000;
-    int scale = 1193046 / freq;
-    out8(0x43, 0xb6);
-    out8(0x42, scale & 0xff);
-    out8(0x42, scale >> 8);
-    out8(0x61, in8(0x61) | 3);
-
-    // let the beep play for a second
-    delay(1000);
-
-    // stop the beep
-    out8(0x61, in8(0x61) & ~3);
-
-    return 0;
-}
-// -----------------------------------------------
-
-Thanks,
-Devin
-
---000000000000bccba205cd12e29c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hello,</div><div><br></div>I am using ACPICA to read =
-battery information in QNX. That part is working great so far. However, now=
- some code that is being used to make beeps via the PC speaker stopped work=
-ing.<div><br></div><div>Strangely, this code stops working on a few devices=
- only after ACPICA runs. It works fine if I don&#39;t start ACPICA. The cod=
-e is using I/O ports 0x43, 0x42, and 0x61 to generate beeps. This seems to =
-be an industry standard way to make beeps on x86 based PCs using a Programm=
-able Interval Timer (PIT).</div><div><br></div><div>What could my ACPICA be=
- doing (or failing to do) that could cause the beeps to stop working with t=
-he code below? Is the PIT being disabled somehow? I guess I&#39;ll need to =
-learn more about the PIT and how to check its status to see if it&#39;s bei=
-ng disabled after ACPICA runs.<br></div><div><br></div><div>Here&#39;s exam=
-ple code for QNX to generate a beep using the PC speaker:</div><div>// ----=
--------------------------------------------<br></div><div>#include &lt;sys/=
-neutrino.h&gt;<br>#include &lt;hw/inout.h&gt;<br>#include &lt;unistd.h&gt;<=
-br><br>int main(void) {<br>=C2=A0=C2=A0=C2=A0 ThreadCtl( _NTO_TCTL_IO, 0 );=
- // get I/O permissions<br></div><div><br></div><div>=C2=A0=C2=A0=C2=A0 // =
-start a beep<br></div><div>=C2=A0 =C2=A0 int freq =3D 1000;<br>=C2=A0 =C2=
-=A0 int scale =3D 1193046 / freq;<br>=C2=A0 =C2=A0 out8(0x43, 0xb6);<br>=C2=
-=A0 =C2=A0 out8(0x42, scale &amp; 0xff);<br>=C2=A0 =C2=A0 out8(0x42, scale =
-&gt;&gt; 8);<br>=C2=A0 =C2=A0 out8(0x61, in8(0x61) | 3);<br></div><div>=C2=
-=A0=C2=A0=C2=A0 <br></div><div>=C2=A0=C2=A0=C2=A0 // let the beep play for =
-a second<br></div><div>=C2=A0=C2=A0=C2=A0 delay(1000);<br></div><div><br></=
-div><div>=C2=A0=C2=A0=C2=A0 // stop the beep<br></div><div>=C2=A0 =C2=A0 ou=
-t8(0x61, in8(0x61) &amp; ~3);<br><br>=C2=A0=C2=A0=C2=A0 return 0;<br>}</div=
-><div>
-// ----------------------------------------------- <br></div><div><br></div=
-><div>Thanks,</div><div>Devin<br></div></div>
-
---000000000000bccba205cd12e29c--
-
---===============4902798302677020639==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
-_______________________________________________
-Devel mailing list -- devel@acpica.org
-To unsubscribe send an email to devel-leave@acpica.org
-%(web_page_url)slistinfo%(cgiext)s/%(_internal_name)s
---===============4902798302677020639==--
+SSBjYW4gdGFrZSB0aGlzIHBhdGNoIGFzLWlzLCBJIHRoaW5rLiBJJ2xsIHRyeSBmb3IgdGhlIG5l
+eHQgYWNwaWNhIHJlbGVhc2UgbGF0ZXIgdGhpcyB3ZWVrLg0KDQoNCi0tLS0tT3JpZ2luYWwgTWVz
+c2FnZS0tLS0tDQpGcm9tOiBXeXNvY2tpLCBSYWZhZWwgSiA8cmFmYWVsLmoud3lzb2NraUBpbnRl
+bC5jb20+IA0KU2VudDogVHVlc2RheSwgU2VwdGVtYmVyIDI4LCAyMDIxIDEwOjQ0IEFNDQpUbzog
+QXJuZCBCZXJnbWFubiA8YXJuZEBrZXJuZWwub3JnPjsgTW9vcmUsIFJvYmVydCA8cm9iZXJ0Lm1v
+b3JlQGludGVsLmNvbT4NCkNjOiBBcm5kIEJlcmdtYW5uIDxhcm5kQGFybmRiLmRlPjsgTmF0aGFu
+IENoYW5jZWxsb3IgPG5hdGhhbkBrZXJuZWwub3JnPjsgTmljayBEZXNhdWxuaWVycyA8bmRlc2F1
+bG5pZXJzQGdvb2dsZS5jb20+OyBFcmlrIEthbmVkYSA8ZXJpay5rYW5lZGFAaW50ZWwuY29tPjsg
+bGludXgtYWNwaUB2Z2VyLmtlcm5lbC5vcmc7IGRldmVsQGFjcGljYS5vcmc7IGxpbnV4LWtlcm5l
+bEB2Z2VyLmtlcm5lbC5vcmc7IGxsdm1AbGlzdHMubGludXguZGV2OyBMZW4gQnJvd24gPGxlbmJA
+a2VybmVsLm9yZz47IFJhZmFlbCBKLiBXeXNvY2tpIDxyYWZhZWxAa2VybmVsLm9yZz4NClN1Ympl
+Y3Q6IFJlOiBbUEFUQ0hdIEFDUEk6IGF2b2lkIE5VTEwgcG9pbnRlciBhcml0aG1ldGljDQoNCkJv
+YiwgdGhpcyBpcyBBQ1BJQ0EgbWF0ZXJpYWwuDQoNCldvdWxkIGl0IGJlIHBvc3NpYmxlIHRvIGFw
+cGx5IHRoaXMgdG8gdGhlIHVwc3RyZWFtIGZyb20gdGhlIHBhdGNoIG9yIGRvIHlvdSBuZWVkwqAg
+YSBQUiBmb3IgdGhpcz8NCg0KT24gOS8yNy8yMDIxIDI6MTMgUE0sIEFybmQgQmVyZ21hbm4gd3Jv
+dGU6DQo+IEZyb206IEFybmQgQmVyZ21hbm4gPGFybmRAYXJuZGIuZGU+DQo+DQo+IFRoZXJlIGFy
+ZSBzb21lIHZlcnkgb2xkIG1hY3JvcyBmb3IgZG9pbmcgYW4gb3Blbi1jb2RlZCBvZmZzZXRvZigp
+IGFuZCANCj4gY2FzdCBiZXR3ZWVuIHBvaW50ZXIgYW5kIGludGVnZXIgaW4gQUNQSSBoZWFkZXJz
+LiBjbGFuZy0xNCBub3cgDQo+IGNvbXBsYWlucyBhYm91dCB0aGVzZToNCj4NCj4gZHJpdmVycy9h
+Y3BpL2FjcGljYS90YmZhZHQuYzo4NjozOiBlcnJvcjogcGVyZm9ybWluZyBwb2ludGVyIHN1YnRy
+YWN0aW9uIHdpdGggYSBudWxsIHBvaW50ZXIgaGFzIHVuZGVmaW5lZCBiZWhhdmlvciBbLVdlcnJv
+ciwtV251bGwtcG9pbnRlci1zdWJ0cmFjdGlvbl0NCj4gICAgICAgICAgIEFDUElfRkFEVF9PRkZT
+RVQocG1fdGltZXJfYmxvY2spLA0KPiAgICAgICAgICAgXn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+
+fn5+fn5+fn4NCj4gaW5jbHVkZS9hY3BpL2FjdGJsLmg6Mzc2OjQ3OiBub3RlOiBleHBhbmRlZCBm
+cm9tIG1hY3JvICdBQ1BJX0ZBRFRfT0ZGU0VUJw0KPiAgICNkZWZpbmUgQUNQSV9GQURUX09GRlNF
+VChmKSAgICAgICAgICAgICAodTE2KSBBQ1BJX09GRlNFVCAoc3RydWN0IGFjcGlfdGFibGVfZmFk
+dCwgZikNCj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAN
+Cj4gXn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+DQo+IGluY2x1ZGUvYWNw
+aS9hY3R5cGVzLmg6NTExOjQxOiBub3RlOiBleHBhbmRlZCBmcm9tIG1hY3JvICdBQ1BJX09GRlNF
+VCcNCj4gICAjZGVmaW5lIEFDUElfT0ZGU0VUKGQsIGYpICAgICAgICAgICAgICAgQUNQSV9QVFJf
+RElGRiAoJigoKGQgKikgMCktPmYpLCAodm9pZCAqKSAwKQ0KPiAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgIA0KPiBefn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+
+fn5+fn5+fn5+fn5+DQo+IGluY2x1ZGUvYWNwaS9hY3R5cGVzLmg6NTA1Ojc5OiBub3RlOiBleHBh
+bmRlZCBmcm9tIG1hY3JvICdBQ1BJX1BUUl9ESUZGJw0KPiAgICNkZWZpbmUgQUNQSV9QVFJfRElG
+RihhLCBiKSAgICAgICAgICAgICAoKGFjcGlfc2l6ZSkgKEFDUElfQ0FTVF9QVFIgKHU4LCAoYSkp
+IC0gQUNQSV9DQVNUX1BUUiAodTgsIChiKSkpKQ0KPiAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgDQo+
+IF4gfn5+fn5+fn5+fn5+fn5+fn5+fn5+fn4gQ29udmVydCB0aGVtIHRvIHRoZSBtb2Rlcm4gZXF1
+aXZhbGVudHMuDQo+DQo+IFNpZ25lZC1vZmYtYnk6IEFybmQgQmVyZ21hbm4gPGFybmRAYXJuZGIu
+ZGU+DQo+IC0tLQ0KPiAgIGluY2x1ZGUvYWNwaS9hY3R5cGVzLmggfCA0ICsrLS0NCj4gICAxIGZp
+bGUgY2hhbmdlZCwgMiBpbnNlcnRpb25zKCspLCAyIGRlbGV0aW9ucygtKQ0KPg0KPiBkaWZmIC0t
+Z2l0IGEvaW5jbHVkZS9hY3BpL2FjdHlwZXMuaCBiL2luY2x1ZGUvYWNwaS9hY3R5cGVzLmggaW5k
+ZXggDQo+IDkyYzcxZGZjZTBkNS4uMjg1YmM3YjczZGUzIDEwMDY0NA0KPiAtLS0gYS9pbmNsdWRl
+L2FjcGkvYWN0eXBlcy5oDQo+ICsrKyBiL2luY2x1ZGUvYWNwaS9hY3R5cGVzLmgNCj4gQEAgLTUw
+Nyw4ICs1MDcsOCBAQCB0eXBlZGVmIHU2NCBhY3BpX2ludGVnZXI7DQo+ICAgLyogUG9pbnRlci9J
+bnRlZ2VyIHR5cGUgY29udmVyc2lvbnMgKi8NCj4gICANCj4gICAjZGVmaW5lIEFDUElfVE9fUE9J
+TlRFUihpKSAgICAgICAgICAgICAgQUNQSV9DQVNUX1BUUiAodm9pZCwgKGFjcGlfc2l6ZSkgKGkp
+KQ0KPiAtI2RlZmluZSBBQ1BJX1RPX0lOVEVHRVIocCkgICAgICAgICAgICAgIEFDUElfUFRSX0RJ
+RkYgKHAsICh2b2lkICopIDApDQo+IC0jZGVmaW5lIEFDUElfT0ZGU0VUKGQsIGYpICAgICAgICAg
+ICAgICAgQUNQSV9QVFJfRElGRiAoJigoKGQgKikgMCktPmYpLCAodm9pZCAqKSAwKQ0KPiArI2Rl
+ZmluZSBBQ1BJX1RPX0lOVEVHRVIocCkgICAgICAgICAgICAgICgodWludHB0cl90KShwKSkNCj4g
+KyNkZWZpbmUgQUNQSV9PRkZTRVQoZCwgZikgICAgICAgICAgICAgICBvZmZzZXRvZihkLCBmKQ0K
+PiAgICNkZWZpbmUgQUNQSV9QSFlTQUREUl9UT19QVFIoaSkgICAgICAgICBBQ1BJX1RPX1BPSU5U
+RVIoaSkNCj4gICAjZGVmaW5lIEFDUElfUFRSX1RPX1BIWVNBRERSKGkpICAgICAgICAgQUNQSV9U
+T19JTlRFR0VSKGkpDQo+ICAgDQoNCg0KX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX18KRGV2ZWwgbWFpbGluZyBsaXN0IC0tIGRldmVsQGFjcGljYS5vcmcKVG8g
+dW5zdWJzY3JpYmUgc2VuZCBhbiBlbWFpbCB0byBkZXZlbC1sZWF2ZUBhY3BpY2Eub3JnCiUod2Vi
+X3BhZ2VfdXJsKXNsaXN0aW5mbyUoY2dpZXh0KXMvJShfaW50ZXJuYWxfbmFtZSlz
