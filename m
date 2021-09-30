@@ -1,54 +1,48 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id E80ED41E1CA
-	for <lists+devel-acpica@lfdr.de>; Thu, 30 Sep 2021 20:53:14 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D680241E405
+	for <lists+devel-acpica@lfdr.de>; Fri,  1 Oct 2021 00:38:02 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 71944100F3FDD;
-	Thu, 30 Sep 2021 11:53:13 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.161.49; helo=mail-oo1-f49.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	by ml01.01.org (Postfix) with ESMTP id 0E3C3100F4785;
+	Thu, 30 Sep 2021 15:38:01 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.31; helo=mga06.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 11336100F3FD8
-	for <devel@acpica.org>; Thu, 30 Sep 2021 11:53:10 -0700 (PDT)
-Received: by mail-oo1-f49.google.com with SMTP id h11-20020a4aa74b000000b002a933d156cbso2165100oom.4
-        for <devel@acpica.org>; Thu, 30 Sep 2021 11:53:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AWz5foWcr+bWR6CSFDKJoUEhYPxpGczQBoONhahdcus=;
-        b=YBGj4MaOthiFIqXfn5CxksC3L0BNtq6Suv3bpk6OqE5ADwqwSVMdzMVtakB6YCJtQ/
-         1RgQ0bBiAwJtWn3nsGVI1SIxMaNDaMiQjsTtr97yKCy1Fu0caP8mn/X0A/gw0jC07pA4
-         /UXSEx57uD6HQgjwGVMDjFjpPdPgSS1kBud4QtyzCRkoZkvYQmofiLJobpcSS8gV74vr
-         1mj7NSkNfi4xyIbbZoTmjIZ3LbaorwuNX6zgalcM1BrYabEpPW6W/yJdWQuruDm44tKB
-         ucYM6KYgKq4nIuAgCjMPVIMrJtf9vRkVdhe3X4Ie46JDGh5eSWDZmaYJcqfNovOIDU/6
-         TASw==
-X-Gm-Message-State: AOAM532ILKZursm9OSWBPsuWVYCP0HEY0+qx/SjbVxl4Cy+nG9Heh9T6
-	apWps20AiBHHVZERg874iXPuRBZcQEE6ZYOvvqM=
-X-Google-Smtp-Source: ABdhPJw8+m2xqrDVqABBbHFhPc+Vi/u0KcQlXUvSeYYp71RAa69bRuSXSureyv6cjZyWA10UqXHMSc2jbi7XhFK/J08=
-X-Received: by 2002:a05:6820:17a:: with SMTP id k26mr6219832ood.37.1633027990202;
- Thu, 30 Sep 2021 11:53:10 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTPS id 876D8100EBBC0
+	for <devel@acpica.org>; Thu, 30 Sep 2021 15:37:58 -0700 (PDT)
+X-IronPort-AV: E=McAfee;i="6200,9189,10123"; a="286323798"
+X-IronPort-AV: E=Sophos;i="5.85,336,1624345200";
+   d="scan'208";a="286323798"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Sep 2021 15:37:57 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.85,336,1624345200";
+   d="scan'208";a="480142041"
+Received: from lkp-server01.sh.intel.com (HELO 72c3bd3cf19c) ([10.239.97.150])
+  by fmsmga007.fm.intel.com with ESMTP; 30 Sep 2021 15:37:56 -0700
+Received: from kbuild by 72c3bd3cf19c with local (Exim 4.92)
+	(envelope-from <lkp@intel.com>)
+	id 1mW4gd-0000Uy-JY; Thu, 30 Sep 2021 22:37:55 +0000
+Date: Fri, 01 Oct 2021 06:36:59 +0800
+From: kernel test robot <lkp@intel.com>
+To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Message-ID: <61563c0b./8hPbqmWX5n06sF1%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-References: <20210927121338.938994-1-arnd@kernel.org> <CAJZ5v0jJRYQPSfVV_hCD6uxch+vU6kvWV9-KAfqHckHgkFOeaA@mail.gmail.com>
-In-Reply-To: <CAJZ5v0jJRYQPSfVV_hCD6uxch+vU6kvWV9-KAfqHckHgkFOeaA@mail.gmail.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Thu, 30 Sep 2021 20:52:59 +0200
-Message-ID: <CAJZ5v0jDKK6ecsubVDv_=EUF3goiiDW28tvbKF9cesMphgKaug@mail.gmail.com>
-To: Arnd Bergmann <arnd@kernel.org>
-Message-ID-Hash: A2XOI2MHTLMHYREZ5LVZ3SJ2YNGVBLSY
-X-Message-ID-Hash: A2XOI2MHTLMHYREZ5LVZ3SJ2YNGVBLSY
-X-MailFrom: rjwysocki@gmail.com
+Message-ID-Hash: XPQBKVPTDSDFQGYSKCS7OVB74D2R3AF5
+X-Message-ID-Hash: XPQBKVPTDSDFQGYSKCS7OVB74D2R3AF5
+X-MailFrom: lkp@intel.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: Arnd Bergmann <arnd@arndb.de>, "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>, Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, Erik Kaneda <erik.kaneda@intel.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, llvm@lists.linux.dev
+CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH] ACPI: avoid NULL pointer arithmetic
+Subject: [Devel] [rafael-pm:bleeding-edge] BUILD SUCCESS 28f08c3dc673d5c3f83fda3af11eab85d82842af
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/A2XOI2MHTLMHYREZ5LVZ3SJ2YNGVBLSY/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/XPQBKVPTDSDFQGYSKCS7OVB74D2R3AF5/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -57,59 +51,132 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Wed, Sep 29, 2021 at 8:47 PM Rafael J. Wysocki <rafael@kernel.org> wrote:
->
-> On Mon, Sep 27, 2021 at 2:13 PM Arnd Bergmann <arnd@kernel.org> wrote:
-> >
-> > From: Arnd Bergmann <arnd@arndb.de>
-> >
-> > There are some very old macros for doing an open-coded offsetof() and
-> > cast between pointer and integer in ACPI headers. clang-14 now complains
-> > about these:
-> >
-> > drivers/acpi/acpica/tbfadt.c:86:3: error: performing pointer subtraction with a null pointer has undefined behavior [-Werror,-Wnull-pointer-subtraction]
-> >          ACPI_FADT_OFFSET(pm_timer_block),
-> >          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> > include/acpi/actbl.h:376:47: note: expanded from macro 'ACPI_FADT_OFFSET'
-> >  #define ACPI_FADT_OFFSET(f)             (u16) ACPI_OFFSET (struct acpi_table_fadt, f)
-> >                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> > include/acpi/actypes.h:511:41: note: expanded from macro 'ACPI_OFFSET'
-> >  #define ACPI_OFFSET(d, f)               ACPI_PTR_DIFF (&(((d *) 0)->f), (void *) 0)
-> >                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> > include/acpi/actypes.h:505:79: note: expanded from macro 'ACPI_PTR_DIFF'
-> >  #define ACPI_PTR_DIFF(a, b)             ((acpi_size) (ACPI_CAST_PTR (u8, (a)) - ACPI_CAST_PTR (u8, (b))))
-> >                                                                               ^ ~~~~~~~~~~~~~~~~~~~~~~~
-> > Convert them to the modern equivalents.
-> >
-> > Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-> > ---
-> >  include/acpi/actypes.h | 4 ++--
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/include/acpi/actypes.h b/include/acpi/actypes.h
-> > index 92c71dfce0d5..285bc7b73de3 100644
-> > --- a/include/acpi/actypes.h
-> > +++ b/include/acpi/actypes.h
-> > @@ -507,8 +507,8 @@ typedef u64 acpi_integer;
-> >  /* Pointer/Integer type conversions */
-> >
-> >  #define ACPI_TO_POINTER(i)              ACPI_CAST_PTR (void, (acpi_size) (i))
-> > -#define ACPI_TO_INTEGER(p)              ACPI_PTR_DIFF (p, (void *) 0)
-> > -#define ACPI_OFFSET(d, f)               ACPI_PTR_DIFF (&(((d *) 0)->f), (void *) 0)
-> > +#define ACPI_TO_INTEGER(p)              ((uintptr_t)(p))
-> > +#define ACPI_OFFSET(d, f)               offsetof(d, f)
-> >  #define ACPI_PHYSADDR_TO_PTR(i)         ACPI_TO_POINTER(i)
-> >  #define ACPI_PTR_TO_PHYSADDR(i)         ACPI_TO_INTEGER(i)
-> >
-> > --
->
-> Queued up as 5.16 material, converted into an upstream ACPICA pull
-> request and submitted, thanks!
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
+branch HEAD: 28f08c3dc673d5c3f83fda3af11eab85d82842af  Merge branch 'acpica' into bleeding-edge
 
-And reverted from there, because it introduced build issues.
+elapsed time: 739m
 
-Can we use alternative definitions that don't depend on uintptr_t and
-offsetof()?
+configs tested: 106
+configs skipped: 4
+
+The following configs have been built successfully.
+More configs may be tested in the coming days.
+
+gcc tested configs:
+arm                                 defconfig
+arm64                            allyesconfig
+arm64                               defconfig
+arm                              allyesconfig
+arm                              allmodconfig
+i386                 randconfig-c001-20210930
+mips                           ip27_defconfig
+arm                       cns3420vb_defconfig
+arm                        realview_defconfig
+sparc                       sparc32_defconfig
+sh                              ul2_defconfig
+arm                           stm32_defconfig
+m68k                          sun3x_defconfig
+powerpc                         wii_defconfig
+powerpc                 canyonlands_defconfig
+powerpc                 mpc837x_mds_defconfig
+m68k                           sun3_defconfig
+ia64                             alldefconfig
+powerpc                 mpc8315_rdb_defconfig
+arm                      footbridge_defconfig
+powerpc                     sequoia_defconfig
+powerpc                     taishan_defconfig
+mips                          ath79_defconfig
+sh                          lboxre2_defconfig
+arm                  randconfig-c002-20210930
+x86_64               randconfig-c001-20210930
+ia64                             allmodconfig
+ia64                                defconfig
+ia64                             allyesconfig
+m68k                             allmodconfig
+m68k                                defconfig
+m68k                             allyesconfig
+nds32                               defconfig
+nios2                            allyesconfig
+csky                                defconfig
+alpha                               defconfig
+alpha                            allyesconfig
+xtensa                           allyesconfig
+h8300                            allyesconfig
+arc                                 defconfig
+sh                               allmodconfig
+nios2                               defconfig
+arc                              allyesconfig
+nds32                             allnoconfig
+parisc                              defconfig
+s390                             allyesconfig
+s390                             allmodconfig
+parisc                           allyesconfig
+s390                                defconfig
+i386                             allyesconfig
+sparc                            allyesconfig
+sparc                               defconfig
+i386                                defconfig
+mips                             allyesconfig
+mips                             allmodconfig
+powerpc                          allyesconfig
+powerpc                          allmodconfig
+powerpc                           allnoconfig
+i386                 randconfig-a003-20210930
+i386                 randconfig-a001-20210930
+i386                 randconfig-a004-20210930
+i386                 randconfig-a002-20210930
+i386                 randconfig-a006-20210930
+i386                 randconfig-a005-20210930
+x86_64               randconfig-a004-20210930
+x86_64               randconfig-a001-20210930
+x86_64               randconfig-a002-20210930
+x86_64               randconfig-a005-20210930
+x86_64               randconfig-a006-20210930
+x86_64               randconfig-a003-20210930
+arc                  randconfig-r043-20210930
+riscv                    nommu_k210_defconfig
+riscv                            allyesconfig
+riscv                    nommu_virt_defconfig
+riscv                             allnoconfig
+riscv                               defconfig
+riscv                          rv32_defconfig
+riscv                            allmodconfig
+x86_64                    rhel-8.3-kselftests
+um                           x86_64_defconfig
+um                             i386_defconfig
+x86_64                           allyesconfig
+x86_64                              defconfig
+x86_64                               rhel-8.3
+x86_64                                  kexec
+
+clang tested configs:
+i386                 randconfig-c001-20210930
+arm                  randconfig-c002-20210930
+powerpc              randconfig-c003-20210930
+mips                 randconfig-c004-20210930
+s390                 randconfig-c005-20210930
+riscv                randconfig-c006-20210930
+x86_64               randconfig-c007-20210930
+x86_64               randconfig-a015-20210930
+x86_64               randconfig-a011-20210930
+x86_64               randconfig-a012-20210930
+x86_64               randconfig-a013-20210930
+x86_64               randconfig-a016-20210930
+x86_64               randconfig-a014-20210930
+i386                 randconfig-a014-20210930
+i386                 randconfig-a013-20210930
+i386                 randconfig-a011-20210930
+i386                 randconfig-a015-20210930
+i386                 randconfig-a016-20210930
+i386                 randconfig-a012-20210930
+riscv                randconfig-r042-20210930
+hexagon              randconfig-r041-20210930
+s390                 randconfig-r044-20210930
+hexagon              randconfig-r045-20210930
+
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
