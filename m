@@ -1,409 +1,173 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EAA0B41F577
-	for <lists+devel-acpica@lfdr.de>; Fri,  1 Oct 2021 21:08:55 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [198.145.21.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B15041FA6E
+	for <lists+devel-acpica@lfdr.de>; Sat,  2 Oct 2021 10:51:59 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id BB5E6100F484A;
-	Fri,  1 Oct 2021 12:08:53 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2607:f8b0:4864:20::92a; helo=mail-ua1-x92a.google.com; envelope-from=devinsteffler@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-ua1-x92a.google.com (mail-ua1-x92a.google.com [IPv6:2607:f8b0:4864:20::92a])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
-	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id DC1C7100EBB6A
-	for <devel@acpica.org>; Fri,  1 Oct 2021 12:08:51 -0700 (PDT)
-Received: by mail-ua1-x92a.google.com with SMTP id u5so4458952uao.13
-        for <devel@acpica.org>; Fri, 01 Oct 2021 12:08:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=uet2gf6rU0BeEzm4AFWYMi3bFZbh/l4+4kVHJgZjrkg=;
-        b=hnyqeYFiZ+jJzQzfsYR+Cc3mGYo+t9OSrSu75ApzK+ER+vDdCUbVEODzX6SEK1hMtg
-         cI7z8+kPv/JeNCk8wK73ppqtSm3rVxIF8DCzWAY+D46Su2znTd9+YVjmJ7oPJ+2tivLQ
-         wiBUJYFQhKuvYapMNmHQmbOycBKZCAukNvAXE5CyYYQ0+AV08ZkQZdizS8gnaUqxkcRQ
-         hEB7+w2K+MscMGwAsGB/r9jtwAhvG3qRGug5zJexv3vKKrZmbwxCAuLH204NN4GYYwnG
-         ZnqN2FYeSffwWKEpPmWQyhGL9J0IJLGnLBRNcA5xPXMsr+8Jn5WD6cDquceIrRvn+3qP
-         pK7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=uet2gf6rU0BeEzm4AFWYMi3bFZbh/l4+4kVHJgZjrkg=;
-        b=tW15W+3mqP+j93osXi6vwy46JpdlY+KEpzqk0TMEqHoIbhI1vZNLKNvx7Q+myr+gpm
-         tULC25Aa/1wZASEPAx5R8Ihg6MZE/3A2BwYjbsr6HaT+5dpTBgWQ1pNEKd7xsjkdlyid
-         4IqfsB42K3B5+dCQS2LugzpTxCBBPzKS3A+BBtcsld6yftnfpuxJhxHV92kas0mENPm1
-         9H5HN2Pp15Si3MRsxM0gdyfHijbgWq03M7LCfwtgvR7F4wMCVc7DaNA9RO5qbIlbEMla
-         5V3CsKILonfLXadnf9UbpfOPNZt//3rcN7ydjKKwy/cOGJMuHbWpWtlEmHYsg+isZUGa
-         YHNg==
-X-Gm-Message-State: AOAM532cQoKLeidVW8U2JOSqj/Y48G0ZmfVA5PBvCO5OX5zVrw1/2W9/
-	ZVJ/z6mVdJ+MO846OJONoU6IutOrqMz2eb+2dgVM64R8E28=
-X-Google-Smtp-Source: ABdhPJyx51jUiHMRHU+p98oWvLuHbmkW8pCfqvPncA3KY4e5i6GGY4aC6o24NOSWExhM1XliETecp4N6wyee7GT9yIo=
-X-Received: by 2002:ab0:5b03:: with SMTP id u3mr11894979uae.41.1633115330710;
- Fri, 01 Oct 2021 12:08:50 -0700 (PDT)
-MIME-Version: 1.0
+	by ml01.01.org (Postfix) with ESMTP id 81265100EA2CF;
+	Sat,  2 Oct 2021 01:51:56 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=85.118.132.146; helo=mail.medvecky.net; envelope-from=r.marek@assembler.cz; receiver=<UNKNOWN> 
+Received: from mail.medvecky.net (mail.medvecky.net [85.118.132.146])
+	by ml01.01.org (Postfix) with ESMTP id 9FB5F100EF27E
+	for <devel@acpica.org>; Sat,  2 Oct 2021 01:51:54 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+	by mail.medvecky.net (Postfix) with ESMTP id 747F330AA83;
+	Sat,  2 Oct 2021 10:51:50 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at medvecky.net
+X-Spam-Flag: NO
+X-Spam-Score: -2.822
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.822 tagged_above=-999 required=3.8
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, TW_XF=0.077,
+	URIBL_BLOCKED=0.001] autolearn=ham autolearn_force=no
+Received: from mail.medvecky.net ([127.0.0.1])
+	by localhost (slovakia.medvecky.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id iPEoRJe4IlbM; Sat,  2 Oct 2021 10:51:45 +0200 (CEST)
+Received: from [192.168.0.115] (ip-86-49-244-235.net.upcbroadband.cz [86.49.244.235])
+	by mail.medvecky.net (Postfix) with ESMTPSA id E295E30AA7F;
+	Sat,  2 Oct 2021 10:51:44 +0200 (CEST)
+To: Devin Steffler <devinsteffler@gmail.com>
 References: <CAAuRk_jLAfxp7ryhuWPORetZaqMPoNmsHYP6Y=BtkCucAyp45w@mail.gmail.com>
- <CAAuRk_iKBx7Zmo60BDqFzmzqjz3q1vHPtNxje-KUcpixO_n+pg@mail.gmail.com> <d81ebcde-8de7-7b09-911a-ede29e78b80b@assembler.cz>
-In-Reply-To: <d81ebcde-8de7-7b09-911a-ede29e78b80b@assembler.cz>
-From: Devin Steffler <devinsteffler@gmail.com>
-Date: Fri, 1 Oct 2021 15:08:39 -0400
-Message-ID: <CAAuRk_g-rQQONwOCVvtzeO8Eq1XhcRDtyZzOnBsdAYGOdkbDpw@mail.gmail.com>
-To: Rudolf Marek <r.marek@assembler.cz>
-Message-ID-Hash: DQPIVHHDRAMFXDDPJK3LXSEG35HVLPEU
-X-Message-ID-Hash: DQPIVHHDRAMFXDDPJK3LXSEG35HVLPEU
-X-MailFrom: devinsteffler@gmail.com
+ <CAAuRk_iKBx7Zmo60BDqFzmzqjz3q1vHPtNxje-KUcpixO_n+pg@mail.gmail.com>
+ <d81ebcde-8de7-7b09-911a-ede29e78b80b@assembler.cz>
+ <CAAuRk_g-rQQONwOCVvtzeO8Eq1XhcRDtyZzOnBsdAYGOdkbDpw@mail.gmail.com>
+From: Rudolf Marek <r.marek@assembler.cz>
+Message-ID: <c5fe2f8c-2b8c-2878-1e5d-bb9ffafb33ae@assembler.cz>
+Date: Sat, 2 Oct 2021 10:51:44 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
+MIME-Version: 1.0
+In-Reply-To: <CAAuRk_g-rQQONwOCVvtzeO8Eq1XhcRDtyZzOnBsdAYGOdkbDpw@mail.gmail.com>
+Content-Language: en-US
+Message-ID-Hash: LH2TY2N2BVP6MCCBX3BUTWD6WJ4P37YI
+X-Message-ID-Hash: LH2TY2N2BVP6MCCBX3BUTWD6WJ4P37YI
+X-MailFrom: r.marek@assembler.cz
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
 CC: devel@acpica.org
 X-Mailman-Version: 3.1.1
 Precedence: list
 Subject: [Devel] Re: Question about ACPICA, QNX and making beeps
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/DQPIVHHDRAMFXDDPJK3LXSEG35HVLPEU/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/LH2TY2N2BVP6MCCBX3BUTWD6WJ4P37YI/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Type: multipart/mixed; boundary="===============2773226659897914582=="
+Content-Type: text/plain; charset="utf-8"; format="flowed"
+Content-Transfer-Encoding: base64
 
---===============2773226659897914582==
-Content-Type: multipart/alternative; boundary="0000000000002a10bd05cd4f4b5c"
-
---0000000000002a10bd05cd4f4b5c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Hi Rudolf,
-
-You're correct. Simply writing 0xa0 to 0xb2 will cause this.
-
-I'm having a hard time figuring out what 0xb2 is. It seems like an I/O port
-that causes an SMI and sets APMC_EN=3D1. That's all that I could find so fa=
-r.
-I have no idea yet what the bits in 0xa0 do.
-
-Is this telling the BIOS that I have an APM aware OS (not ACPI)? If that's
-the case, then I have a feeling that my ACPICA should be instead doing
-something to say "I'm not APM aware" so that it doesn't try to do this. Or
-is being "APM aware" required for ACPI functionality since it's the
-successor to APM? On this system reading battery information works fine
-without this write to 0xb2. I would have to test on other devices as well
-to check if that's always the case or not.
-
-As a side note, in case it's relevant, I am setting the following in my
-ACPICA:
-#define ACPI_OS_NAME                    "Microsoft Windows NT"
-
-That was done arbitrarily or perhaps out of laziness/lack of testing
-support. The comment above ACPI_OS_NAME suggests that it's obsolete anyways=
-.
-
-Unfortunately, I don't see any option in the BIOS relating to clock gating
-or C11 power states.
-
-Should I pursue allowing the write but then disable the clock gating
-separately? I'm not sure how to do that yet.
-
-I started to learn about clock gating. I wanted to see if I could confirm
-that clock gating happens when 0xa0 is written to 0xb2. I stumbled on the
-following information from Intel:
-Datasheet:
-https://www.intel.com/content/dam/www/public/us/en/documents/technical-spec=
-ifications/300-series-chipset-on-package-pch-datasheet-vol-2.pdf
--------------------------------------------------
-30.2.20 ITSS Power Reduction Control (ITSSPRC)=E2=80=94Offset 3300h
-Power controls for the entire interrupt and timer subsystem.
-Bit 2:
-"8254 Static Clock Gating Enable (CGE8254): When set, the 8254 timer is
-disabled statically. This bit shall be set by BIOS if the 8254 feature is
-not needed in
-the system or before BIOS hands off the system that supports C11. Normal
-operation
-of 8254 requires this bit to 0."
--------------------------------------------------
-
-Unfortunately, I haven't been able to get access to that bit yet. The P2SB
-Bridge is hidden. I've found a way to get the SBREG_BAR from the P2SB
-Bridge in the QNX BSP. However, using it to read the ITSSPRC still returns
-0xFFFFFFFF. I was hoping that I could clear that bit if it is getting set
-to test if that makes the PC speaker work again.
-
-Part of this is a learning exercise for me, but part of it is also to get a
-proper fix for this system. If this is just an "APM thing" that shouldn't
-be enabled to begin with on my system, then I guess I need to figure out
-how to tell BIOS that this OS is "not APM aware". Either that, or just
-block 0xa0 writes to 0xb2 (but that feels like the wrong approach).
-
-Thanks,
-Devin
-
-
-
-On Thu, Sep 30, 2021 at 1:12 PM Rudolf Marek <r.marek@assembler.cz> wrote:
-
-> On 30. 09. 21 15:53, Devin Steffler wrote:
-> > Hello,
-> >
-> > Will Miles suggested that I monitor AcpiOsRead* and AcpiOsWrite* calls.
-> I observed the following:
-> > ./test_sound # it plays fine
-> > ./acpica
-> > AcpiOsReadPort: read 0x0 from 0x1804 with width 16
-> > AcpiOsReadPort: read 0x0 from 0x1804 with width 16
-> > AcpiOsWritePort: write 0xa0 to 0xb2 with width 8
->
-> This is likely the SMI_CMD and ACPI_ENABLE see my other mail.
->
-> > AcpiOsReadPort: read 0x1 from 0x1804 with width 16
-> > ./test_sound # it stops working
-> >
-> > To check if that write to 0xb2 is related, I modified AcpiOsWritePort t=
-o
-> return AE_OK on all writes to Address 0xb2 without doing the actual write=
-.
-> I also modified AcpiOsReadPort to do a "fake read" of 1 when reading from
-> port 0x1804 if there was a previous write to 0xb2. When I do this, then t=
-he
-> beep continues to work and reading battery information via ACPI also
-> continues to work (at least on this laptop, I haven't tested other device=
-s
-> yet).
->
-> Try vice versa, do not enable/use the ACPICA at all and write 0xa0 to 0xb=
-2
-> to see if it breaks it.
->
-> > Looking at the PCH datasheet for the Intel i5 11357G CPU (what I'm usin=
-g
-> at the moment), it looks like writing to 0xb2 will trigger an SMI and set
-> "APMC_EN =3D1" and is reported via APM_STS. Does this mean that it's supp=
-osed
-> to activate power management and enable SMI interrupts for BIOS controlle=
-d
-> power management (i.e. to be executed by ACPICA via SMI interrupt
-> handlers)?
->
-> It tells BIOS, hey I'm ACPI aware OS stop messing around. And basically
-> BIOS runs some unknown code in SMM when you just write to 0xb2 the 0xA0
-> command.
-> This unknown code can possibly enable the 8254 clock gating.
->
-> >I'm not sure why that would break the PC speaker. Could it be that my OS=
-L
-> interrupt handling is broken and BIOS was relying on it to re-enable the
-> devices needed to use the PC speaker?
->
-> The PC speaker does not do anything with IRQs. The PIT has no
-> architecturally defined way to be disabled. I don't know what Intel smoke=
-s
-> but lets not inhale, intel invented the clock gating to make programers
-> life more miserable (problem for TSC/lapic clock calibration when you hav=
-e
-> no HPET)
->
-> > Or could APMC_EN=3D1 also "turn off some devices (that the PC speaker
-> requires) to save power as they won't be used by this OS"? Should I inste=
-ad
-> be looking at the ACPI tables for this laptop to see if something is bein=
-g
-> turned off to save power and figure out how to turn them back on via ACPI
-> calls?
->
-> This is likely not the problem. The ACPI tables do not instruct the
-> hardware, because you commented out above write. Also most hardware for
-> chipset is memory mapped, not IOport mapped. Try what I wrote above. If i=
-t
-> breaks, it confirms that BIOS is doing something behind the scene which i=
-s
-> not even ACPICA related.
->
-> > The same section (22.4.5 SMI#/SCI Generation) in the datasheet also
-> states things like the following:
-> > "The SCI is a level-mode interrupt that is typically handled by an
-> ACPI-aware operating
-> > system. In non-APIC systems (which is the default), the SCI IRQ is
-> routed to one of
-> > the 8259 interrupts (IRQ 9, 10, or 11). The 8259 interrupt controller
-> must be
-> > programmed to level mode for that interrupt."
->
-> I don't think it is problem with SCI. See above.
->
-> The 8254 clock gating will slow down the PIT frequency 16x and it will
-> stop legacy IRQ 0  (on PIC/IOAPIC) generation as a symptom of clock gatin=
-g.
-> This is not documented but it behaves like that. Yes again intel did not
-> stop the counter completely to detect it but slowed down. Sigh.
->
-> Maybe it also affects PC speaker that it generates waveforms too slowly.
-> You can also try to search BIOS option in setup menu for clock gating or
-> try to disable C11 power state in there.
->
-> Yes it is mess.
->
-> Thanks,
-> Rudolf
->
->
-
---0000000000002a10bd05cd4f4b5c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hi=20
-Rudolf,</div><div><br></div><div>You&#39;re correct. Simply writing 0xa0 to=
- 0xb2 will cause this.</div><div><br></div><div>I&#39;m having a hard time =
-figuring out what 0xb2 is. It seems like an I/O port that causes an SMI and=
- sets APMC_EN=3D1. That&#39;s all that I could find so far. I have no idea =
-yet what the bits in 0xa0 do.<br></div><div><br></div><div>Is this telling =
-the BIOS that I have an APM aware OS (not ACPI)? If that&#39;s the case, th=
-en I have a feeling that my ACPICA should be instead doing something to say=
- &quot;I&#39;m not APM aware&quot; so that it doesn&#39;t try to do this. O=
-r is being &quot;APM aware&quot; required for ACPI functionality since it&#=
-39;s the successor to APM? On this system reading battery information works=
- fine without this write to 0xb2. I would have to test on other devices as =
-well to check if that&#39;s always the case or not.<br></div><div><br></div=
-><div>As a side note, in case it&#39;s relevant, I am setting the following=
- in my ACPICA:</div><div>#define ACPI_OS_NAME =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;Microsoft Windows NT&quot;<b=
-r></div><div><br></div><div>That was done arbitrarily or perhaps out of laz=
-iness/lack of testing support. The comment above ACPI_OS_NAME suggests that=
- it&#39;s obsolete anyways.<br></div><br><div>Unfortunately, I don&#39;t se=
-e any option in the BIOS relating to clock gating or C11 power states.<br><=
-/div><div><br></div><div>Should I pursue allowing the write but then disabl=
-e the clock gating separately? I&#39;m not sure how to do that yet.<br></di=
-v><div><br></div><div>I started to learn about clock gating. I wanted to se=
-e if I could confirm that clock gating happens when 0xa0 is written to 0xb2=
-. I stumbled on the following information from Intel:</div><div></div><div>=
-Datasheet: <a href=3D"https://www.intel.com/content/dam/www/public/us/en/do=
-cuments/technical-specifications/300-series-chipset-on-package-pch-datashee=
-t-vol-2.pdf" target=3D"_blank">https://www.intel.com/content/dam/www/public=
-/us/en/documents/technical-specifications/300-series-chipset-on-package-pch=
--datasheet-vol-2.pdf</a></div><div>
--------------------------------------------------
-
-</div><div>30.2.20 ITSS Power Reduction Control (ITSSPRC)=E2=80=94Offset 33=
-00h<br>Power controls for the entire interrupt and timer subsystem.<br>Bit =
-2:<br>&quot;8254 Static Clock Gating Enable (CGE8254): When set, the 8254 t=
-imer is <br>disabled statically. This bit shall be set by BIOS if the 8254 =
-feature is not needed in <br>the system or before BIOS hands off the system=
- that supports C11. Normal operation <br>of 8254 requires this bit to 0.&qu=
-ot;<br>-------------------------------------------------</div><div><br></di=
-v><div>Unfortunately, I haven&#39;t been able to get access to that bit yet=
-. The P2SB Bridge is hidden. I&#39;ve found a way to get the SBREG_BAR from=
- the P2SB Bridge in the QNX BSP. However, using it to read the ITSSPRC stil=
-l returns 0xFFFFFFFF. I was hoping that I could clear that bit if it is get=
-ting set to test if that makes the PC speaker work again.</div><div><br></d=
-iv><div>Part of this is a learning exercise for me, but part of it is also =
-to get a proper fix for this system. If this is just an &quot;APM thing&quo=
-t; that shouldn&#39;t be enabled to begin with on my system, then I guess I=
- need to figure out how to tell BIOS that this OS is &quot;not APM aware&qu=
-ot;. Either that, or just block 0xa0 writes to 0xb2 (but that feels like th=
-e wrong approach).<br></div><br><div>Thanks,</div><div>Devin<br></div><div>=
-<div><br></div><div><br></div></div></div><br><div class=3D"gmail_quote"><d=
-iv dir=3D"ltr" class=3D"gmail_attr">On Thu, Sep 30, 2021 at 1:12 PM Rudolf =
-Marek &lt;<a href=3D"mailto:r.marek@assembler.cz" target=3D"_blank">r.marek=
-@assembler.cz</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" sty=
-le=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddi=
-ng-left:1ex">On 30. 09. 21 15:53, Devin Steffler wrote:<br>
-&gt; Hello,<br>
-&gt; <br>
-&gt; Will Miles suggested that I monitor AcpiOsRead* and AcpiOsWrite* calls=
-. I observed the following:<br>
-&gt; ./test_sound # it plays fine<br>
-&gt; ./acpica<br>
-&gt; AcpiOsReadPort: read 0x0 from 0x1804 with width 16<br>
-&gt; AcpiOsReadPort: read 0x0 from 0x1804 with width 16<br>
-&gt; AcpiOsWritePort: write 0xa0 to 0xb2 with width 8<br>
-<br>
-This is likely the SMI_CMD and ACPI_ENABLE see my other mail.<br>
-<br>
-&gt; AcpiOsReadPort: read 0x1 from 0x1804 with width 16<br>
-&gt; ./test_sound # it stops working<br>
-&gt; <br>
-&gt; To check if that write to 0xb2 is related, I modified AcpiOsWritePort =
-to return AE_OK on all writes to Address 0xb2 without doing the actual writ=
-e. I also modified AcpiOsReadPort to do a &quot;fake read&quot; of 1 when r=
-eading from port 0x1804 if there was a previous write to 0xb2. When I do th=
-is, then the beep continues to work and reading battery information via ACP=
-I also continues to work (at least on this laptop, I haven&#39;t tested oth=
-er devices yet).<br>
-<br>
-Try vice versa, do not enable/use the ACPICA at all and write 0xa0 to 0xb2 =
-to see if it breaks it.<br>
-<br>
-&gt; Looking at the PCH datasheet for the Intel i5 11357G CPU (what I&#39;m=
- using at the moment), it looks like writing to 0xb2 will trigger an SMI an=
-d set &quot;APMC_EN =3D1&quot; and is reported via APM_STS. Does this mean =
-that it&#39;s supposed to activate power management and enable SMI interrup=
-ts for BIOS controlled power management (i.e. to be executed by ACPICA via =
-SMI interrupt handlers)? <br>
-<br>
-It tells BIOS, hey I&#39;m ACPI aware OS stop messing around. And basically=
- BIOS runs some unknown code in SMM when you just write to 0xb2 the 0xA0 co=
-mmand.<br>
-This unknown code can possibly enable the 8254 clock gating.<br>
-<br>
-&gt;I&#39;m not sure why that would break the PC speaker. Could it be that =
-my OSL interrupt handling is broken and BIOS was relying on it to re-enable=
- the devices needed to use the PC speaker?<br>
-<br>
-The PC speaker does not do anything with IRQs. The PIT has no architectural=
-ly defined way to be disabled. I don&#39;t know what Intel smokes but lets =
-not inhale, intel invented the clock gating to make programers life more mi=
-serable (problem for TSC/lapic clock calibration when you have no HPET)<br>
-<br>
-&gt; Or could APMC_EN=3D1 also &quot;turn off some devices (that the PC spe=
-aker requires) to save power as they won&#39;t be used by this OS&quot;? Sh=
-ould I instead be looking at the ACPI tables for this laptop to see if some=
-thing is being turned off to save power and figure out how to turn them bac=
-k on via ACPI calls?<br>
-<br>
-This is likely not the problem. The ACPI tables do not instruct the hardwar=
-e, because you commented out above write. Also most hardware for chipset is=
- memory mapped, not IOport mapped. Try what I wrote above. If it breaks, it=
- confirms that BIOS is doing something behind the scene which is not even A=
-CPICA related.<br>
-<br>
-&gt; The same section (22.4.5 SMI#/SCI Generation) in the datasheet also st=
-ates things like the following:<br>
-&gt; &quot;The SCI is a level-mode interrupt that is typically handled by a=
-n ACPI-aware operating<br>
-&gt; system. In non-APIC systems (which is the default), the SCI IRQ is rou=
-ted to one of<br>
-&gt; the 8259 interrupts (IRQ 9, 10, or 11). The 8259 interrupt controller =
-must be<br>
-&gt; programmed to level mode for that interrupt.&quot;<br>
-<br>
-I don&#39;t think it is problem with SCI. See above.<br>
-<br>
-The 8254 clock gating will slow down the PIT frequency 16x and it will stop=
- legacy IRQ 0=C2=A0 (on PIC/IOAPIC) generation as a symptom of clock gating=
-. This is not documented but it behaves like that. Yes again intel did not =
-stop the counter completely to detect it but slowed down. Sigh.<br>
-<br>
-Maybe it also affects PC speaker that it generates waveforms too slowly. Yo=
-u can also try to search BIOS option in setup menu for clock gating or try =
-to disable C11 power state in there.<br>
-<br>
-Yes it is mess.<br>
-<br>
-Thanks,<br>
-Rudolf<br>
-<br>
-</blockquote></div>
-
---0000000000002a10bd05cd4f4b5c--
-
---===============2773226659897914582==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
-_______________________________________________
-Devel mailing list -- devel@acpica.org
-To unsubscribe send an email to devel-leave@acpica.org
-%(web_page_url)slistinfo%(cgiext)s/%(_internal_name)s
---===============2773226659897914582==--
+SGkgRGV2aW4sDQoNCk9uIDAxLiAxMC4gMjEgMjE6MDgsIERldmluIFN0ZWZmbGVyIHdyb3RlOg0K
+PiBIaSBSdWRvbGYsDQo+IA0KPiBZb3UncmUgY29ycmVjdC4gU2ltcGx5IHdyaXRpbmcgMHhhMCB0
+byAweGIyIHdpbGwgY2F1c2UgdGhpcy4NCg0KR3JlYXQuIChvciBub3Qgc28pLg0KDQo+IEknbSBo
+YXZpbmcgYSBoYXJkIHRpbWUgZmlndXJpbmcgb3V0IHdoYXQgMHhiMiBpcy4gSXQgc2VlbXMgbGlr
+ZSBhbiBJL08gcG9ydCB0aGF0IGNhdXNlcyBhbiBTTUkgYW5kIHNldHMgQVBNQ19FTj0xLiBUaGF0
+J3MgYWxsIHRoYXQgSSBjb3VsZCBmaW5kIHNvIGZhci4gSSBoYXZlIG5vIGlkZWEgeWV0IHdoYXQg
+dGhlIGJpdHMgaW4gMHhhMCBkby4NCg0KVGhpcyBpcyBhIHNvZnR3YXJlIEFQSSB0byBwZXJmb3Jt
+IHZhcmlvdXMgZnVuY3Rpb25zIG5vdCBieSBBQ1BJQ0EgYnl0ZWNvZGUgYnV0IGJ5IHRoZSBtYWNo
+aW5lIGNvZGUuIEl0IGlzIGtpbmQgb2YgImJhY2tkb29yIiBmb3IgQklPUyBwcm9ncmFtbWVycyBv
+ZnRlbg0KbWlzdXNlZC4gSXQgd2FzIGhlYXZpbHkgdXNlZCBkdXJpbmcgQVBNIGVyYSwgYnV0IHJl
+bWFpbmVkIHRoZXJlLiBUaGUgd2hvbGUgc3lzdGVtIG1hbmFnZW1lbWVudCBtb2RlIGlzIGFub3Ro
+ZXIgbWVzcy4gVGhlIFNNSSBpcyBtb3JlIHByaXZpbGVnZWQgdGhhbiBvcywNCnNvIGl0IGlzIHJp
+bmcgLTEgKE9TIGlzIHJpbmcgMCkuIEJhc2ljYWxseSB0aGlzIGFsbG93cyBCSU9TIHRvIGRvICJi
+ZWhpbmQgdGhlIHNjZW5lIiBvcGVyYXRpb24uIDB4QTAgaXMganVzdCBBUEksIGl0IGlzIGludm9r
+ZSBjb21tYW5kICJBMCIgaW4gQklPUy4NCkFuZCBieSBhIGNvbnZlbnRpb24gdGhpcyBjb21tYW5k
+IGlzIHRvIGluc3RydWN0IEJJT1MgdGhhdCBBQ1BJQ0EgYXdhcmUgT1MgaXMgYmVpbmcgdXNlZC4g
+VG8gZmlndXJlIG91dCB3aGF0IGlzIHJlYWxseSBkb25lLCB5b3Ugd291bGQgbmVlZCB0bw0KDQox
+KSBnZXQgc3VwcG9ydCBmb3IgTXIuIExlbm92byAtIGJ1dCBub3QgdGhlIG9yZGluYXJ5IHN1cHBv
+cnQNCjIpIHVucGFjayBhbmQgZGlzYXNzZW1ibGUvcmV2ZXJzZSBlbmdpbmVlciB0aGUgQklPUyB0
+byBzZWUgd2hhdCAweEEwIGlzIHJlYWxseSBkb2luZw0KDQo+IElzIHRoaXMgdGVsbGluZyB0aGUg
+QklPUyB0aGF0IEkgaGF2ZSBhbiBBUE0gYXdhcmUgT1MgKG5vdCBBQ1BJKT8gSWYgdGhhdCdzIHRo
+ZSBjYXNlLCB0aGVuIEkgaGF2ZSBhIGZlZWxpbmcgdGhhdCBteSBBQ1BJQ0Egc2hvdWxkIGJlIGlu
+c3RlYWQgZG9pbmcgc29tZXRoaW5nIHRvIHNheSAiSSdtIG5vdCBBUE0gYXdhcmUiIHNvIHRoYXQg
+aXQgZG9lc24ndCB0cnkgdG8gZG8gdGhpcy4gT3IgaXMgYmVpbmcgIkFQTSBhd2FyZSIgcmVxdWly
+ZWQgZm9yIEFDUEkgZnVuY3Rpb25hbGl0eSBzaW5jZSBpdCdzIHRoZSBzdWNjZXNzb3IgdG8gQVBN
+PyBPbiB0aGlzIHN5c3RlbSByZWFkaW5nIGJhdHRlcnkgaW5mb3JtYXRpb24gd29ya3MgZmluZSB3
+aXRob3V0IHRoaXMgd3JpdGUgdG8gMHhiMi4gSSB3b3VsZCBoYXZlIHRvIHRlc3Qgb24gb3RoZXIg
+ZGV2aWNlcyBhcyB3ZWxsIHRvIGNoZWNrIGlmIHRoYXQncyBhbHdheXMgdGhlIGNhc2Ugb3Igbm90
+Lg0KDQpUaGUgQTAgY29tbWFuZCB0ZWxzIHRoZSBjb250cmFyeSBpdCBzYXlzIHRvIE9TLCBJJ20g
+QUNQSSBhd2FyZSBPUy4gQW5kIHNvbWVvbmUgYXQgTXIuIExlbm92byBwcm9iYWJseSB3YXMgY2xl
+dmVyIHRvIHJlYWxpemUgdGhhdCB0aGV5IGNhbiBtYXliZSBzd2l0Y2ggb2ZmIHNvbWV0aGluZw0K
+YmVjYXVzZSBsZWdhY3kgT1MgaXMgbm90IGluIHVzZS4uLg0KDQo+IEFzIGEgc2lkZSBub3RlLCBp
+biBjYXNlIGl0J3MgcmVsZXZhbnQsIEkgYW0gc2V0dGluZyB0aGUgZm9sbG93aW5nIGluIG15IEFD
+UElDQToNCj4gI2RlZmluZSBBQ1BJX09TX05BTUUgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAiTWljcm9zb2Z0IFdpbmRvd3MgTlQiDQo+IA0KPiBUaGF0IHdhcyBkb25lIGFyYml0cmFyaWx5
+IG9yIHBlcmhhcHMgb3V0IG9mIGxhemluZXNzL2xhY2sgb2YgdGVzdGluZyBzdXBwb3J0LiBUaGUg
+Y29tbWVudCBhYm92ZSBBQ1BJX09TX05BTUUgc3VnZ2VzdHMgdGhhdCBpdCdzIG9ic29sZXRlIGFu
+eXdheXMuDQoNClllcyB0aGVyZSBhcmUgYW5vdGhlciBob3Jyb3Igc3RvcmllcyBmb3IgdGhpcy4g
+QmFzaWNhbGx5IEJJT1MgcHJvZ3JhbW1lcnMgd2VyZSB0ZXN0aW5nIG9uIHdoYXQgQUNQSUNBL09T
+IHRoZXkgcnVuIHdpdGggYW5kIGRvIGRpZmZlcmVudCB0aGluZ3MuRGVwZW5kaW5nDQp3aGF0IE9T
+IHdhcyB0b2xkLg0KDQo+IFVuZm9ydHVuYXRlbHksIEkgZG9uJ3Qgc2VlIGFueSBvcHRpb24gaW4g
+dGhlIEJJT1MgcmVsYXRpbmcgdG8gY2xvY2sgZ2F0aW5nIG9yIEMxMSBwb3dlciBzdGF0ZXMuDQoN
+ClRoYXRzIGJhZC4gVHJ5IHNvbWUgbW9yZSBnZW5lcmFsIHBvd2VyIHNhdmluZyBvcHRpb25zLiBE
+b2VzIHRoZSBiZWhhdmlvciBjaGFuZ2UgaWYgbGFwdG9wIGlzIHBsdWdnZWQgdG8gQUM/DQoNCj4g
+U2hvdWxkIEkgcHVyc3VlIGFsbG93aW5nIHRoZSB3cml0ZSBidXQgdGhlbiBkaXNhYmxlIHRoZSBj
+bG9jayBnYXRpbmcgc2VwYXJhdGVseT8gSSdtIG5vdCBzdXJlIGhvdyB0byBkbyB0aGF0IHlldC4N
+Cg0KWWVzIHlvdSBjYW4gdHJ5IGl0IG91dC4gQnV0IGl0IGlzIHRyaWNreS4NCg0KPiANCj4gSSBz
+dGFydGVkIHRvIGxlYXJuIGFib3V0IGNsb2NrIGdhdGluZy4gSSB3YW50ZWQgdG8gc2VlIGlmIEkg
+Y291bGQgY29uZmlybSB0aGF0IGNsb2NrIGdhdGluZyBoYXBwZW5zIHdoZW4gMHhhMCBpcyB3cml0
+dGVuIHRvIDB4YjIuIEkgc3R1bWJsZWQgb24gdGhlIGZvbGxvd2luZyBpbmZvcm1hdGlvbiBmcm9t
+IEludGVsOg0KPiBEYXRhc2hlZXQ6IGh0dHBzOi8vd3d3LmludGVsLmNvbS9jb250ZW50L2RhbS93
+d3cvcHVibGljL3VzL2VuL2RvY3VtZW50cy90ZWNobmljYWwtc3BlY2lmaWNhdGlvbnMvMzAwLXNl
+cmllcy1jaGlwc2V0LW9uLXBhY2thZ2UtcGNoLWRhdGFzaGVldC12b2wtMi5wZGYgPGh0dHBzOi8v
+d3d3LmludGVsLmNvbS9jb250ZW50L2RhbS93d3cvcHVibGljL3VzL2VuL2RvY3VtZW50cy90ZWNo
+bmljYWwtc3BlY2lmaWNhdGlvbnMvMzAwLXNlcmllcy1jaGlwc2V0LW9uLXBhY2thZ2UtcGNoLWRh
+dGFzaGVldC12b2wtMi5wZGY+DQo+IC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0NCj4gMzAuMi4yMCBJVFNTIFBvd2VyIFJlZHVjdGlvbiBDb250cm9sIChJ
+VFNTUFJDKeKAlE9mZnNldCAzMzAwaA0KPiBQb3dlciBjb250cm9scyBmb3IgdGhlIGVudGlyZSBp
+bnRlcnJ1cHQgYW5kIHRpbWVyIHN1YnN5c3RlbS4NCj4gQml0IDI6DQo+ICI4MjU0IFN0YXRpYyBD
+bG9jayBHYXRpbmcgRW5hYmxlIChDR0U4MjU0KTogV2hlbiBzZXQsIHRoZSA4MjU0IHRpbWVyIGlz
+DQo+IGRpc2FibGVkIHN0YXRpY2FsbHkuIFRoaXMgYml0IHNoYWxsIGJlIHNldCBieSBCSU9TIGlm
+IHRoZSA4MjU0IGZlYXR1cmUgaXMgbm90IG5lZWRlZCBpbg0KPiB0aGUgc3lzdGVtIG9yIGJlZm9y
+ZSBCSU9TIGhhbmRzIG9mZiB0aGUgc3lzdGVtIHRoYXQgc3VwcG9ydHMgQzExLiBOb3JtYWwgb3Bl
+cmF0aW9uDQo+IG9mIDgyNTQgcmVxdWlyZXMgdGhpcyBiaXQgdG8gMC4iDQo+IC0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCg0KWWVzIHRoaXMgaXMgaXQu
+IFVuZm9ydHVuYXRlbHkgdGhlIHJlZ2lzdGVyIHBsYWNlbWVudCBpcyBub3Qgc3RhYmxlL3NhbWUg
+YWNyb3NzIHN5c3RlbXMuIEludGVsIHRlbmRzIHRvIHB1dCBpdCB0byB2YXJpb3VzIHBsYWNlcy4g
+U28gbGlrZSBBcG9sbG8gbGFrZSBoYXMgaXQgZWxzZXdoZXJlIGV0Yy4gWW91IG5lZWQgdG8gbG9v
+ayB0byBhIGRvY3VtZW50YXRpb24gd2hpY2ggbWF0Y2hlcyAxMDAlIHlvdXIgc3lzdGVtLiBZb3Ug
+Y2FuIHRyeSB0byBjaGVjayB0aGlzIGJ5IGNvbXBhcmluZyB0aGUgUENJIGlkcyBvZiB2YXJpb3Vz
+IGRldmljZXMgYW5kIGNoZWNraW5nDQp0aGVtIGFnYWluc3QgZGF0YXNoZWV0cy4gWW91IGNhbiB0
+cnkgdG8gbG9vayB0byBjb3JlYm9vdCBzb3VyY2VzIG9yIHNvbWUgb3RoZXIgb3BlbnNvdXJjZSB1
+ZWZpIGltcGxlbWVudGF0aW9uIGlmIHRoZXkgaGF2ZSBzdXBwb3J0IGZvciB5b3VyIHN5c3RlbXMg
+dG8gc2VlIGhvdyB0aGUgcDJzYiBpcyBkb25lLg0KDQo+IFVuZm9ydHVuYXRlbHksIEkgaGF2ZW4n
+dCBiZWVuIGFibGUgdG8gZ2V0IGFjY2VzcyB0byB0aGF0IGJpdCB5ZXQuIFRoZSBQMlNCIEJyaWRn
+ZSBpcyBoaWRkZW4uIEkndmUgZm91bmQgYSB3YXkgdG8gZ2V0IHRoZSBTQlJFR19CQVIgZnJvbSB0
+aGUgUDJTQiBCcmlkZ2UgaW4gdGhlIFFOWCBCU1AuIA0KDQpZZXMuIEJ1dCBtYXliZSBpdCBpcyBm
+b3IgYW5vdGhlciBjaGlwc2V0LiBTZWUgYWJvdmUuDQoNCj5Ib3dldmVyLCB1c2luZyBpdCB0byBy
+ZWFkIHRoZSBJVFNTUFJDIHN0aWxsIHJldHVybnMgMHhGRkZGRkZGRi4gSSB3YXMgaG9waW5nIHRo
+YXQgSSBjb3VsZCBjbGVhciB0aGF0IGJpdCBpZiBpdCBpcyBnZXR0aW5nIHNldCB0byB0ZXN0IGlm
+IHRoYXQgbWFrZXMgdGhlIFBDIHNwZWFrZXIgd29yayA+YWdhaW4uDQoNCkhtIDB4ZmZmZmZmZmYg
+c291bmRzIHdheSBzdXNwaWNpb3VzLiBJIGRvbid0IGtub3cgd2hhdCBvdGhlciBiaXRzIGRvIGJ1
+dCBpdCBsb29rcyBsaWtlIHlvdSBhcmUgbG9va2luZyB0byB3cm9uZyBwbGFjZS4gUG9zc2libGUg
+ZXJyb3JzOg0KDQoxKSB5b3UgZGlkIG5vdCBtYXAgY29ycmVjdCBtZW1vcnkgcmVnaW9uDQoyKSB5
+b3UgZGlkIG5vdCBtYXAgaXQgdW5jYWNoZWQNCjMpIHlvdSBkaWQgbm90IGVuYWJsZSBkZWNvZGlu
+ZyBvZiB0aGUgcmVnaW9uIChtYXliZSB0aGUgUDJTQiBoYXMgYWxzbyBjb21tYW5kIHJlZ2lzdGVy
+IHdoZXJlIHlvdSBtaWdodCBuZWVkIHRvIGVuYWJsZSBCQVIgZGVjb2RpbmcpDQo0KSB5b3UgZGlk
+IG5vdCB1c2UgcHJvcGVyIGNvbXBpbGVyIHRoaW5ncyBsaWtlICJ2b2xhdGlsZSIgb3IgY29tcGls
+ZXIgYmFycmllcnMgYW5kL29yIHlvdXIgYWNjZXNzIGhhcyBiZWVuIG9wdGltaXplZCBvdXQgYnkg
+dGhlIGNvbXBpbGVyDQo1KSB5b3UgZGlkIG5vdCByZWFkIHRoZSByZWdpc3RlciB1c2luZyBjb3Jy
+ZWN0IHJlZ2lzdGVyIGxlbmd0aA0KPiBQYXJ0IG9mIHRoaXMgaXMgYSBsZWFybmluZyBleGVyY2lz
+ZSBmb3IgbWUsIGJ1dCBwYXJ0IG9mIGl0IGlzIGFsc28gdG8gZ2V0IGEgcHJvcGVyIGZpeCBmb3Ig
+dGhpcyBzeXN0ZW0uIElmIHRoaXMgaXMganVzdCBhbiAiQVBNIHRoaW5nIiB0aGF0IHNob3VsZG4n
+dCBiZSBlbmFibGVkIHRvIGJlZ2luIHdpdGggb24gbXkgc3lzdGVtLCB0aGVuIEkgZ3Vlc3MgSSBu
+ZWVkIHRvIGZpZ3VyZSBvdXQgaG93IHRvIHRlbGwgQklPUyB0aGF0IHRoaXMgT1MgaXMgIm5vdCBB
+UE0gYXdhcmUiLiANCg0KVGhlIEFDUElDQSBkb2VzIGNvcnJlY3QgdGhpbmcuIFNlZSBhYm92ZS4N
+Cg0KPkVpdGhlciB0aGF0LCBvciBqdXN0IGJsb2NrIDB4YTAgd3JpdGVzIHRvIDB4YjIgKGJ1dCB0
+aGF0IGZlZWxzIGxpa2UgdGhlIHdyb25nIGFwcHJvYWNoKS4NCg0KWWVzIHRoaXMgaXMgd3Jvbmcg
+YXBwcm9hY2gsIGJlY2F1c2UgQklPUyB3aWxsIG9mdGVuIGdlbmVyYXRlIFNNSXMgYW5kIFNDSXMg
+Zm9yIG1hbnkgZXZlbnRzLiBJJ20gYWZyYWlkIHlvdSBuZWVkIHRvIGRvIHRoZSB3cml0ZSB0byAw
+eGIyLg0KDQpHaXZpbmcgaXQgbW9yZSB0aG91Z2h0cyB0aGUgY2xvY2sgZ2F0aW5nIG1pZ2h0IG5v
+dCBiZSB0aGUgb25seSBvciBjb3JyZWN0IHByb2JsZW0gdG8gc29sdmUuIElmIGl0IGlzIGEgbGFw
+dG9wLCBJIHN1c3BlY3QgdGhhdCB0aGUgbGVnYWN5IHNwZWFrZXINCmdvZXMgdG8gc291bmQgY29k
+ZWMgc29tZWhvdyBhbmQgdGhlbiB0byBsYXB0b3Agc3BlYWtlcnMsIGFuZCBtYXliZSBCSU9TIHN3
+aXRjaGVzIG9mZiB0aGUgc291bmQgY29kZWMgKGxpa2UgcHV0cyBpdCB0byBEMyBzbGVlcCkuDQpJ
+IGRvbid0IGtub3cgaG93IHRoZSBzb3VuZCBjb2RlYyByb3V0aW5nIGlzIHVzdWFsbHkgZG9uZS4g
+WW91IG5lZWQgdG8gY2hlY2sgaXQgeW91cnNlbGYuDQoNCkRvIHlvdSBoYXZlIHNjaGVtYXRpY3Mg
+b2YgdGhhdCBzeXN0ZW0gdG8gY2hlY2sgd2hhdCB0aGUgYmVlcGluZyBvdXRwdXQgZnJvbSB0aGUg
+Y2hpcHNldCByZWFsbHkgZG9lcz8NCg0KVGhhbmtzLA0KUnVkb2xmDQoNCg0KDQoNCl9fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fCkRldmVsIG1haWxpbmcgbGlz
+dCAtLSBkZXZlbEBhY3BpY2Eub3JnClRvIHVuc3Vic2NyaWJlIHNlbmQgYW4gZW1haWwgdG8gZGV2
+ZWwtbGVhdmVAYWNwaWNhLm9yZwolKHdlYl9wYWdlX3VybClzbGlzdGluZm8lKGNnaWV4dClzLyUo
+X2ludGVybmFsX25hbWUpcw==
