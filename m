@@ -2,49 +2,47 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F6E5426F5A
-	for <lists+devel-acpica@lfdr.de>; Fri,  8 Oct 2021 19:07:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E1EFE4271B2
+	for <lists+devel-acpica@lfdr.de>; Fri,  8 Oct 2021 22:00:11 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id D1705100EB328;
-	Fri,  8 Oct 2021 10:07:21 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=79.96.170.134; helo=cloudserver094114.home.pl; envelope-from=rjw@rjwysocki.net; receiver=<UNKNOWN> 
-Received: from cloudserver094114.home.pl (cloudserver094114.home.pl [79.96.170.134])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+	by ml01.01.org (Postfix) with ESMTP id 6863E100F3921;
+	Fri,  8 Oct 2021 13:00:10 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.20; helo=mga02.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id BAF2A100EB845
-	for <devel@acpica.org>; Fri,  8 Oct 2021 10:07:19 -0700 (PDT)
-Received: from localhost (127.0.0.1) (HELO v370.home.net.pl)
- by /usr/run/smtp (/usr/run/postfix/private/idea_relay_lmtp) via UNIX with SMTP (IdeaSmtpServer 3.0.0)
- id 0022d0cc6dd07f2b; Fri, 8 Oct 2021 19:07:17 +0200
-Received: from kreacher.localnet (unknown [213.134.175.153])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by v370.home.net.pl (Postfix) with ESMTPSA id 464E366A808;
-	Fri,  8 Oct 2021 19:07:15 +0200 (CEST)
-From: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-To: "Limonciello, Mario" <mario.limonciello@amd.com>
-Date: Fri, 08 Oct 2021 19:07:14 +0200
-Message-ID: <5504370.DvuYhMxLoT@kreacher>
-In-Reply-To: <8c8df41d-265a-637d-bc26-cdaf0e4e93a8@amd.com>
-References: <20211007205126.11769-1-mario.limonciello@amd.com> <2211361.ElGaqSPkdT@kreacher> <8c8df41d-265a-637d-bc26-cdaf0e4e93a8@amd.com>
+	by ml01.01.org (Postfix) with ESMTPS id E0560100EB32F
+	for <devel@acpica.org>; Fri,  8 Oct 2021 13:00:07 -0700 (PDT)
+X-IronPort-AV: E=McAfee;i="6200,9189,10131"; a="213721532"
+X-IronPort-AV: E=Sophos;i="5.85,358,1624345200";
+   d="scan'208";a="213721532"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Oct 2021 13:00:07 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.85,358,1624345200";
+   d="scan'208";a="657918588"
+Received: from lkp-server02.sh.intel.com (HELO 1950922c5479) ([10.239.97.151])
+  by orsmga005.jf.intel.com with ESMTP; 08 Oct 2021 13:00:05 -0700
+Received: from kbuild by 1950922c5479 with local (Exim 4.92)
+	(envelope-from <lkp@intel.com>)
+	id 1mYw2G-0000gR-T1; Fri, 08 Oct 2021 20:00:04 +0000
+Date: Sat, 09 Oct 2021 03:59:08 +0800
+From: kernel test robot <lkp@intel.com>
+To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Message-ID: <6160a30c.PjihTpl7a2c+qe3N%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-X-CLIENT-IP: 213.134.175.153
-X-CLIENT-HOSTNAME: 213.134.175.153
-X-VADE-SPAMSTATE: clean
-X-VADE-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvtddrvddttddguddtiecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfjqffogffrnfdpggftiffpkfenuceurghilhhouhhtmecuudehtdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvufffkfgjfhgggfgtsehtufertddttdejnecuhfhrohhmpedftfgrfhgrvghlucflrdcuhgihshhotghkihdfuceorhhjfiesrhhjfiihshhotghkihdrnhgvtheqnecuggftrfgrthhtvghrnhephfduteeiueegtefgieetteffveehhefgieelkedujeekhfettdfgvdelveevkeegnecuffhomhgrihhnpehouhhtlhhoohhkrdgtohhmpdhkvghrnhgvlhdrohhrghenucfkphepvddufedrudefgedrudejhedrudehfeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvudefrddufeegrddujeehrdduheefpdhhvghlohepkhhrvggrtghhvghrrdhlohgtrghlnhgvthdpmhgrihhlfhhrohhmpedftfgrfhgrvghlucflrdcuhgihshhotghkihdfuceorhhjfiesrhhjfiihshhotghkihdrnhgvtheqpdhrtghpthhtohepmhgrrhhiohdrlhhimhhonhgtihgvlhhlohesrghmugdrtghomhdprhgtphhtthhopehlvghnsgeskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsghhvghlghgrrghssehgohhoghhlvgdrtghomhdprhgtphhtthhopehrohgsvghrthdrmhhoohhrvgesihhnthgvlhdrtghomhdprhgt
- phhtthhopegvrhhikhdrkhgrnhgvuggrsehinhhtvghlrdgtohhmpdhrtghpthhtoheplhhinhhugidqrggtphhisehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqphgtihesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopeguvghvvghlsegrtghpihgtrgdrohhrgh
-X-DCC--Metrics: v370.home.net.pl 1024; Body=9 Fuz1=9 Fuz2=9
-Message-ID-Hash: ZLHVKABNWIOBVAW7NV4TTXPPNRJHI344
-X-Message-ID-Hash: ZLHVKABNWIOBVAW7NV4TTXPPNRJHI344
-X-MailFrom: rjw@rjwysocki.net
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
-CC: Bjorn Helgaas <bhelgaas@google.com>, Erik Kaneda <erik.kaneda@intel.com>, "open list:ACPI" <linux-acpi@vger.kernel.org>, open list <linux-kernel@vger.kernel.org>, "open list:PCI SUBSYSTEM" <linux-pci@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>
+Message-ID-Hash: PWBII4ZJDWO4ZYRAAZTRPL2XKEORUZ3P
+X-Message-ID-Hash: PWBII4ZJDWO4ZYRAAZTRPL2XKEORUZ3P
+X-MailFrom: lkp@intel.com
+X-Mailman-Rule-Hits: nonmember-moderation
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
+CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH] PCI: Put power resources not tied to a physical node in D3cold
+Subject: [Devel] [rafael-pm:bleeding-edge] BUILD SUCCESS 3577b2bc2275c245e5632e50b1acf84a1cf4e01a
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/ZLHVKABNWIOBVAW7NV4TTXPPNRJHI344/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/PWBII4ZJDWO4ZYRAAZTRPL2XKEORUZ3P/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -53,308 +51,128 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Friday, October 8, 2021 5:47:53 PM CEST Limonciello, Mario wrote:
-> On 10/8/2021 09:05, Rafael J. Wysocki wrote:
-> > On Thursday, October 7, 2021 10:51:26 PM CEST Mario Limonciello wrote:
-> >> I found a case that a system that two physical SATA controllers share
-> >> the same ACPI Power Resource.  When a drive is connected to one of
-> >> the controllers then it will bind with PCI devices with the ahci driver
-> >> and form a relationship with the firmware node and physical node.  During
-> >> s2idle I see that the constraints are met for this device as it is
-> >> transitioned into the appropriate state. However the second ACPI node
-> >> doesn't have any relationship with a physical node and stays in "D0":
-> >>
-> >> ```
-> >> ACPI: \_SB_.PCI0.GP18.SATA: ACPI: PM: Power state change: D0 -> D3cold
-> >> ACPI: PM: Power resource [P0SA] still in use
-> >> acpi device:2a: Power state changed to D3cold
-> >> ```
-> >>
-> >> Due to the refcounting used on the shared power resource putting the
-> >> device with a physical node into D3 doesn't result in the _OFF method
-> >> being called.
-> >>
-> >> To help with this type of problem, make a new helper function that can
-> >> be used to check all the children of an ACPI device and put any firmware
-> >> nodes that don't have physical devices into D3cold to allow shared
-> >> resources to transition. Call this helper function after PCI devices have
-> >> been scanned and ACPI companions have had a chance to associate.
-> >>
-> >> After making this change, here is what the flow looks like:
-> >> ```
-> >> <snip:bootup>
-> >> ACPI: \_SB_.PCI0.GP18.SAT1: ACPI: PM: Power state change: D0 -> D3cold
-> >> ACPI: PM: Power resource [P0SA] still in use
-> >> acpi device:2c: Power state changed to D3cold
-> >> <snip:suspend>
-> >> ACPI: \_SB_.PCI0.GP18.SATA: ACPI: PM: Power state change: D0 -> D3cold
-> >> ACPI: PM: Power resource [P0SA] turned off
-> >> acpi device:2a: Power state changed to D3cold
-> >> ```
-> >>
-> >> Link: https://nam11.safelinks.protection.outlook.com/?url=https%3A%2F%2Flore.kernel.org%2Flinux-acpi%2F0571292a-286b-18f2-70ad-12b125a61469%40amd.com%2FT%2F%23m042055c5ca1e49c2829655511f04b0311c142559&amp;data=04%7C01%7Cmario.limonciello%40amd.com%7Ce54614dae1624dfb240408d98a64b8da%7C3dd8961fe4884e608e11a82d994e183d%7C0%7C0%7C637692988971446528%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000&amp;sdata=9fYSZ4d2cA2TnM453MQxqmOlGN%2FU6WNi7By7pVP2EV4%3D&amp;reserved=0
-> >> BugLink: https://nam11.safelinks.protection.outlook.com/?url=https%3A%2F%2Fbugzilla.kernel.org%2Fshow_bug.cgi%3Fid%3D214091&amp;data=04%7C01%7Cmario.limonciello%40amd.com%7Ce54614dae1624dfb240408d98a64b8da%7C3dd8961fe4884e608e11a82d994e183d%7C0%7C0%7C637692988971446528%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000&amp;sdata=vsjQOgqzadLYXTfRW2sui5Dp7%2B0EYf14rUCiIDNofoI%3D&amp;reserved=0
-> >> Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-> >> ---
-> >>   drivers/acpi/device_pm.c | 34 ++++++++++++++++++++++++++++++++++
-> >>   drivers/pci/probe.c      |  5 +++++
-> >>   include/acpi/acpi_bus.h  |  1 +
-> >>   3 files changed, 40 insertions(+)
-> >>
-> >> diff --git a/drivers/acpi/device_pm.c b/drivers/acpi/device_pm.c
-> >> index 0028b6b51c87..0fb0bbeeae9e 100644
-> >> --- a/drivers/acpi/device_pm.c
-> >> +++ b/drivers/acpi/device_pm.c
-> >> @@ -149,6 +149,40 @@ static int acpi_dev_pm_explicit_set(struct acpi_device *adev, int state)
-> >>   	return 0;
-> >>   }
-> >>   
-> >> +/**
-> >> + * acpi_device_turn_off_absent_children - Turn off power resources for
-> >> + *					  children not physically present.
-> >> + * @parent: ACPI bridge device
-> >> + */
-> >> +int acpi_device_turn_off_absent_children(struct acpi_device *parent)
-> >> +{
-> >> +	struct acpi_device *adev;
-> >> +	int ret = 0;
-> >> +
-> >> +	if (!parent)
-> >> +		return -EINVAL;
-> >> +
-> >> +	list_for_each_entry(adev, &parent->children, node) {
-> > 
-> > It is better to use device_for_each_child() for this, walking the children list
-> > without locking is questionable.
-> > 
-> >> +		int state;
-> >> +
-> >> +		if (!adev->flags.power_manageable ||
-> > 
-> > This need not be checked, acpi_device_set_power() checks it.
-> > 
-> >> +		    !adev->power.flags.power_resources)
-> > 
-> > And I'm not sure about this too.  Even if there are no power resources, it
-> > would be still prudent to release PM resources referred to by unused device
-> > objects by calling _PS3 on them.
-> > 
-> >> +			continue;
-> >> +		if (acpi_get_first_physical_node(adev))
-> >> +			continue;
-> > 
-> > In addition to this, I would check if the device object has _ADR, because
-> > there are legitimate cases when device objects with a _HID have no physical
-> > nodes.
-> > 
-> >> +		ret = acpi_device_get_power(adev, &state);
-> >> +		if (ret)
-> >> +			return ret;
-> >> +		if (state == ACPI_STATE_D3_COLD)
-> >> +			continue;
-> > 
-> > The above is not necessary.
-> > 
-> >> +		ret = acpi_device_set_power(adev, ACPI_STATE_D3_COLD);
-> >> +		if (ret)
-> >> +			return ret;
-> >> +	}
-> >> +	return ret;
-> >> +}
-> >> +EXPORT_SYMBOL_GPL(acpi_device_turn_off_absent_children);
-> > 
-> > And I would put this function into glue.c.
-> > 
-> >> +
-> >>   /**
-> >>    * acpi_device_set_power - Set power state of an ACPI device.
-> >>    * @device: Device to set the power state of.
-> >> diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
-> >> index 79177ac37880..1a45182394d1 100644
-> >> --- a/drivers/pci/probe.c
-> >> +++ b/drivers/pci/probe.c
-> >> @@ -2939,6 +2939,11 @@ static unsigned int pci_scan_child_bus_extend(struct pci_bus *bus,
-> >>   		}
-> >>   	}
-> >>   
-> >> +	/* check for and turn off dangling power resources */
-> >> +	for_each_pci_bridge(dev, bus) {
-> >> +		acpi_device_turn_off_absent_children(ACPI_COMPANION(&dev->dev));
-> > 
-> > IMO it would be better to call this from inside of the ACPI subsystem and
-> > after scanning the entire bus.
-> > 
-> >> +	}
-> >> +
-> >>   	/*
-> >>   	 * We've scanned the bus and so we know all about what's on
-> >>   	 * the other side of any bridges that may be on this bus plus
-> >> diff --git a/include/acpi/acpi_bus.h b/include/acpi/acpi_bus.h
-> >> index 13d93371790e..0eba08b60e13 100644
-> >> --- a/include/acpi/acpi_bus.h
-> >> +++ b/include/acpi/acpi_bus.h
-> >> @@ -510,6 +510,7 @@ int acpi_bus_get_status(struct acpi_device *device);
-> >>   
-> >>   int acpi_bus_set_power(acpi_handle handle, int state);
-> >>   const char *acpi_power_state_string(int state);
-> >> +int acpi_device_turn_off_absent_children(struct acpi_device *parent);
-> >>   int acpi_device_set_power(struct acpi_device *device, int state);
-> >>   int acpi_bus_init_power(struct acpi_device *device);
-> >>   int acpi_device_fix_up_power(struct acpi_device *device);
-> >>
-> > 
-> > Overall, something like the appended patch might work. >
-> > Note that on my test-bed machine it makes no difference, though.
-> 
-> Yes this helps the resources on the identified problematic machine.
-> 
-> > 
-> > ---
-> >   drivers/acpi/glue.c     |   28 ++++++++++++++++++++++++++++
-> >   drivers/acpi/internal.h |    2 ++
-> >   drivers/acpi/pci_root.c |    1 +
-> >   3 files changed, 31 insertions(+)
-> > 
-> > Index: linux-pm/drivers/acpi/glue.c
-> > ===================================================================
-> > --- linux-pm.orig/drivers/acpi/glue.c
-> > +++ linux-pm/drivers/acpi/glue.c
-> > @@ -350,3 +350,31 @@ void acpi_device_notify_remove(struct de
-> >   
-> >   	acpi_unbind_one(dev);
-> >   }
-> > +
-> > +static int acpi_dev_turn_off_if_unused(struct device *dev, void *not_used)
-> > +{
-> > +	struct acpi_device *adev = to_acpi_device(dev);
-> > +
-> > +	acpi_dev_turn_off_unused_descendants(adev);
-> > +
-> > +	if (adev->pnp.type.bus_address && !acpi_get_first_physical_node(adev))
-> > +		acpi_device_set_power(adev, ACPI_STATE_D3_COLD);
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +/**
-> > + * acpi_dev_turn_off_unused_descendants - Put unused descendants into D3cold.
-> > + * @adev: ACPI device object at the top of a branch of device hierarchy.
-> > + *
-> > + * Walk the branch of the hierarchy of ACPI device objects starting at @adev
-> > + * and put all of the objects in it that have _ADR and have no corresponding
-> > + * physical nodes into D3cold.
-> > + *
-> > + * This allows power resources that are only referred to by unused ACPI device
-> > + * objects to be turned off.
-> > + */
-> > +void acpi_dev_turn_off_unused_descendants(struct acpi_device *adev)
-> > +{
-> > +	device_for_each_child(&adev->dev, NULL, acpi_dev_turn_off_if_unused);
-> > +}
-> > Index: linux-pm/drivers/acpi/internal.h
-> > ===================================================================
-> > --- linux-pm.orig/drivers/acpi/internal.h
-> > +++ linux-pm/drivers/acpi/internal.h
-> > @@ -88,6 +88,8 @@ bool acpi_scan_is_offline(struct acpi_de
-> >   acpi_status acpi_sysfs_table_handler(u32 event, void *table, void *context);
-> >   void acpi_scan_table_notify(void);
-> >   
-> > +void acpi_dev_turn_off_unused_descendants(struct acpi_device *adev);
-> > +
-> >   /* --------------------------------------------------------------------------
-> >                        Device Node Initialization / Removal
-> >      -------------------------------------------------------------------------- */
-> > Index: linux-pm/drivers/acpi/pci_root.c
-> > ===================================================================
-> > --- linux-pm.orig/drivers/acpi/pci_root.c
-> > +++ linux-pm/drivers/acpi/pci_root.c
-> > @@ -630,6 +630,7 @@ static int acpi_pci_root_add(struct acpi
-> >   
-> >   	pci_lock_rescan_remove();
-> >   	pci_bus_add_devices(root->bus);
-> > +	acpi_dev_turn_off_unused_descendants(root->device);
-> >   	pci_unlock_rescan_remove();
-> >   	return 1;
-> >   
-> > 
-> > 
-> > 
-> 
-> When you submit this if no other changes, please include:
-> 
-> Tested-by: Mario Limonciello <mario.limonciello@amd.com>
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
+branch HEAD: 3577b2bc2275c245e5632e50b1acf84a1cf4e01a  Merge branch 'thermal-docs' into bleeding-edge
 
-Thanks, but we may do better in a couple of ways.
+elapsed time: 1516m
 
-First off, there's no particular reason to restrict the walk to the device
-objects below the host bridge one.
+configs tested: 104
+configs skipped: 3
 
-Second, if the physical node appears while we're removing power from the
-device, whoever adds it may be confused, so it's better to avoid that.
+The following configs have been built successfully.
+More configs may be tested in the coming days.
 
-Please check if the appended one still works for you.
+gcc tested configs:
+arm                                 defconfig
+arm64                            allyesconfig
+arm64                               defconfig
+arm                              allyesconfig
+arm                              allmodconfig
+powerpc                  mpc866_ads_defconfig
+mips                        omega2p_defconfig
+sh                        apsh4ad0a_defconfig
+arm                        oxnas_v6_defconfig
+arm                          collie_defconfig
+s390                       zfcpdump_defconfig
+m68k                       m5475evb_defconfig
+sparc                            alldefconfig
+sparc                       sparc64_defconfig
+sh                        sh7757lcr_defconfig
+h8300                       h8s-sim_defconfig
+sh                          rsk7264_defconfig
+powerpc                       holly_defconfig
+sh                            migor_defconfig
+sh                         ecovec24_defconfig
+arm                     davinci_all_defconfig
+sh                          polaris_defconfig
+xtensa                          iss_defconfig
+arm                       multi_v4t_defconfig
+powerpc                     ksi8560_defconfig
+mips                        bcm63xx_defconfig
+x86_64               randconfig-c001-20211003
+i386                 randconfig-c001-20211003
+arm                  randconfig-c002-20211003
+ia64                             allmodconfig
+ia64                                defconfig
+ia64                             allyesconfig
+m68k                             allmodconfig
+m68k                                defconfig
+m68k                             allyesconfig
+nds32                               defconfig
+nios2                            allyesconfig
+csky                                defconfig
+alpha                               defconfig
+alpha                            allyesconfig
+xtensa                           allyesconfig
+h8300                            allyesconfig
+arc                                 defconfig
+sh                               allmodconfig
+parisc                              defconfig
+s390                             allyesconfig
+s390                             allmodconfig
+parisc                           allyesconfig
+s390                                defconfig
+i386                             allyesconfig
+sparc                            allyesconfig
+sparc                               defconfig
+i386                                defconfig
+nios2                               defconfig
+arc                              allyesconfig
+nds32                             allnoconfig
+mips                             allyesconfig
+mips                             allmodconfig
+powerpc                          allyesconfig
+powerpc                          allmodconfig
+powerpc                           allnoconfig
+x86_64               randconfig-a015-20211004
+x86_64               randconfig-a012-20211004
+x86_64               randconfig-a016-20211004
+x86_64               randconfig-a014-20211004
+x86_64               randconfig-a013-20211004
+x86_64               randconfig-a011-20211004
+i386                 randconfig-a013-20211004
+i386                 randconfig-a016-20211004
+i386                 randconfig-a014-20211004
+i386                 randconfig-a011-20211004
+i386                 randconfig-a012-20211004
+i386                 randconfig-a015-20211004
+arc                  randconfig-r043-20211007
+riscv                    nommu_k210_defconfig
+riscv                            allyesconfig
+riscv                    nommu_virt_defconfig
+riscv                             allnoconfig
+riscv                               defconfig
+riscv                          rv32_defconfig
+riscv                            allmodconfig
+um                           x86_64_defconfig
+um                             i386_defconfig
+x86_64                           allyesconfig
+x86_64                    rhel-8.3-kselftests
+x86_64                              defconfig
+x86_64                               rhel-8.3
+x86_64                                  kexec
+
+clang tested configs:
+i386                 randconfig-a001-20211004
+i386                 randconfig-a003-20211004
+i386                 randconfig-a005-20211004
+i386                 randconfig-a002-20211004
+i386                 randconfig-a004-20211004
+i386                 randconfig-a006-20211004
+x86_64               randconfig-a003-20211004
+x86_64               randconfig-a005-20211004
+x86_64               randconfig-a001-20211004
+x86_64               randconfig-a002-20211004
+x86_64               randconfig-a004-20211004
+x86_64               randconfig-a006-20211004
+hexagon              randconfig-r045-20211007
+hexagon              randconfig-r041-20211007
+s390                 randconfig-r044-20211007
+riscv                randconfig-r042-20211007
 
 ---
- drivers/acpi/glue.c     |   16 ++++++++++++++++
- drivers/acpi/internal.h |    1 +
- drivers/acpi/scan.c     |    6 ++++++
- 3 files changed, 23 insertions(+)
-
-Index: linux-pm/drivers/acpi/scan.c
-===================================================================
---- linux-pm.orig/drivers/acpi/scan.c
-+++ linux-pm/drivers/acpi/scan.c
-@@ -2559,6 +2559,12 @@ int __init acpi_scan_init(void)
- 		}
- 	}
- 
-+	/*
-+	 * Make sure that power management resources are not blocked by ACPI
-+	 * device objects with no users.
-+	 */
-+	bus_for_each_dev(&acpi_bus_type, NULL, NULL, acpi_dev_turn_off_if_unused);
-+
- 	acpi_turn_off_unused_power_resources();
- 
- 	acpi_scan_initialized = true;
-Index: linux-pm/drivers/acpi/glue.c
-===================================================================
---- linux-pm.orig/drivers/acpi/glue.c
-+++ linux-pm/drivers/acpi/glue.c
-@@ -350,3 +350,19 @@ void acpi_device_notify_remove(struct de
- 
- 	acpi_unbind_one(dev);
- }
-+
-+int acpi_dev_turn_off_if_unused(struct device *dev, void *not_used)
-+{
-+	struct acpi_device *adev = to_acpi_device(dev);
-+
-+	if (adev->pnp.type.bus_address) {
-+		mutex_lock(&adev->physical_node_lock);
-+
-+		if (list_empty(&adev->physical_node_list))
-+			acpi_device_set_power(adev, ACPI_STATE_D3_COLD);
-+
-+		mutex_unlock(&adev->physical_node_lock);
-+	}
-+
-+	return 0;
-+}
-Index: linux-pm/drivers/acpi/internal.h
-===================================================================
---- linux-pm.orig/drivers/acpi/internal.h
-+++ linux-pm/drivers/acpi/internal.h
-@@ -117,6 +117,7 @@ bool acpi_device_is_battery(struct acpi_
- bool acpi_device_is_first_physical_node(struct acpi_device *adev,
- 					const struct device *dev);
- int acpi_bus_register_early_device(int type);
-+int acpi_dev_turn_off_if_unused(struct device *dev, void *not_used);
- 
- /* --------------------------------------------------------------------------
-                      Device Matching and Notification
-
-
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
