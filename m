@@ -2,53 +2,47 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1395843D0E0
-	for <lists+devel-acpica@lfdr.de>; Wed, 27 Oct 2021 20:37:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 150264401BE
+	for <lists+devel-acpica@lfdr.de>; Fri, 29 Oct 2021 20:12:48 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id E0F1A100EBB94;
-	Wed, 27 Oct 2021 11:37:34 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.167.181; helo=mail-oi1-f181.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	by ml01.01.org (Postfix) with ESMTP id 1F2C4100EB35B;
+	Fri, 29 Oct 2021 11:12:45 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.43; helo=mga05.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 12997100EF27E
-	for <devel@acpica.org>; Wed, 27 Oct 2021 11:37:31 -0700 (PDT)
-Received: by mail-oi1-f181.google.com with SMTP id q129so4783604oib.0
-        for <devel@acpica.org>; Wed, 27 Oct 2021 11:37:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=hVPuTQqP6aEFqO2fyoc1su/oe5Az3LSwCS4uRf5/p08=;
-        b=Ki0YEQNq6E8PkOxudAZyFO6bmFG71pOXCRcY6FHySOBuYrwzoF9b+iFiX3lT/cf6cq
-         kmEyLv1TrUQ4K+M5Nax6Jkx5k2fGGemTBoQ8rEtlOcjw2Syt67EXQzrU2HGn9lchJRkI
-         UHmforMM8f2TkDBU6d7H4H7JqigynQCgDuGIfCvwluxF0PF8rK8KBQP3NHY/VTiTR+mu
-         KHPtb/JVaw+B/rBDXuFtm8tMTqlVB47IR5XarNC+xq+BunsEDIfMXow5luwrOK3+n38F
-         hDLTz9ZqMebCrPMmT7+3qVRe5TLsxGcca/RplsGWrCkQXBUIEkY6+mU13K4iH4XSlGoe
-         RK3Q==
-X-Gm-Message-State: AOAM530J0aR0E2xyUFxOSGND6IosFRkM6eWb9H0XLsg65Lp96mUfY9vK
-	oeYujfmJ9q0/Pwc9WwHeA4KOPt/teQ7PRLcsfXw=
-X-Google-Smtp-Source: ABdhPJzutzJ7/Yj893mdq8no4/lj/5r4vF4oW8JGvIk2VWf04ta96JHBQadGGsCMKVkQFFaoWhZrYdUCMLWXmITeCQE=
-X-Received: by 2002:aca:5c5:: with SMTP id 188mr4840138oif.154.1635359850793;
- Wed, 27 Oct 2021 11:37:30 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTPS id 5DAC2100EB353
+	for <devel@acpica.org>; Fri, 29 Oct 2021 11:12:43 -0700 (PDT)
+X-IronPort-AV: E=McAfee;i="6200,9189,10152"; a="316907731"
+X-IronPort-AV: E=Sophos;i="5.87,193,1631602800";
+   d="scan'208";a="316907731"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2021 10:23:05 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.87,193,1631602800";
+   d="scan'208";a="487648865"
+Received: from lkp-server02.sh.intel.com (HELO c20d8bc80006) ([10.239.97.151])
+  by orsmga007.jf.intel.com with ESMTP; 29 Oct 2021 10:23:03 -0700
+Received: from kbuild by c20d8bc80006 with local (Exim 4.92)
+	(envelope-from <lkp@intel.com>)
+	id 1mgVao-0000Xq-IQ; Fri, 29 Oct 2021 17:23:02 +0000
+Date: Sat, 30 Oct 2021 01:22:51 +0800
+From: kernel test robot <lkp@intel.com>
+To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Message-ID: <617c2deb.RFrMMMkcjFLAHzD9%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-References: <20211027065438.1742175-1-hch@lst.de>
-In-Reply-To: <20211027065438.1742175-1-hch@lst.de>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Wed, 27 Oct 2021 20:37:20 +0200
-Message-ID: <CAJZ5v0jYmrV7bMV0b9wB8L-bX6PU+yCDrK8s+jCJh1x3xCi_Rg@mail.gmail.com>
-To: Christoph Hellwig <hch@lst.de>
-Message-ID-Hash: 7KBQYVQA3FOAS6EHO4IUIDKTMGSHXH66
-X-Message-ID-Hash: 7KBQYVQA3FOAS6EHO4IUIDKTMGSHXH66
-X-MailFrom: rjwysocki@gmail.com
+Message-ID-Hash: MTDA3QIHPNOBRQIHNDVVRY6PKCT54O4T
+X-Message-ID-Hash: MTDA3QIHPNOBRQIHNDVVRY6PKCT54O4T
+X-MailFrom: lkp@intel.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: "Rafael J. Wysocki" <rafael@kernel.org>, Tony Luck <tony.luck@intel.com>, Borislav Petkov <bp@alien8.de>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>
+CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH] ACPI: APEI: mark apei_hest_parse
+Subject: [Devel] [rafael-pm:bleeding-edge] BUILD SUCCESS ff77b4a23e470f82642897284e6140ad581c714a
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/7KBQYVQA3FOAS6EHO4IUIDKTMGSHXH66/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/MTDA3QIHPNOBRQIHNDVVRY6PKCT54O4T/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -57,56 +51,106 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Wed, Oct 27, 2021 at 8:54 AM Christoph Hellwig <hch@lst.de> wrote:
->
-> apei_hest_parse is only used in hest.c, so mark it static.
->
-> Signed-off-by: Christoph Hellwig <hch@lst.de>
-> ---
->  drivers/acpi/apei/hest.c | 5 +++--
->  include/acpi/apei.h      | 3 ---
->  2 files changed, 3 insertions(+), 5 deletions(-)
->
-> diff --git a/drivers/acpi/apei/hest.c b/drivers/acpi/apei/hest.c
-> index 277f00b288d14..0edc1ed476737 100644
-> --- a/drivers/acpi/apei/hest.c
-> +++ b/drivers/acpi/apei/hest.c
-> @@ -86,7 +86,9 @@ static int hest_esrc_len(struct acpi_hest_header *hest_hdr)
->         return len;
->  };
->
-> -int apei_hest_parse(apei_hest_func_t func, void *data)
-> +typedef int (*apei_hest_func_t)(struct acpi_hest_header *hest_hdr, void *data);
-> +
-> +static int apei_hest_parse(apei_hest_func_t func, void *data)
->  {
->         struct acpi_hest_header *hest_hdr;
->         int i, rc, len;
-> @@ -121,7 +123,6 @@ int apei_hest_parse(apei_hest_func_t func, void *data)
->
->         return 0;
->  }
-> -EXPORT_SYMBOL_GPL(apei_hest_parse);
->
->  /*
->   * Check if firmware advertises firmware first mode. We need FF bit to be set
-> diff --git a/include/acpi/apei.h b/include/acpi/apei.h
-> index 680f80960c3dc..ece0a8af2bae7 100644
-> --- a/include/acpi/apei.h
-> +++ b/include/acpi/apei.h
-> @@ -37,9 +37,6 @@ void __init acpi_hest_init(void);
->  static inline void acpi_hest_init(void) { return; }
->  #endif
->
-> -typedef int (*apei_hest_func_t)(struct acpi_hest_header *hest_hdr, void *data);
-> -int apei_hest_parse(apei_hest_func_t func, void *data);
-> -
->  int erst_write(const struct cper_record_header *record);
->  ssize_t erst_get_record_count(void);
->  int erst_get_record_id_begin(int *pos);
-> --
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
+branch HEAD: ff77b4a23e470f82642897284e6140ad581c714a  Merge branch 'acpi-glue' into bleeding-edge
 
-Applied as 5.16 material, thanks!
+elapsed time: 1543m
+
+configs tested: 82
+configs skipped: 3
+
+The following configs have been built successfully.
+More configs may be tested in the coming days.
+
+gcc tested configs:
+arm                                 defconfig
+arm64                            allyesconfig
+arm64                               defconfig
+arm                              allyesconfig
+arm                              allmodconfig
+ia64                             allmodconfig
+ia64                                defconfig
+ia64                             allyesconfig
+m68k                             allmodconfig
+m68k                                defconfig
+m68k                             allyesconfig
+nds32                               defconfig
+nios2                            allyesconfig
+csky                                defconfig
+alpha                               defconfig
+alpha                            allyesconfig
+xtensa                           allyesconfig
+h8300                            allyesconfig
+arc                                 defconfig
+sh                               allmodconfig
+parisc                              defconfig
+s390                             allyesconfig
+s390                             allmodconfig
+parisc                           allyesconfig
+s390                                defconfig
+i386                             allyesconfig
+sparc                            allyesconfig
+sparc                               defconfig
+i386                                defconfig
+i386                              debian-10.3
+nios2                               defconfig
+arc                              allyesconfig
+nds32                             allnoconfig
+mips                             allyesconfig
+mips                             allmodconfig
+powerpc                          allyesconfig
+powerpc                          allmodconfig
+powerpc                           allnoconfig
+i386                 randconfig-a004-20211028
+i386                 randconfig-a003-20211028
+i386                 randconfig-a002-20211028
+i386                 randconfig-a006-20211028
+i386                 randconfig-a001-20211028
+i386                 randconfig-a005-20211028
+x86_64               randconfig-a002-20211028
+x86_64               randconfig-a004-20211028
+x86_64               randconfig-a005-20211028
+x86_64               randconfig-a001-20211028
+x86_64               randconfig-a006-20211028
+x86_64               randconfig-a003-20211028
+arc                  randconfig-r043-20211028
+riscv                    nommu_k210_defconfig
+riscv                            allyesconfig
+riscv                    nommu_virt_defconfig
+riscv                             allnoconfig
+riscv                               defconfig
+riscv                          rv32_defconfig
+riscv                            allmodconfig
+um                           x86_64_defconfig
+um                             i386_defconfig
+x86_64                           allyesconfig
+x86_64                    rhel-8.3-kselftests
+x86_64                              defconfig
+x86_64                               rhel-8.3
+x86_64                          rhel-8.3-func
+x86_64                                  kexec
+
+clang tested configs:
+x86_64               randconfig-a015-20211028
+x86_64               randconfig-a013-20211028
+x86_64               randconfig-a011-20211028
+x86_64               randconfig-a014-20211028
+x86_64               randconfig-a012-20211028
+x86_64               randconfig-a016-20211028
+i386                 randconfig-a012-20211028
+i386                 randconfig-a013-20211028
+i386                 randconfig-a011-20211028
+i386                 randconfig-a015-20211028
+i386                 randconfig-a016-20211028
+i386                 randconfig-a014-20211028
+hexagon              randconfig-r045-20211028
+riscv                randconfig-r042-20211028
+s390                 randconfig-r044-20211028
+hexagon              randconfig-r041-20211028
+
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
