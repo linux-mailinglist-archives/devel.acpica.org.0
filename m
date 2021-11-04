@@ -2,291 +2,106 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5775F443585
-	for <lists+devel-acpica@lfdr.de>; Tue,  2 Nov 2021 19:26:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 58C7844523D
+	for <lists+devel-acpica@lfdr.de>; Thu,  4 Nov 2021 12:31:41 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 2C56A100EA2B4;
-	Tue,  2 Nov 2021 11:26:17 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=217.140.110.172; helo=foss.arm.com; envelope-from=sudeep.holla@arm.com; receiver=<UNKNOWN> 
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by ml01.01.org (Postfix) with ESMTP id B8633100EA2B0
-	for <devel@acpica.org>; Tue,  2 Nov 2021 11:26:14 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0EBE811B3;
-	Tue,  2 Nov 2021 11:26:14 -0700 (PDT)
-Received: from usa.arm.com (e103737-lin.cambridge.arm.com [10.1.197.49])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 29BA73F7B4;
-	Tue,  2 Nov 2021 11:26:13 -0700 (PDT)
-From: Sudeep Holla <sudeep.holla@arm.com>
-To: Robert Moore <robert.moore@intel.com>
-Date: Tue,  2 Nov 2021 18:25:42 +0000
-Message-Id: <20211102182542.3460787-4-sudeep.holla@arm.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20211102182542.3460787-1-sudeep.holla@arm.com>
-References: <20211102182542.3460787-1-sudeep.holla@arm.com>
+	by ml01.01.org (Postfix) with ESMTP id 799FB100EAB17;
+	Thu,  4 Nov 2021 04:31:37 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.210.54; helo=mail-ot1-f54.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	(No client certificate requested)
+	by ml01.01.org (Postfix) with ESMTPS id 00607100EAB17
+	for <devel@acpica.org>; Thu,  4 Nov 2021 04:31:34 -0700 (PDT)
+Received: by mail-ot1-f54.google.com with SMTP id g25-20020a9d5f99000000b0055af3d227e8so3357548oti.11
+        for <devel@acpica.org>; Thu, 04 Nov 2021 04:31:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=MgdOLOPcs/A9vtxa4IU81lPxBsuAOPrUSmt5KTVFe1c=;
+        b=bGHsd/KivlxenLgWzuHDtUSaE0t2uHBRx8MaCVqXfDGTQomtIR5Bxl2OLN4xKkO8Q7
+         ddzA2Zv2xhseeFWzkgQ4K06GhOMVSU0bMHJ8K3RVOtbY0VznABupNAiCJhd0quAQ8huP
+         JGD63de/e0vyoy+9amg482nVI3RBSw5Yc+4Jfw695wJ+w3ZY5JgLcB8fG4C/2GYBcY70
+         dTRbwOLb/cW2VsXh3hUmbT6RXFHpJEVgz+dfh4+1baFZMpVsYNzZ/E2hpKtkkfRxfutG
+         +UCna3UEXvd8YUBqQygXad9OzG2CEfeKIK8Wu4aYull/R0egDCUAsQNE2sifTX1j7Q2i
+         o7Dw==
+X-Gm-Message-State: AOAM533DBR2/nUiD9WB+ipsvdA8m9kn8+RPwbW1OTnHHFcaTF3ePPYH/
+	sntHAtDq5+BOi119vwba7ckGODXlIYpiETTePwI=
+X-Google-Smtp-Source: ABdhPJyz+c5mJx35EqCu2zCOmAMuHJd58bEGPCbjF/ZRaisv3JU+s3sWzlmd8eR1Gg5qsKPAA7e55XEGx8XMc0QzcX8=
+X-Received: by 2002:a9d:a64:: with SMTP id 91mr30941382otg.198.1636025493924;
+ Thu, 04 Nov 2021 04:31:33 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID-Hash: EOYSSE6K2NG6ETIVSZDNQ5BN52MCWPJS
-X-Message-ID-Hash: EOYSSE6K2NG6ETIVSZDNQ5BN52MCWPJS
-X-MailFrom: sudeep.holla@arm.com
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
-CC: "Rafael J . Wysocki" <rafael@kernel.org>, linux-kernel@vger.kernel.org, linux-acpi@vger.kernel.org, devel@acpica.org
+References: <20211026075257.3785036-1-ishii.shuuichir@fujitsu.com> <TYCPR01MB6160403C510AE93C1EC2635DE98D9@TYCPR01MB6160.jpnprd01.prod.outlook.com>
+In-Reply-To: <TYCPR01MB6160403C510AE93C1EC2635DE98D9@TYCPR01MB6160.jpnprd01.prod.outlook.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Thu, 4 Nov 2021 12:31:22 +0100
+Message-ID: <CAJZ5v0j4ZvbkdF2Az_5MLFY=Vt7835LA-U2N2qKbZVk9KDx7QA@mail.gmail.com>
+To: "ishii.shuuichir@fujitsu.com" <ishii.shuuichir@fujitsu.com>
+Message-ID-Hash: UGEP23DLDTN5NBZICEB4OAEEJMNOJ5BY
+X-Message-ID-Hash: UGEP23DLDTN5NBZICEB4OAEEJMNOJ5BY
+X-MailFrom: rjwysocki@gmail.com
+X-Mailman-Rule-Hits: nonmember-moderation
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
+CC: "rjw@rjwysocki.net" <rjw@rjwysocki.net>, "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "rafael.j.wysocki@intel.com" <rafael.j.wysocki@intel.com>, "devel@acpica.org" <devel@acpica.org>, "lorenzo.pieralisi@arm.com" <lorenzo.pieralisi@arm.com>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [PATCH 3/3] ACPI: PCC: Implement OperationRegion handler for the PCC Type 3 subtype
+Subject: [Devel] Re: [PATCH] ACPI: Add AEST in ACPI Table Definitions
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/EOYSSE6K2NG6ETIVSZDNQ5BN52MCWPJS/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/UGEP23DLDTN5NBZICEB4OAEEJMNOJ5BY/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-PCC OpRegion provides a mechanism to communicate with the platform
-directly from the AML. PCCT provides the list of PCC channel available
-in the platform, a subset or all of them can be used in PCC Opregion.
-
-This patch registers the PCC OpRegion handler before ACPI tables are loaded.
-This relies on the special context data passed to identify and setup the
-PCC channel before the OpRegion handler is executed for the first time.
-
-Typical PCC Opregion declaration looks like this:
-
-OperationRegion (PFRM, PCC, 2, 0x74)
-Field (PFRM, ByteAcc, NoLock, Preserve)
-{
-    SIGN,   32,
-    FLGS,   32,
-    LEN,    32,
-    CMD,    32,
-    DATA,   800
-}
-
-It contains 4 named double words followed by 100 bytes of buffer names DATA.
-
-ASL can fill out the buffer something like:
-
-    /* Create global or local buffer */
-    Name (BUFF, Buffer (0x0C){})
-    /* Create double word fields over the buffer */
-    CreateDWordField (BUFF, 0x0, WD0)
-    CreateDWordField (BUFF, 0x04, WD1)
-    CreateDWordField (BUFF, 0x08, WD2)
-
-    /* Fill the named fields */
-    WD0 = 0x50434300
-    SIGN = BUFF
-    WD0 = 1
-    FLGS = BUFF
-    WD0 = 0x10
-    LEN = BUFF
-
-    /* Fill the payload in the DATA buffer */
-    WD0 = 0
-    WD1 = 0x08
-    WD2 = 0
-    DATA = BUFF
-
-    /* Write to CMD field to trigger handler */
-    WD0 = 0x4404
-    CMD = BUFF
-
-This buffer is recieved by acpi_pcc_opregion_space_handler. This
-handler will fetch the commplete buffer via internal_pcc_buffer.
-
-The setup handler will receive the special PCC context data which will
-contain the PCC channel index which used to setup the channel. The buffer
-pointer and length is saved in region context which is then used in the
-handler.
-
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
----
- drivers/acpi/Kconfig        |   5 ++
- drivers/acpi/Makefile       |   1 +
- drivers/acpi/bus.c          |   1 +
- drivers/acpi/pcc_opregion.c | 111 ++++++++++++++++++++++++++++++++++++
- include/linux/acpi.h        |   6 ++
- 5 files changed, 124 insertions(+)
- create mode 100644 drivers/acpi/pcc_opregion.c
-
-diff --git a/drivers/acpi/Kconfig b/drivers/acpi/Kconfig
-index 1da360c51d66..c2998e489cec 100644
---- a/drivers/acpi/Kconfig
-+++ b/drivers/acpi/Kconfig
-@@ -524,6 +524,11 @@ config ACPI_PPTT
- 	bool
- endif
- 
-+config ACPI_PCC_OPREGION
-+	bool "PCC Opregion"
-+	depends on PCC
-+	default y
-+
- source "drivers/acpi/pmic/Kconfig"
- 
- config ACPI_VIOT
-diff --git a/drivers/acpi/Makefile b/drivers/acpi/Makefile
-index 3018714e87d9..d010ed3f4937 100644
---- a/drivers/acpi/Makefile
-+++ b/drivers/acpi/Makefile
-@@ -67,6 +67,7 @@ acpi-$(CONFIG_ACPI_LPIT)	+= acpi_lpit.o
- acpi-$(CONFIG_ACPI_GENERIC_GSI) += irq.o
- acpi-$(CONFIG_ACPI_WATCHDOG)	+= acpi_watchdog.o
- acpi-$(CONFIG_ACPI_PRMT)	+= prmt.o
-+acpi-$(CONFIG_ACPI_PCC_OPREGION) += pcc_opregion.o
- 
- # Address translation
- acpi-$(CONFIG_ACPI_ADXL)	+= acpi_adxl.o
-diff --git a/drivers/acpi/bus.c b/drivers/acpi/bus.c
-index fa923a929224..5e1eea7fb6f4 100644
---- a/drivers/acpi/bus.c
-+++ b/drivers/acpi/bus.c
-@@ -1320,6 +1320,7 @@ static int __init acpi_init(void)
- 		pr_debug("%s: kset create error\n", __func__);
- 
- 	init_prmt();
-+	init_pcc_opregion();
- 	result = acpi_bus_init();
- 	if (result) {
- 		kobject_put(acpi_kobj);
-diff --git a/drivers/acpi/pcc_opregion.c b/drivers/acpi/pcc_opregion.c
-new file mode 100644
-index 000000000000..c965ce555bd0
---- /dev/null
-+++ b/drivers/acpi/pcc_opregion.c
-@@ -0,0 +1,111 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Author: Sudeep Holla <sudeep.holla@arm.com>
-+ * Copyright 2021 Arm Limited
-+ *
-+ * pcc_opregion.c
-+ *
-+ */
-+#include <linux/kernel.h>
-+#include <linux/acpi.h>
-+#include <linux/completion.h>
-+#include <linux/idr.h>
-+#include <linux/io.h>
-+
-+#include <acpi/pcc.h>
-+
-+struct pcc_data {
-+	struct pcc_mbox_chan *pcc_chan;
-+	void __iomem *pcc_comm_addr;
-+	struct completion done;
-+        struct mbox_client cl;
-+	struct acpi_pcc_info ctx;
-+};
-+
-+struct acpi_pcc_info pcc_ctx;
-+
-+static void pcc_rx_callback(struct mbox_client *cl, void *m)
-+{
-+        struct pcc_data *data = container_of(cl, struct pcc_data, cl);
-+
-+	complete(&data->done);
-+}
-+
-+static acpi_status
-+acpi_pcc_opregion_setup(acpi_handle region_handle, u32 function,
-+			void *handler_context,  void **region_context)
-+{
-+	struct pcc_data *data;
-+	struct acpi_pcc_info *ctx = handler_context;
-+	struct pcc_mbox_chan *pcc_chan;
-+
-+	data = kzalloc(sizeof(*data), GFP_KERNEL);
-+	if (!data)
-+		return_ACPI_STATUS(AE_NO_MEMORY);
-+
-+	data->cl.rx_callback = pcc_rx_callback;
-+	data->cl.knows_txdone = true;
-+	data->ctx.length = ctx->length;
-+	data->ctx.subspace_id = ctx->subspace_id;
-+	data->ctx.internal_buffer = ctx->internal_buffer;
-+
-+	init_completion(&data->done);
-+	data->pcc_chan = pcc_mbox_request_channel(&data->cl, ctx->subspace_id);
-+	if (IS_ERR(data->pcc_chan)) {
-+		pr_err("Failed to find PCC channel for subspace %d\n",
-+		       ctx->subspace_id);
-+		return_ACPI_STATUS(AE_NOT_FOUND);
-+	}
-+
-+	pcc_chan = data->pcc_chan;
-+	data->pcc_comm_addr = acpi_os_ioremap(pcc_chan->shmem_base_addr,
-+					      pcc_chan->shmem_size);
-+	if (!data->pcc_comm_addr) {
-+		pr_err("Failed to ioremap PCC comm region mem for %d\n",
-+		       ctx->subspace_id);
-+		return_ACPI_STATUS(AE_NO_MEMORY);
-+	}
-+
-+	*region_context = data;
-+	return_ACPI_STATUS(AE_OK);
-+}
-+
-+static acpi_status
-+acpi_pcc_opregion_space_handler(u32 function, acpi_physical_address addr,
-+				u32 bits, acpi_integer *value,
-+				void *handler_context, void *region_context)
-+{
-+	int ret;
-+	struct pcc_data* data = region_context;
-+
-+	reinit_completion(&data->done);
-+
-+	/* Write to Shared Memory */
-+	memcpy_toio(data->pcc_comm_addr, (void *)value, data->ctx.length);
-+
-+	ret = mbox_send_message(data->pcc_chan->mchan, NULL);
-+	if (ret < 0)
-+		return_ACPI_STATUS(AE_ERROR);
-+
-+	if (data->pcc_chan->mchan->mbox->txdone_irq)
-+		wait_for_completion(&data->done);
-+
-+	mbox_client_txdone(data->pcc_chan->mchan, ret);
-+
-+	memcpy_fromio(value, data->pcc_comm_addr, data->ctx.length);
-+
-+	return_ACPI_STATUS(AE_OK);
-+}
-+
-+void __init init_pcc_opregion(void)
-+{
-+	acpi_status status;
-+
-+	status = acpi_install_address_space_handler(ACPI_ROOT_OBJECT,
-+						    ACPI_ADR_SPACE_PLATFORM_COMM,
-+						    &acpi_pcc_opregion_space_handler,
-+						    &acpi_pcc_opregion_setup,
-+						    &pcc_ctx);
-+	if (ACPI_FAILURE(status))
-+		pr_alert("OperationRegion handler could not be installed\n");
-+}
-diff --git a/include/linux/acpi.h b/include/linux/acpi.h
-index fbc2146050a4..7dd565294408 100644
---- a/include/linux/acpi.h
-+++ b/include/linux/acpi.h
-@@ -1384,6 +1384,12 @@ static inline int find_acpi_cpu_cache_topology(unsigned int cpu, int level)
- }
- #endif
- 
-+#ifdef CONFIG_ACPI_PCC_OPREGION
-+void init_pcc_opregion(void);
-+#else
-+static inline void init_pcc_opregion(void) { }
-+#endif
-+
- #ifdef CONFIG_ACPI
- extern void acpi_device_notify(struct device *dev);
- extern void acpi_device_notify_remove(struct device *dev);
--- 
-2.25.1
-_______________________________________________
-Devel mailing list -- devel@acpica.org
-To unsubscribe send an email to devel-leave@acpica.org
-%(web_page_url)slistinfo%(cgiext)s/%(_internal_name)s
+T24gVGh1LCBOb3YgNCwgMjAyMSBhdCA4OjE0IEFNIGlzaGlpLnNodXVpY2hpckBmdWppdHN1LmNv
+bQ0KPGlzaGlpLnNodXVpY2hpckBmdWppdHN1LmNvbT4gd3JvdGU6DQo+DQo+IHBpbmc/DQo+DQo+
+IFAuUy4NCj4gV2Ugc2hvdWxkIGhhdmUgYWRkZWQgdGhlIG1haW50YWluZXIgb2YgQUNQSSBGT1Ig
+QVJNNjQgKEFDUEkvYXJtNjQpIGZpcnN0LA0KPiBidXQgc2luY2UgQUVTVCBpcyBhbiBhcm0tc3Bl
+YyBBQ1BJIHRhYmxlLCBhZGRlZCB0aGUgY29uY2VybmVkIHBlcnNvbnMNCj4gYXMgbmV3IGUtbWFp
+bCBhZGRyZXNzZXMuDQoNClBsZWFzZSByZXNlbmQgdGhlIHBhdGNoLCB0aGVuLCB3aXRoIGFsbCBv
+ZiB0aGUgcmVxdWlzaXRlIGFkZHJlc3Nlcw0KcHJlc2VudCBpbiB0aGUgQ0MgbGlzdC4NCg0KPiA+
+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+ID4gRnJvbTogU2h1dWljaGlyb3UgSXNoaWkg
+PGlzaGlpLnNodXVpY2hpckBmdWppdHN1LmNvbT4NCj4gPiBTZW50OiBUdWVzZGF5LCBPY3RvYmVy
+IDI2LCAyMDIxIDQ6NTMgUE0NCj4gPiBUbzogcmp3QHJqd3lzb2NraS5uZXQ7IGxlbmJAa2VybmVs
+Lm9yZzsgbGludXgtYWNwaUB2Z2VyLmtlcm5lbC5vcmc7DQo+ID4gbGludXgta2VybmVsQHZnZXIu
+a2VybmVsLm9yZzsgcm9iZXJ0Lm1vb3JlQGludGVsLmNvbTsgZXJpay5rYW5lZGFAaW50ZWwuY29t
+Ow0KPiA+IHJhZmFlbC5qLnd5c29ja2lAaW50ZWwuY29tOyBkZXZlbEBhY3BpY2Eub3JnDQo+ID4g
+Q2M6IElzaGlpLCBTaHV1aWNoaXJvdS/nn7PkupUg5ZGo5LiA6YOOIDxpc2hpaS5zaHV1aWNoaXJA
+ZnVqaXRzdS5jb20+DQo+ID4gU3ViamVjdDogW1BBVENIXSBBQ1BJOiBBZGQgQUVTVCBpbiBBQ1BJ
+IFRhYmxlIERlZmluaXRpb25zDQo+ID4NCj4gPiBXaGVuIFdlIGFkZGVkIEFFU1QgdXNpbmcgdGhl
+IFVwZ3JhZGluZyBBQ1BJIHRhYmxlcyB2aWEgaW5pdHJkIGZ1bmN0aW9uLCB0aGUNCj4gPiBrZXJu
+ZWwgY291bGQgbm90IHJlY29nbml6ZSB0aGUgQUVTVCwgc28gV2UgYWRkZWQgQUVTVCB0aGUgQUNQ
+SSB0YWJsZSBkZWZpbml0aW9uLg0KPiA+DQo+ID4gU2lnbmVkLW9mZi1ieTogU2h1dWljaGlyb3Ug
+SXNoaWkgPGlzaGlpLnNodXVpY2hpckBmdWppdHN1LmNvbT4NCj4gPiAtLS0NCj4gPiAgZHJpdmVy
+cy9hY3BpL3RhYmxlcy5jIHwgMiArLQ0KPiA+ICBpbmNsdWRlL2FjcGkvYWN0YmwyLmggfCAxICsN
+Cj4gPiAgMiBmaWxlcyBjaGFuZ2VkLCAyIGluc2VydGlvbnMoKyksIDEgZGVsZXRpb24oLSkNCj4g
+Pg0KPiA+IGRpZmYgLS1naXQgYS9kcml2ZXJzL2FjcGkvdGFibGVzLmMgYi9kcml2ZXJzL2FjcGkv
+dGFibGVzLmMgaW5kZXgNCj4gPiBmOTM4MzczNmZhMGYuLmFiMGZiNGMzM2UwNyAxMDA2NDQNCj4g
+PiAtLS0gYS9kcml2ZXJzL2FjcGkvdGFibGVzLmMNCj4gPiArKysgYi9kcml2ZXJzL2FjcGkvdGFi
+bGVzLmMNCj4gPiBAQCAtNDk5LDcgKzQ5OSw3IEBAIHN0YXRpYyBjb25zdCBjaGFyIHRhYmxlX3Np
+Z3NbXVtBQ1BJX05BTUVTRUdfU0laRV0NCj4gPiBfX2luaXRjb25zdCA9IHsNCj4gPiAgICAgICBB
+Q1BJX1NJR19XRERULCBBQ1BJX1NJR19XRFJULCBBQ1BJX1NJR19EU0RULCBBQ1BJX1NJR19GQURU
+LA0KPiA+ICAgICAgIEFDUElfU0lHX1BTRFQsIEFDUElfU0lHX1JTRFQsIEFDUElfU0lHX1hTRFQs
+IEFDUElfU0lHX1NTRFQsDQo+ID4gICAgICAgQUNQSV9TSUdfSU9SVCwgQUNQSV9TSUdfTkZJVCwg
+QUNQSV9TSUdfSE1BVCwgQUNQSV9TSUdfUFBUVCwNCj4gPiAtICAgICBBQ1BJX1NJR19OSExUIH07
+DQo+ID4gKyAgICAgQUNQSV9TSUdfTkhMVCwgQUNQSV9TSUdfQUVTVCB9Ow0KPiA+DQo+ID4gICNk
+ZWZpbmUgQUNQSV9IRUFERVJfU0laRSBzaXplb2Yoc3RydWN0IGFjcGlfdGFibGVfaGVhZGVyKQ0K
+PiA+DQo+ID4gZGlmZiAtLWdpdCBhL2luY2x1ZGUvYWNwaS9hY3RibDIuaCBiL2luY2x1ZGUvYWNw
+aS9hY3RibDIuaCBpbmRleA0KPiA+IGE0N2IzMmE1Y2JkZS4uYjU4NmU0MGQ0Yjg2IDEwMDY0NA0K
+PiA+IC0tLSBhL2luY2x1ZGUvYWNwaS9hY3RibDIuaA0KPiA+ICsrKyBiL2luY2x1ZGUvYWNwaS9h
+Y3RibDIuaA0KPiA+IEBAIC00OCw2ICs0OCw3IEBADQo+ID4gICNkZWZpbmUgQUNQSV9TSUdfU0RF
+ViAgICAgICAgICAgIlNERVYiICAgICAgIC8qIFNlY3VyZSBEZXZpY2VzIHRhYmxlICovDQo+ID4g
+ICNkZWZpbmUgQUNQSV9TSUdfTkhMVCAgICAgICAgICAgIk5ITFQiICAgICAgIC8qIE5vbi1IREF1
+ZGlvIExpbmsgVGFibGUNCj4gPiAqLw0KPiA+ICAjZGVmaW5lIEFDUElfU0lHX1NWS0wgICAgICAg
+ICAgICJTVktMIiAgICAgICAvKiBTdG9yYWdlIFZvbHVtZSBLZXkNCj4gPiBMb2NhdGlvbiBUYWJs
+ZSAqLw0KPiA+ICsjZGVmaW5lIEFDUElfU0lHX0FFU1QgICAgICAgICAgICJBRVNUIiAvKiBBcm0g
+RXJyb3IgU291cmNlIFRhYmxlICovDQo+ID4NCj4gPiAgLyoNCj4gPiAgICogQWxsIHRhYmxlcyBt
+dXN0IGJlIGJ5dGUtcGFja2VkIHRvIG1hdGNoIHRoZSBBQ1BJIHNwZWNpZmljYXRpb24sIHNpbmNl
+DQo+ID4gLS0NCj4gPiAyLjI3LjANCj4KX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX18KRGV2ZWwgbWFpbGluZyBsaXN0IC0tIGRldmVsQGFjcGljYS5vcmcKVG8g
+dW5zdWJzY3JpYmUgc2VuZCBhbiBlbWFpbCB0byBkZXZlbC1sZWF2ZUBhY3BpY2Eub3JnCiUod2Vi
+X3BhZ2VfdXJsKXNsaXN0aW5mbyUoY2dpZXh0KXMvJShfaW50ZXJuYWxfbmFtZSlz
