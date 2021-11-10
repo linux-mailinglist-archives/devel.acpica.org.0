@@ -2,124 +2,273 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id E96D744BB7A
-	for <lists+devel-acpica@lfdr.de>; Wed, 10 Nov 2021 06:54:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4BE4244C41E
+	for <lists+devel-acpica@lfdr.de>; Wed, 10 Nov 2021 16:11:36 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id AFCFA100F225D;
-	Tue,  9 Nov 2021 21:54:24 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.31; helo=mga06.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+	by ml01.01.org (Postfix) with ESMTP id D418E100EBBDD;
+	Wed, 10 Nov 2021 07:11:04 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.126; helo=mga18.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id B11AD100EB859
-	for <devel@acpica.org>; Tue,  9 Nov 2021 21:54:22 -0800 (PST)
-X-IronPort-AV: E=McAfee;i="6200,9189,10163"; a="293440173"
-X-IronPort-AV: E=Sophos;i="5.87,222,1631602800";
-   d="scan'208";a="293440173"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Nov 2021 21:54:22 -0800
+	by ml01.01.org (Postfix) with ESMTPS id F33DD100EBBBD
+	for <devel@acpica.org>; Wed, 10 Nov 2021 07:11:02 -0800 (PST)
+X-IronPort-AV: E=McAfee;i="6200,9189,10164"; a="219580373"
+X-IronPort-AV: E=Sophos;i="5.87,224,1631602800";
+   d="scan'208";a="219580373"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Nov 2021 07:10:33 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.87,222,1631602800";
-   d="scan'208";a="452178190"
-Received: from lkp-server02.sh.intel.com (HELO c20d8bc80006) ([10.239.97.151])
-  by orsmga003.jf.intel.com with ESMTP; 09 Nov 2021 21:54:20 -0800
-Received: from kbuild by c20d8bc80006 with local (Exim 4.92)
-	(envelope-from <lkp@intel.com>)
-	id 1mkgYt-000ETd-O0; Wed, 10 Nov 2021 05:54:19 +0000
-Date: Wed, 10 Nov 2021 13:53:33 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <618b5e5d.LIIA+YkluiYtLQNJ%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+X-IronPort-AV: E=Sophos;i="5.87,224,1631602800";
+   d="scan'208";a="669830325"
+Received: from orsmsx606.amr.corp.intel.com ([10.22.229.19])
+  by orsmga005.jf.intel.com with ESMTP; 10 Nov 2021 07:10:33 -0800
+Received: from orsmsx612.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX606.amr.corp.intel.com (10.22.229.19) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2242.12; Wed, 10 Nov 2021 07:10:33 -0800
+Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
+ orsmsx612.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2242.12 via Frontend Transport; Wed, 10 Nov 2021 07:10:33 -0800
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (104.47.59.168)
+ by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2242.12; Wed, 10 Nov 2021 07:10:32 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=h+fTQsrR4cdX8zyhgc4Ge6dOSy4QPm8LzEiN++HCUCoggK4SwsbgZu5fw2jc5JbjNGGCEhxh7PwsvumHEgBVM74HB+rJI3uho8Y3izXZnPUg9Gjyt6OEbH/3BdWYvw5ipVfwbfQ2EOd6g3SXzB02p04GGbRSCYAu9cGlwIx6GcA7/YAIHT4Kie8GUVEvvUWAqHS9DPFweyilBXc2BTCRV72OGxd/QfgB8uFh48p1sD75CJXrR4ejIPAHQzgvZHsLHUY0TvHIfzTCFQAAIyMbIxvfuA/7T6mRb2SqmJk8UeoaUxLDKaGSu59xoNUWM6zNWngy/xQoU+E51fWNuOxp3Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=XdBAPtA2thbzIvDGozWG/mfhDOLrqnPylSFlRLMgNmM=;
+ b=cav+GglfgPShgkeI5v5c1yh8kJByC5nuzqdUBmXrpGvLpkY8lVKnmaZH2WLRP8ZUYroDr4/phBnxWmU9BULmAU0K2OIC7LWIjlw9xq3XAZQfdJxuuu2q4/FYEzn/u4dWQV2vozrOfPCA31ckbeJM/j6d9gUMA9eGSpzdY9oqnhe/Lbq8y9SxHArz+4sWlUge8VjQIF+0VwUe2zBAss7JFhA9Gd9f+m/KqJlBW5qWR/ojMg1begydR1LEvr4psDXSycwaDUgXCg5DpsDacJl9LXxVHRtUXOlqjZRkcoY0q0l/wcNw6Xae3CKtlkbVFCmVGFEjKa86vdDruFP2NZkOtQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com;
+ s=selector2-intel-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=XdBAPtA2thbzIvDGozWG/mfhDOLrqnPylSFlRLMgNmM=;
+ b=BxWmgFV4RlE6YnA5aEq2nly6Mue6Eqq+nFl6bO446K8ccmmoGd/UmikdaOTkhTmfz7dpRS0Ox1EfaphxpTJUvsbanAf1rvC18orAOToeaxtWrsixyKv2oLBXd0FwosycyZfBJXmNX3Dj3nRykdoMNVYM4fzzzaIeu/aUaX/vTAw=
+Received: from BYAPR11MB3256.namprd11.prod.outlook.com (2603:10b6:a03:76::19)
+ by SJ0PR11MB4815.namprd11.prod.outlook.com (2603:10b6:a03:2dd::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4690.18; Wed, 10 Nov
+ 2021 15:10:31 +0000
+Received: from BYAPR11MB3256.namprd11.prod.outlook.com
+ ([fe80::61d4:ab77:cc62:fabf]) by BYAPR11MB3256.namprd11.prod.outlook.com
+ ([fe80::61d4:ab77:cc62:fabf%6]) with mapi id 15.20.4669.016; Wed, 10 Nov 2021
+ 15:10:31 +0000
+From: "Moore, Robert" <robert.moore@intel.com>
+To: Sasha Levin <sashal@kernel.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, "stable@vger.kernel.org"
+	<stable@vger.kernel.org>
+Thread-Topic: [PATCH AUTOSEL 4.4 15/30] ACPICA: Avoid evaluating methods too
+ early during system resume
+Thread-Index: AQHX1QZ+Ms7KajTmukyGgWbWHmy0Yqv83/Cw
+Date: Wed, 10 Nov 2021 15:10:30 +0000
+Message-ID: <BYAPR11MB3256001FA32D50DE6F56425087939@BYAPR11MB3256.namprd11.prod.outlook.com>
+References: <20211109010918.1192063-1-sashal@kernel.org>
+ <20211109010918.1192063-15-sashal@kernel.org>
+In-Reply-To: <20211109010918.1192063-15-sashal@kernel.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+dlp-version: 11.6.200.16
+dlp-product: dlpe-windows
+dlp-reaction: no-action
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: ae64611f-ff13-4907-ec31-08d9a45c3cad
+x-ms-traffictypediagnostic: SJ0PR11MB4815:
+x-microsoft-antispam-prvs: <SJ0PR11MB4815776C505BA29AD02CA96C87939@SJ0PR11MB4815.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:3276;
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: f0yjFSZ2u5BCxSOlF3MftlQys9dQ2cE/8g4L7xoO5reevVPpr9OTdVMA8a7WIuZjZWzYX9/tFLSmRux8Mr8O30MltdMv3GYGYNKQOeTHruOre0zga9AmdwaZFegW2sCZpOvcpRpMdHblNcN08rFqnW9yuCHB5zZuEGQKJgiXhqypFzV7Idjif3jOzGaIba+jLRzkD47Au/Ei52/vCrBj9B0uJEV1W4duQCAkT2L1yUJdSdwkFt9dS0SUwiIa/8W9huq6ZxgtFQWBkbRq5e6cT5E9qmjN8IqHEUwh0gAppldo+Z4+eLMHevDwTYubU50bVIzHb5/U7BtCzaq3aRtvErUHImy0JeYAwyVlZTywhjPUDXvwMXOMdmLZ6hOd61BI9vbF04+yvUMADsnWgOdwOGBHXTNir5Zz+uHmCGi82TgxOrv4rCwWizknSIxFeet49uf9buD9v/rX4JS2Gg05cdMaYFKcSxffkcccWJn4rL1LeYaYMAW6R1IRVnO4cFfGyJHMkeWOUoew/P/uJ/EjDxwzm20wOsZR2beFF5+C1eJYssjx4mqozaZp1DlYc0S6JwrHc+XVEzRGiKJDKae3UTnXlLaHD0KSownfAoxnxa9ifz7pI5AfSeViXUXt50GzOPNr1YLXTFhXZHrQcCk1zIOqr8/81L0L4lzHTcpd/7Y+z1hohRCsINGRf3tvi2JG6alNeCWtBSqZac5qe8aYzhEN8qNHYruZqLtZ8asfKB/6Q+CcSQes4R3IZ2h5lSBwSTPCZc63qbxcpjwrelY26CYqkou1DjttrGe22uEkWCM=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(366004)(186003)(83380400001)(5660300002)(38100700002)(66446008)(64756008)(66556008)(66476007)(966005)(110136005)(54906003)(8676002)(71200400001)(26005)(38070700005)(508600001)(82960400001)(9686003)(316002)(8936002)(55016002)(52536014)(86362001)(33656002)(2906002)(66946007)(122000001)(6506007)(76116006)(53546011)(7696005)(4326008);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?lCLNPzd1P4JhillxKXDUgRCsEVvcK0NY6VIRM8+jTxLXSRewD6O21tYsLMD/?=
+ =?us-ascii?Q?6xbDsVPCMoArCXYmMKxeYZuMvrBKG1p/nC7rK3eCFtpn8D9KH6CYA8XSyW21?=
+ =?us-ascii?Q?EpyggZQ6W6eenleQN6wnDQhKkK9j9322+thKkdnr1Mm6mX1+Ag9ym8w8ZsvA?=
+ =?us-ascii?Q?WRWu+RQVm8SIKaDTwKC4SBr6dGhNS25EhgSVJ3tg4PyHr/YZdg1XSc2kpmaV?=
+ =?us-ascii?Q?RGTRiqEKgMEliSiuQ/XVzCpvY3ideYhA8EB61LztSDgVK3EBrhINRq9rO/mZ?=
+ =?us-ascii?Q?rfFSmLJapaA1U48kO+yZuBB6g+APPz4Wr1MCGA8+cqtOXAKn1xcsN03r6Jej?=
+ =?us-ascii?Q?vHbTyWqY5sUzhIfnswE+fqsxEOsPiVBrlHxUD/mcZaipiOxsZxpiSZMr38Km?=
+ =?us-ascii?Q?A6HtoOy0ARjitD8mxVgS3xEBaGcWNfnFYUa1i9aHpUmMhmZVZFj82X/iz17K?=
+ =?us-ascii?Q?4XlZzp7UMfJ4xQLTmfGm0vsUnjY2y74tmGRaKHrrRMMVIBtbIUmQJROPQ74w?=
+ =?us-ascii?Q?SaQ2Pap1mF5GzUJw86U9vq9JAbDJt/Xz4+tO+GVsLx5qyPmBOC5zOUPcGq1U?=
+ =?us-ascii?Q?FI6aM+a2u7S+ggKfkhBT66DWqUjscQlAcIbOf1yk6xQr47zrYqYH8k+Diiex?=
+ =?us-ascii?Q?RyQ9gcT7DiXBNLPZk/MFYNthenZ4lyrDPHo71LnQeaf5ip5jWxVO+SaFqLti?=
+ =?us-ascii?Q?QJyzrCGV3k3Zd367H07u3A0e5XMZxjy1D3P995ckUVC6qQsLynemo4Xp1lSZ?=
+ =?us-ascii?Q?IeW+Rg4Zl/utH2/uoE7CEBjnDA8rd/6+skPaQ7PzSK3KyCPA8SE66CRp0WbQ?=
+ =?us-ascii?Q?URr8rpOoNTGgcOKrGrlWhvfzj26W/K6DneDlBQlhjJGcsk7pNWhpGlbdD1qc?=
+ =?us-ascii?Q?AdWHH3yR1OdXovfTtxOD+p0h7b5BbPheCrqRe1UCHYBNTwyAxrf/6fZSDMvD?=
+ =?us-ascii?Q?lsD+Z3lYxn/+FTvnZf0mbR6lRcfcl1aRRV81B2NRvTaxBMxCgKjbtPlvNnu/?=
+ =?us-ascii?Q?5JuyGbS9zYc73J0p2vMN4cV8FoY5jBqk+YazPj7odDVSBgxEf6N8/S5/OCgd?=
+ =?us-ascii?Q?DEKFjAUsf+WOPztC5z2jsDGUS66Hp63t8JxnyOVZ4TZWMijcfVpukYNDqdOi?=
+ =?us-ascii?Q?GZyqrwiphDP7nuZynS0imkhQXe86NIQp3f8r0yhlf5COEW4WNVvTMlsUDPWl?=
+ =?us-ascii?Q?VRq9qFAU1ZFpHJXG1MOsIQztnM5eqz8A+XMqN+JqSOEq3qgQ2zVgD7yEMtFo?=
+ =?us-ascii?Q?TnjV8Il9p9QFznw6Skoj5zWcv+E0lmmaoyjZiM7yNsru3yqBAHgNqgg/aFXS?=
+ =?us-ascii?Q?Ful4gukYscKgqCQO6dK2nhF29kNv/wG6fhLs60l2RIKpv+vdaAQaXbwoY3Bs?=
+ =?us-ascii?Q?MQcshEIrhOkR1YOXbaCChenamMx1dwXP6Kz9AnoBG2XskwAqeXh/x/QCQQT/?=
+ =?us-ascii?Q?Vpdfd2YcowzGBsjJrs5y8hbu5ITvx/GjbsNMTsn+LNfjOx/X48bn49uR/Mu8?=
+ =?us-ascii?Q?qzUTC75KnekPPUHtQiX/mqy3PDD0tSn65TIJpYFOjMoB6TA1aZqWfoD1eNqt?=
+ =?us-ascii?Q?Ok6VUTvgGT7teNgfbg8s1/wjx8FC95PBctQWaoVsaVSAvzIuk9+836R2gEma?=
+ =?us-ascii?Q?Ic3RG8px1la2Mq72V7A9aFU=3D?=
+Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
-Message-ID-Hash: LERP2GX7USRRFAHZS6F3LPHRP4T3I2JO
-X-Message-ID-Hash: LERP2GX7USRRFAHZS6F3LPHRP4T3I2JO
-X-MailFrom: lkp@intel.com
-X-Mailman-Rule-Hits: nonmember-moderation
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3256.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ae64611f-ff13-4907-ec31-08d9a45c3cad
+X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Nov 2021 15:10:31.0224
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 9SJpaWewptQ8Ys4zwOknZbI5zf/Jnx0fBa+JiIn9OHmltoYIPydNLtnj7nTqY7Kx8KifOEYHCj4Q2nJwl+VeeQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB4815
+X-OriginatorOrg: intel.com
+Message-ID-Hash: WKXWSA43SE7OFD6JSPBTTKV32QEYPWYK
+X-Message-ID-Hash: WKXWSA43SE7OFD6JSPBTTKV32QEYPWYK
+X-MailFrom: robert.moore@intel.com
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
+CC: "Wysocki, Rafael J" <rafael.j.wysocki@intel.com>, Reik Keutterling <spielkind@gmail.com>, "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>, "devel@acpica.org" <devel@acpica.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [rafael-pm:bleeding-edge] BUILD SUCCESS 8158a90cbe6c549c0b816ac2d747b787f2bec5ef
+Subject: [Devel] Re: [PATCH AUTOSEL 4.4 15/30] ACPICA: Avoid evaluating methods too early during system resume
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/LERP2GX7USRRFAHZS6F3LPHRP4T3I2JO/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/WKXWSA43SE7OFD6JSPBTTKV32QEYPWYK/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-branch HEAD: 8158a90cbe6c549c0b816ac2d747b787f2bec5ef  Merge branch 'thermal-core' into linux-next
+Sasha,
+Can you re-do this patch in native ACPICA format, then add a pull request to our github?
 
-elapsed time: 728m
+Thanks,
+Bob
 
-configs tested: 53
-configs skipped: 3
 
-The following configs have been built successfully.
-More configs may be tested in the coming days.
+-----Original Message-----
+From: Sasha Levin <sashal@kernel.org> 
+Sent: Monday, November 08, 2021 5:09 PM
+To: linux-kernel@vger.kernel.org; stable@vger.kernel.org
+Cc: Wysocki, Rafael J <rafael.j.wysocki@intel.com>; Reik Keutterling <spielkind@gmail.com>; Sasha Levin <sashal@kernel.org>; Moore, Robert <robert.moore@intel.com>; linux-acpi@vger.kernel.org; devel@acpica.org
+Subject: [PATCH AUTOSEL 4.4 15/30] ACPICA: Avoid evaluating methods too early during system resume
 
-gcc tested configs:
-arm                                 defconfig
-arm64                            allyesconfig
-arm64                               defconfig
-arm                              allyesconfig
-arm                              allmodconfig
-ia64                             allmodconfig
-ia64                                defconfig
-ia64                             allyesconfig
-m68k                             allmodconfig
-m68k                                defconfig
-m68k                             allyesconfig
-nds32                               defconfig
-nios2                            allyesconfig
-csky                                defconfig
-alpha                               defconfig
-alpha                            allyesconfig
-xtensa                           allyesconfig
-h8300                            allyesconfig
-arc                                 defconfig
-sh                               allmodconfig
-parisc                              defconfig
-s390                             allyesconfig
-s390                             allmodconfig
-parisc                           allyesconfig
-s390                                defconfig
-i386                             allyesconfig
-sparc                            allyesconfig
-sparc                               defconfig
-i386                                defconfig
-i386                              debian-10.3
-nios2                               defconfig
-arc                              allyesconfig
-nds32                             allnoconfig
-mips                             allyesconfig
-mips                             allmodconfig
-powerpc                          allyesconfig
-powerpc                          allmodconfig
-powerpc                           allnoconfig
-riscv                    nommu_k210_defconfig
-riscv                            allyesconfig
-riscv                    nommu_virt_defconfig
-riscv                             allnoconfig
-riscv                               defconfig
-riscv                          rv32_defconfig
-riscv                            allmodconfig
-um                           x86_64_defconfig
-um                             i386_defconfig
-x86_64                           allyesconfig
-x86_64                    rhel-8.3-kselftests
-x86_64                              defconfig
-x86_64                               rhel-8.3
-x86_64                          rhel-8.3-func
-x86_64                                  kexec
+From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
+[ Upstream commit d3c4b6f64ad356c0d9ddbcf73fa471e6a841cc5c ]
+
+ACPICA commit 0762982923f95eb652cf7ded27356b247c9774de
+
+During wakeup from system-wide sleep states, acpi_get_sleep_type_data() is called and it tries to get memory from the slab allocator in order to evaluate a control method, but if KFENCE is enabled in the kernel, the memory allocation attempt causes an IRQ work to be queued and a self-IPI to be sent to the CPU running the code which requires the memory controller to be ready, so if that happens too early in the wakeup path, it doesn't work.
+
+Prevent that from taking place by calling acpi_get_sleep_type_data() for S0 upfront, when preparing to enter a given sleep state, and saving the data obtained by it for later use during system wakeup.
+
+BugLink: https://bugzilla.kernel.org/show_bug.cgi?id=214271
+Reported-by: Reik Keutterling <spielkind@gmail.com>
+Tested-by: Reik Keutterling <spielkind@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+ drivers/acpi/acpica/acglobal.h  |  2 ++  drivers/acpi/acpica/hwesleep.c  |  8 ++------
+ drivers/acpi/acpica/hwsleep.c   | 11 ++++-------
+ drivers/acpi/acpica/hwxfsleep.c |  7 +++++++
+ 4 files changed, 15 insertions(+), 13 deletions(-)
+
+diff --git a/drivers/acpi/acpica/acglobal.h b/drivers/acpi/acpica/acglobal.h index faa97604d878e..f178d11597c09 100644
+--- a/drivers/acpi/acpica/acglobal.h
++++ b/drivers/acpi/acpica/acglobal.h
+@@ -256,6 +256,8 @@ extern struct acpi_bit_register_info
+ 
+ ACPI_GLOBAL(u8, acpi_gbl_sleep_type_a);  ACPI_GLOBAL(u8, acpi_gbl_sleep_type_b);
++ACPI_GLOBAL(u8, acpi_gbl_sleep_type_a_s0); ACPI_GLOBAL(u8, 
++acpi_gbl_sleep_type_b_s0);
+ 
+ /*****************************************************************************
+  *
+diff --git a/drivers/acpi/acpica/hwesleep.c b/drivers/acpi/acpica/hwesleep.c index e5599f6108083..e4998cc0ce283 100644
+--- a/drivers/acpi/acpica/hwesleep.c
++++ b/drivers/acpi/acpica/hwesleep.c
+@@ -184,17 +184,13 @@ acpi_status acpi_hw_extended_sleep(u8 sleep_state)
+ 
+ acpi_status acpi_hw_extended_wake_prep(u8 sleep_state)  {
+-	acpi_status status;
+ 	u8 sleep_type_value;
+ 
+ 	ACPI_FUNCTION_TRACE(hw_extended_wake_prep);
+ 
+-	status = acpi_get_sleep_type_data(ACPI_STATE_S0,
+-					  &acpi_gbl_sleep_type_a,
+-					  &acpi_gbl_sleep_type_b);
+-	if (ACPI_SUCCESS(status)) {
++	if (acpi_gbl_sleep_type_a_s0 != ACPI_SLEEP_TYPE_INVALID) {
+ 		sleep_type_value =
+-		    ((acpi_gbl_sleep_type_a << ACPI_X_SLEEP_TYPE_POSITION) &
++		    ((acpi_gbl_sleep_type_a_s0 << ACPI_X_SLEEP_TYPE_POSITION) &
+ 		     ACPI_X_SLEEP_TYPE_MASK);
+ 
+ 		(void)acpi_write((u64)(sleep_type_value | ACPI_X_SLEEP_ENABLE), diff --git a/drivers/acpi/acpica/hwsleep.c b/drivers/acpi/acpica/hwsleep.c index 7d21cae6d6028..7e44ba8c6a1ab 100644
+--- a/drivers/acpi/acpica/hwsleep.c
++++ b/drivers/acpi/acpica/hwsleep.c
+@@ -217,7 +217,7 @@ acpi_status acpi_hw_legacy_sleep(u8 sleep_state)
+ 
+ acpi_status acpi_hw_legacy_wake_prep(u8 sleep_state)  {
+-	acpi_status status;
++	acpi_status status = AE_OK;
+ 	struct acpi_bit_register_info *sleep_type_reg_info;
+ 	struct acpi_bit_register_info *sleep_enable_reg_info;
+ 	u32 pm1a_control;
+@@ -230,10 +230,7 @@ acpi_status acpi_hw_legacy_wake_prep(u8 sleep_state)
+ 	 * This is unclear from the ACPI Spec, but it is required
+ 	 * by some machines.
+ 	 */
+-	status = acpi_get_sleep_type_data(ACPI_STATE_S0,
+-					  &acpi_gbl_sleep_type_a,
+-					  &acpi_gbl_sleep_type_b);
+-	if (ACPI_SUCCESS(status)) {
++	if (acpi_gbl_sleep_type_a_s0 != ACPI_SLEEP_TYPE_INVALID) {
+ 		sleep_type_reg_info =
+ 		    acpi_hw_get_bit_register_info(ACPI_BITREG_SLEEP_TYPE);
+ 		sleep_enable_reg_info =
+@@ -254,9 +251,9 @@ acpi_status acpi_hw_legacy_wake_prep(u8 sleep_state)
+ 
+ 			/* Insert the SLP_TYP bits */
+ 
+-			pm1a_control |= (acpi_gbl_sleep_type_a <<
++			pm1a_control |= (acpi_gbl_sleep_type_a_s0 <<
+ 					 sleep_type_reg_info->bit_position);
+-			pm1b_control |= (acpi_gbl_sleep_type_b <<
++			pm1b_control |= (acpi_gbl_sleep_type_b_s0 <<
+ 					 sleep_type_reg_info->bit_position);
+ 
+ 			/* Write the control registers and ignore any errors */ diff --git a/drivers/acpi/acpica/hwxfsleep.c b/drivers/acpi/acpica/hwxfsleep.c index d62a61612b3f1..b04e2b0f62246 100644
+--- a/drivers/acpi/acpica/hwxfsleep.c
++++ b/drivers/acpi/acpica/hwxfsleep.c
+@@ -372,6 +372,13 @@ acpi_status acpi_enter_sleep_state_prep(u8 sleep_state)
+ 		return_ACPI_STATUS(status);
+ 	}
+ 
++	status = acpi_get_sleep_type_data(ACPI_STATE_S0,
++					  &acpi_gbl_sleep_type_a_s0,
++					  &acpi_gbl_sleep_type_b_s0);
++	if (ACPI_FAILURE(status)) {
++		acpi_gbl_sleep_type_a_s0 = ACPI_SLEEP_TYPE_INVALID;
++	}
++
+ 	/* Execute the _PTS method (Prepare To Sleep) */
+ 
+ 	arg_list.count = 1;
+--
+2.33.0
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
