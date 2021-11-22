@@ -1,54 +1,41 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 528FA455E78
-	for <lists+devel-acpica@lfdr.de>; Thu, 18 Nov 2021 15:46:26 +0100 (CET)
+Received: from ml01.01.org (ml01.01.org [198.145.21.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id D4031459471
+	for <lists+devel-acpica@lfdr.de>; Mon, 22 Nov 2021 18:59:16 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 6D62F100F4841;
-	Thu, 18 Nov 2021 06:46:23 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.210.46; helo=mail-ot1-f46.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
-	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 06512100EAB17
-	for <devel@acpica.org>; Thu, 18 Nov 2021 06:46:21 -0800 (PST)
-Received: by mail-ot1-f46.google.com with SMTP id x19-20020a9d7053000000b0055c8b39420bso11350846otj.1
-        for <devel@acpica.org>; Thu, 18 Nov 2021 06:46:21 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4fPLCC/lGDe6nSg2L0GXzk92DuK5SfiaVXrmm2j2MVs=;
-        b=xAzYYHQiC4eVaiSTPFy/F8wLKYRakMXAOrezKcIEmFEli/x1aoLxWRA/9bTNF3ISBI
-         q67cmiFZYV468E6HiQ7uqxQ2O2CW/rmi7pJa9Q9HGRCREu9xED3NI5DcxatbcAVq2Z2K
-         bYFeeN5UvX5li+kTs1kJ21VhfAa8Wvd2DUCjcyfFwjjbLaeHRHCEZ0uB52kaEa/m/Fyi
-         lS9iPhMMC+gctUtJjkAPONLJQz7yV8DjPpYPt6ScjsehfazX3/dzNM4imyuRukcEMYkV
-         OXGQEFpLbjiZD9SzcE245+JKRskfdX4gIWmzETxyIDhZsnhq2qe0LMlFC78TUHjsutB+
-         kFEg==
-X-Gm-Message-State: AOAM532t7WYhPSqKXofdzEGrtk0TIfmw5WKz/EmaS7967Lyzi7ylL0p5
-	O6pNpPpVajYr4B9KvPax3XEb8yPVvQyNCb42Vz8=
-X-Google-Smtp-Source: ABdhPJy8QKzZL1z6g5aFUr30ddDVC64W+lwBHux0Ym4byl/nYpAo2gjoXbsVYpcnAXhv/onfFQfWeM7AeWVkSCP5Bsw=
-X-Received: by 2002:a9d:a64:: with SMTP id 91mr21419631otg.198.1637246780981;
- Thu, 18 Nov 2021 06:46:20 -0800 (PST)
+	by ml01.01.org (Postfix) with ESMTP id 57F2C100F3931;
+	Mon, 22 Nov 2021 09:59:15 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=217.140.110.172; helo=foss.arm.com; envelope-from=sudeep.holla@arm.com; receiver=<UNKNOWN> 
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by ml01.01.org (Postfix) with ESMTP id E373A100EA2A4
+	for <devel@acpica.org>; Mon, 22 Nov 2021 09:59:13 -0800 (PST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 465811042;
+	Mon, 22 Nov 2021 09:59:12 -0800 (PST)
+Received: from bogus (unknown [10.57.46.248])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4833A3F73B;
+	Mon, 22 Nov 2021 09:59:11 -0800 (PST)
+Date: Mon, 22 Nov 2021 17:59:08 +0000
+From: Sudeep Holla <sudeep.holla@arm.com>
+To: "Rafael J. Wysocki" <rafael@kernel.org>
+Message-ID: <20211122175908.uprdvok2kruj4qko@bogus>
+References: <20211102182542.3460787-1-sudeep.holla@arm.com>
+ <CAJZ5v0jL2+1rzqB2aAJ0T6w3md2dyuHWZNKOk+AbioeD-4ccDA@mail.gmail.com>
 MIME-Version: 1.0
-References: <20211109134728.1710-1-guozhengkui@vivo.com>
-In-Reply-To: <20211109134728.1710-1-guozhengkui@vivo.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Thu, 18 Nov 2021 15:46:10 +0100
-Message-ID: <CAJZ5v0ixtvzNiAwwLtXXgG-8FdvtWYy7RUh0pFz65sjcmyuNdQ@mail.gmail.com>
-To: Guo Zhengkui <guozhengkui@vivo.com>
-Message-ID-Hash: TPNBZ3AHXVJT5LPXR55MW4WNCHIYKSVK
-X-Message-ID-Hash: TPNBZ3AHXVJT5LPXR55MW4WNCHIYKSVK
-X-MailFrom: rjwysocki@gmail.com
-X-Mailman-Rule-Hits: nonmember-moderation
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, kernel@vivo.com
+Content-Disposition: inline
+In-Reply-To: <CAJZ5v0jL2+1rzqB2aAJ0T6w3md2dyuHWZNKOk+AbioeD-4ccDA@mail.gmail.com>
+Message-ID-Hash: ALK2EZI5A4CGWD2XWV4X6542KGYVT7AC
+X-Message-ID-Hash: ALK2EZI5A4CGWD2XWV4X6542KGYVT7AC
+X-MailFrom: sudeep.holla@arm.com
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
+CC: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH] ACPICA: fix swap.cocci warning
+Subject: [Devel] Re: [PATCH 0/3] ACPI: Add support for PCC Operation Region
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/TPNBZ3AHXVJT5LPXR55MW4WNCHIYKSVK/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/ALK2EZI5A4CGWD2XWV4X6542KGYVT7AC/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -57,57 +44,53 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Tue, Nov 9, 2021 at 2:47 PM Guo Zhengkui <guozhengkui@vivo.com> wrote:
->
-> Fix following swap.cocci warning:
-> ./drivers/acpi/acpica/nsrepair2.c:896:33-34: WARNING
-> opportunity for swap()
->
-> Signed-off-by: Guo Zhengkui <guozhengkui@vivo.com>
+Hi Rafael,
 
-This change needs to be submitted to the upstream ACPICA project via
-https://github.com/acpica/acpica/
 
-Thanks!
+Thanks for the response, sorry for the delay as I was away.
 
-> ---
->  drivers/acpi/acpica/nsrepair2.c | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
+On Fri, Nov 05, 2021 at 03:58:14PM +0100, Rafael J. Wysocki wrote:
+> Hi Sudeep,
+> 
+> On Tue, Nov 2, 2021 at 7:26 PM Sudeep Holla <sudeep.holla@arm.com> wrote:
+> >
+> > Hi,
+> >
+> > This series adds support for ACPI PCC OpRegion added in ACPI 6.3
+> > I understand that the ACPICA changes need to go via different route,
+> > but I am posting it together to give complete narative/picture for
+> > the review/discussion.
+> >
+> > Regards,
+> > Sudeep
+> >
+> > Sudeep Holla (3):
+> >   ACPICA: Fix wrong interpretation of PCC address
+> >   ACPICA: Add support for PCC Opregion special context data
+> 
+> The above two need to be submitted to the upstream project via GitHub
+> at https://github.com/acpica/acpica
+> 
+
+Thanks for the info, I had a rough idea but posted these for reference here
+anyways.
+
+> The will be applicable to the Linux code base only after they have
+> been accepted by the upstream.
 >
-> diff --git a/drivers/acpi/acpica/nsrepair2.c b/drivers/acpi/acpica/nsrepair2.c
-> index 14b71b41e845..02a904ca4caf 100644
-> --- a/drivers/acpi/acpica/nsrepair2.c
-> +++ b/drivers/acpi/acpica/nsrepair2.c
-> @@ -8,6 +8,7 @@
->   *
->   *****************************************************************************/
+
+Sure, I have now sent the pull request(https://github.com/acpica/acpica/pull/735)
+
+> >   ACPI: PCC: Implement OperationRegion handler for the PCC Type 3 subtype
+> 
+> And this one will be applied when the above happens.
 >
-> +#include <linux/minmax.h>
->  #include <acpi/acpi.h>
->  #include "accommon.h"
->  #include "acnamesp.h"
-> @@ -875,7 +876,6 @@ acpi_ns_sort_list(union acpi_operand_object **elements,
->  {
->         union acpi_operand_object *obj_desc1;
->         union acpi_operand_object *obj_desc2;
-> -       union acpi_operand_object *temp_obj;
->         u32 i;
->         u32 j;
->
-> @@ -892,9 +892,7 @@ acpi_ns_sort_list(union acpi_operand_object **elements,
->                             || ((sort_direction == ACPI_SORT_DESCENDING)
->                                 && (obj_desc1->integer.value <
->                                     obj_desc2->integer.value))) {
-> -                               temp_obj = elements[j - 1];
-> -                               elements[j - 1] = elements[j];
-> -                               elements[j] = temp_obj;
-> +                               swap(elements[j - 1], elements[j]);
->                         }
->                 }
->         }
-> --
-> 2.20.1
->
+
+Make sense.
+
+-- 
+Regards,
+Sudeep
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
