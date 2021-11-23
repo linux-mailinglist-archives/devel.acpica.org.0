@@ -1,41 +1,54 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id D4031459471
-	for <lists+devel-acpica@lfdr.de>; Mon, 22 Nov 2021 18:59:16 +0100 (CET)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42A3045AABF
+	for <lists+devel-acpica@lfdr.de>; Tue, 23 Nov 2021 19:03:39 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 57F2C100F3931;
-	Mon, 22 Nov 2021 09:59:15 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=217.140.110.172; helo=foss.arm.com; envelope-from=sudeep.holla@arm.com; receiver=<UNKNOWN> 
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by ml01.01.org (Postfix) with ESMTP id E373A100EA2A4
-	for <devel@acpica.org>; Mon, 22 Nov 2021 09:59:13 -0800 (PST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 465811042;
-	Mon, 22 Nov 2021 09:59:12 -0800 (PST)
-Received: from bogus (unknown [10.57.46.248])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4833A3F73B;
-	Mon, 22 Nov 2021 09:59:11 -0800 (PST)
-Date: Mon, 22 Nov 2021 17:59:08 +0000
-From: Sudeep Holla <sudeep.holla@arm.com>
-To: "Rafael J. Wysocki" <rafael@kernel.org>
-Message-ID: <20211122175908.uprdvok2kruj4qko@bogus>
-References: <20211102182542.3460787-1-sudeep.holla@arm.com>
- <CAJZ5v0jL2+1rzqB2aAJ0T6w3md2dyuHWZNKOk+AbioeD-4ccDA@mail.gmail.com>
+	by ml01.01.org (Postfix) with ESMTP id 19807100EAB18;
+	Tue, 23 Nov 2021 10:03:37 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.167.174; helo=mail-oi1-f174.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	(No client certificate requested)
+	by ml01.01.org (Postfix) with ESMTPS id 4BAFC100EB83A
+	for <devel@acpica.org>; Tue, 23 Nov 2021 10:03:34 -0800 (PST)
+Received: by mail-oi1-f174.google.com with SMTP id q25so46307774oiw.0
+        for <devel@acpica.org>; Tue, 23 Nov 2021 10:03:34 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6eTpqnVuWiy6J9/pK85SFmtlKrVau8JlSwHmWLQrrZc=;
+        b=EZ/jo7GcpVmOUJJhuJEmhokSQwAr290szkZyB9iAb4nP0lwZmT821grAkrA4wC4/Id
+         d32kET8IvIqTSi1sSP2WGILpIULSKeyKKh6OQO99BNCkE0jEjrx9fVtitpwFJ08vpuiR
+         rEtIUSubWrVgG0JKLnqW8Gs+aZtDo0uP9as0IWCuKtK6N9dxmPP7fmV7vmHcFzRjRnqH
+         7P9g8ht3NFBDUdqWl94cb/2fnqfn5U9oCUF2l1vNcClE4DO3jfezm1lnIqdq0Bpxw0/1
+         is2QCDEIekwpEbpD1b+1EL3EI3zG7UUGEtYiP5+/GqheSADpsWRWcxr9H4Sg8UsGrjs3
+         j8cA==
+X-Gm-Message-State: AOAM531qFdPASODTgCNXgT8HiLwFR4a3B9wEfVoz71wMRn3f1k2Z/ZJt
+	9GM7oAQQ7z8A4sScdf2ZibOQOYgZ3qyloRy6/EQ=
+X-Google-Smtp-Source: ABdhPJw3CPdiusK2j7KExKEEOfGfmKQp+tyKGKo2YlgWNtr7tduXngTF0kV4LWdRMiGXU6lIL7vAAyhpi+UipVAcmyY=
+X-Received: by 2002:a05:6808:e90:: with SMTP id k16mr4287594oil.166.1637690612921;
+ Tue, 23 Nov 2021 10:03:32 -0800 (PST)
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <CAJZ5v0jL2+1rzqB2aAJ0T6w3md2dyuHWZNKOk+AbioeD-4ccDA@mail.gmail.com>
-Message-ID-Hash: ALK2EZI5A4CGWD2XWV4X6542KGYVT7AC
-X-Message-ID-Hash: ALK2EZI5A4CGWD2XWV4X6542KGYVT7AC
-X-MailFrom: sudeep.holla@arm.com
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
-CC: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>
+References: <20211110111640.62807-1-andriy.shevchenko@linux.intel.com> <YZ0XXoH05cUQ+UMj@smile.fi.intel.com>
+In-Reply-To: <YZ0XXoH05cUQ+UMj@smile.fi.intel.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Tue, 23 Nov 2021 19:03:21 +0100
+Message-ID: <CAJZ5v0iz-rRV8dktYCe5L-u_zG3vp5S2ZuF=gjrsfgLgcQSnow@mail.gmail.com>
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Message-ID-Hash: VO3L2MPAXDFZPIDIANCQZOWOOKCHUBTP
+X-Message-ID-Hash: VO3L2MPAXDFZPIDIANCQZOWOOKCHUBTP
+X-MailFrom: rjwysocki@gmail.com
+X-Mailman-Rule-Hits: nonmember-moderation
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
+CC: Wei Liu <wei.liu@kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH 0/3] ACPI: Add support for PCC Operation Region
+Subject: [Devel] Re: [PATCH v1 1/1] ACPI: Replace kernel.h with the necessary inclusions
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/ALK2EZI5A4CGWD2XWV4X6542KGYVT7AC/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/VO3L2MPAXDFZPIDIANCQZOWOOKCHUBTP/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -44,53 +57,19 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-Hi Rafael,
-
-
-Thanks for the response, sorry for the delay as I was away.
-
-On Fri, Nov 05, 2021 at 03:58:14PM +0100, Rafael J. Wysocki wrote:
-> Hi Sudeep,
-> 
-> On Tue, Nov 2, 2021 at 7:26 PM Sudeep Holla <sudeep.holla@arm.com> wrote:
-> >
-> > Hi,
-> >
-> > This series adds support for ACPI PCC OpRegion added in ACPI 6.3
-> > I understand that the ACPICA changes need to go via different route,
-> > but I am posting it together to give complete narative/picture for
-> > the review/discussion.
-> >
-> > Regards,
-> > Sudeep
-> >
-> > Sudeep Holla (3):
-> >   ACPICA: Fix wrong interpretation of PCC address
-> >   ACPICA: Add support for PCC Opregion special context data
-> 
-> The above two need to be submitted to the upstream project via GitHub
-> at https://github.com/acpica/acpica
-> 
-
-Thanks for the info, I had a rough idea but posted these for reference here
-anyways.
-
-> The will be applicable to the Linux code base only after they have
-> been accepted by the upstream.
+On Tue, Nov 23, 2021 at 5:31 PM Andy Shevchenko
+<andriy.shevchenko@linux.intel.com> wrote:
 >
-
-Sure, I have now sent the pull request(https://github.com/acpica/acpica/pull/735)
-
-> >   ACPI: PCC: Implement OperationRegion handler for the PCC Type 3 subtype
-> 
-> And this one will be applied when the above happens.
+> On Wed, Nov 10, 2021 at 01:16:40PM +0200, Andy Shevchenko wrote:
+> > When kernel.h is used in the headers it adds a lot into dependency hell,
+> > especially when there are circular dependencies are involved.
+> >
+> > Replace kernel.h inclusion with the list of what is really being used.
 >
+> Anybody any comments on this? I really want to shrink kernel.h usage in
+> headers rather sooner than later...
 
-Make sense.
-
--- 
-Regards,
-Sudeep
+Patch applied as 5.17 material, thanks!
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
