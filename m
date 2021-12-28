@@ -2,60 +2,60 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64C2548059B
-	for <lists+devel-acpica@lfdr.de>; Tue, 28 Dec 2021 02:56:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DFF0E48087C
+	for <lists+devel-acpica@lfdr.de>; Tue, 28 Dec 2021 11:40:06 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 08846100EAB0D;
-	Mon, 27 Dec 2021 17:56:51 -0800 (PST)
+	by ml01.01.org (Postfix) with ESMTP id C51B2100EA910;
+	Tue, 28 Dec 2021 02:40:04 -0800 (PST)
 Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.31; helo=mga06.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
 Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 8625F100EB825
-	for <devel@acpica.org>; Mon, 27 Dec 2021 17:56:48 -0800 (PST)
+	by ml01.01.org (Postfix) with ESMTPS id 76998100F224B
+	for <devel@acpica.org>; Tue, 28 Dec 2021 02:40:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1640656608; x=1672192608;
-  h=date:from:to:cc:subject:message-id:mime-version;
-  bh=DKwG8lWbT6mngDQUOHLQ6ktH2iz4mmzsTr40NcmYb+Y=;
-  b=PNnnzuko1SMhgGqQDRtyPtvcUDD5ahWi+pk7E8CqYUCYXn+OhnvgX3Mq
-   RbePo6ZaPGrPPleGwhOKO2ogjL6ZtTu5IduspHrVSbtXOXbwznHcwXj5w
-   +rL3pxdtjYyOoUjzZGKvXHppoL/xDR8PatC8CjeCTqPdTwiuPHLpFBjx8
-   LSh3zgBIAng+qhK6rAsRWLV4gfgE+3P8nM5na0dWlb+yyMy/19YVu5giq
-   okSDRg3apZQBlNSItxrh2q8pwT7fNeHVkq0RkQ9rElBEfHbQeh0fWAXJg
-   x4i2T0OjYoPi5ZZ70atQWHFEpL8wXTMUD5AEy2ENIAJp73R6e3nGu+xxU
-   Q==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10210"; a="302049341"
-X-IronPort-AV: E=Sophos;i="5.88,241,1635231600";
-   d="scan'208";a="302049341"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Dec 2021 17:56:47 -0800
+  t=1640688002; x=1672224002;
+  h=date:from:to:cc:subject:message-id:mime-version:
+   content-transfer-encoding;
+  bh=tiRyDOyL5kkRwfgvPqclCj2b1zkGRkJfUXvHFTZE8Ek=;
+  b=PODAb+JdrsUEpy6fn1hfMSs26SRcbuLG66/8jNEqtMaECeXe0KqRrRw+
+   haYEI/eWpI/bV1wHSPe7RIUgRIGgcK/gFkMcSRBmY2lXlWams3l6fv5BM
+   twyj70+HHShbeI0dAttc1sdiE9xU5FA+L13zFVRX03yl3sZ+vjNebJRzG
+   lNFfY6PRLYPvWRYU5Tzv2Tg0HgTKs9hVun8BaMVTWBZV0JHrftDMmO7wh
+   ZCcvi/nPm8NNGvHHzwEMKCuHZJh0D/6IXSuXkq/Zi5ra3zsisvBiN6yR7
+   s4oOPT9uuL/8IufZzoPdrdWGQV42OylrjHHotYvqrN6f5ZyBAFp4/PGlt
+   g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10210"; a="302103289"
+X-IronPort-AV: E=Sophos;i="5.88,242,1635231600";
+   d="scan'208";a="302103289"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Dec 2021 02:40:01 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,241,1635231600";
-   d="scan'208";a="468001512"
+X-IronPort-AV: E=Sophos;i="5.88,242,1635231600";
+   d="scan'208";a="469995176"
 Received: from lkp-server01.sh.intel.com (HELO e357b3ef1427) ([10.239.97.150])
-  by orsmga003.jf.intel.com with ESMTP; 27 Dec 2021 17:56:45 -0800
+  by orsmga006.jf.intel.com with ESMTP; 28 Dec 2021 02:40:00 -0800
 Received: from kbuild by e357b3ef1427 with local (Exim 4.92)
 	(envelope-from <lkp@intel.com>)
-	id 1n21jI-000761-UL; Tue, 28 Dec 2021 01:56:44 +0000
-Date: Tue, 28 Dec 2021 09:56:38 +0800
+	id 1n29tf-0007Uq-HW; Tue, 28 Dec 2021 10:39:59 +0000
+Date: Tue, 28 Dec 2021 18:39:00 +0800
 From: kernel test robot <lkp@intel.com>
-To: Jessica Clarke <jrtc27@jrtc27.com>
-Message-ID: <202112280907.gTYYYuB4-lkp@intel.com>
+To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Message-ID: <61cae944.Twod0fyG7mT0FqUV%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Message-ID-Hash: L7XTKKHVXHMY56LKZZ6DCOX5BDBPVNRP
-X-Message-ID-Hash: L7XTKKHVXHMY56LKZZ6DCOX5BDBPVNRP
+Message-ID-Hash: HMW4LRFTR6VDGAP7OCY66SHBP2RWIEE6
+X-Message-ID-Hash: HMW4LRFTR6VDGAP7OCY66SHBP2RWIEE6
 X-MailFrom: lkp@intel.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: llvm@lists.linux.dev, kbuild-all@lists.01.org, linux-acpi@vger.kernel.org, devel@acpica.org, linux-pm@vger.kernel.org, "Rafael J. Wysocki" <rjw@rjwysocki.net>
+CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [rafael-pm:bleeding-edge 97/119] drivers/acpi/acpica/exregion.c:519:17: warning: performing pointer subtraction with a null pointer has undefined behavior
+Subject: [Devel] [rafael-pm:bleeding-edge] BUILD SUCCESS WITH WARNING 86e4182dd2d1465f6446863dd26da97ea069c8a2
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/L7XTKKHVXHMY56LKZZ6DCOX5BDBPVNRP/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/HMW4LRFTR6VDGAP7OCY66SHBP2RWIEE6/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -64,78 +64,135 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree:   https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-head:   86e4182dd2d1465f6446863dd26da97ea069c8a2
-commit: ca25f92b72d25457653dbf2a81f322235804fb05 [97/119] ACPICA: Use original data_table_region pointer for accesses
-config: i386-randconfig-a012-20211228 (https://download.01.org/0day-ci/archive/20211228/202112280907.gTYYYuB4-lkp@intel.com/config)
-compiler: clang version 14.0.0 (https://github.com/llvm/llvm-project 7171af744543433ac75b232eb7dfdaef7efd4d7a)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git/commit/?id=ca25f92b72d25457653dbf2a81f322235804fb05
-        git remote add rafael-pm https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git
-        git fetch --no-tags rafael-pm bleeding-edge
-        git checkout ca25f92b72d25457653dbf2a81f322235804fb05
-        # save the config file to linux build tree
-        mkdir build_dir
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=i386 SHELL=/bin/bash drivers/acpi/acpica/
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
+branch HEAD: 86e4182dd2d1465f6446863dd26da97ea069c8a2  Merge branch 'acpi-pfrut' into bleeding-edge
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
+Warning reports:
 
-All warnings (new ones prefixed by >>):
+https://lore.kernel.org/llvm/202112280907.gTYYYuB4-lkp@intel.com
 
->> drivers/acpi/acpica/exregion.c:519:17: warning: performing pointer subtraction with a null pointer has undefined behavior [-Wnull-pointer-subtraction]
-               (address - ACPI_PTR_TO_PHYSADDR(mapping->pointer));
-                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   include/acpi/actypes.h:513:41: note: expanded from macro 'ACPI_PTR_TO_PHYSADDR'
-   #define ACPI_PTR_TO_PHYSADDR(i)         ACPI_TO_INTEGER(i)
-                                           ^~~~~~~~~~~~~~~~~~
-   include/acpi/actypes.h:510:41: note: expanded from macro 'ACPI_TO_INTEGER'
-   #define ACPI_TO_INTEGER(p)              ACPI_PTR_DIFF (p, (void *) 0)
-                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   include/acpi/actypes.h:505:79: note: expanded from macro 'ACPI_PTR_DIFF'
-   #define ACPI_PTR_DIFF(a, b)             ((acpi_size) (ACPI_CAST_PTR (u8, (a)) - ACPI_CAST_PTR (u8, (b))))
-                                                                                 ^ ~~~~~~~~~~~~~~~~~~~~~~~
-   1 warning generated.
+Warning in current branch:
 
+drivers/acpi/acpica/exregion.c:519:17: warning: performing pointer subtraction with a null pointer has undefined behavior [-Wnull-pointer-subtraction]
 
-vim +519 drivers/acpi/acpica/exregion.c
+Warning ids grouped by kconfigs:
 
-   486	
-   487	/*******************************************************************************
-   488	 *
-   489	 * FUNCTION:    acpi_ex_data_table_space_handler
-   490	 *
-   491	 * PARAMETERS:  function            - Read or Write operation
-   492	 *              address             - Where in the space to read or write
-   493	 *              bit_width           - Field width in bits (8, 16, or 32)
-   494	 *              value               - Pointer to in or out value
-   495	 *              handler_context     - Pointer to Handler's context
-   496	 *              region_context      - Pointer to context specific to the
-   497	 *                                    accessed region
-   498	 *
-   499	 * RETURN:      Status
-   500	 *
-   501	 * DESCRIPTION: Handler for the Data Table address space (Op Region)
-   502	 *
-   503	 ******************************************************************************/
-   504	
-   505	acpi_status
-   506	acpi_ex_data_table_space_handler(u32 function,
-   507					 acpi_physical_address address,
-   508					 u32 bit_width,
-   509					 u64 *value,
-   510					 void *handler_context, void *region_context)
-   511	{
-   512		struct acpi_data_table_space_context *mapping;
-   513		char *pointer;
-   514	
-   515		ACPI_FUNCTION_TRACE(ex_data_table_space_handler);
-   516	
-   517		mapping = (struct acpi_data_table_space_context *) region_context;
-   518		pointer = ACPI_CAST_PTR(char, mapping->pointer) +
- > 519		    (address - ACPI_PTR_TO_PHYSADDR(mapping->pointer));
+clang_recent_errors
+|-- i386-randconfig-a012-20211228
+|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
+`-- x86_64-randconfig-a015-20211228
+    `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
+
+elapsed time: 721m
+
+configs tested: 102
+configs skipped: 3
+
+gcc tested configs:
+arm                                 defconfig
+arm                              allyesconfig
+arm                              allmodconfig
+arm64                               defconfig
+arm64                            allyesconfig
+i386                 randconfig-c001-20211228
+powerpc                 mpc8540_ads_defconfig
+mips                        jmr3927_defconfig
+powerpc                   microwatt_defconfig
+sh                            shmin_defconfig
+powerpc                      obs600_defconfig
+powerpc                    amigaone_defconfig
+sparc                               defconfig
+arm                           spitz_defconfig
+sh                         ap325rxa_defconfig
+powerpc                  mpc866_ads_defconfig
+s390                             alldefconfig
+sh                              ul2_defconfig
+ia64                      gensparse_defconfig
+sh                            migor_defconfig
+powerpc                           allnoconfig
+powerpc                       eiger_defconfig
+powerpc                     tqm8548_defconfig
+arm                          ixp4xx_defconfig
+riscv                          rv32_defconfig
+sh                          urquell_defconfig
+arm                  randconfig-c002-20211228
+ia64                                defconfig
+ia64                             allmodconfig
+ia64                             allyesconfig
+m68k                             allmodconfig
+m68k                                defconfig
+m68k                             allyesconfig
+nds32                             allnoconfig
+nios2                               defconfig
+arc                              allyesconfig
+csky                                defconfig
+alpha                               defconfig
+nds32                               defconfig
+alpha                            allyesconfig
+nios2                            allyesconfig
+arc                                 defconfig
+sh                               allmodconfig
+h8300                            allyesconfig
+xtensa                           allyesconfig
+parisc                              defconfig
+s390                             allmodconfig
+parisc                           allyesconfig
+s390                                defconfig
+s390                             allyesconfig
+i386                             allyesconfig
+i386                                defconfig
+i386                   debian-10.3-kselftests
+i386                              debian-10.3
+sparc                            allyesconfig
+mips                             allmodconfig
+mips                             allyesconfig
+powerpc                          allmodconfig
+powerpc                          allyesconfig
+x86_64               randconfig-a001-20211228
+x86_64               randconfig-a003-20211228
+x86_64               randconfig-a002-20211228
+x86_64               randconfig-a005-20211228
+x86_64               randconfig-a004-20211228
+x86_64               randconfig-a006-20211228
+i386                 randconfig-a002-20211228
+i386                 randconfig-a003-20211228
+i386                 randconfig-a001-20211228
+i386                 randconfig-a005-20211228
+i386                 randconfig-a006-20211228
+i386                 randconfig-a004-20211228
+arc                  randconfig-r043-20211228
+riscv                    nommu_k210_defconfig
+riscv                            allyesconfig
+riscv                    nommu_virt_defconfig
+riscv                             allnoconfig
+riscv                               defconfig
+riscv                            allmodconfig
+um                             i386_defconfig
+um                           x86_64_defconfig
+x86_64                           allyesconfig
+x86_64                              defconfig
+x86_64                               rhel-8.3
+x86_64                          rhel-8.3-func
+x86_64                                  kexec
+x86_64                    rhel-8.3-kselftests
+
+clang tested configs:
+x86_64               randconfig-a014-20211228
+x86_64               randconfig-a013-20211228
+x86_64               randconfig-a012-20211228
+x86_64               randconfig-a011-20211228
+x86_64               randconfig-a016-20211228
+x86_64               randconfig-a015-20211228
+i386                 randconfig-a012-20211228
+i386                 randconfig-a011-20211228
+i386                 randconfig-a013-20211228
+i386                 randconfig-a014-20211228
+i386                 randconfig-a016-20211228
+i386                 randconfig-a015-20211228
+hexagon              randconfig-r041-20211228
+riscv                randconfig-r042-20211228
+s390                 randconfig-r044-20211228
+hexagon              randconfig-r045-20211228
 
 ---
 0-DAY CI Kernel Test Service, Intel Corporation
