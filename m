@@ -2,53 +2,60 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4AF18481E1D
-	for <lists+devel-acpica@lfdr.de>; Thu, 30 Dec 2021 17:32:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B2C04482319
+	for <lists+devel-acpica@lfdr.de>; Fri, 31 Dec 2021 10:50:02 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 102F2100EA11E;
-	Thu, 30 Dec 2021 08:32:07 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.222.172; helo=mail-qk1-f172.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	by ml01.01.org (Postfix) with ESMTP id 7BE14100EAB6E;
+	Fri, 31 Dec 2021 01:50:00 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.88; helo=mga01.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 62FA4100EB847
-	for <devel@acpica.org>; Thu, 30 Dec 2021 08:32:04 -0800 (PST)
-Received: by mail-qk1-f172.google.com with SMTP id w27so16985359qkj.7
-        for <devel@acpica.org>; Thu, 30 Dec 2021 08:32:04 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=SMR3MPLmeBapB7tPMkt4p+dub4AFSu/Ecw/CYlkb3Qg=;
-        b=4sflX8N4Ep4zhFgqnPwHWXo8uj907RkNDTfht6g6rHGQMiuLM06+6Uda7DAOqvsjRO
-         mYXUXOdpVznT620fyCoRPyzLQ2Sf/w8i5NxwvUfNxFE99NgjlvbRGJfJfJstoXOLOa62
-         Z83sP+mkY16IkDIjPyaqNNNPbDwFZEsTZw+P+LXoDZC+AgOjPi5rzZjYDZX1HK+kcQMX
-         7Xi23LznoCuLX+yCKPBL2oeonQMVzVKMZ/VvMV1sBe4Tw3fKBNGAFzM16qOa/9Y9OoLw
-         xT91wb6VAvJuBnj+kJ25mseXUuSkyWw+v5EYPAIRaUFA0jb9nj7Vpz+5hFuP1AC1wyJh
-         2r/g==
-X-Gm-Message-State: AOAM531nIa4Ja3QGYcoRIHFZDYW1sat659RpmJyd3TjZ9EyYJpaW8yWw
-	9Yl5KcPxout8UEaMPfkeFoeS/baoZ7fmFzW2AHM=
-X-Google-Smtp-Source: ABdhPJzsKgoPVIRt1f1dGhol687DGA5SJ3uvWtKWwXyUEjSvbZ9NpgoMTPiBslL5ME5a+nsfvibwS/JBDv0D7eRoe9M=
-X-Received: by 2002:a05:620a:4721:: with SMTP id bs33mr22857201qkb.8.1640881920167;
- Thu, 30 Dec 2021 08:32:00 -0800 (PST)
+	by ml01.01.org (Postfix) with ESMTPS id E5483100EAB5E
+	for <devel@acpica.org>; Fri, 31 Dec 2021 01:49:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1640944194; x=1672480194;
+  h=date:from:to:cc:subject:message-id:mime-version:
+   content-transfer-encoding;
+  bh=E9emw0TlSksX88zg6rjmIHedw6o+X6vPYwASFUV6AuQ=;
+  b=aF/fmkm680jszDnDVzp48XaCpCX+ttwsiXT6KmBOpi2uQblZILT6VsKb
+   S3LyM0FycVr0stQi8DaQBBNBxmDnU5cXoCBGM+svQUAhtL0QH6pyRWCH/
+   mBg7PBQAoNpXcBm00ZZMwxU/o4AckrPyPU13QfQXb4HbM4iV7TUAg5WjF
+   InaPeicKn+rC1lJTySCjnOGk6uq2arkcVo8A2DofijX5sn2BnLGEAAIM3
+   nv3lf7XaJM6uCHLEeplqhotihMnDueujpuuZnTszbJdieB5PFJBcxUkVJ
+   xRsdZJKTkOTOSPxMLRFfNvLnNsDosOn4AsJuct7a2Ltl7ZgcAGeTigdy9
+   w==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10213"; a="266045529"
+X-IronPort-AV: E=Sophos;i="5.88,251,1635231600";
+   d="scan'208";a="266045529"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Dec 2021 01:49:52 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.88,251,1635231600";
+   d="scan'208";a="470911704"
+Received: from lkp-server01.sh.intel.com (HELO e357b3ef1427) ([10.239.97.150])
+  by orsmga006.jf.intel.com with ESMTP; 31 Dec 2021 01:49:50 -0800
+Received: from kbuild by e357b3ef1427 with local (Exim 4.92)
+	(envelope-from <lkp@intel.com>)
+	id 1n3EXl-000B9B-R0; Fri, 31 Dec 2021 09:49:49 +0000
+Date: Fri, 31 Dec 2021 17:49:27 +0800
+From: kernel test robot <lkp@intel.com>
+To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Message-ID: <61ced227.bwGu6xI7ZBErSpCQ%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-References: <20211229174058.11350-1-shenzijun@kylinos.cn>
-In-Reply-To: <20211229174058.11350-1-shenzijun@kylinos.cn>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Thu, 30 Dec 2021 17:31:49 +0100
-Message-ID: <CAJZ5v0jef5a=3w6bsh6CwEYixTwVgTaT6BBwYym3Sut6KToJsg@mail.gmail.com>
-To: shenzijun <shenzijun@kylinos.cn>
-Message-ID-Hash: V5XRGJX6WOFSNSQKAPLG2YKKCMWP4QGR
-X-Message-ID-Hash: V5XRGJX6WOFSNSQKAPLG2YKKCMWP4QGR
-X-MailFrom: rjwysocki@gmail.com
+Message-ID-Hash: TJZJ5SP6VCY2DXUJLQFRHVEL6DSSKCZT
+X-Message-ID-Hash: TJZJ5SP6VCY2DXUJLQFRHVEL6DSSKCZT
+X-MailFrom: lkp@intel.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: Rafael Wysocki <rafael.j.wysocki@intel.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, jinzi120021@sina.com
+CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH] ACPICA: DEBUGGER: Add return value check to acpi_db_walk_for_fields()
+Subject: [Devel] [rafael-pm:bleeding-edge] BUILD SUCCESS WITH WARNING 642439a4441150c7ab54db8d54fac1c7fee57b5a
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/V5XRGJX6WOFSNSQKAPLG2YKKCMWP4QGR/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/TJZJ5SP6VCY2DXUJLQFRHVEL6DSSKCZT/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -57,44 +64,237 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Wed, Dec 29, 2021 at 10:41 AM shenzijun <shenzijun@kylinos.cn> wrote:
->
-> From: Zijun Shen <shenzijun@kylinos.cn>
->
-> The function acpi_db_walk_for_fields frees buffer.pointer by the
-> first ACPI_FREE. And then uses the second ACPI_FREE to free
-> buffer.pointer which may assigns again in acpi_evaluate_object.
-> It's necessary to make sure that buffer.pointer get a block of
-> memory in acpi_evaluate_object and acpi_evaluate_object return 0.
->
-> Signed-off-by: Zijun Shen <shenzijun@kylinos.cn>
-> ---
->  drivers/acpi/acpica/dbnames.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/acpi/acpica/dbnames.c b/drivers/acpi/acpica/dbnames.c
-> index 3615e1a6efd8..7a2d980cb2b8 100644
-> --- a/drivers/acpi/acpica/dbnames.c
-> +++ b/drivers/acpi/acpica/dbnames.c
-> @@ -550,7 +550,10 @@ acpi_db_walk_for_fields(acpi_handle obj_handle,
->         ACPI_FREE(buffer.pointer);
->
->         buffer.length = ACPI_ALLOCATE_LOCAL_BUFFER;
-> -       acpi_evaluate_object(obj_handle, NULL, NULL, &buffer);
-> +       status = acpi_evaluate_object(obj_handle, NULL, NULL, &buffer);
-> +       if (ACPI_FAILURE(status)) {
-> +               return (AE_OK);
-> +       }
->
->         /*
->          * Since this is a field unit, surround the output in braces
-> --
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
+branch HEAD: 642439a4441150c7ab54db8d54fac1c7fee57b5a  Merge branch 'acpi-processor' into bleeding-edge
 
+Warning reports:
 
-This is ACPICA material, so please submit it to the upstream ACPICA
-project via https://github.com/acpica/acpica/
+https://lore.kernel.org/llvm/202112280907.gTYYYuB4-lkp@intel.com
 
-Thanks!
+Warning in current branch:
+
+drivers/acpi/acpica/exregion.c:519:17: warning: performing pointer subtraction with a null pointer has undefined behavior [-Wnull-pointer-subtraction]
+
+possible Warning in current branch (please contact us if interested):
+
+sound/soc/sh/rz-ssi.c:1023:9: warning: ignoring return value of 'pm_runtime_resume_and_get' declared with attribute 'warn_unused_result' [-Wunused-result]
+
+Warning ids grouped by kconfigs:
+
+gcc_recent_errors
+|-- alpha-allmodconfig
+|   `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+|-- alpha-allyesconfig
+|   `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+|-- arc-allyesconfig
+|   `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+|-- arc-randconfig-r043-20211230
+|   `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+|-- arm-allmodconfig
+|   `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+|-- arm-allyesconfig
+|   `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+|-- arm-randconfig-c002-20211230
+|   `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+|-- arm64-allyesconfig
+|   `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+|-- arm64-defconfig
+|   `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+|-- h8300-allyesconfig
+|   `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+|-- ia64-allyesconfig
+|   `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+|-- ia64-buildonly-randconfig-r004-20211231
+|   `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+|-- m68k-allmodconfig
+|   `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+|-- m68k-allyesconfig
+|   `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+|-- mips-allmodconfig
+|   `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+|-- mips-allyesconfig
+|   `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+|-- nios2-allyesconfig
+|   `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+|-- parisc-allyesconfig
+|   `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+|-- powerpc-allmodconfig
+|   `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+|-- powerpc-allyesconfig
+|   `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+|-- riscv-allmodconfig
+|   `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+|-- riscv-allyesconfig
+|   `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+|-- s390-allyesconfig
+|   `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+|-- sh-allmodconfig
+|   `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+|-- sparc-allyesconfig
+|   `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+|-- sparc64-randconfig-r005-20211230
+|   `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+`-- xtensa-allyesconfig
+    `-- sound-soc-sh-rz-ssi.c:warning:ignoring-return-value-of-pm_runtime_resume_and_get-declared-with-attribute-warn_unused_result
+
+clang_recent_errors
+|-- i386-randconfig-a001-20211230
+|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
+|-- i386-randconfig-a002-20211230
+|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
+|-- i386-randconfig-a003-20211230
+|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
+|-- i386-randconfig-a004-20211230
+|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
+|-- i386-randconfig-a005-20211230
+|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
+|-- i386-randconfig-a006-20211230
+|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
+|-- i386-randconfig-a011-20211231
+|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
+|-- i386-randconfig-a012-20211231
+|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
+|-- i386-randconfig-a013-20211231
+|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
+|-- i386-randconfig-a014-20211231
+|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
+|-- i386-randconfig-a015-20211231
+|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
+|-- i386-randconfig-a016-20211231
+|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
+|-- i386-randconfig-r033-20211230
+|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
+|-- x86_64-randconfig-a001-20211230
+|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
+|-- x86_64-randconfig-a002-20211230
+|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
+|-- x86_64-randconfig-a003-20211230
+|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
+|-- x86_64-randconfig-a004-20211230
+|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
+|-- x86_64-randconfig-a005-20211230
+|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
+`-- x86_64-randconfig-a006-20211230
+    `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
+
+elapsed time: 724m
+
+configs tested: 106
+configs skipped: 3
+
+gcc tested configs:
+arm                                 defconfig
+arm                              allmodconfig
+arm                              allyesconfig
+arm64                               defconfig
+arm64                            allyesconfig
+i386                 randconfig-c001-20211230
+sh                         apsh4a3a_defconfig
+arm                       multi_v4t_defconfig
+sh                   rts7751r2dplus_defconfig
+sh                           se7721_defconfig
+powerpc                 mpc8313_rdb_defconfig
+h8300                       h8s-sim_defconfig
+arm                           spitz_defconfig
+arm                          pxa168_defconfig
+powerpc                          g5_defconfig
+powerpc                mpc7448_hpc2_defconfig
+powerpc                    ge_imp3a_defconfig
+mips                           mtx1_defconfig
+sh                ecovec24-romimage_defconfig
+arm                        mini2440_defconfig
+xtensa                           alldefconfig
+sh                            migor_defconfig
+arm                            zeus_defconfig
+arm                         at91_dt_defconfig
+m68k                       m5249evb_defconfig
+mips                          ath79_defconfig
+s390                          debug_defconfig
+arm                  randconfig-c002-20211230
+ia64                             allmodconfig
+ia64                                defconfig
+ia64                             allyesconfig
+m68k                                defconfig
+m68k                             allmodconfig
+m68k                             allyesconfig
+nds32                               defconfig
+csky                                defconfig
+alpha                               defconfig
+alpha                            allyesconfig
+nios2                            allyesconfig
+arc                                 defconfig
+sh                               allmodconfig
+h8300                            allyesconfig
+xtensa                           allyesconfig
+parisc                              defconfig
+s390                             allyesconfig
+s390                             allmodconfig
+parisc                           allyesconfig
+s390                                defconfig
+i386                             allyesconfig
+sparc                               defconfig
+i386                                defconfig
+i386                   debian-10.3-kselftests
+i386                              debian-10.3
+sparc                            allyesconfig
+nds32                             allnoconfig
+nios2                               defconfig
+arc                              allyesconfig
+mips                             allyesconfig
+mips                             allmodconfig
+powerpc                           allnoconfig
+powerpc                          allyesconfig
+powerpc                          allmodconfig
+x86_64               randconfig-a013-20211230
+x86_64               randconfig-a015-20211230
+x86_64               randconfig-a012-20211230
+x86_64               randconfig-a011-20211230
+x86_64               randconfig-a016-20211230
+x86_64               randconfig-a014-20211230
+arc                  randconfig-r043-20211230
+riscv                randconfig-r042-20211230
+s390                 randconfig-r044-20211230
+riscv                    nommu_k210_defconfig
+riscv                            allyesconfig
+riscv                    nommu_virt_defconfig
+riscv                             allnoconfig
+riscv                               defconfig
+riscv                          rv32_defconfig
+riscv                            allmodconfig
+um                             i386_defconfig
+um                           x86_64_defconfig
+x86_64                              defconfig
+x86_64                               rhel-8.3
+x86_64                                  kexec
+x86_64                           allyesconfig
+x86_64                          rhel-8.3-func
+x86_64                    rhel-8.3-kselftests
+
+clang tested configs:
+x86_64               randconfig-a002-20211230
+x86_64               randconfig-a001-20211230
+x86_64               randconfig-a003-20211230
+x86_64               randconfig-a006-20211230
+x86_64               randconfig-a004-20211230
+x86_64               randconfig-a005-20211230
+i386                 randconfig-a001-20211230
+i386                 randconfig-a004-20211230
+i386                 randconfig-a002-20211230
+i386                 randconfig-a006-20211230
+i386                 randconfig-a003-20211230
+i386                 randconfig-a005-20211230
+i386                 randconfig-a011-20211231
+i386                 randconfig-a012-20211231
+i386                 randconfig-a013-20211231
+i386                 randconfig-a014-20211231
+i386                 randconfig-a015-20211231
+i386                 randconfig-a016-20211231
+hexagon              randconfig-r041-20211230
+hexagon              randconfig-r045-20211230
+
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
