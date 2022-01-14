@@ -1,61 +1,61 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B3E0348DD09
-	for <lists+devel-acpica@lfdr.de>; Thu, 13 Jan 2022 18:42:05 +0100 (CET)
+Received: from ml01.01.org (ml01.01.org [198.145.21.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 75FC348E6A1
+	for <lists+devel-acpica@lfdr.de>; Fri, 14 Jan 2022 09:36:43 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id BD6B6100F393A;
-	Thu, 13 Jan 2022 09:42:03 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.100; helo=mga07.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+	by ml01.01.org (Postfix) with ESMTP id 5A078100EA908;
+	Fri, 14 Jan 2022 00:36:41 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.43; helo=mga05.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id CF09C100EBB98
-	for <devel@acpica.org>; Thu, 13 Jan 2022 09:42:01 -0800 (PST)
+	by ml01.01.org (Postfix) with ESMTPS id 67F33100EB83B
+	for <devel@acpica.org>; Fri, 14 Jan 2022 00:36:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1642095721; x=1673631721;
+  t=1642149398; x=1673685398;
   h=date:from:to:cc:subject:message-id:mime-version:
    content-transfer-encoding;
-  bh=7vvfp8QEIFWemWmYZbPUkb7BTfnB33/a8QpFyM2EwNM=;
-  b=T9wGowHxVTgNj9NRcSJUDL1CSpvKEd8u4+jL4bQB5GGA+Naqi7xdnGge
-   M246ZNNNZDbgGakQExs9uqUU94ZSv5lEiBchoxIx4Ht6RgKlat/5jaHX8
-   bccc9gqVZYQ6lxFrLZFDY9smde97eggBbcIEV2zjAu5EErW7mOHoBOROE
-   4eFF5NUZzmOU+Bgr+8Wn7N3729S/EIcvWA0W8BjtkdNNQ4dNUY9eNDMc3
-   9IpLCSAUaN74eU+ZaI1IxWS8RgHQUOVdV3FOb2PxNyOrsTKTDdESS/XEB
-   BTLMbl8SScQs1n5ICE7pjiJhhXerYvfUU5Xpwt9UFtsRMB2lqt80BTWmx
+  bh=3CGh/MudxyzwkBuNBCKJeUmz0ETgj2pAJrvNQX2fPyk=;
+  b=SwmS5ePkL5o5huaZgv6Qj2mOJDF+zhK+hGP87uC6JEAjRSyD5uJQJ4lM
+   fJnnyR2PWulARZr2qgifIaWO8jWiHlCTQgCljNusD/YVWBF0qsBGeTWzS
+   U7sHcWdUv2XJlorcIWipxrR3Mfnah4Wy+h0HER46IVx57fuuUNSg6bQD4
+   AHDpOHDVGS5UhQUHScse4xa7Me5tTz/H1Vor+RhaVO3urJkG45a6VWbZF
+   yTf50GB3aRMmCYzwj2Gy/whpuQDwRxrSWwO4cc1B8qSoWUOBa97fIWGxk
+   XKhWGi6aPPO6sYmjspd2zx9C5/bF85W91TgSzBjGjoYrBPLdi/pCkPmql
    Q==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10226"; a="307414489"
-X-IronPort-AV: E=Sophos;i="5.88,286,1635231600";
-   d="scan'208";a="307414489"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jan 2022 09:42:01 -0800
+X-IronPort-AV: E=McAfee;i="6200,9189,10226"; a="330557928"
+X-IronPort-AV: E=Sophos;i="5.88,288,1635231600";
+   d="scan'208";a="330557928"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jan 2022 00:36:37 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,286,1635231600";
-   d="scan'208";a="593415788"
+X-IronPort-AV: E=Sophos;i="5.88,288,1635231600";
+   d="scan'208";a="516291576"
 Received: from lkp-server01.sh.intel.com (HELO 276f1b88eecb) ([10.239.97.150])
-  by fmsmga004.fm.intel.com with ESMTP; 13 Jan 2022 09:41:59 -0800
+  by orsmga007.jf.intel.com with ESMTP; 14 Jan 2022 00:36:35 -0800
 Received: from kbuild by 276f1b88eecb with local (Exim 4.92)
 	(envelope-from <lkp@intel.com>)
-	id 1n846o-0007VF-FP; Thu, 13 Jan 2022 17:41:58 +0000
-Date: Fri, 14 Jan 2022 01:41:13 +0800
+	id 1n8I4Y-0008JM-Oa; Fri, 14 Jan 2022 08:36:34 +0000
+Date: Fri, 14 Jan 2022 16:35:39 +0800
 From: kernel test robot <lkp@intel.com>
 To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <61e06439.qy0uOpPWwP7XQiav%lkp@intel.com>
+Message-ID: <61e135db.+ddT8af5GkhnpHHb%lkp@intel.com>
 User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-Message-ID-Hash: GVJGYHMMNS4SAAYIEJYLRE4CBWX4AXXG
-X-Message-ID-Hash: GVJGYHMMNS4SAAYIEJYLRE4CBWX4AXXG
+Message-ID-Hash: KROBEKSAI6VVJNQDXM4M7ZBLV2CKXFNM
+X-Message-ID-Hash: KROBEKSAI6VVJNQDXM4M7ZBLV2CKXFNM
 X-MailFrom: lkp@intel.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
 CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [rafael-pm:bleeding-edge] BUILD SUCCESS WITH WARNING 625b47dd50305ce992adb54412e7294c9a9a6468
+Subject: [Devel] [rafael-pm:bleeding-edge] BUILD SUCCESS WITH WARNING 93e5c8b5e46e70f119200c99a8f15e2e87083b53
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/GVJGYHMMNS4SAAYIEJYLRE4CBWX4AXXG/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/KROBEKSAI6VVJNQDXM4M7ZBLV2CKXFNM/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -65,7 +65,7 @@ Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
 tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-branch HEAD: 625b47dd50305ce992adb54412e7294c9a9a6468  Merge branch 'pm-core' into bleeding-edge
+branch HEAD: 93e5c8b5e46e70f119200c99a8f15e2e87083b53  Merge branch 'pm-core' into linux-next
 
 Warning reports:
 
@@ -90,8 +90,6 @@ clang_recent_errors
 |   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
 |-- i386-randconfig-a015
 |   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
-|-- i386-randconfig-c001
-|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
 |-- x86_64-randconfig-a001
 |   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
 |-- x86_64-randconfig-a003
@@ -102,128 +100,166 @@ clang_recent_errors
 |   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
 |-- x86_64-randconfig-a014
 |   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
-|-- x86_64-randconfig-a016
-|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
-`-- x86_64-randconfig-c007
+`-- x86_64-randconfig-a016
     `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
 
-elapsed time: 1350m
+elapsed time: 721m
 
-configs tested: 107
+configs tested: 145
 configs skipped: 3
 
 gcc tested configs:
 arm                                 defconfig
+arm64                            allyesconfig
+arm64                               defconfig
 arm                              allyesconfig
 arm                              allmodconfig
-arm64                               defconfig
-arm64                            allyesconfig
 i386                          randconfig-c001
-mips                 randconfig-c004-20220112
-mips                  maltasmvp_eva_defconfig
-powerpc                      mgcoge_defconfig
-openrisc                            defconfig
-powerpc                         wii_defconfig
-arm                       omap2plus_defconfig
-h8300                     edosk2674_defconfig
-sh                        sh7763rdp_defconfig
-m68k                       m5275evb_defconfig
-sparc                       sparc64_defconfig
-powerpc                   currituck_defconfig
+arm                          gemini_defconfig
+arm                         at91_dt_defconfig
+nios2                         10m50_defconfig
+sparc64                             defconfig
+mips                        bcm47xx_defconfig
+powerpc                 mpc837x_mds_defconfig
+m68k                        mvme16x_defconfig
+powerpc                     tqm8555_defconfig
+arm                            hisi_defconfig
+powerpc                      tqm8xx_defconfig
+arm                         lpc18xx_defconfig
+powerpc                      pcm030_defconfig
+arm                         s3c6400_defconfig
+arm                         axm55xx_defconfig
+arm                           h5000_defconfig
+powerpc                    amigaone_defconfig
+arc                        nsim_700_defconfig
+sh                        sh7757lcr_defconfig
+sh                          landisk_defconfig
+csky                             alldefconfig
+xtensa                          iss_defconfig
+arm                           sunxi_defconfig
+powerpc                      pasemi_defconfig
+sh                               j2_defconfig
+arc                              alldefconfig
+mips                           ci20_defconfig
+arm                          iop32x_defconfig
+mips                         tb0226_defconfig
+arm                            mps2_defconfig
+arm                          lpd270_defconfig
+riscv                            allmodconfig
+arm                            qcom_defconfig
+arm                            pleb_defconfig
+ia64                        generic_defconfig
+sh                   rts7751r2dplus_defconfig
+mips                         db1xxx_defconfig
+powerpc                     mpc83xx_defconfig
+mips                        vocore2_defconfig
+openrisc                    or1ksim_defconfig
+sh                   sh7724_generic_defconfig
+s390                          debug_defconfig
+sh                          rsk7264_defconfig
+sh                          r7785rp_defconfig
+arm                            xcep_defconfig
+sh                           se7343_defconfig
+sh                                  defconfig
+i386                             alldefconfig
+sh                          sdk7786_defconfig
+arm                           tegra_defconfig
+sh                         microdev_defconfig
+powerpc                       ppc64_defconfig
+m68k                             allmodconfig
+sh                              ul2_defconfig
 arm                  randconfig-c002-20220113
-ia64                                defconfig
 ia64                             allmodconfig
+ia64                                defconfig
 ia64                             allyesconfig
 m68k                                defconfig
 m68k                             allyesconfig
-m68k                             allmodconfig
-nds32                             allnoconfig
 nios2                               defconfig
 arc                              allyesconfig
-nds32                               defconfig
+nds32                             allnoconfig
 csky                                defconfig
 alpha                               defconfig
+nds32                               defconfig
 alpha                            allyesconfig
 nios2                            allyesconfig
+xtensa                           allyesconfig
+h8300                            allyesconfig
 arc                                 defconfig
 sh                               allmodconfig
-h8300                            allyesconfig
-xtensa                           allyesconfig
 parisc                              defconfig
 s390                             allmodconfig
-s390                                defconfig
 parisc                           allyesconfig
+s390                                defconfig
 s390                             allyesconfig
 i386                             allyesconfig
+sparc                            allyesconfig
 sparc                               defconfig
 i386                                defconfig
 i386                   debian-10.3-kselftests
 i386                              debian-10.3
-sparc                            allyesconfig
 mips                             allyesconfig
 mips                             allmodconfig
-powerpc                           allnoconfig
-powerpc                          allmodconfig
 powerpc                          allyesconfig
+powerpc                          allmodconfig
+powerpc                           allnoconfig
+x86_64                        randconfig-a006
+x86_64                        randconfig-a004
+x86_64                        randconfig-a002
 i386                          randconfig-a003
 i386                          randconfig-a001
 i386                          randconfig-a005
 x86_64                        randconfig-a011
 x86_64                        randconfig-a013
 x86_64                        randconfig-a015
-x86_64                        randconfig-a004
-x86_64                        randconfig-a002
-x86_64                        randconfig-a006
 i386                          randconfig-a012
 i386                          randconfig-a014
 i386                          randconfig-a016
-arc                  randconfig-r043-20220112
+riscv                randconfig-r042-20220113
+arc                  randconfig-r043-20220113
+s390                 randconfig-r044-20220113
 riscv                    nommu_k210_defconfig
 riscv                            allyesconfig
 riscv                    nommu_virt_defconfig
 riscv                             allnoconfig
 riscv                               defconfig
 riscv                          rv32_defconfig
-riscv                            allmodconfig
 x86_64                    rhel-8.3-kselftests
-um                             i386_defconfig
 um                           x86_64_defconfig
+um                             i386_defconfig
+x86_64                           allyesconfig
 x86_64                              defconfig
 x86_64                               rhel-8.3
-x86_64                                  kexec
-x86_64                           allyesconfig
 x86_64                          rhel-8.3-func
+x86_64                                  kexec
 
 clang tested configs:
 arm                  randconfig-c002-20220113
 x86_64                        randconfig-c007
+riscv                randconfig-c006-20220113
 powerpc              randconfig-c003-20220113
 i386                          randconfig-c001
-s390                 randconfig-c005-20220113
 mips                 randconfig-c004-20220113
-riscv                randconfig-c006-20220113
-mips                  cavium_octeon_defconfig
-powerpc                     skiroot_defconfig
-powerpc                     tqm5200_defconfig
-powerpc                    socrates_defconfig
-arm                           spitz_defconfig
-powerpc                          g5_defconfig
+mips                           ip28_defconfig
+arm                          pxa168_defconfig
+powerpc                     powernv_defconfig
+powerpc                        icon_defconfig
+mips                        bcm63xx_defconfig
+arm                                 defconfig
+riscv                             allnoconfig
+x86_64                        randconfig-a005
+x86_64                        randconfig-a003
+x86_64                        randconfig-a001
 i386                          randconfig-a002
-i386                          randconfig-a004
 i386                          randconfig-a006
+i386                          randconfig-a004
 x86_64                        randconfig-a012
 x86_64                        randconfig-a014
 x86_64                        randconfig-a016
-x86_64                        randconfig-a003
-x86_64                        randconfig-a001
-x86_64                        randconfig-a005
 i386                          randconfig-a011
 i386                          randconfig-a013
 i386                          randconfig-a015
-hexagon              randconfig-r045-20220112
-s390                 randconfig-r044-20220112
-hexagon              randconfig-r041-20220112
-riscv                randconfig-r042-20220112
+hexagon              randconfig-r045-20220113
+hexagon              randconfig-r041-20220113
 
 ---
 0-DAY CI Kernel Test Service, Intel Corporation
