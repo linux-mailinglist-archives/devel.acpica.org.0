@@ -2,60 +2,60 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 602EC492110
-	for <lists+devel-acpica@lfdr.de>; Tue, 18 Jan 2022 09:21:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B253A49C4F5
+	for <lists+devel-acpica@lfdr.de>; Wed, 26 Jan 2022 09:11:47 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 50F58100EAAF0;
-	Tue, 18 Jan 2022 00:21:22 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.120; helo=mga04.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+	by ml01.01.org (Postfix) with ESMTP id AD55E100E6C2C;
+	Wed, 26 Jan 2022 00:11:44 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.88; helo=mga01.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id D14D9100EAB6F
-	for <devel@acpica.org>; Tue, 18 Jan 2022 00:21:20 -0800 (PST)
+	by ml01.01.org (Postfix) with ESMTPS id CD339100EB823
+	for <devel@acpica.org>; Wed, 26 Jan 2022 00:11:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1642494080; x=1674030080;
+  t=1643184701; x=1674720701;
   h=date:from:to:cc:subject:message-id:mime-version:
    content-transfer-encoding;
-  bh=aqjvWPVx9YJJeRWXjyHAWrEuoHA7h5scVl/d2ejQNVk=;
-  b=Z4TRokVMhhQ9FTpLBPVJYpK6uZlFgjy21ArHG+sMjgx2GDKugsR1srmA
-   ShUR5vMPgeP1sOd6KvMiJOv5QiY7gHBOZgc4Eu1oI6erRCwMK/yjjlTxs
-   xhPGtanoUMOHD2o/OAFOGqoiGg6DSv11WXsmc6Eib/VCJzVeu/vFkexJy
-   PjG4SriM/6hHDDqijX97C42tAPoOEiVB93hcpnQGcBvnmi6bdQLmq3k8W
-   fjAgju/M5Hk93D6kfyzt6vpf4XEdTuQl36ZMpyJVgsD/zoLNRME41JyKT
-   Zr7DTAesgsg/GD95hBOeHqeBrJUc5KfX2UoRGYqQx5vyHDvwXyzYD27vV
-   Q==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10230"; a="243588567"
-X-IronPort-AV: E=Sophos;i="5.88,296,1635231600";
-   d="scan'208";a="243588567"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jan 2022 00:21:09 -0800
+  bh=+0CNHvxudF+drdCVHIQmeiLO4y31a0s8hhTTtm7SUQA=;
+  b=HEjeycgs3bvZy1vMBoHErFjF+zrYGSFub0WplvpnfiiYn9dWqgMtJgXx
+   QtxcrAtyt0+ODGi81KUUx51AY5auDs8dG0vCVsPLhdkucUKbHJ1ZXq8BO
+   9m0emVnbE7bFnrhHqzSkqVEH6LpcwQguWOBc5Bm8Jv97LVWHm/t12F6cI
+   YA1cPFL0iI6OQo8LR9oyE0nobcrEco5CMRL5brJivZHaen/nVEDCEGnj5
+   rGjw+OBb2hJXs9eBTZmxAvsCFX8S/umDjxt8e0vZ8ldMO8AMZr1mGsUGS
+   mPEsSzwudEVDOAoay6Wodk9i1bFg6Qgy+4PYP5hrr3+wEE8AsPaVC6Z9z
+   g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10238"; a="270953910"
+X-IronPort-AV: E=Sophos;i="5.88,317,1635231600";
+   d="scan'208";a="270953910"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jan 2022 00:11:41 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,296,1635231600";
-   d="scan'208";a="625432039"
+X-IronPort-AV: E=Sophos;i="5.88,317,1635231600";
+   d="scan'208";a="563339697"
 Received: from lkp-server01.sh.intel.com (HELO 276f1b88eecb) ([10.239.97.150])
-  by orsmga004.jf.intel.com with ESMTP; 18 Jan 2022 00:21:08 -0800
+  by orsmga001.jf.intel.com with ESMTP; 26 Jan 2022 00:11:39 -0800
 Received: from kbuild by 276f1b88eecb with local (Exim 4.92)
 	(envelope-from <lkp@intel.com>)
-	id 1n9jjn-000CLK-9g; Tue, 18 Jan 2022 08:21:07 +0000
-Date: Tue, 18 Jan 2022 16:21:03 +0800
+	id 1nCdP0-000KyW-Rr; Wed, 26 Jan 2022 08:11:38 +0000
+Date: Wed, 26 Jan 2022 16:10:40 +0800
 From: kernel test robot <lkp@intel.com>
 To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <61e6786f.Nakrpo0qkrvtSyjB%lkp@intel.com>
+Message-ID: <61f10200.0PBUFzNDuN552Nk2%lkp@intel.com>
 User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-Message-ID-Hash: IFFKBDWUMYNS7CKHZGA4NN6YVFLMKBYN
-X-Message-ID-Hash: IFFKBDWUMYNS7CKHZGA4NN6YVFLMKBYN
+Message-ID-Hash: E5H4YOQK5ZEFJ4I4L4CZKK4XWWMFZNFG
+X-Message-ID-Hash: E5H4YOQK5ZEFJ4I4L4CZKK4XWWMFZNFG
 X-MailFrom: lkp@intel.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
 CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [rafael-pm:bleeding-edge] BUILD SUCCESS WITH WARNING fc720b592cc66f5903ee0bf4d17508e2b8614528
+Subject: [Devel] [rafael-pm:bleeding-edge] BUILD SUCCESS af8e84518513d168ae3bc299e761ce7fec1dcb89
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/IFFKBDWUMYNS7CKHZGA4NN6YVFLMKBYN/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/E5H4YOQK5ZEFJ4I4L4CZKK4XWWMFZNFG/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -65,102 +65,59 @@ Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
 tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-branch HEAD: fc720b592cc66f5903ee0bf4d17508e2b8614528  Merge branch 'thermal-int340x' into bleeding-edge
+branch HEAD: af8e84518513d168ae3bc299e761ce7fec1dcb89  Merge branch 'acpi-properties' into bleeding-edge
 
-Warning reports:
+elapsed time: 737m
 
-https://lore.kernel.org/llvm/202112280907.gTYYYuB4-lkp@intel.com
-
-Warning in current branch:
-
-drivers/acpi/acpica/exregion.c:519:17: warning: performing pointer subtraction with a null pointer has undefined behavior [-Wnull-pointer-subtraction]
-
-Warning ids grouped by kconfigs:
-
-clang_recent_errors
-|-- arm64-allmodconfig
-|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
-|-- i386-randconfig-a001-20220117
-|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
-|-- i386-randconfig-a002-20220117
-|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
-|-- i386-randconfig-a003-20220117
-|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
-|-- i386-randconfig-a004-20220117
-|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
-|-- i386-randconfig-a005-20220117
-|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
-|-- i386-randconfig-a006-20220117
-|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
-|-- i386-randconfig-c001
-|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
-|-- x86_64-randconfig-a001-20220117
-|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
-|-- x86_64-randconfig-a002-20220117
-|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
-|-- x86_64-randconfig-a003-20220117
-|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
-|-- x86_64-randconfig-a004-20220117
-|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
-|-- x86_64-randconfig-a005-20220117
-|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
-|-- x86_64-randconfig-a006-20220117
-|   `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
-`-- x86_64-randconfig-c007
-    `-- drivers-acpi-acpica-exregion.c:warning:performing-pointer-subtraction-with-a-null-pointer-has-undefined-behavior
-
-elapsed time: 729m
-
-configs tested: 123
+configs tested: 107
 configs skipped: 3
+
+The following configs have been built successfully.
+More configs may be tested in the coming days.
 
 gcc tested configs:
 arm                                 defconfig
-arm64                               defconfig
 arm                              allyesconfig
 arm                              allmodconfig
+arm64                               defconfig
 arm64                            allyesconfig
-i386                 randconfig-c001-20220117
-powerpc                      pasemi_defconfig
-powerpc                 mpc837x_rdb_defconfig
-mips                         tb0226_defconfig
-ia64                             alldefconfig
-sh                           se7721_defconfig
+i386                 randconfig-c001-20220124
+nios2                            alldefconfig
+sh                 kfr2r09-romimage_defconfig
+sh                          urquell_defconfig
+mips                         cobalt_defconfig
+powerpc                         ps3_defconfig
+powerpc                  storcenter_defconfig
+sh                            shmin_defconfig
+sh                           se7780_defconfig
+mips                         db1xxx_defconfig
+xtensa                  audio_kc705_defconfig
+s390                             allyesconfig
+arc                                 defconfig
+mips                            gpr_defconfig
 powerpc                       ppc64_defconfig
-powerpc                      mgcoge_defconfig
-powerpc                 canyonlands_defconfig
-mips                  decstation_64_defconfig
-m68k                          amiga_defconfig
-mips                          rb532_defconfig
-mips                           ip32_defconfig
-openrisc                 simple_smp_defconfig
-m68k                        stmark2_defconfig
-arm                  randconfig-c002-20220118
-arm                  randconfig-c002-20220116
-arm                  randconfig-c002-20220117
+arm                  randconfig-c002-20220124
 ia64                                defconfig
 ia64                             allmodconfig
 ia64                             allyesconfig
-m68k                                defconfig
 m68k                             allyesconfig
 m68k                             allmodconfig
+m68k                                defconfig
 nds32                             allnoconfig
 nios2                               defconfig
 arc                              allyesconfig
+nds32                               defconfig
 csky                                defconfig
 alpha                               defconfig
-nds32                               defconfig
 alpha                            allyesconfig
 nios2                            allyesconfig
-arc                                 defconfig
 sh                               allmodconfig
-h8300                            allyesconfig
 xtensa                           allyesconfig
+h8300                            allyesconfig
 parisc                              defconfig
-s390                             allmodconfig
 s390                                defconfig
+s390                             allmodconfig
 parisc                           allyesconfig
-s390                             allyesconfig
 i386                             allyesconfig
 sparc                               defconfig
 i386                                defconfig
@@ -172,75 +129,64 @@ mips                             allmodconfig
 powerpc                           allnoconfig
 powerpc                          allmodconfig
 powerpc                          allyesconfig
-x86_64               randconfig-a012-20220117
-x86_64               randconfig-a013-20220117
-x86_64               randconfig-a011-20220117
-x86_64               randconfig-a014-20220117
-x86_64               randconfig-a015-20220117
-x86_64               randconfig-a016-20220117
-i386                 randconfig-a012-20220117
-i386                 randconfig-a016-20220117
-i386                 randconfig-a014-20220117
-i386                 randconfig-a015-20220117
-i386                 randconfig-a011-20220117
-i386                 randconfig-a013-20220117
-riscv                randconfig-r042-20220117
-arc                  randconfig-r043-20220116
-arc                  randconfig-r043-20220117
-s390                 randconfig-r044-20220117
-arc                  randconfig-r043-20220118
+i386                          randconfig-a003
+i386                          randconfig-a001
+i386                          randconfig-a005
+arc                  randconfig-r043-20220124
+x86_64               randconfig-a002-20220124
+x86_64               randconfig-a003-20220124
+x86_64               randconfig-a001-20220124
+x86_64               randconfig-a004-20220124
+x86_64               randconfig-a005-20220124
+x86_64               randconfig-a006-20220124
+riscv                    nommu_k210_defconfig
 riscv                            allyesconfig
 riscv                    nommu_virt_defconfig
 riscv                             allnoconfig
 riscv                               defconfig
 riscv                          rv32_defconfig
 riscv                            allmodconfig
-riscv                    nommu_k210_defconfig
 um                             i386_defconfig
 um                           x86_64_defconfig
-x86_64                           allyesconfig
-x86_64                    rhel-8.3-kselftests
 x86_64                              defconfig
 x86_64                               rhel-8.3
 x86_64                          rhel-8.3-func
 x86_64                                  kexec
+x86_64                           allyesconfig
+x86_64                    rhel-8.3-kselftests
 
 clang tested configs:
-x86_64                        randconfig-c007
-powerpc              randconfig-c003-20220116
-i386                          randconfig-c001
-mips                 randconfig-c004-20220116
-arm                  randconfig-c002-20220116
-riscv                randconfig-c006-20220116
-s390                 randconfig-c005-20220116
+arm                  randconfig-c002-20220124
+i386                 randconfig-c001-20220124
+powerpc              randconfig-c003-20220124
+mips                 randconfig-c004-20220124
+s390                 randconfig-c005-20220124
+x86_64               randconfig-c007-20220124
+riscv                randconfig-c006-20220124
+mips                      bmips_stb_defconfig
 powerpc                    socrates_defconfig
-arm                         s5pv210_defconfig
-arm                       mainstone_defconfig
-powerpc                       ebony_defconfig
-powerpc                  mpc866_ads_defconfig
-powerpc                      ppc44x_defconfig
-i386                 randconfig-a001-20220117
-i386                 randconfig-a004-20220117
-i386                 randconfig-a002-20220117
-i386                 randconfig-a003-20220117
-i386                 randconfig-a005-20220117
-i386                 randconfig-a006-20220117
-x86_64               randconfig-a004-20220117
-x86_64               randconfig-a001-20220117
-x86_64               randconfig-a006-20220117
-x86_64               randconfig-a002-20220117
-x86_64               randconfig-a003-20220117
-x86_64               randconfig-a005-20220117
-riscv                randconfig-r042-20220118
-hexagon              randconfig-r045-20220116
-hexagon              randconfig-r045-20220117
-hexagon              randconfig-r045-20220118
-riscv                randconfig-r042-20220116
-hexagon              randconfig-r041-20220118
-s390                 randconfig-r044-20220118
-s390                 randconfig-r044-20220116
-hexagon              randconfig-r041-20220116
-hexagon              randconfig-r041-20220117
+arm                         orion5x_defconfig
+powerpc                     skiroot_defconfig
+powerpc                        icon_defconfig
+i386                          randconfig-a002
+i386                          randconfig-a004
+i386                          randconfig-a006
+x86_64               randconfig-a011-20220124
+x86_64               randconfig-a013-20220124
+x86_64               randconfig-a014-20220124
+x86_64               randconfig-a012-20220124
+x86_64               randconfig-a015-20220124
+x86_64               randconfig-a016-20220124
+i386                 randconfig-a011-20220124
+i386                 randconfig-a013-20220124
+i386                 randconfig-a014-20220124
+i386                 randconfig-a015-20220124
+i386                 randconfig-a012-20220124
+i386                 randconfig-a016-20220124
+riscv                randconfig-r042-20220124
+hexagon              randconfig-r045-20220124
+hexagon              randconfig-r041-20220124
+s390                 randconfig-r044-20220124
 
 ---
 0-DAY CI Kernel Test Service, Intel Corporation
