@@ -1,85 +1,86 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE00E4C3116
-	for <lists+devel-acpica@lfdr.de>; Thu, 24 Feb 2022 17:16:10 +0100 (CET)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 58CE04C3120
+	for <lists+devel-acpica@lfdr.de>; Thu, 24 Feb 2022 17:20:02 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 7FF8B100E5D30;
-	Thu, 24 Feb 2022 08:16:08 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.126; helo=mga18.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+	by ml01.01.org (Postfix) with ESMTP id CEC8A100E5D3B;
+	Thu, 24 Feb 2022 08:19:59 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.20; helo=mga02.intel.com; envelope-from=robert.moore@intel.com; receiver=<UNKNOWN> 
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 711AE100EA139
-	for <devel@acpica.org>; Thu, 24 Feb 2022 08:16:06 -0800 (PST)
+	by ml01.01.org (Postfix) with ESMTPS id C53A6100EA139
+	for <devel@acpica.org>; Thu, 24 Feb 2022 08:19:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1645719366; x=1677255366;
-  h=from:to:subject:date:message-id:references:in-reply-to:
-   content-transfer-encoding:mime-version;
-  bh=dTI31Rt/jnZC1kDafW65pQ02MS8HA8Uc0JQTXKfkBqk=;
-  b=IHeVDK3/uFa2zdaSEoYJbbx/bpbOAW1dYW838hca1/8TKXuPl7ssS2zn
-   B4QNorYKWHcSsMww7o+6RphYXJoa2MuvzYhxOL3PW9CrafeDuupEeV/PJ
-   RJtJKc+O0ZfmpxmSn8TymKDqnD7Qpp9KYHdyJPmb/19pdRlUZ/QaAVL2z
-   PQSVHLvV8x/iJhm3it6mpTB2o2U4AaRngXw28DvmCL4TKa/PF1oqj1yTe
-   qJy1kRt5IJb9PQnauwAePXLuuNtMluZpnx3AGVcfUVVA0Ngh6zGWJRjmU
-   e/P6qXFJWJtquF37V+WE9buPRGdh1x0Q1L4frswTjut6D6XNA/gfF6NjG
-   A==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10268"; a="235779634"
+  t=1645719597; x=1677255597;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=hJcHBIv5GtzJ7UFp/EHGVlmJY6Fq7yzDCkR6uBrWNjY=;
+  b=X3iAjZUHPfuA1UbBavPPDbFwlr+qa+4rJ8ShYP9Uqps0DSaaLCw2O6i0
+   TcFFLD8Tt3zk+8H1cbzFZ0uQJ1KQj/Zh6ryFDrGKHRwcm3zfh3lo62MVY
+   6yfrUlg7hz5quaNzFefFo5yiTQC4KzUqUjO9JOSkE6zO6t8pMbKpYkOXB
+   ZdmbHhAPFWK3w3Auh9LeehrGGWUd6wPAnO0ASIYBsI1Ms7YBqb8rZ42F6
+   EN+S+6/kweacrBilrZ1WAP9w+7nCfgQAKIf3qb5I/+fB17KxQlIc+7KlZ
+   9GAFx1DcFrmeCcPiGx0LjCjm4+i1eiTvKEkGLHoPenkot/I+UF5Xn42q1
+   g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10268"; a="239673285"
 X-IronPort-AV: E=Sophos;i="5.90,134,1643702400";
-   d="scan'208";a="235779634"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Feb 2022 08:16:05 -0800
+   d="scan'208";a="239673285"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Feb 2022 08:19:56 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.90,134,1643702400";
-   d="scan'208";a="508922545"
-Received: from fmsmsx604.amr.corp.intel.com ([10.18.126.84])
-  by orsmga006.jf.intel.com with ESMTP; 24 Feb 2022 08:16:04 -0800
-Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
- fmsmsx604.amr.corp.intel.com (10.18.126.84) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.21; Thu, 24 Feb 2022 08:16:04 -0800
+   d="scan'208";a="548812952"
+Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
+  by orsmga008.jf.intel.com with ESMTP; 24 Feb 2022 08:19:56 -0800
 Received: from fmsmsx607.amr.corp.intel.com (10.18.126.87) by
- fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.20; Thu, 24 Feb 2022 08:16:04 -0800
+ 15.1.2308.21; Thu, 24 Feb 2022 08:19:56 -0800
+Received: from fmsmsx607.amr.corp.intel.com (10.18.126.87) by
+ fmsmsx607.amr.corp.intel.com (10.18.126.87) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.21; Thu, 24 Feb 2022 08:19:55 -0800
 Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
  fmsmsx607.amr.corp.intel.com (10.18.126.87) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.21 via Frontend Transport; Thu, 24 Feb 2022 08:16:04 -0800
-Received: from NAM02-DM3-obe.outbound.protection.outlook.com (104.47.56.47) by
+ 15.1.2308.21 via Frontend Transport; Thu, 24 Feb 2022 08:19:55 -0800
+Received: from NAM04-DM6-obe.outbound.protection.outlook.com (104.47.73.43) by
  edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2308.20; Thu, 24 Feb 2022 08:16:04 -0800
+ 15.1.2308.20; Thu, 24 Feb 2022 08:19:54 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=dCKkXWWBC7Fum7JP3E5FcR+UcycFRpDKzbWS02LNbbehL7Dtq4lgdAFTXbRjy71E+nZ5UMz55n1lQ0tZweEGu6CxP85N5Tn0Z42bDHlytgV9sQrmYDpE+bCnvzPNRGLn6CH9aDHHXidoZzNGV76okznoQqZA694zScZb9oVl0a8Hg5mWsdGFn9nb2vdNfG1QSZEDxbFTiisaFyahdVq7L4dXQdc424xbG5cD0Vylzu+sVc1AED+1ULkFrSc0953mDOcOJxkcD1A7xlUf5kyg9ru3P7brEgrQsxO59aDHyAr2bLcSkgVK+Mmiojo3F1PrSycOb3mxlmozDg4hIf4ucw==
+ b=S0mWl4btNho5uGuy6/2sfVs9XK3DYDOpYTH+6/YJbn/HnY7dgLsYPWU41E1p9Tsg5a+CPbo9KajU1qcKVk/dUHCfvT8FB1fo1noi8+oAHqaCXipfiS5kM7sNAt0Kt76fzXNRObRtycv1OP3zbN5DvbX9ZvL3IMqpRMkWZP9Pjq1F505S+oXa/9y5J2fsGbEZHMFHzqc9bGt1WNZ6NM7S3SRDMRa7dmle9mOXRJfpCM2yjbEdPOViMAHgQPi6DYSl5r9fOiApSlRuC/3yP/aDjah2xDTs5jT6xU34xrnKVk2htdXPrRXmNAg7Vh9RUNAW4ZhWYu0Ni2yuEEKQQ2fI8g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=dTI31Rt/jnZC1kDafW65pQ02MS8HA8Uc0JQTXKfkBqk=;
- b=i4GubI2tnHOHFvITdqpn9oU6Fb6Oeml1jurgrufnB+6BEdOK2xywLgHyd/xdGfKdPJw8mFdfMsLQZbnT79wqw4nSZONeKLufB8KAv1yhF0cgnQrrNzA6bfiNZZVF+eYBAdmexLuFlVzV3F/t+KPnnAsonQcJ0QsUfkeHrc8211OMITMifDG9jkRVX87mIvWDgFFW0uGkWWoOXFiX1wpYRskM5bsDdQAgx0g1yNV9vCf6/cqYy+XF3yG1XCrQprTuQKqlU7SNkHu7mXvgA1VMFUhP7wP88dlrW1TC7hzxdLM3SDt2NrefK+MWBTJB0TkdunG97eSoeVxTegbroBO4iQ==
+ bh=zi3dVeCjvXtFudZ3K3P3b37oxoxa7GIsLUhceXXBz2Q=;
+ b=Nxch7tZbnUGb3V2RiRxbYW7e8iCxsVxYIqj9H0mFCQ3cxbM9R9V3R1Ds58Mob3oHL70sDAUA4HFKrW6GlormM9ASdP8C0E6kMWlTJah+SUmxtCaQSYdqLxUdC8XQn29z2aITHZut8/uPegkEPXrPtB7WrGSGo3Z4q+kOL7CndEyD6Kmri24y+rDpTjiDM5J0306QpuvMvCxJZS2sCun4ZVWvTaaPlxK5O5xGtZ8C7r71CGScT5Zh0gtJKV0MdaFPZq9nmjnFzvFcxKNetBsJvXf2H9aTJZ8+jRKUcJxrc9ClPJ27+qZ9KHA13+AI4asruWmTtOqmLVcLP5qMfKXqnw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 Received: from BYAPR11MB3256.namprd11.prod.outlook.com (2603:10b6:a03:76::19)
- by BL1PR11MB5525.namprd11.prod.outlook.com (2603:10b6:208:31f::10) with
+ by MN2PR11MB3549.namprd11.prod.outlook.com (2603:10b6:208:e9::23) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5017.21; Thu, 24 Feb
- 2022 16:16:02 +0000
+ 2022 16:19:53 +0000
 Received: from BYAPR11MB3256.namprd11.prod.outlook.com
  ([fe80::910a:a800:65c2:c366]) by BYAPR11MB3256.namprd11.prod.outlook.com
  ([fe80::910a:a800:65c2:c366%5]) with mapi id 15.20.4995.027; Thu, 24 Feb 2022
- 16:16:02 +0000
+ 16:19:52 +0000
 From: "Moore, Robert" <robert.moore@intel.com>
-To: "bwicaksono@nvidia.com" <bwicaksono@nvidia.com>, "devel@acpica.org"
-	<devel@acpica.org>
-Thread-Topic: [Devel] Contribution copyright question
-Thread-Index: AQHYKC6kiQMfHMsK5UKBP/g1qZzSbayi4xdg
-Date: Thu, 24 Feb 2022 16:16:02 +0000
-Message-ID: <BYAPR11MB32569275AA5F6836B1B3DD0B873D9@BYAPR11MB3256.namprd11.prod.outlook.com>
-References: <20220222205605.3802.2803@ml01.vlan13.01.org>
-In-Reply-To: <20220222205605.3802.2803@ml01.vlan13.01.org>
+To: Paul Menzel <pmenzel@molgen.mpg.de>, "Wysocki, Rafael J"
+	<rafael.j.wysocki@intel.com>, Len Brown <lenb@kernel.org>
+Thread-Topic: [PATCH 3/4] acpi: exsystem: Warn about sleeps greater than 50 ms
+Thread-Index: AQHYKXMVEnTJK3a8GECkhoN2wlnjd6yi4XkA
+Date: Thu, 24 Feb 2022 16:19:52 +0000
+Message-ID: <BYAPR11MB32563DC0413B8595D1339B37873D9@BYAPR11MB3256.namprd11.prod.outlook.com>
+References: <20220224113807.91771-1-pmenzel@molgen.mpg.de>
+ <20220224113807.91771-3-pmenzel@molgen.mpg.de>
+In-Reply-To: <20220224113807.91771-3-pmenzel@molgen.mpg.de>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -90,97 +91,124 @@ dlp-reaction: no-action
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 56de51eb-6f8c-4cea-6a4b-08d9f7b0f3ab
-x-ms-traffictypediagnostic: BL1PR11MB5525:EE_
-x-microsoft-antispam-prvs: <BL1PR11MB5525EE84E5725C6A9E70B3E3873D9@BL1PR11MB5525.namprd11.prod.outlook.com>
+x-ms-office365-filtering-correlation-id: 2edbc282-99e1-44b1-26b2-08d9f7b17d1b
+x-ms-traffictypediagnostic: MN2PR11MB3549:EE_
+x-microsoft-antispam-prvs: <MN2PR11MB35497314C5E59439DC317303873D9@MN2PR11MB3549.namprd11.prod.outlook.com>
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: GA878s6guXfO6F24/lYQEQlGglvnvW6zE7Gr4JlMTCXCn0edvhulLpFmveoIoIxiDNibc2MFYGKheHd0j/oQf8JcenAWsJPDOwPT6w8Gg/JXdZIqJBhTrk2huXdzhCr49KbH+k9LasGnqSo3dU5/5TAYwz9d30jsr9azcF99ditKiA4S04tpao0Gx6vStaglKthGvmyS97B/2IVsBfaY0XytgMYOw0isorHTGSSvvf/6x7cC7gB8CZ9Za3ZgfLmTMuUqLOpaEl+nj6DhwAi7YM9hbdkpXQaBqWy5vj5lxQWl+jwifXG4ZiuUwaHKXrUnszQ7h4sq+jC+ZAZfZVSLLdyQoa8ifE+bDDYZcqdGugNWJkEFu5UfgbsHZBJPQBYumIZcsaLPdFrcQ9YcNMRKhlPBG2pe8neanJ42VBV+XKUBCXqQnf5tSTIUwwYdnS8f6i5ryYymr3zByAA6k1fdz+RvpCzKX3LB73UdqbLl1a1O2hQ7ErJe9BELyRi8cvy+uzYPlrU0xXZJBd/XIWG11ZswdXdYmtD+xMdFCXIjHVwiM+TNkAHWjW4qAknCXa39nBDg7EiowWrfYxnbeVWrA8frLJtmlGhByJ6bScHUMXXIGgF9t7R0Nu8sABUnKNSl8yi26eXBL2NDAbs9o9G0HiSZmFGjETI/9+CS97Y31a4RRcH6va3OQbV0TrMTtpUkfFLtw9TEgktxBMZNHoW9tg==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(366004)(33656002)(66446008)(66946007)(64756008)(66476007)(8676002)(66556008)(110136005)(76116006)(26005)(71200400001)(38070700005)(7696005)(6506007)(186003)(83380400001)(55016003)(2906002)(9686003)(53546011)(82960400001)(52536014)(38100700002)(5660300002)(508600001)(86362001)(8936002)(4744005)(316002)(122000001);DIR:OUT;SFP:1102;
+x-microsoft-antispam-message-info: NMB8WFTNiYJINuWLMg1fy06sc7VAT1ObZiu25LkbLOGatgZdmYcqRyJ7bltMKEKhhlzTt+MViRD4Pl60T18d0wP++0GCKhOuiDVeLoGpt3gCn/WvL9haEUxSnIGSPa2uB7zWs/mkpHDBCQ3lpz2gUuJ05BSrmKeMQWZ6j3Gv2WzA/hWGmcoB7tfD0HkvBiPvB8L4IL/6qYvZvzXCnuhh9bxIgIhNXLiqmJQxCLPL5LRU8UgTTRGAGU7YORmN+YtKN73gk+9/WB417LUbF2/JUeD79Tf6S0nwNHJlgCT+zpTWpg3mW55UITpzxUqR0cGrbnAndQ3LC/SsFM7/bPYJt+g7vu0ZjDzmEOf2T1C4JTlja/gyN29IdmF9+ldPIccX+4wKYIF6ytSDgmZ6CjUa+rEmPRjV58CzAUoVgXfUrRMtNT4rJ612YF46oLa5uWIqleHPO9C//ohOmwCVc0JEREuLLMPZ9ipyG+LEIWpTaYiXbdiWdK40VS+xTQrhRCHBH2pT0qJ/QNxVGcOm6OOd7zUzLGraW6b9QVxjD09q3XvtmkNJXL2FGhs3EPvZABrrBAI1DJOIPdsKP/J4OJp/4SJxVZO2nHLEd5P/Hv5/4t3C5+r514JZIGUHBGY1I7i4nHfUwF1j3UBsK1+vsy5cboyqTBvcF1g5H2O6qw7jfNzP71XhsqzBobf2QamO91uqu2teqHHVtGkMysKu+U8p8Q==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3256.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(366004)(8936002)(26005)(186003)(71200400001)(52536014)(316002)(54906003)(38100700002)(76116006)(8676002)(66556008)(66946007)(110136005)(66476007)(122000001)(86362001)(33656002)(82960400001)(83380400001)(4326008)(66446008)(64756008)(38070700005)(2906002)(7696005)(5660300002)(6506007)(55016003)(9686003)(508600001)(53546011);DIR:OUT;SFP:1102;
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?b1doQmNWNlhIMnRjTkJqVGFhS2luaDhuWHRHK0JOZ1ZKYzFwTU9lak0vMXNX?=
- =?utf-8?B?em81Mi85WnNMdzlQYkFlUk5Qd1hEVU9oYk91b2dQRFpkdEZHYVBnNEJld1J2?=
- =?utf-8?B?SlZyQm1zdUFreGxhdjUvS0Y0emVaR29CMUM1WmRDb2JRc0gxbTZHZWVpOTha?=
- =?utf-8?B?THU2TlNrMGswNHBZeHRBTmtmcWNoaStwZ1QvYkkrQ2Y0Mnc5QWl6d3VVM1VJ?=
- =?utf-8?B?azhPZWdXaTBZMEkwdGZwWEROaGF3ZFF5bkc1d3NRUkx1ajVtZGRTc0sxaEJj?=
- =?utf-8?B?SWR6aXoxYmx5Z2trcCsyRHN0OVJJR0VLYUZCZklPbVl4dW4zNjNoSmllVlkr?=
- =?utf-8?B?LzlFc2h5bFVGdHB5bk1FeERmSHpJRndhZVlxTEtXVTkzWjk5M0FhaC8wTVAw?=
- =?utf-8?B?MVpFbnpYbFJuSUZyMzdmWjdxbktva2NmdUgrenhGcEw2ZGxCaVBxQmYyaVFZ?=
- =?utf-8?B?aXJaTVVDSTBIS2RlRzdpMWhXTDA1a2N4cmRnWjJxRHNlYituQ1RiY1Y0L09X?=
- =?utf-8?B?S2NNL3F6Q1d1V080L0x1WjZ2R1hGQ204MDZzLzBObTFNZkxEM1AyT1V6eGI3?=
- =?utf-8?B?UUxjY096Nk5IK2dFYjc4WHdyUEFKWFJacmQ0MWJHcHBoRGxaUmtCSmFKc1pR?=
- =?utf-8?B?dk1XbTJtSkVyMzREYTVBZHIycUYwVzQ4TkZVTTByVWF0QVpGak5oQ01aM0cw?=
- =?utf-8?B?L1h5QXZxVUNCK2RkRmU1bVdUcHU3ZTg0ak1EcUwrUzRlRE9RcUJYM0dVYmxh?=
- =?utf-8?B?YkIwRjI2VDhzNEtlNzJaQlYwbmdnTlhTV1I4eVY4NnZJdENuUExQYTA2Q0JU?=
- =?utf-8?B?VkpBZE9aNjZIYVdyQkUrNGNkdkFjb2tmL1BUVnlwcmRselZiTytaRDhkZWZB?=
- =?utf-8?B?NUExOGloRk9DZlozemtyaUZOdTVmdzExbXppSHNXbWRsVDF3cFBZRzZjekJM?=
- =?utf-8?B?TG9yQmFoeGkwdWtaVFRrYXQ2Z2l5K0J2V3UxeExhYmJDS3BFWDdVZzFVVmlK?=
- =?utf-8?B?U2ZoeEZlVnNkS0RWKzI3SkF5emJVZEVoYWtVSTNoN1VaeE1WKzFWN2tocWNT?=
- =?utf-8?B?b1ZRem1qN1VBRFkzTUxReFV1bzY3UHJJeC9hRzBYZ3lweE90akdBYXF0Y2dJ?=
- =?utf-8?B?K0c3SVdsTjdReGZMUlpXV1hUTFR4ZzRmR25JTWxkc3lpTHhtL21vNjFDZHpK?=
- =?utf-8?B?Rm5NR2FPMExsYWZ4WXhCa2VvY0lwKytwblpMNmNWZ205Q29rbzk3aXQzWENk?=
- =?utf-8?B?aFRXN3poZTVnSEdXRGRDWUUrT09xcnlPQ3NPZVc3WnFPQ3BrY3F4aTdEdXpG?=
- =?utf-8?B?SHMvMXJBcTVFblhhNFRiMEt6bDk1WDNKd2lXVk5sdHU0K2cvN2FmNDd5RHV0?=
- =?utf-8?B?cnl2MjNqK291eHVERmo5NVVmOElNZzBLNTV4eSttQ2xDKzZOdllHbytkR3E5?=
- =?utf-8?B?Q0tGdlhhcGF2aHhmVVFZU1c5Yy93Y3llVW9IQXRPaTZ0K0xSR3Vvc05CelpN?=
- =?utf-8?B?OWJ0OUdSYlN2TjJlNHpHUysvUjNxRXczRmIwZ0w0a3hPeFZNbkw4bkJjYkFl?=
- =?utf-8?B?ZW9hV2wwQUNVcDNjKzJLNDlGN0RxT01HQXFrRFUycmZmQ2IyYzU4VjFqek9p?=
- =?utf-8?B?cTg4ajNaR0ZSMS9WMi91cFZFZlRyb3JvMVJDd1l2V28zUXZEbXJCUk96ZEIx?=
- =?utf-8?B?cjRQMDF1ZHdlWGFLdTRnbXBBOCt4MzVYYVl4YXp1dnRDRVZMYzFFZjl1NHd2?=
- =?utf-8?B?V0RpTnBMSlRZNFpka2Jrb0RGUnlhVWdtWFJFTEhjcUhQeERaaHI5czNNRTFv?=
- =?utf-8?B?ZEpjZDdrTDV5eGJvMllYcVZPQUxxNzJrTi85NmhYSEQ0cWdWOHA3QzNVYkxh?=
- =?utf-8?B?V2xFamtzeDQrZU9QSlU5VThYN1lVWHdZRFlTL1FRT3FpV3U3SW1MQVI3Tjk5?=
- =?utf-8?B?UjMvTDlMQjdNejJnTTBKT0taUmdqdGlXbUU1cmVaWE53aW9Sa2VwK1BBMGFE?=
- =?utf-8?B?WGlRNFlyS3Q3clJyejI0aHQ4VE5xVmsvaVZBMTJFdHIvUjhocDVkWTAyTXhE?=
- =?utf-8?B?TWJ6aDhQanpRVUZVcEFRN0pGM2RWSzU5VG5oRDdueGk5OVlzR3l3SVNPVmVo?=
- =?utf-8?B?L0dKdDFLTldIS2dteHh0Y3psdHhWNUZjSHhGb2sraEdqdjlKQmVGTGgrVk9i?=
- =?utf-8?Q?GNtgDxFZ5uDhvA3xMVEC4Os=3D?=
-Content-Type: text/plain; charset="utf-8"
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?CB95+ETv7+diOXFWLSnj/enLGAdoBHQAKd5p3Mt8f0rCvvPbcpGykERtohNh?=
+ =?us-ascii?Q?5zFVflGojk9vcfllNhwTmj+8ocQA1ll5KhvNUD96nnA6sIkeK9QWeJqki+B/?=
+ =?us-ascii?Q?bzym1wYlxAViZn7N9IzslH0pKf2ekPhkuqoZ/ocJpRv5FVtdEeRnpG7RG0Qw?=
+ =?us-ascii?Q?L3K8cqT9x+q71HkrNca2hRDPZUElX9s9d3jmswtKhB8gUqdX1sApPb8W2wji?=
+ =?us-ascii?Q?hfFaST1VCyaM+7Cjq4UVgzHEMwepnGzc/7dXut7TuKdY7wfOu6fxCJeaGLzs?=
+ =?us-ascii?Q?0Vu6gXmFg9YA4BICyqshjh6x7DY3vbTZGYv8gfLxiIq+slsqUPoG8ws6rZE8?=
+ =?us-ascii?Q?OBGnO5S8lkXuJjayb8sw2/4mQvEaeCCn7PXK9tzCuR9I9OM45HYIH+2JLtYi?=
+ =?us-ascii?Q?oqOIjUPKf1R/Hf9LH/MrE/Y517F7GCvwZA5LZ5MlLx/+byi45FlC7u6uSsOi?=
+ =?us-ascii?Q?hltqbmh8/oL2zh4PcjyNa2U4TQuO5/Z09LNfpCRypE2Su3E/Oy7YW2zfGgKE?=
+ =?us-ascii?Q?8HOTJ7yz5mbYb2MJu1fo8RdA4FZ+X2EQEkpwvkJWLlPdgUx9S29wO1I/5/au?=
+ =?us-ascii?Q?UO/Zbt2yMj27lJ5LByae+Am1cPLIp1MGZmxQXtrmox/UznMNC64Hdyu1kxQR?=
+ =?us-ascii?Q?ecnUcLIj4lcqwpD4wn1xtUEXaxYXsQrYQB8ZE0xPq4sx014PGhOoCXTJaDom?=
+ =?us-ascii?Q?UhgHUJArcStidIpxsLAdGVnBIHdNaN3Lk+3wvCYMItxzx0TmR82YDkjG9n2S?=
+ =?us-ascii?Q?Ff2wsdHK7IQ10mTwKCqLNXQxLtUUgYSdmmzX9uCatIN9c9COhutms49bFDoM?=
+ =?us-ascii?Q?1ECrPybngqRC+ygI7HTLX1p8lDtyBsEWitEAwewtujWZpJzrB3M2De7NXWcM?=
+ =?us-ascii?Q?uYvWwcguFY7PTSQwlVsZ53e6/lBXIQZCptDSaAkJckGZRP0J/WpwmXctRMu2?=
+ =?us-ascii?Q?TdBRv/FFPuB207lyIxgMf00ZubFNpxNTeUVM6dAZxpMyR7lbiAEDOVqe1DfI?=
+ =?us-ascii?Q?Jo89eq5n0VMm731OzyYK/Ao9FBA5+B7s+/sYOuemRrbCBRHPKlOAw5gVVF9y?=
+ =?us-ascii?Q?bAqsrzjWfdP92AhI8FkzRwIP8PJTvvMmiTh2q111Q4TA6gyS/0dhLNclMCIX?=
+ =?us-ascii?Q?HIum3PJpoWmULoBaszU1+BH2fJM/IaUfSnhhsbPjpcf/IJpyA5qfUar4K8Ok?=
+ =?us-ascii?Q?CjsPr73/vB2EgJxNN96bT+w4RW3+ixbIs3voFCpFVv8LIGqEA+V3B1J2Z1pc?=
+ =?us-ascii?Q?8C/0LEAfLD4QEcDmRwhrkxP/GzHqdZRKWO8t8t76RCsbaFehpLXRcH6hlxJF?=
+ =?us-ascii?Q?Q6AfykCvuCWq1pXiX2PnXHLo+dGunaEXG3S1sc5Xr0WqUrWRZioEUwrBlbHt?=
+ =?us-ascii?Q?g1zvjIydN4EugqO66lvzX6iU3aJ/5bB11xhBMAIBhi4+H1gK99wDnDllGpV5?=
+ =?us-ascii?Q?8LO8Jg4FeJJ5Vb52sdgkBqVZRySmULp/aXNwQsKuu2qL9VVcQeaUrmyykHoT?=
+ =?us-ascii?Q?/8NDxJcOaclMvV6KeZtOvDk1BM8sE7fNwdqSfNDrnwAdMSu94RSUPtTSWQJM?=
+ =?us-ascii?Q?aF+ToRH1H8DpKfBkjaw7XgG2XvK5lwlpZrubFHNkqE8XCwFNdIrHbX9ArdXc?=
+ =?us-ascii?Q?/K1dS+vW10pFc7NekpV8voI=3D?=
+Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3256.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 56de51eb-6f8c-4cea-6a4b-08d9f7b0f3ab
-X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Feb 2022 16:16:02.3256
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2edbc282-99e1-44b1-26b2-08d9f7b17d1b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Feb 2022 16:19:52.9214
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: I2peobK1A49rpsbWF/JuPwHo0FNVZr+xu5YqcncmwKj8ndeE3Y7rr1EVXF7Dgc80FBRaEgYlodzFnqRP2kGQhg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR11MB5525
+X-MS-Exchange-CrossTenant-userprincipalname: z+uvRVFlIveMFmXbSDOzhclt+BXdpLcMfeIFiJLr3SG/8sIuJXCCW4aFTSzgPlxwWmsa0YUSMP62Gu/f3T/Phw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR11MB3549
 X-OriginatorOrg: intel.com
-Message-ID-Hash: MCGWWIPH7CUTALFSJDUXPZXU6WJSQTGG
-X-Message-ID-Hash: MCGWWIPH7CUTALFSJDUXPZXU6WJSQTGG
+Message-ID-Hash: 4JEQ5YGE4IXKGVSZK2LE3CIFMMNIDRVU
+X-Message-ID-Hash: 4JEQ5YGE4IXKGVSZK2LE3CIFMMNIDRVU
 X-MailFrom: robert.moore@intel.com
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
+CC: "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>, "devel@acpica.org" <devel@acpica.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: Contribution copyright question
+Subject: [Devel] Re: [PATCH 3/4] acpi: exsystem: Warn about sleeps greater than 50 ms
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/MCGWWIPH7CUTALFSJDUXPZXU6WJSQTGG/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/4JEQ5YGE4IXKGVSZK2LE3CIFMMNIDRVU/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: 7bit
 
-SSBhc3N1bWUgeW91IGFyZSB0YWxraW5nIGFib3V0IEFDUElDQS4NCg0KWWVzLCBJIGRvbid0IGJl
-bGlldmUgeW91IGFyZSBhbGxvd2VkIHRvIGFkZCBhIGNvcHlyaWdodC4NCkJvYg0KDQoNCi0tLS0t
-T3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBid2ljYWtzb25vQG52aWRpYS5jb20gPGJ3aWNh
-a3Nvbm9AbnZpZGlhLmNvbT4gDQpTZW50OiBUdWVzZGF5LCBGZWJydWFyeSAyMiwgMjAyMiAxMjo1
-NiBQTQ0KVG86IGRldmVsQGFjcGljYS5vcmcNClN1YmplY3Q6IFtEZXZlbF0gQ29udHJpYnV0aW9u
-IGNvcHlyaWdodCBxdWVzdGlvbg0KDQpUbyB3aG9tIGl0IG1heSBjb25jZXJuLA0KDQpXaGF0IGlz
-IHRoZSBhY2NlcHRhYmxlIG1ldGhvZCB0byBtYXJrIGNvZGUgY29udHJpYnV0aW9uIGJ5IG9yZ2Fu
-aXphdGlvbiBvdXRzaWRlIEludGVsID8NCldpbGwgaXQgYmUgZmluZSB0byBhZGQgYSBuZXcgY29w
-eXJpZ2h0IGxpbmUgdW5kZXIgIkNvcHlyaWdodCAoYykgMjAwMCDigJMgMjAxNyBJbnRlbCBDb3Jw
-LiIgPw0KSSBjb3VsZCBub3QgZmluZCBzdWNoIGNhc2UgZnJvbSBwcmV2aW91cyBjb21taXRzLiBT
-byBJIGFzc3VtZWQgdGhpcyBpcyBwcm9oaWJpdGVkLCBidXQgd2FudCB0byBnZXQgY29uZmlybWF0
-aW9uLg0KDQpSZWdhcmRzLA0KQmVzYXINCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fDQpEZXZlbCBtYWlsaW5nIGxpc3QgLS0gZGV2ZWxAYWNwaWNhLm9yZw0K
-VG8gdW5zdWJzY3JpYmUgc2VuZCBhbiBlbWFpbCB0byBkZXZlbC1sZWF2ZUBhY3BpY2Eub3JnICUo
-d2ViX3BhZ2VfdXJsKXNsaXN0aW5mbyUoY2dpZXh0KXMvJShfaW50ZXJuYWxfbmFtZSlzDQpfX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXwpEZXZlbCBtYWlsaW5n
-IGxpc3QgLS0gZGV2ZWxAYWNwaWNhLm9yZwpUbyB1bnN1YnNjcmliZSBzZW5kIGFuIGVtYWlsIHRv
-IGRldmVsLWxlYXZlQGFjcGljYS5vcmcKJSh3ZWJfcGFnZV91cmwpc2xpc3RpbmZvJShjZ2lleHQp
-cy8lKF9pbnRlcm5hbF9uYW1lKXM=
+So, this is the current implementation:
+
+    /*
+     * For compatibility with other ACPI implementations and to prevent
+     * accidental deep sleeps, limit the sleep time to something reasonable.
+     */
+    if (HowLong > ACPI_MAX_SLEEP)
+    {
+        HowLong = ACPI_MAX_SLEEP;
+    }
+
+    AcpiOsSleep (HowLong);
+
+Where ACPI_MAX_SLEEP is: 
+
+#define ACPI_MAX_SLEEP                  2000    /* 2000 millisec == two seconds */
+
+-----Original Message-----
+From: Paul Menzel <pmenzel@molgen.mpg.de> 
+Sent: Thursday, February 24, 2022 3:38 AM
+To: Moore, Robert <robert.moore@intel.com>; Wysocki, Rafael J <rafael.j.wysocki@intel.com>; Len Brown <lenb@kernel.org>
+Cc: Paul Menzel <pmenzel@molgen.mpg.de>; linux-acpi@vger.kernel.org; devel@acpica.org; linux-kernel@vger.kernel.org
+Subject: [PATCH 3/4] acpi: exsystem: Warn about sleeps greater than 50 ms
+
+Quick boottime is important, so warn about sleeps greater than 50 ms in ACPI.
+
+50 ms is still long compared to distribution Linux kernels reaching initrd in 350 ms, so should probably changed to 10 ms, so people are aware about this.
+
+Signed-off-by: Paul Menzel <pmenzel@molgen.mpg.de>
+---
+ drivers/acpi/acpica/exsystem.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/drivers/acpi/acpica/exsystem.c b/drivers/acpi/acpica/exsystem.c index 00f66af31ffa..bdffb8aac05c 100644
+--- a/drivers/acpi/acpica/exsystem.c
++++ b/drivers/acpi/acpica/exsystem.c
+@@ -167,6 +167,11 @@ acpi_status acpi_ex_system_do_sleep(u64 how_long_ms)
+ 
+ 	acpi_ex_exit_interpreter();
+ 
++	if (how_long_ms > 50) {
++		ACPI_WARNING((AE_INFO,
++		    "Time parameter %llu > 50 ms. Please contact firmware vendor for more responsive system.", how_long_ms));
++	}
++
+ 	/*
+ 	 * For compatibility with other ACPI implementations and to prevent
+ 	 * accidental deep sleeps, limit the sleep time to something reasonable.
+--
+2.35.1
+_______________________________________________
+Devel mailing list -- devel@acpica.org
+To unsubscribe send an email to devel-leave@acpica.org
+%(web_page_url)slistinfo%(cgiext)s/%(_internal_name)s
