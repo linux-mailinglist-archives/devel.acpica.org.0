@@ -1,55 +1,61 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE8224C9486
-	for <lists+devel-acpica@lfdr.de>; Tue,  1 Mar 2022 20:40:42 +0100 (CET)
+Received: from ml01.01.org (ml01.01.org [198.145.21.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 146324C9B83
+	for <lists+devel-acpica@lfdr.de>; Wed,  2 Mar 2022 03:51:55 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 5F32E100EA13C;
-	Tue,  1 Mar 2022 11:40:40 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.128.175; helo=mail-yw1-f175.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	by ml01.01.org (Postfix) with ESMTP id 62621100F3934;
+	Tue,  1 Mar 2022 18:51:53 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.120; helo=mga04.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id A4E6F100EB83B
-	for <devel@acpica.org>; Tue,  1 Mar 2022 11:40:38 -0800 (PST)
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-2dbd8777564so41499647b3.0
-        for <devel@acpica.org>; Tue, 01 Mar 2022 11:40:38 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rC4BvLXBCXqc68pcQ7m+8z/EJtaEH/MsSh5u4qPMaYc=;
-        b=W1RhvnWQG7iaqhD1DaWqK5r85g9hcQAhOeUGo0zwqgqY3ZcpQqyrB99Pt5B8O3we4e
-         NYxG1dlG8s/ipyw2umi0G4xS7yZ3y2ezx2nBe32G0IxSgHcrxFTGXvkLhHgk6m69cKaE
-         SFW5aUKyhavUeL9+BIAa5WKDZb3BcINeDgNDUW0kGFXYDdoib9DofZcipI9QQSvx88w6
-         +4dgH3z/kW/2SJ2kRQ1eO88aSuN+L8kph5QMoJ5g+K44SYg7Erml2eneTqnfAxPWkRvT
-         B+NdH2M8Fkt9xwNMybt5zqFcyDdhJPVAms+JaNJqAldkIlJflAce3TOlVmt2CbzXOVPv
-         13cg==
-X-Gm-Message-State: AOAM533A/xQpz5AxFtRVbVCpG8ZhHq0e92TZ20FVHzaHtBAWJaIUkWZw
-	1Q0k0OQsXKG05FKhHrHg6QxVo+4pDbdgX79SZa0=
-X-Google-Smtp-Source: ABdhPJzqz8NvN2OYlSJ4r049oH9twxzobfp3rZ5a9AqKOhlvAWL0GuQURf4suVyw4zXef72pObOLA5ljD92LHelrPUU=
-X-Received: by 2002:a81:1611:0:b0:2d6:3290:9bd3 with SMTP id
- 17-20020a811611000000b002d632909bd3mr26858713yww.19.1646163637141; Tue, 01
- Mar 2022 11:40:37 -0800 (PST)
+	by ml01.01.org (Postfix) with ESMTPS id 4BDBC100EA110
+	for <devel@acpica.org>; Tue,  1 Mar 2022 18:51:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1646189512; x=1677725512;
+  h=date:from:to:cc:subject:message-id:mime-version;
+  bh=Tm4+8lizUr2xgEpaQ+EdlRF/QIwp9cOAif5S+psZgdk=;
+  b=RgrCb3Lkj5lJJpLWTxwwvEhEQvQ4CAPgZevhBfs9JLzJeTYIn35nKQY3
+   a0SiyF21krjmgljMBhhkaM0t84J6YzKxz1QAlIGDh1RWVOmEKYD8lMab9
+   srK/xT8wXneaLn7deAYzT7LaGXRG0toYNVJT3D/ArATLuuIXq7+KCjUcw
+   wFC7qVVRtAMSmq1SMWlMOz12PGzXmCJryzl3jsigtnpmUAw18Jrbj7d8L
+   bUfpcNcnuIcEbke/4EB0AfVq1jZlDArATMu2iW4RY57bwAWsPEAx8Y0vB
+   o6zDAtDryVtnkrLj5jmP1BW4OAdyC+l3xIDBAGO9bdyO2+zVZGEFVm6lP
+   Q==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10273"; a="252126455"
+X-IronPort-AV: E=Sophos;i="5.90,146,1643702400";
+   d="scan'208";a="252126455"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Mar 2022 18:51:36 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.90,146,1643702400";
+   d="scan'208";a="510826971"
+Received: from lkp-server02.sh.intel.com (HELO e9605edfa585) ([10.239.97.151])
+  by orsmga006.jf.intel.com with ESMTP; 01 Mar 2022 18:51:34 -0800
+Received: from kbuild by e9605edfa585 with local (Exim 4.92)
+	(envelope-from <lkp@intel.com>)
+	id 1nPF5R-0000wI-Ga; Wed, 02 Mar 2022 02:51:33 +0000
+Date: Wed, 2 Mar 2022 10:51:10 +0800
+From: kernel test robot <lkp@intel.com>
+To: Mark Cilissen <mark@yotsuba.nl>
+Message-ID: <202203020750.Uq6hGay2-lkp@intel.com>
 MIME-Version: 1.0
-References: <20220224113807.91771-1-pmenzel@molgen.mpg.de>
-In-Reply-To: <20220224113807.91771-1-pmenzel@molgen.mpg.de>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Tue, 1 Mar 2022 20:40:26 +0100
-Message-ID: <CAJZ5v0iCwJ10gM0+LsOMU9X3X4ToN_OHBW=9vVsfEP3+cRpudQ@mail.gmail.com>
-To: Paul Menzel <pmenzel@molgen.mpg.de>
-Message-ID-Hash: 6JG7PZL6ED7E6KI6O37AMBP4W5S4TGFQ
-X-Message-ID-Hash: 6JG7PZL6ED7E6KI6O37AMBP4W5S4TGFQ
-X-MailFrom: rjwysocki@gmail.com
+Content-Disposition: inline
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Message-ID-Hash: S6EYMWYC3OC4EWEZI2ER2TZZFVGKJASH
+X-Message-ID-Hash: S6EYMWYC3OC4EWEZI2ER2TZZFVGKJASH
+X-MailFrom: lkp@intel.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+CC: kbuild-all@lists.01.org, linux-acpi@vger.kernel.org, devel@acpica.org, linux-pm@vger.kernel.org, "Rafael J. Wysocki" <rjw@rjwysocki.net>, Hans de Goede <hdegoede@redhat.com>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH 1/4] acpi: exsystem: Add units to time variable names
+Subject: [Devel] [rafael-pm:bleeding-edge 113/118] include/linux/mod_devicetable.h:587:25: warning: excess elements in array initializer
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/6JG7PZL6ED7E6KI6O37AMBP4W5S4TGFQ/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/S6EYMWYC3OC4EWEZI2ER2TZZFVGKJASH/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -58,100 +64,59 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Thu, Feb 24, 2022 at 12:38 PM Paul Menzel <pmenzel@molgen.mpg.de> wrote:
->
-> `how_long` uses different units in both functions, so make it more
-> clear, what unit they expect.
->
-> Signed-off-by: Paul Menzel <pmenzel@molgen.mpg.de>
-> ---
->  drivers/acpi/acpica/exsystem.c | 20 ++++++++++----------
+tree:   https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
+head:   f7307721a01f4f14d21c699b270a870370cf34b9
+commit: ed00b2b8d737f87a2437d7bd7c7f90124b50da05 [113/118] x86 / ACPI: Work around broken XSDT on SEGA AALE board
+config: i386-randconfig-a003 (https://download.01.org/0day-ci/archive/20220302/202203020750.Uq6hGay2-lkp@intel.com/config)
+compiler: gcc-9 (Debian 9.3.0-22) 9.3.0
+reproduce (this is a W=1 build):
+        # https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git/commit/?id=ed00b2b8d737f87a2437d7bd7c7f90124b50da05
+        git remote add rafael-pm https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git
+        git fetch --no-tags rafael-pm bleeding-edge
+        git checkout ed00b2b8d737f87a2437d7bd7c7f90124b50da05
+        # save the config file to linux build tree
+        mkdir build_dir
+        make W=1 O=build_dir ARCH=i386 SHELL=/bin/bash arch/x86/kernel/acpi/
 
-As ACPICA material, this should be submitted to the upstream project
-via https://github.com/acpica/acpica/.
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
 
-This applies to the other patches in the series too.
+All warnings (new ones prefixed by >>):
 
->  1 file changed, 10 insertions(+), 10 deletions(-)
->
-> diff --git a/drivers/acpi/acpica/exsystem.c b/drivers/acpi/acpica/exsystem.c
-> index 1281c07112de..6bc5b46e6927 100644
-> --- a/drivers/acpi/acpica/exsystem.c
-> +++ b/drivers/acpi/acpica/exsystem.c
-> @@ -107,7 +107,7 @@ acpi_status acpi_ex_system_wait_mutex(acpi_mutex mutex, u16 timeout)
->   *
->   * FUNCTION:    acpi_ex_system_do_stall
->   *
-> - * PARAMETERS:  how_long        - The amount of time to stall,
-> + * PARAMETERS:  how_long_us     - The amount of time to stall,
->   *                                in microseconds
->   *
->   * RETURN:      Status
-> @@ -120,13 +120,13 @@ acpi_status acpi_ex_system_wait_mutex(acpi_mutex mutex, u16 timeout)
->   *
->   ******************************************************************************/
->
-> -acpi_status acpi_ex_system_do_stall(u32 how_long)
-> +acpi_status acpi_ex_system_do_stall(u32 how_long_us)
->  {
->         acpi_status status = AE_OK;
->
->         ACPI_FUNCTION_ENTRY();
->
-> -       if (how_long > 255) {   /* 255 microseconds */
-> +       if (how_long_us > 255) {        /* 255 microseconds */
->                 /*
->                  * Longer than 255 usec, this is an error
->                  *
-> @@ -134,10 +134,10 @@ acpi_status acpi_ex_system_do_stall(u32 how_long)
->                  * order to support existing BIOSs)
->                  */
->                 ACPI_ERROR((AE_INFO,
-> -                           "Time parameter is too large (%u)", how_long));
-> +                           "Time parameter is too large (%u)", how_long_us));
->                 status = AE_AML_OPERAND_VALUE;
->         } else {
-> -               acpi_os_stall(how_long);
-> +               acpi_os_stall(how_long_us);
->         }
->
->         return (status);
-> @@ -147,7 +147,7 @@ acpi_status acpi_ex_system_do_stall(u32 how_long)
->   *
->   * FUNCTION:    acpi_ex_system_do_sleep
->   *
-> - * PARAMETERS:  how_long        - The amount of time to sleep,
-> + * PARAMETERS:  how_long_ms     - The amount of time to sleep,
->   *                                in milliseconds
->   *
->   * RETURN:      None
-> @@ -156,7 +156,7 @@ acpi_status acpi_ex_system_do_stall(u32 how_long)
->   *
->   ******************************************************************************/
->
-> -acpi_status acpi_ex_system_do_sleep(u64 how_long)
-> +acpi_status acpi_ex_system_do_sleep(u64 how_long_ms)
->  {
->         ACPI_FUNCTION_ENTRY();
->
-> @@ -168,11 +168,11 @@ acpi_status acpi_ex_system_do_sleep(u64 how_long)
->          * For compatibility with other ACPI implementations and to prevent
->          * accidental deep sleeps, limit the sleep time to something reasonable.
->          */
-> -       if (how_long > ACPI_MAX_SLEEP) {
-> -               how_long = ACPI_MAX_SLEEP;
-> +       if (how_long_ms > ACPI_MAX_SLEEP) {
-> +               how_long_ms = ACPI_MAX_SLEEP;
->         }
->
-> -       acpi_os_sleep(how_long);
-> +       acpi_os_sleep(how_long_ms);
->
->         /* And now we must get the interpreter again */
->
-> --
-> 2.35.1
->
+   In file included from include/linux/of.h:18,
+                    from include/linux/irqdomain.h:35,
+                    from include/linux/acpi.h:13,
+                    from arch/x86/kernel/acpi/boot.c:11:
+>> include/linux/mod_devicetable.h:587:25: warning: excess elements in array initializer
+     587 | #define DMI_MATCH(a, b) { .slot = a, .substr = b }
+         |                         ^
+   arch/x86/kernel/acpi/boot.c:1476:8: note: in expansion of macro 'DMI_MATCH'
+    1476 |        DMI_MATCH(DMI_BIOS_DATE, "02/01/2011"),
+         |        ^~~~~~~~~
+   include/linux/mod_devicetable.h:587:25: note: (near initialization for 'acpi_dmi_table[6].matches')
+     587 | #define DMI_MATCH(a, b) { .slot = a, .substr = b }
+         |                         ^
+   arch/x86/kernel/acpi/boot.c:1476:8: note: in expansion of macro 'DMI_MATCH'
+    1476 |        DMI_MATCH(DMI_BIOS_DATE, "02/01/2011"),
+         |        ^~~~~~~~~
+
+
+vim +587 include/linux/mod_devicetable.h
+
+d945b697d0eea5 David Woodhouse 2008-09-16  586  
+5017b2851373ee Jani Nikula     2013-07-03 @587  #define DMI_MATCH(a, b)	{ .slot = a, .substr = b }
+5017b2851373ee Jani Nikula     2013-07-03  588  #define DMI_EXACT_MATCH(a, b)	{ .slot = a, .substr = b, .exact_match = 1 }
+d2653e92732bd3 Jean Delvare    2008-04-29  589  
+
+:::::: The code at line 587 was first introduced by commit
+:::::: 5017b2851373ee15c7035151853bb1448800cae2 dmi: add support for exact DMI matches in addition to substring matching
+
+:::::: TO: Jani Nikula <jani.nikula@intel.com>
+:::::: CC: Linus Torvalds <torvalds@linux-foundation.org>
+
+---
+0-DAY CI Kernel Test Service, Intel Corporation
+https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
