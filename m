@@ -1,61 +1,55 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F9B74D192C
-	for <lists+devel-acpica@lfdr.de>; Tue,  8 Mar 2022 14:30:31 +0100 (CET)
+Received: from ml01.01.org (ml01.01.org [198.145.21.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F1CC4D207B
+	for <lists+devel-acpica@lfdr.de>; Tue,  8 Mar 2022 19:49:31 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 3F4F6100EA126;
-	Tue,  8 Mar 2022 05:30:29 -0800 (PST)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.31; helo=mga06.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	by ml01.01.org (Postfix) with ESMTP id E1A8B100F394A;
+	Tue,  8 Mar 2022 10:49:29 -0800 (PST)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.128.175; helo=mail-yw1-f175.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 6987B100EB842
-	for <devel@acpica.org>; Tue,  8 Mar 2022 05:30:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1646746227; x=1678282227;
-  h=date:from:to:cc:subject:message-id:mime-version:
-   content-transfer-encoding;
-  bh=G0hKG25g9et/AdWP/FKZ/bsA5yCXu3qpFDQrW0hJLhc=;
-  b=hDEkomO1uuwNga2QheRy6hEsGV/KqUG2n6T5PThQmopM/vhsbbqLGHbK
-   uYDl8CJ4B9AdhjHtjla3dNUBBmYE5OE9+b0Zpc+AN3VvVcFRonr8f0wVh
-   1Q7i/aubbulF8kPKWz838SxzBsz2fXlohkd5UEmRh4MiF9CgUvPK15YjI
-   CTTplBlSM/vUA8L3+XQ1M8SpUYUdGODkc2fFwHR0Lqq/guiBdG3dKitIV
-   wuBQS53acuUPBXPHP6xpUGqDHcnXloqNY5mDxcwx10CElJn2mFpxLHx+b
-   ouUfllGXt2FHm+s/LXAzkq0Sc7Ugj8LGjbh+QxSh9qONC1DHE0PjQzQMM
-   w==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10279"; a="315396302"
-X-IronPort-AV: E=Sophos;i="5.90,164,1643702400";
-   d="scan'208";a="315396302"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Mar 2022 05:30:26 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.90,164,1643702400";
-   d="scan'208";a="687918823"
-Received: from lkp-server02.sh.intel.com (HELO 89b41b6ae01c) ([10.239.97.151])
-  by fmsmga001.fm.intel.com with ESMTP; 08 Mar 2022 05:30:24 -0800
-Received: from kbuild by 89b41b6ae01c with local (Exim 4.92)
-	(envelope-from <lkp@intel.com>)
-	id 1nRZuy-0001SQ-0K; Tue, 08 Mar 2022 13:30:24 +0000
-Date: Tue, 08 Mar 2022 21:29:59 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <62275a57.3dDihesTVN0ZrdNn%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTPS id 3E0BE100F3949
+	for <devel@acpica.org>; Tue,  8 Mar 2022 10:49:27 -0800 (PST)
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-2db2add4516so212789637b3.1
+        for <devel@acpica.org>; Tue, 08 Mar 2022 10:49:27 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Nyh3q5AmkurI2j9g19+bjblbFKnL13Pmrx5aakYOePA=;
+        b=uucVaVx7aP/tHVjHLmXbW/2vt+RvRiW8cljbtSBBxSYWfyOrXVxRdcCP3edLKAwgYb
+         WRJfTKcXy2FZsFmtr0u6FMtyaZGefxOaicG9hiJ7Kd//ZnGbnEEvofvvSgcq9VVA7U/i
+         p5cY/nrXklWurQv8Cijwds3VbsZ7Nh6oHVabCB+XQD3/l2/5Pmd5SN5aPYAASnZJrV8b
+         14QA0moo5R9jhL/oiDuXZu4xfr4kO1/dkTfUDPtns52V6bfg5JZqzcotY5TTiMj/+hpn
+         glQOKKxejULh0vB8xqnfi87tgfJODrmCTaXQ+jhUPEwBzSygl3GUz+qqGBHfVkAc78nj
+         b1Gw==
+X-Gm-Message-State: AOAM533mlcMIkgm2+7ggDmiCGn9YE9ZkkZus08GNbbgpCyqxRBc/pPHA
+	aiARveQDfDpoH9yg4R7sFm73kI/CZ9gz2IYVLSE=
+X-Google-Smtp-Source: ABdhPJyl72NZ6wDli1DHB6/e0VogH4/zmns8SSrZS40ksbFAEj7L52VY5eIm2zoGpaWqlSF/Urmx0lmT7Wj83M3eSq8=
+X-Received: by 2002:a81:19c3:0:b0:2dc:2686:14e3 with SMTP id
+ 186-20020a8119c3000000b002dc268614e3mr14009637ywz.515.1646765365090; Tue, 08
+ Mar 2022 10:49:25 -0800 (PST)
 MIME-Version: 1.0
-Message-ID-Hash: 37A6EAYR2B5N6DNVINRWMDPZDPSZGN3G
-X-Message-ID-Hash: 37A6EAYR2B5N6DNVINRWMDPZDPSZGN3G
-X-MailFrom: lkp@intel.com
+References: <20220306111838.810959-1-chenhuacai@loongson.cn>
+In-Reply-To: <20220306111838.810959-1-chenhuacai@loongson.cn>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Tue, 8 Mar 2022 19:49:14 +0100
+Message-ID: <CAJZ5v0hsHMcqd==+cJZUcd3T11NUU6bSphFbBRjvv1ktCuH08w@mail.gmail.com>
+To: Huacai Chen <chenhuacai@loongson.cn>
+Message-ID-Hash: YUZ6K4I2BQGJWMJSDYYQMIFBNQ5QTWYG
+X-Message-ID-Hash: YUZ6K4I2BQGJWMJSDYYQMIFBNQ5QTWYG
+X-MailFrom: rjwysocki@gmail.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+CC: "Rafael J . Wysocki" <rjw@rjwysocki.net>, Erik Kaneda <erik.kaneda@intel.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Xuefeng Li <lixuefeng@loongson.cn>, Huacai Chen <chenhuacai@gmail.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>, Jianmin Lv <lvjianmin@loongson.cn>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [rafael-pm:bleeding-edge] BUILD SUCCESS e8f79f1bdea6a6a50337fe86e79e651a699352ca
+Subject: [Devel] Re: [PATCH V2 0/2] ACPI: Add LoongArch-related definitions
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/37A6EAYR2B5N6DNVINRWMDPZDPSZGN3G/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/YUZ6K4I2BQGJWMJSDYYQMIFBNQ5QTWYG/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -64,131 +58,62 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-branch HEAD: e8f79f1bdea6a6a50337fe86e79e651a699352ca  Merge branch 'acpica' into bleeding-edge
+On Sun, Mar 6, 2022 at 12:17 PM Huacai Chen <chenhuacai@loongson.cn> wrote:
+>
+> LoongArch is a new RISC ISA, which is a bit like MIPS or RISC-V.
+> LoongArch includes a reduced 32-bit version (LA32R), a standard 32-bit
+> version (LA32S) and a 64-bit version (LA64). LoongArch use ACPI as its
+> boot protocol LoongArch-specific interrupt controllers (similar to APIC)
+> are already added in the next revision of ACPI Specification (current
+> revision is 6.4).
+>
+> This patchset are preparing to add LoongArch support in mainline kernel,
+> we can see a snapshot here:
+> https://github.com/loongson/linux/tree/loongarch-next
+>
+> Cross-compile tool chain to build kernel:
+> https://github.com/loongson/build-tools/releases
+>
+> Loongson and LoongArch documentations:
+> https://github.com/loongson/LoongArch-Documentation
+>
+> ECR for LoongArch-specific interrupt controllers:
+> https://mantis.uefi.org/mantis/view.php?id=2203
+> https://mantis.uefi.org/mantis/view.php?id=2313
+>
+> ACPI changes of LoongArch have been approved in the last year, but the
+> new version of ACPI SPEC hasn't been made public yet.
+>
+> V2: Remove merged patches and update commit messages.
+>
+> Huacai Chen and Jianmin Lv(2):
+>  ACPICA: MADT: Add LoongArch APICs support.
+>  ACPICA: Events: Support fixed pcie wake event.
 
-elapsed time: 990m
+Both patches in this series are mostly ACPICA material which needs to
+be submitted to the upstream ACPICA project via
+https://github.com/acpica/acpica
 
-configs tested: 107
-configs skipped: 3
+It will be pulled by the Linux kernel from there.
 
-The following configs have been built successfully.
-More configs may be tested in the coming days.
+>
+> Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+> Signed-off-by: Jianmin Lv <lvjianmin@loongson.cn>
+> ---
+>  drivers/acpi/acpica/evevent.c  |  17 ++++--
+>  drivers/acpi/acpica/hwsleep.c  |  12 ++++
+>  drivers/acpi/acpica/utglobal.c |   4 ++
+>  drivers/acpi/tables.c          |  10 ++++
 
-gcc tested configs:
-arm                                 defconfig
-arm                              allmodconfig
-arm                              allyesconfig
-arm64                               defconfig
-arm64                            allyesconfig
-i386                 randconfig-c001-20220307
-arm                      footbridge_defconfig
-alpha                            alldefconfig
-m68k                           sun3_defconfig
-sh                           se7722_defconfig
-sh                          urquell_defconfig
-arm                         nhk8815_defconfig
-powerpc                      ep88xc_defconfig
-arm                         assabet_defconfig
-arm                          simpad_defconfig
-m68k                       m5475evb_defconfig
-powerpc                     taishan_defconfig
-arm                           viper_defconfig
-powerpc                      arches_defconfig
-arm                  randconfig-c002-20220308
-arm                  randconfig-c002-20220307
-ia64                                defconfig
-ia64                             allmodconfig
-ia64                             allyesconfig
-m68k                                defconfig
-m68k                             allyesconfig
-m68k                             allmodconfig
-arc                              allyesconfig
-csky                                defconfig
-alpha                               defconfig
-nds32                               defconfig
-alpha                            allyesconfig
-nios2                            allyesconfig
-arc                                 defconfig
-sh                               allmodconfig
-h8300                            allyesconfig
-xtensa                           allyesconfig
-nds32                             allnoconfig
-nios2                               defconfig
-parisc                              defconfig
-parisc64                            defconfig
-s390                             allmodconfig
-s390                                defconfig
-parisc                           allyesconfig
-s390                             allyesconfig
-i386                             allyesconfig
-i386                              debian-10.3
-i386                   debian-10.3-kselftests
-i386                                defconfig
-sparc                               defconfig
-sparc                            allyesconfig
-mips                             allyesconfig
-mips                             allmodconfig
-powerpc                           allnoconfig
-powerpc                          allmodconfig
-powerpc                          allyesconfig
-i386                 randconfig-a003-20220307
-i386                 randconfig-a001-20220307
-i386                 randconfig-a004-20220307
-i386                 randconfig-a002-20220307
-i386                 randconfig-a005-20220307
-i386                 randconfig-a006-20220307
-x86_64                        randconfig-a015
-x86_64               randconfig-a003-20220307
-x86_64               randconfig-a001-20220307
-x86_64               randconfig-a002-20220307
-x86_64               randconfig-a006-20220307
-x86_64               randconfig-a004-20220307
-x86_64               randconfig-a005-20220307
-riscv                randconfig-r042-20220308
-arc                  randconfig-r043-20220307
-arc                  randconfig-r043-20220308
-s390                 randconfig-r044-20220308
-riscv                    nommu_k210_defconfig
-riscv                            allyesconfig
-riscv                             allnoconfig
-riscv                               defconfig
-riscv                          rv32_defconfig
-riscv                            allmodconfig
-riscv                    nommu_virt_defconfig
-x86_64                    rhel-8.3-kselftests
-um                           x86_64_defconfig
-um                             i386_defconfig
-x86_64                              defconfig
-x86_64                           allyesconfig
-x86_64                                  kexec
-x86_64                               rhel-8.3
-x86_64                          rhel-8.3-func
-x86_64                         rhel-8.3-kunit
+This tables.c change can be submitted as a separate patch when the
+ACPICA changes get integrated.
 
-clang tested configs:
-arm                   milbeaut_m10v_defconfig
-mips                      maltaaprp_defconfig
-arm                         shannon_defconfig
-mips                     loongson1c_defconfig
-powerpc                        fsp2_defconfig
-x86_64                        randconfig-a016
-i386                 randconfig-a013-20220307
-i386                 randconfig-a012-20220307
-i386                 randconfig-a011-20220307
-i386                 randconfig-a016-20220307
-i386                 randconfig-a015-20220307
-i386                 randconfig-a014-20220307
-hexagon              randconfig-r041-20220307
-riscv                randconfig-r042-20220307
-s390                 randconfig-r044-20220307
-hexagon              randconfig-r045-20220308
-hexagon              randconfig-r041-20220308
-hexagon              randconfig-r045-20220307
-
----
-0-DAY CI Kernel Test Service, Intel Corporation
-https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
+>  include/acpi/actbl2.h          | 125 ++++++++++++++++++++++++++++++++++++++++-
+>  include/acpi/actypes.h         |   3 +-
+>  6 files changed, 163 insertions(+), 8 deletions(-)
+> --
+> 2.27.0
+>
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
