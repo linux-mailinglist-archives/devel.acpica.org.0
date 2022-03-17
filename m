@@ -2,43 +2,41 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id E396D4DC850
-	for <lists+devel-acpica@lfdr.de>; Thu, 17 Mar 2022 15:04:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id AE3D14DCDD5
+	for <lists+devel-acpica@lfdr.de>; Thu, 17 Mar 2022 19:44:26 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 96FB7100EA93C;
-	Thu, 17 Mar 2022 07:04:40 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTP id 400C9100EA2A8;
+	Thu, 17 Mar 2022 11:44:25 -0700 (PDT)
 Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2a02:768:2704:8c1a:3eec:efff:fe00:2ce4; helo=srv1.home.kabele.me; envelope-from=vit@kabele.me; receiver=<UNKNOWN> 
 Received: from srv1.home.kabele.me (unknown [IPv6:2a02:768:2704:8c1a:3eec:efff:fe00:2ce4])
-	by ml01.01.org (Postfix) with ESMTP id 9803D100EAB51
-	for <devel@acpica.org>; Thu, 17 Mar 2022 07:04:39 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTP id 9EB82100EA2A4
+	for <devel@acpica.org>; Thu, 17 Mar 2022 11:44:22 -0700 (PDT)
 Received: from srv1.home.kabele.me (localhost [IPv6:::1])
-	by srv1.home.kabele.me (Postfix) with ESMTP id E2AA4168FAD;
-	Thu, 17 Mar 2022 15:04:42 +0100 (CET)
+	by srv1.home.kabele.me (Postfix) with ESMTP id 7423916927C;
+	Thu, 17 Mar 2022 19:44:24 +0100 (CET)
 Received: from localhost ([2a01:c22:8dfa:1400:beea:2810:7764:7afc])
 	by srv1.home.kabele.me with ESMTPSA
-	id TxkYNPo/M2JI8zMAnmUwTQ
-	(envelope-from <vit@kabele.me>); Thu, 17 Mar 2022 15:04:42 +0100
-Date: Thu, 17 Mar 2022 15:04:37 +0100
+	id 9D7GGYiBM2LuRjQAnmUwTQ
+	(envelope-from <vit@kabele.me>); Thu, 17 Mar 2022 19:44:24 +0100
+Date: Thu, 17 Mar 2022 19:44:19 +0100
 From: Vit Kabele <vit@kabele.me>
-To: platform-driver-x86@kernel.org
-Message-ID: <YjM/9UrYVIKs/LOl@czspare1-lap.sysgo.cz>
-Mail-Followup-To: platform-driver-x86@kernel.org, r.marek@assembler.cz,
+To: platform-driver-x86@vger.kernel.org
+Message-ID: <YjOBg4Oys3qV1dbe@czspare1-lap.sysgo.cz>
+Mail-Followup-To: platform-driver-x86@vger.kernel.org, r.marek@assembler.cz,
 	devel@acpica.org, mingo@redhat.com, robert.moore@intel.com,
-	linux-kernel@kernel.org, linux-acpi@vger.kernel.org
-References: <cover.1647525033.git.vit@kabele.me>
+	linux-kernel@vger.kernel.org, linux-acpi@vger.kernel.org
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <cover.1647525033.git.vit@kabele.me>
-Message-ID-Hash: FQC6EXG2E6NCQJQIEKQNZ5SCXB7TQQE4
-X-Message-ID-Hash: FQC6EXG2E6NCQJQIEKQNZ5SCXB7TQQE4
+Message-ID-Hash: 7KYVHNZNTY74ETCX5PMX2RCO6C5Z6QLR
+X-Message-ID-Hash: 7KYVHNZNTY74ETCX5PMX2RCO6C5Z6QLR
 X-MailFrom: vit@kabele.me
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
-CC: vit@kabele.me, devel@acpica.org, mingo@redhat.com, linux-kernel@kernel.org, linux-acpi@vger.kernel.org
+CC: devel@acpica.org, mingo@redhat.com, linux-kernel@vger.kernel.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [PATCH 3/3] acpica: Do not touch VGA memory when EBDA < 1KiB
+Subject: [Devel] [PATCH 0/3 RESEND] platform/x86, apcica: Sanitize EBDA pointer from memory
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/FQC6EXG2E6NCQJQIEKQNZ5SCXB7TQQE4/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/7KYVHNZNTY74ETCX5PMX2RCO6C5Z6QLR/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -47,70 +45,42 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-The ACPICA code assumes that EBDA region must be at least 1KiB in size.
-Because this is not guaranteed, it might happen that while scanning the
-memory for RSDP pointer, the kernel touches memory above 640KiB.
+[Resend because I messed up the mailing list addresses]
 
-This is unwanted as the VGA memory range may not be decoded or
-even present when running under virtualization.
+When testing custom virtualization platform, we noticed that in cases
+where the memory is initialized with random pattern, the Linux guest
+tends to crash on EPT violation.
 
-Signed-off-by: Vit Kabele <vit@kabele.me>
-Reviewed-by: Rudolf Marek <r.marek@assembler.cz>
----
- drivers/acpi/acpica/tbxfroot.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+It turns out that (at least two) codepaths during boot do not check the
+validity of EBDA pointer retrieved from BDA memory at address 0x40e.
+In case that the returned address is over 640K, the kernel happily
+touches the VGA memory (which was not present in our setup, hence the
+EPT violation).
 
-diff --git a/drivers/acpi/acpica/tbxfroot.c b/drivers/acpi/acpica/tbxfroot.c
-index 67b7df1c0520..b1f4a91044d9 100644
---- a/drivers/acpi/acpica/tbxfroot.c
-+++ b/drivers/acpi/acpica/tbxfroot.c
-@@ -114,6 +114,7 @@ acpi_find_root_pointer(acpi_physical_address *table_address)
- 	u8 *table_ptr;
- 	u8 *mem_rover;
- 	u32 physical_address;
-+	u32 ebda_window_size;
- 
- 	ACPI_FUNCTION_TRACE(acpi_find_root_pointer);
- 
-@@ -143,25 +144,32 @@ acpi_find_root_pointer(acpi_physical_address *table_address)
- 	 */
- 	if (physical_address > 0x400 &&
- 	    physical_address < 0xA0000) {
-+		/* Calculate the scan window size
-+		 * The EBDA is not guaranteed to be larger than a KiB
-+		 * and in case that it is smaller the scanning function would
-+		 * leave the low memory and continue to the VGA range.
-+		 */
-+		ebda_window_size = ACPI_MIN(ACPI_EBDA_WINDOW_SIZE,
-+					    0xA0000 - physical_address);
-+
- 		/*
--		 * 1b) Search EBDA paragraphs (EBDA is required to be a
--		 *     minimum of 1K length)
-+		 * 1b) Search EBDA paragraphs
- 		 */
- 		table_ptr = acpi_os_map_memory((acpi_physical_address)
- 					       physical_address,
--					       ACPI_EBDA_WINDOW_SIZE);
-+					       ebda_window_size);
- 		if (!table_ptr) {
- 			ACPI_ERROR((AE_INFO,
- 				    "Could not map memory at 0x%8.8X for length %u",
--				    physical_address, ACPI_EBDA_WINDOW_SIZE));
-+				    physical_address, ebda_window_size));
- 
- 			return_ACPI_STATUS(AE_NO_MEMORY);
- 		}
- 
- 		mem_rover =
- 		    acpi_tb_scan_memory_for_rsdp(table_ptr,
--						 ACPI_EBDA_WINDOW_SIZE);
--		acpi_os_unmap_memory(table_ptr, ACPI_EBDA_WINDOW_SIZE);
-+						 ebda_window_size);
-+		acpi_os_unmap_memory(table_ptr, ebda_window_size);
- 
- 		if (mem_rover) {
- 
+This may be problematic in other virtualized environment too, but it can
+probably also happen on bare metal when booted with legacy free (e.g.
+UEFI without CSM) firmware, because the BDA may not be initialized and
+the VGA range might not be properly decoded.
+
+The third patch of the series adds workaround for the situation where
+EBDA is smaller than 1KiB and the ACPI code scanning for RSDP table
+bumps to the VGA memory.
+
+The two acpcia patches can eventually be squashed together, it's up to you.
+
+I tested these patches on my lenovo laptop (and in QEMU if that counts).
+
+Vit Kabele (3):
+  platform/x86: Check validity of EBDA pointer in mpparse.c
+  acpica: Check that the EBDA pointer is in valid range
+  acpica: Do not touch VGA memory when EBDA < 1KiB
+
+ arch/x86/include/asm/bios_ebda.h |  3 +++
+ arch/x86/kernel/ebda.c           |  3 ---
+ arch/x86/kernel/mpparse.c        | 12 +++++++++++-
+ drivers/acpi/acpica/tbxfroot.c   | 25 ++++++++++++++++++-------
+ 4 files changed, 32 insertions(+), 11 deletions(-)
+
 -- 
 2.30.2
 _______________________________________________
