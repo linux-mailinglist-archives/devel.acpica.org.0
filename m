@@ -1,27 +1,27 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id B866A4DC84B
-	for <lists+devel-acpica@lfdr.de>; Thu, 17 Mar 2022 15:04:01 +0100 (CET)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 347814DC84C
+	for <lists+devel-acpica@lfdr.de>; Thu, 17 Mar 2022 15:04:33 +0100 (CET)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 6651A100EA937;
-	Thu, 17 Mar 2022 07:04:00 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTP id 8A99F100EA93A;
+	Thu, 17 Mar 2022 07:04:31 -0700 (PDT)
 Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2a02:768:2704:8c1a:3eec:efff:fe00:2ce4; helo=srv1.home.kabele.me; envelope-from=vit@kabele.me; receiver=<UNKNOWN> 
 Received: from srv1.home.kabele.me (unknown [IPv6:2a02:768:2704:8c1a:3eec:efff:fe00:2ce4])
-	by ml01.01.org (Postfix) with ESMTP id B53BA100EA934
-	for <devel@acpica.org>; Thu, 17 Mar 2022 07:03:57 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTP id 433E6100EA934
+	for <devel@acpica.org>; Thu, 17 Mar 2022 07:04:28 -0700 (PDT)
 Received: from srv1.home.kabele.me (localhost [IPv6:::1])
-	by srv1.home.kabele.me (Postfix) with ESMTP id 490C9168FA3;
-	Thu, 17 Mar 2022 15:03:59 +0100 (CET)
+	by srv1.home.kabele.me (Postfix) with ESMTP id 67FBF168FA8;
+	Thu, 17 Mar 2022 15:04:31 +0100 (CET)
 Received: from localhost ([2a01:c22:8dfa:1400:beea:2810:7764:7afc])
 	by srv1.home.kabele.me with ESMTPSA
-	id gtgvD88/M2Iz8zMAnmUwTQ
-	(envelope-from <vit@kabele.me>); Thu, 17 Mar 2022 15:03:59 +0100
-Date: Thu, 17 Mar 2022 15:03:54 +0100
+	id FsSRFu8/M2JB8zMAnmUwTQ
+	(envelope-from <vit@kabele.me>); Thu, 17 Mar 2022 15:04:31 +0100
+Date: Thu, 17 Mar 2022 15:04:26 +0100
 From: Vit Kabele <vit@kabele.me>
 To: platform-driver-x86@kernel.org
-Message-ID: <YjM/yphbAQHxJIxg@czspare1-lap.sysgo.cz>
+Message-ID: <YjM/6rqxZN19en2I@czspare1-lap.sysgo.cz>
 Mail-Followup-To: platform-driver-x86@kernel.org, r.marek@assembler.cz,
 	devel@acpica.org, mingo@redhat.com, robert.moore@intel.com,
 	linux-kernel@kernel.org, linux-acpi@vger.kernel.org
@@ -29,16 +29,16 @@ References: <cover.1647525033.git.vit@kabele.me>
 MIME-Version: 1.0
 Content-Disposition: inline
 In-Reply-To: <cover.1647525033.git.vit@kabele.me>
-Message-ID-Hash: ZN2MSZ6EGZAH54B7OLP3E56OGSWD2TAC
-X-Message-ID-Hash: ZN2MSZ6EGZAH54B7OLP3E56OGSWD2TAC
+Message-ID-Hash: 3QCIW2ZET2DOCB5D4ZZAOBWBLHXOJBD7
+X-Message-ID-Hash: 3QCIW2ZET2DOCB5D4ZZAOBWBLHXOJBD7
 X-MailFrom: vit@kabele.me
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
 CC: vit@kabele.me, devel@acpica.org, mingo@redhat.com, linux-kernel@kernel.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [PATCH 1/3] platform/x86: Check validity of EBDA pointer in mpparse.c
+Subject: [Devel] [PATCH 2/3] acpica: Check that the EBDA pointer is in valid range
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/ZN2MSZ6EGZAH54B7OLP3E56OGSWD2TAC/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/3QCIW2ZET2DOCB5D4ZZAOBWBLHXOJBD7/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -47,75 +47,36 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-The pointer to EBDA area is retrieved from a word at 0x40e in BDA.
-In case that the memory there is not initialized and contains garbage,
-it might happen that the kernel touches memory above 640K.
+If the memory at 0x40e is uninitialized, the retrieved physical_memory
+address of EBDA may be beyond the low memory (i.e. above 640K).
 
-This may cause unwanted reads from VGA memory which may not be decoded,
-or even present when running under virtualization.
-
-This patch adds sanity check for the EBDA pointer retrieved from the memory
-so that scanning EBDA does not leave the low memory.
+If so, the kernel may unintentionally access the VGA memory, that
+might not be decoded or even present in case of virtualization.
 
 Signed-off-by: Vit Kabele <vit@kabele.me>
 Reviewed-by: Rudolf Marek <r.marek@assembler.cz>
 ---
- arch/x86/include/asm/bios_ebda.h |  3 +++
- arch/x86/kernel/ebda.c           |  3 ---
- arch/x86/kernel/mpparse.c        | 12 +++++++++++-
- 3 files changed, 14 insertions(+), 4 deletions(-)
+ drivers/acpi/acpica/tbxfroot.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/include/asm/bios_ebda.h b/arch/x86/include/asm/bios_ebda.h
-index 4d5a17e2febe..c3133c01d5b7 100644
---- a/arch/x86/include/asm/bios_ebda.h
-+++ b/arch/x86/include/asm/bios_ebda.h
-@@ -4,6 +4,9 @@
+diff --git a/drivers/acpi/acpica/tbxfroot.c b/drivers/acpi/acpica/tbxfroot.c
+index 9fec3df6c3ba..67b7df1c0520 100644
+--- a/drivers/acpi/acpica/tbxfroot.c
++++ b/drivers/acpi/acpica/tbxfroot.c
+@@ -138,8 +138,11 @@ acpi_find_root_pointer(acpi_physical_address *table_address)
+ 	acpi_os_unmap_memory(table_ptr, ACPI_EBDA_PTR_LENGTH);
  
- #include <asm/io.h>
- 
-+#define BIOS_START_MIN		0x20000U	/* 128K, less than this is insane */
-+#define BIOS_START_MAX		0x9f000U	/* 640K, absolute maximum */
-+
- /*
-  * Returns physical address of EBDA.  Returns 0 if there is no EBDA.
-  */
-diff --git a/arch/x86/kernel/ebda.c b/arch/x86/kernel/ebda.c
-index 38e7d597b660..86c0801fc3ce 100644
---- a/arch/x86/kernel/ebda.c
-+++ b/arch/x86/kernel/ebda.c
-@@ -50,9 +50,6 @@
- 
- #define BIOS_RAM_SIZE_KB_PTR	0x413
- 
--#define BIOS_START_MIN		0x20000U	/* 128K, less than this is insane */
--#define BIOS_START_MAX		0x9f000U	/* 640K, absolute maximum */
+ 	/* EBDA present? */
 -
- void __init reserve_bios_regions(void)
- {
- 	unsigned int bios_start, ebda_start;
-diff --git a/arch/x86/kernel/mpparse.c b/arch/x86/kernel/mpparse.c
-index fed721f90116..6bba0744d32d 100644
---- a/arch/x86/kernel/mpparse.c
-+++ b/arch/x86/kernel/mpparse.c
-@@ -633,7 +633,17 @@ void __init default_find_smp_config(void)
- 	 */
- 
- 	address = get_bios_ebda();
--	if (address)
-+
-+	/* Check that the EBDA address is sane and the get_bios_ebda() did not
-+	 * return just garbage from memory.
-+	 * The upper bound is considered valid if it points below 1K before
-+	 * end of the lower memory (i.e. 639K). The EBDA can be smaller
-+	 * than 1K in which case the pointer will point above 639K but that
-+	 * case is handled in step 2) above, and we don't need to adjust scan
-+	 * size to not bump into the memory above 640K.
+-	if (physical_address > 0x400) {
++	/* Check that the EBDA pointer from 0x40e is sane and does not point
++	 * above valid low memory
 +	 */
-+	if (address >= BIOS_START_MIN &&
-+	    address < 639 * 0x400)
- 		smp_scan_config(address, 0x400);
- }
- 
++	if (physical_address > 0x400 &&
++	    physical_address < 0xA0000) {
+ 		/*
+ 		 * 1b) Search EBDA paragraphs (EBDA is required to be a
+ 		 *     minimum of 1K length)
 -- 
 2.30.2
 _______________________________________________
