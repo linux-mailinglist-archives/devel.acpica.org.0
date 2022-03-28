@@ -2,293 +2,221 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D91D4E49DF
-	for <lists+devel-acpica@lfdr.de>; Wed, 23 Mar 2022 01:01:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id F28B74E96A9
+	for <lists+devel-acpica@lfdr.de>; Mon, 28 Mar 2022 14:33:49 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 415AC100F3FB3;
-	Tue, 22 Mar 2022 17:01:41 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.151; helo=mga17.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	by ml01.01.org (Postfix) with ESMTP id 1ACCB100F392B;
+	Mon, 28 Mar 2022 05:33:48 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.219.179; helo=mail-yb1-f179.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id B6AB0100EB34A
-	for <devel@acpica.org>; Tue, 22 Mar 2022 17:01:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1647993699; x=1679529699;
-  h=date:from:to:cc:subject:message-id:mime-version:
-   content-transfer-encoding;
-  bh=hHzBe8U8IturRswb/6WWXu+XslqPIXQ8Eg5k/VP6cek=;
-  b=Uc2tQPtL8y+nThFzejXyARx2pxDt78DB+I83V/I5DBYdKEcU6tlIIDp7
-   Yen5Z9At/6jijLP8XzA7ioLc1ox93o+6rV1xsGPc+yuKn3+I2XoUblCVJ
-   kyptfubK6ezU1X+QxmTQYiqtW8T3zm9JMF4eDJkHOSg3u6/Am/UHymNHk
-   qY2AqkNyBPdRvv/EzII9lA24smtaEJCk9QfkFNszgbRhgcU8Datvl+jJh
-   IfWABTzNnW9al/VmRqocpzQUjTN+Q+9fT0Co7nvbMU7eS9pV+G7gwzVQp
-   SAkAlePaNtmOEI/UQO0XxVoDvIFfg9yTZvRSVsqACVpELXkt6QBgjO9TV
-   Q==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10294"; a="238589201"
-X-IronPort-AV: E=Sophos;i="5.90,203,1643702400";
-   d="scan'208";a="238589201"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2022 17:01:38 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.90,203,1643702400";
-   d="scan'208";a="583490886"
-Received: from lkp-server02.sh.intel.com (HELO 89b41b6ae01c) ([10.239.97.151])
-  by orsmga001.jf.intel.com with ESMTP; 22 Mar 2022 17:01:35 -0700
-Received: from kbuild by 89b41b6ae01c with local (Exim 4.92)
-	(envelope-from <lkp@intel.com>)
-	id 1nWoRT-000JQp-8I; Wed, 23 Mar 2022 00:01:35 +0000
-Date: Wed, 23 Mar 2022 08:01:07 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <623a6343.pZi+FzcShn3ZsUU6%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTPS id 2EACD100F3928
+	for <devel@acpica.org>; Mon, 28 Mar 2022 05:33:46 -0700 (PDT)
+Received: by mail-yb1-f179.google.com with SMTP id y142so25671265ybe.11
+        for <devel@acpica.org>; Mon, 28 Mar 2022 05:33:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=96R3YZlaxPkbqjS50KOs84E9IviQBiQAWcWza7S6bDo=;
+        b=dSKGnn6K34lqRSXA2W9QhnTSLh6V2OQH4PV3wLF6FktvOnFaVVchD+2dGVBBGdIEOP
+         76Cr4Bc/0dmhtqiINnzlwJZU/XXPw22quAz4YUfzEkHVQXdRNrL/3tgvmIvtQE1FrFVB
+         xHCeVj1iPj2v6Bj+F9pFFM04DT1eyxMAk6roe4rx3RmL0slBSo1xt7LXz6EMD18ZMgXv
+         ezXd0GveHpzqaBDCjlUsB5CS7IAD3PNcSO0dlvSuyTgbJqIj2l1jB1N80KZgKuXwjSri
+         3ysoGZ6z/X3kuB1aDLGDq72Xh3saaEhtC6WiaPISWeaDyg36gPsUrHeSO7DDmLfYPimQ
+         ESbQ==
+X-Gm-Message-State: AOAM531zkkd/fW77V13fAfWE4hU0do0ZtfimmpUwkvLQmGy61S2uSKPY
+	VdCPC9FWgjsFmzgQg3ej8K8LFbtyL5j8IfkDouE=
+X-Google-Smtp-Source: ABdhPJx8Wg38N6VDkBqHhGiMOIVXRrg4vGvCYLhNlosUsWn6MZ6VqGYcxoBV2Rzxwr0C4NFzPtT0Oq2lDLGzpa8RiBA=
+X-Received: by 2002:a25:9d8a:0:b0:633:9668:c48a with SMTP id
+ v10-20020a259d8a000000b006339668c48amr23154148ybp.153.1648470824874; Mon, 28
+ Mar 2022 05:33:44 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID-Hash: YT5MAUZC26Y66CHKJLFGYITHFCMBWNMC
-X-Message-ID-Hash: YT5MAUZC26Y66CHKJLFGYITHFCMBWNMC
-X-MailFrom: lkp@intel.com
+References: <20220326165909.506926-1-benni@stuerz.xyz> <20220326165909.506926-5-benni@stuerz.xyz>
+In-Reply-To: <20220326165909.506926-5-benni@stuerz.xyz>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Mon, 28 Mar 2022 14:33:29 +0200
+Message-ID: <CAJZ5v0iJ=t26mnxHx9B+_A3ue7tVjgATN=TTtNNf2UNfuySd7Q@mail.gmail.com>
+To: =?UTF-8?Q?Benjamin_St=C3=BCrz?= <benni@stuerz.xyz>
+Message-ID-Hash: KBW3OJWG6GHQDLU6ZPDJK3U53I36GUFY
+X-Message-ID-Hash: KBW3OJWG6GHQDLU6ZPDJK3U53I36GUFY
+X-MailFrom: rjwysocki@gmail.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+CC: Andrew Lunn <andrew@lunn.ch>, Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>, Gregory Clement <gregory.clement@bootlin.com>, Russell King - ARM Linux <linux@armlinux.org.uk>, linux@simtec.co.uk, Krzysztof Kozlowski <krzk@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>, Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>, "H. Peter Anvin" <hpa@zytor.com>, Rafael Wysocki <rafael.j.wysocki@intel.com>, 3chas3@gmail.com, laforge@gnumonks.org, Arnd Bergmann <arnd@arndb.de>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, Tony Luck <tony.luck@intel.com>, Robert Richter <rric@kernel.org>, Linus Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski <brgl@bgdev.pl>, mike.marciniszyn@cornelisnetworks.com, dennis.dalessandro@cornelisnetworks.com, Jason Gunthorpe <jgg@ziepe.ca>, =?UTF-8?Q?Pali_Roh=C3=A1r?= <pali@kernel.org>, Dmitry Torokhov <dm
+ itry.torokhov@gmail.com>, isdn@linux-pingi.de, Benjamin Herrenschmidt <benh@kernel.crashing.org>, Frederic Barrat <fbarrat@linux.ibm.com>, Andrew Donnellan <ajd@linux.ibm.com>, David Miller <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, pabeni@redhat.com, Nicolas Pitre <nico@fluxnic.net>, Loic Poulain <loic.poulain@linaro.org>, kvalo@kernel.org, pkshih@realtek.com, Bjorn Helgaas <bhelgaas@google.com>, Linux ARM <linux-arm-kernel@lists.infradead.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Linux Samsung SoC <linux-samsung-soc@vger.kernel.org>, linux-ia64@vger.kernel.org, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, linux-atm-general@lists.sourceforge.net, netdev <netdev@vger.kernel.org>, "open list:EDAC-CORE" <linux-edac@vger.kernel.org>, "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>, linux-rdma@vger.kernel.org, linux-input <linux-input@vger.kernel.org>, linuxppc-dev <l
+ inuxppc-dev@lists.ozlabs.org>, Linux Media Mailing List <linux-media@vger.kernel.org>, wcn36xx@lists.infradead.org, "open list:NETWORKING DRIVERS (WIRELESS)" <linux-wireless@vger.kernel.org>, Linux PCI <linux-pci@vger.kernel.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [rafael-pm:bleeding-edge] BUILD SUCCESS 81bbf3bb3aecb62a539f57a1d81381f0f95ff6ec
+Subject: [Devel] Re: [PATCH 05/22] acpica: Replace comments with C99 initializers
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/YT5MAUZC26Y66CHKJLFGYITHFCMBWNMC/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/KBW3OJWG6GHQDLU6ZPDJK3U53I36GUFY/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-branch HEAD: 81bbf3bb3aecb62a539f57a1d81381f0f95ff6ec  Merge branch 'pm-opp' into linux-next
-
-elapsed time: 727m
-
-configs tested: 200
-configs skipped: 3
-
-The following configs have been built successfully.
-More configs may be tested in the coming days.
-
-gcc tested configs:
-arm                                 defconfig
-arm64                            allyesconfig
-arm64                               defconfig
-arm                              allyesconfig
-arm                              allmodconfig
-i386                          randconfig-c001
-s390                             allmodconfig
-m68k                             allmodconfig
-m68k                             allyesconfig
-powerpc                          allmodconfig
-powerpc                          allyesconfig
-s390                             allyesconfig
-i386                 randconfig-c001-20220321
-mips                 randconfig-c004-20220320
-arm                        shmobile_defconfig
-ia64                          tiger_defconfig
-ia64                         bigsur_defconfig
-arm                         nhk8815_defconfig
-arm                        keystone_defconfig
-h8300                               defconfig
-powerpc                 mpc85xx_cds_defconfig
-sparc                       sparc32_defconfig
-sh                          polaris_defconfig
-i386                                defconfig
-sh                          rsk7201_defconfig
-h8300                     edosk2674_defconfig
-mips                       capcella_defconfig
-sh                             shx3_defconfig
-sh                        sh7757lcr_defconfig
-arm                        multi_v7_defconfig
-sh                           se7780_defconfig
-arm                             pxa_defconfig
-nios2                            alldefconfig
-arm                       aspeed_g5_defconfig
-sh                  sh7785lcr_32bit_defconfig
-arm                         at91_dt_defconfig
-xtensa                    xip_kc705_defconfig
-m68k                        m5407c3_defconfig
-mips                 decstation_r4k_defconfig
-h8300                            allyesconfig
-m68k                          sun3x_defconfig
-powerpc                     taishan_defconfig
-arc                          axs101_defconfig
-mips                     decstation_defconfig
-powerpc                     tqm8548_defconfig
-parisc                           allyesconfig
-mips                         tb0226_defconfig
-powerpc                 canyonlands_defconfig
-sh                            hp6xx_defconfig
-mips                      maltasmvp_defconfig
-powerpc                   motionpro_defconfig
-sh                        sh7763rdp_defconfig
-arc                           tb10x_defconfig
-parisc64                            defconfig
-arc                 nsimosci_hs_smp_defconfig
-sh                               j2_defconfig
-ia64                                defconfig
-powerpc                 mpc837x_rdb_defconfig
-powerpc64                           defconfig
-powerpc                       maple_defconfig
-arm                        clps711x_defconfig
-arm                            qcom_defconfig
-arc                      axs103_smp_defconfig
-xtensa                          iss_defconfig
-sh                         microdev_defconfig
-sh                              ul2_defconfig
-um                                  defconfig
-nios2                         3c120_defconfig
-arm                         lpc18xx_defconfig
-sparc                            alldefconfig
-m68k                        mvme16x_defconfig
-openrisc                 simple_smp_defconfig
-mips                         cobalt_defconfig
-powerpc                 mpc834x_itx_defconfig
-sh                             sh03_defconfig
-sh                        edosk7705_defconfig
-arm                         vf610m4_defconfig
-powerpc                     rainier_defconfig
-arm                         s3c6400_defconfig
-powerpc                  storcenter_defconfig
-sh                        sh7785lcr_defconfig
-arm                            hisi_defconfig
-arc                        nsimosci_defconfig
-nios2                            allyesconfig
-sh                            titan_defconfig
-arm                         assabet_defconfig
-sh                           se7619_defconfig
-arm                        trizeps4_defconfig
-arm                       omap2plus_defconfig
-mips                         db1xxx_defconfig
-mips                           xway_defconfig
-parisc                generic-64bit_defconfig
-arm                           viper_defconfig
-nds32                               defconfig
-m68k                        mvme147_defconfig
-powerpc                    sam440ep_defconfig
-sh                                  defconfig
-xtensa                       common_defconfig
-riscv                            allmodconfig
-arm                  randconfig-c002-20220321
-arm                  randconfig-c002-20220320
-arm                  randconfig-c002-20220322
-ia64                             allmodconfig
-ia64                             allyesconfig
-m68k                                defconfig
-nios2                               defconfig
-arc                              allyesconfig
-nds32                             allnoconfig
-csky                                defconfig
-alpha                               defconfig
-alpha                            allyesconfig
-xtensa                           allyesconfig
-arc                                 defconfig
-sh                               allmodconfig
-parisc                              defconfig
-s390                                defconfig
-i386                             allyesconfig
-sparc                            allyesconfig
-sparc                               defconfig
-i386                   debian-10.3-kselftests
-i386                              debian-10.3
-mips                             allyesconfig
-mips                             allmodconfig
-powerpc                           allnoconfig
-x86_64               randconfig-a016-20220321
-x86_64               randconfig-a011-20220321
-x86_64               randconfig-a012-20220321
-x86_64               randconfig-a013-20220321
-x86_64               randconfig-a014-20220321
-x86_64               randconfig-a015-20220321
-i386                 randconfig-a015-20220321
-i386                 randconfig-a016-20220321
-i386                 randconfig-a013-20220321
-i386                 randconfig-a012-20220321
-i386                 randconfig-a014-20220321
-i386                 randconfig-a011-20220321
-arc                  randconfig-r043-20220320
-riscv                randconfig-r042-20220321
-s390                 randconfig-r044-20220321
-arc                  randconfig-r043-20220321
-riscv                    nommu_k210_defconfig
-riscv                            allyesconfig
-riscv                    nommu_virt_defconfig
-riscv                             allnoconfig
-riscv                               defconfig
-riscv                          rv32_defconfig
-x86_64                    rhel-8.3-kselftests
-x86_64                           allyesconfig
-um                           x86_64_defconfig
-um                             i386_defconfig
-x86_64                              defconfig
-x86_64                               rhel-8.3
-x86_64                          rhel-8.3-func
-x86_64                         rhel-8.3-kunit
-x86_64                                  kexec
-
-clang tested configs:
-x86_64                        randconfig-c007
-mips                 randconfig-c004-20220320
-arm                  randconfig-c002-20220320
-powerpc              randconfig-c003-20220320
-riscv                randconfig-c006-20220320
-i386                          randconfig-c001
-arm                  randconfig-c002-20220322
-powerpc              randconfig-c003-20220322
-riscv                randconfig-c006-20220322
-s390                 randconfig-c005-20220322
-mips                 randconfig-c004-20220322
-powerpc                    gamecube_defconfig
-mips                        maltaup_defconfig
-hexagon                          alldefconfig
-powerpc                     mpc5200_defconfig
-arm                         orion5x_defconfig
-powerpc                     akebono_defconfig
-arm                         lpc32xx_defconfig
-powerpc                          allyesconfig
-powerpc                 mpc8272_ads_defconfig
-arm                        neponset_defconfig
-arm                          moxart_defconfig
-arm64                            allyesconfig
-arm                        mvebu_v5_defconfig
-powerpc                        fsp2_defconfig
-arm                     am200epdkit_defconfig
-hexagon                             defconfig
-x86_64               randconfig-a001-20220321
-x86_64               randconfig-a003-20220321
-x86_64               randconfig-a005-20220321
-x86_64               randconfig-a004-20220321
-x86_64               randconfig-a002-20220321
-x86_64               randconfig-a006-20220321
-i386                 randconfig-a001-20220321
-i386                 randconfig-a006-20220321
-i386                 randconfig-a003-20220321
-i386                 randconfig-a005-20220321
-i386                 randconfig-a004-20220321
-i386                 randconfig-a002-20220321
-x86_64                        randconfig-a012
-x86_64                        randconfig-a014
-x86_64                        randconfig-a016
-riscv                randconfig-r042-20220320
-hexagon              randconfig-r045-20220321
-hexagon              randconfig-r045-20220320
-hexagon              randconfig-r041-20220321
-hexagon              randconfig-r041-20220320
-riscv                randconfig-r042-20220322
-hexagon              randconfig-r045-20220322
-hexagon              randconfig-r041-20220322
-s390                 randconfig-r044-20220320
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
-_______________________________________________
-Devel mailing list -- devel@acpica.org
-To unsubscribe send an email to devel-leave@acpica.org
-%(web_page_url)slistinfo%(cgiext)s/%(_internal_name)s
+T24gU2F0LCBNYXIgMjYsIDIwMjIgYXQgNjowOSBQTSBCZW5qYW1pbiBTdMO8cnogPGJlbm5pQHN0
+dWVyei54eXo+IHdyb3RlOg0KPg0KPiBUaGlzIHJlcGxhY2VzIGNvbW1lbnRzIHdpdGggQzk5J3Mg
+ZGVzaWduYXRlZA0KPiBpbml0aWFsaXplcnMgYmVjYXVzZSB0aGUga2VybmVsIHN1cHBvcnRzIHRo
+ZW0gbm93Lg0KDQpIb3dldmVyLCBub3RlIHRoYXQgYWxsIG9mIHRoZSBBQ1BJQ0EgbWF0ZXJpYWwg
+c2hvdWxkIGJlIHN1Ym1pdHRlZCB0bw0KdGhlIHVwc3RyZWFtIEFDUElDQSBwcm9qZWN0IHZpYSBo
+dHRwczovL2dpdGh1Yi5jb20vYWNwaWNhL2FjcGljYQ0KDQpBbHNvIHBsZWFzZSBub3RlIHRoYXQg
+dGhlIHNldCBvZiBjb21waWxlcnMgdGhhdCBuZWVkIHRvIGJlIHN1cHBvcnRlZA0KYnkgdGhlIEFD
+UElDQSBwcm9qZWN0IGlzIGdyZWF0ZXIgdGhhbiB0aGUgc2V0IG9mIGNvbXBpbGVycyB0aGF0IGNh
+bg0KYnVpbGQgdGhlIExpbnV4IGtlcm5lbC4NCg0KDQo+IFNpZ25lZC1vZmYtYnk6IEJlbmphbWlu
+IFN0w7xyeiA8YmVubmlAc3R1ZXJ6Lnh5ej4NCj4gLS0tDQo+ICBkcml2ZXJzL2FjcGkvYWNwaWNh
+L3V0ZGVjb2RlLmMgfCAxODMgKysrKysrKysrKysrKysrKy0tLS0tLS0tLS0tLS0tLS0tDQo+ICAx
+IGZpbGUgY2hhbmdlZCwgOTAgaW5zZXJ0aW9ucygrKSwgOTMgZGVsZXRpb25zKC0pDQo+DQo+IGRp
+ZmYgLS1naXQgYS9kcml2ZXJzL2FjcGkvYWNwaWNhL3V0ZGVjb2RlLmMgYi9kcml2ZXJzL2FjcGkv
+YWNwaWNhL3V0ZGVjb2RlLmMNCj4gaW5kZXggYmNkMzg3MTA3OWQ3Li5kMTk4NjhkMmVhNDYgMTAw
+NjQ0DQo+IC0tLSBhL2RyaXZlcnMvYWNwaS9hY3BpY2EvdXRkZWNvZGUuYw0KPiArKysgYi9kcml2
+ZXJzL2FjcGkvYWNwaWNhL3V0ZGVjb2RlLmMNCj4gQEAgLTE1NiwzNyArMTU2LDM3IEBAIHN0YXRp
+YyBjb25zdCBjaGFyIGFjcGlfZ2JsX2JhZF90eXBlW10gPSAiVU5ERUZJTkVEIjsNCj4gIC8qIFBy
+aW50YWJsZSBuYW1lcyBvZiB0aGUgQUNQSSBvYmplY3QgdHlwZXMgKi8NCj4NCj4gIHN0YXRpYyBj
+b25zdCBjaGFyICphY3BpX2dibF9uc190eXBlX25hbWVzW10gPSB7DQo+IC0gICAgICAgLyogMDAg
+Ki8gIlVudHlwZWQiLA0KPiAtICAgICAgIC8qIDAxICovICJJbnRlZ2VyIiwNCj4gLSAgICAgICAv
+KiAwMiAqLyAiU3RyaW5nIiwNCj4gLSAgICAgICAvKiAwMyAqLyAiQnVmZmVyIiwNCj4gLSAgICAg
+ICAvKiAwNCAqLyAiUGFja2FnZSIsDQo+IC0gICAgICAgLyogMDUgKi8gIkZpZWxkVW5pdCIsDQo+
+IC0gICAgICAgLyogMDYgKi8gIkRldmljZSIsDQo+IC0gICAgICAgLyogMDcgKi8gIkV2ZW50IiwN
+Cj4gLSAgICAgICAvKiAwOCAqLyAiTWV0aG9kIiwNCj4gLSAgICAgICAvKiAwOSAqLyAiTXV0ZXgi
+LA0KPiAtICAgICAgIC8qIDEwICovICJSZWdpb24iLA0KPiAtICAgICAgIC8qIDExICovICJQb3dl
+ciIsDQo+IC0gICAgICAgLyogMTIgKi8gIlByb2Nlc3NvciIsDQo+IC0gICAgICAgLyogMTMgKi8g
+IlRoZXJtYWwiLA0KPiAtICAgICAgIC8qIDE0ICovICJCdWZmZXJGaWVsZCIsDQo+IC0gICAgICAg
+LyogMTUgKi8gIkRkYkhhbmRsZSIsDQo+IC0gICAgICAgLyogMTYgKi8gIkRlYnVnT2JqZWN0IiwN
+Cj4gLSAgICAgICAvKiAxNyAqLyAiUmVnaW9uRmllbGQiLA0KPiAtICAgICAgIC8qIDE4ICovICJC
+YW5rRmllbGQiLA0KPiAtICAgICAgIC8qIDE5ICovICJJbmRleEZpZWxkIiwNCj4gLSAgICAgICAv
+KiAyMCAqLyAiUmVmZXJlbmNlIiwNCj4gLSAgICAgICAvKiAyMSAqLyAiQWxpYXMiLA0KPiAtICAg
+ICAgIC8qIDIyICovICJNZXRob2RBbGlhcyIsDQo+IC0gICAgICAgLyogMjMgKi8gIk5vdGlmeSIs
+DQo+IC0gICAgICAgLyogMjQgKi8gIkFkZHJIYW5kbGVyIiwNCj4gLSAgICAgICAvKiAyNSAqLyAi
+UmVzb3VyY2VEZXNjIiwNCj4gLSAgICAgICAvKiAyNiAqLyAiUmVzb3VyY2VGbGQiLA0KPiAtICAg
+ICAgIC8qIDI3ICovICJTY29wZSIsDQo+IC0gICAgICAgLyogMjggKi8gIkV4dHJhIiwNCj4gLSAg
+ICAgICAvKiAyOSAqLyAiRGF0YSIsDQo+IC0gICAgICAgLyogMzAgKi8gIkludmFsaWQiDQo+ICsg
+ICAgICAgWzBdICA9ICJVbnR5cGVkIiwNCj4gKyAgICAgICBbMV0gID0gIkludGVnZXIiLA0KPiAr
+ICAgICAgIFsyXSAgPSAiU3RyaW5nIiwNCj4gKyAgICAgICBbM10gID0gIkJ1ZmZlciIsDQo+ICsg
+ICAgICAgWzRdICA9ICJQYWNrYWdlIiwNCj4gKyAgICAgICBbNV0gID0gIkZpZWxkVW5pdCIsDQo+
+ICsgICAgICAgWzZdICA9ICJEZXZpY2UiLA0KPiArICAgICAgIFs3XSAgPSAiRXZlbnQiLA0KPiAr
+ICAgICAgIFs4XSAgPSAiTWV0aG9kIiwNCj4gKyAgICAgICBbOV0gID0gIk11dGV4IiwNCj4gKyAg
+ICAgICBbMTBdID0gIlJlZ2lvbiIsDQo+ICsgICAgICAgWzExXSA9ICJQb3dlciIsDQo+ICsgICAg
+ICAgWzEyXSA9ICJQcm9jZXNzb3IiLA0KPiArICAgICAgIFsxM10gPSAiVGhlcm1hbCIsDQo+ICsg
+ICAgICAgWzE0XSA9ICJCdWZmZXJGaWVsZCIsDQo+ICsgICAgICAgWzE1XSA9ICJEZGJIYW5kbGUi
+LA0KPiArICAgICAgIFsxNl0gPSAiRGVidWdPYmplY3QiLA0KPiArICAgICAgIFsxN10gPSAiUmVn
+aW9uRmllbGQiLA0KPiArICAgICAgIFsxOF0gPSAiQmFua0ZpZWxkIiwNCj4gKyAgICAgICBbMTld
+ID0gIkluZGV4RmllbGQiLA0KPiArICAgICAgIFsyMF0gPSAiUmVmZXJlbmNlIiwNCj4gKyAgICAg
+ICBbMjFdID0gIkFsaWFzIiwNCj4gKyAgICAgICBbMjJdID0gIk1ldGhvZEFsaWFzIiwNCj4gKyAg
+ICAgICBbMjNdID0gIk5vdGlmeSIsDQo+ICsgICAgICAgWzI0XSA9ICJBZGRySGFuZGxlciIsDQo+
+ICsgICAgICAgWzI1XSA9ICJSZXNvdXJjZURlc2MiLA0KPiArICAgICAgIFsyNl0gPSAiUmVzb3Vy
+Y2VGbGQiLA0KPiArICAgICAgIFsyN10gPSAiU2NvcGUiLA0KPiArICAgICAgIFsyOF0gPSAiRXh0
+cmEiLA0KPiArICAgICAgIFsyOV0gPSAiRGF0YSIsDQo+ICsgICAgICAgWzMwXSA9ICJJbnZhbGlk
+Ig0KPiAgfTsNCj4NCj4gIGNvbnN0IGNoYXIgKmFjcGlfdXRfZ2V0X3R5cGVfbmFtZShhY3BpX29i
+amVjdF90eXBlIHR5cGUpDQo+IEBAIC0yODQsMjIgKzI4NCwyMiBAQCBjb25zdCBjaGFyICphY3Bp
+X3V0X2dldF9ub2RlX25hbWUodm9pZCAqb2JqZWN0KQ0KPiAgLyogUHJpbnRhYmxlIG5hbWVzIG9m
+IG9iamVjdCBkZXNjcmlwdG9yIHR5cGVzICovDQo+DQo+ICBzdGF0aWMgY29uc3QgY2hhciAqYWNw
+aV9nYmxfZGVzY190eXBlX25hbWVzW10gPSB7DQo+IC0gICAgICAgLyogMDAgKi8gIk5vdCBhIERl
+c2NyaXB0b3IiLA0KPiAtICAgICAgIC8qIDAxICovICJDYWNoZWQgT2JqZWN0IiwNCj4gLSAgICAg
+ICAvKiAwMiAqLyAiU3RhdGUtR2VuZXJpYyIsDQo+IC0gICAgICAgLyogMDMgKi8gIlN0YXRlLVVw
+ZGF0ZSIsDQo+IC0gICAgICAgLyogMDQgKi8gIlN0YXRlLVBhY2thZ2UiLA0KPiAtICAgICAgIC8q
+IDA1ICovICJTdGF0ZS1Db250cm9sIiwNCj4gLSAgICAgICAvKiAwNiAqLyAiU3RhdGUtUm9vdFBh
+cnNlU2NvcGUiLA0KPiAtICAgICAgIC8qIDA3ICovICJTdGF0ZS1QYXJzZVNjb3BlIiwNCj4gLSAg
+ICAgICAvKiAwOCAqLyAiU3RhdGUtV2Fsa1Njb3BlIiwNCj4gLSAgICAgICAvKiAwOSAqLyAiU3Rh
+dGUtUmVzdWx0IiwNCj4gLSAgICAgICAvKiAxMCAqLyAiU3RhdGUtTm90aWZ5IiwNCj4gLSAgICAg
+ICAvKiAxMSAqLyAiU3RhdGUtVGhyZWFkIiwNCj4gLSAgICAgICAvKiAxMiAqLyAiVHJlZSBXYWxr
+IFN0YXRlIiwNCj4gLSAgICAgICAvKiAxMyAqLyAiUGFyc2UgVHJlZSBPcCIsDQo+IC0gICAgICAg
+LyogMTQgKi8gIk9wZXJhbmQgT2JqZWN0IiwNCj4gLSAgICAgICAvKiAxNSAqLyAiTmFtZXNwYWNl
+IE5vZGUiDQo+ICsgICAgICAgWzBdICA9ICJOb3QgYSBEZXNjcmlwdG9yIiwNCj4gKyAgICAgICBb
+MV0gID0gIkNhY2hlZCBPYmplY3QiLA0KPiArICAgICAgIFsyXSAgPSAiU3RhdGUtR2VuZXJpYyIs
+DQo+ICsgICAgICAgWzNdICA9ICJTdGF0ZS1VcGRhdGUiLA0KPiArICAgICAgIFs0XSAgPSAiU3Rh
+dGUtUGFja2FnZSIsDQo+ICsgICAgICAgWzVdICA9ICJTdGF0ZS1Db250cm9sIiwNCj4gKyAgICAg
+ICBbNl0gID0gIlN0YXRlLVJvb3RQYXJzZVNjb3BlIiwNCj4gKyAgICAgICBbN10gID0gIlN0YXRl
+LVBhcnNlU2NvcGUiLA0KPiArICAgICAgIFs4XSAgPSAiU3RhdGUtV2Fsa1Njb3BlIiwNCj4gKyAg
+ICAgICBbOV0gID0gIlN0YXRlLVJlc3VsdCIsDQo+ICsgICAgICAgWzEwXSA9ICJTdGF0ZS1Ob3Rp
+ZnkiLA0KPiArICAgICAgIFsxMV0gPSAiU3RhdGUtVGhyZWFkIiwNCj4gKyAgICAgICBbMTJdID0g
+IlRyZWUgV2FsayBTdGF0ZSIsDQo+ICsgICAgICAgWzEzXSA9ICJQYXJzZSBUcmVlIE9wIiwNCj4g
+KyAgICAgICBbMTRdID0gIk9wZXJhbmQgT2JqZWN0IiwNCj4gKyAgICAgICBbMTVdID0gIk5hbWVz
+cGFjZSBOb2RlIg0KPiAgfTsNCj4NCj4gIGNvbnN0IGNoYXIgKmFjcGlfdXRfZ2V0X2Rlc2NyaXB0
+b3JfbmFtZSh2b2lkICpvYmplY3QpDQo+IEBAIC0zMzEsMTMgKzMzMSwxMyBAQCBjb25zdCBjaGFy
+ICphY3BpX3V0X2dldF9kZXNjcmlwdG9yX25hbWUodm9pZCAqb2JqZWN0KQ0KPiAgLyogUHJpbnRh
+YmxlIG5hbWVzIG9mIHJlZmVyZW5jZSBvYmplY3Qgc3ViLXR5cGVzICovDQo+DQo+ICBzdGF0aWMg
+Y29uc3QgY2hhciAqYWNwaV9nYmxfcmVmX2NsYXNzX25hbWVzW10gPSB7DQo+IC0gICAgICAgLyog
+MDAgKi8gIkxvY2FsIiwNCj4gLSAgICAgICAvKiAwMSAqLyAiQXJndW1lbnQiLA0KPiAtICAgICAg
+IC8qIDAyICovICJSZWZPZiIsDQo+IC0gICAgICAgLyogMDMgKi8gIkluZGV4IiwNCj4gLSAgICAg
+ICAvKiAwNCAqLyAiRGRiSGFuZGxlIiwNCj4gLSAgICAgICAvKiAwNSAqLyAiTmFtZWQgT2JqZWN0
+IiwNCj4gLSAgICAgICAvKiAwNiAqLyAiRGVidWciDQo+ICsgICAgICAgWzBdID0gIkxvY2FsIiwN
+Cj4gKyAgICAgICBbMV0gPSAiQXJndW1lbnQiLA0KPiArICAgICAgIFsyXSA9ICJSZWZPZiIsDQo+
+ICsgICAgICAgWzNdID0gIkluZGV4IiwNCj4gKyAgICAgICBbNF0gPSAiRGRiSGFuZGxlIiwNCj4g
+KyAgICAgICBbNV0gPSAiTmFtZWQgT2JqZWN0IiwNCj4gKyAgICAgICBbNl0gPSAiRGVidWciDQo+
+ICB9Ow0KPg0KPiAgY29uc3QgY2hhciAqYWNwaV91dF9nZXRfcmVmZXJlbmNlX25hbWUodW5pb24g
+YWNwaV9vcGVyYW5kX29iamVjdCAqb2JqZWN0KQ0KPiBAQCAtNDE2LDI1ICs0MTYsMjIgQEAgY29u
+c3QgY2hhciAqYWNwaV91dF9nZXRfbXV0ZXhfbmFtZSh1MzIgbXV0ZXhfaWQpDQo+ICAvKiBOYW1l
+cyBmb3IgTm90aWZ5KCkgdmFsdWVzLCB1c2VkIGZvciBkZWJ1ZyBvdXRwdXQgKi8NCj4NCj4gIHN0
+YXRpYyBjb25zdCBjaGFyICphY3BpX2dibF9nZW5lcmljX25vdGlmeVtBQ1BJX0dFTkVSSUNfTk9U
+SUZZX01BWCArIDFdID0gew0KPiAtICAgICAgIC8qIDAwICovICJCdXMgQ2hlY2siLA0KPiAtICAg
+ICAgIC8qIDAxICovICJEZXZpY2UgQ2hlY2siLA0KPiAtICAgICAgIC8qIDAyICovICJEZXZpY2Ug
+V2FrZSIsDQo+IC0gICAgICAgLyogMDMgKi8gIkVqZWN0IFJlcXVlc3QiLA0KPiAtICAgICAgIC8q
+IDA0ICovICJEZXZpY2UgQ2hlY2sgTGlnaHQiLA0KPiAtICAgICAgIC8qIDA1ICovICJGcmVxdWVu
+Y3kgTWlzbWF0Y2giLA0KPiAtICAgICAgIC8qIDA2ICovICJCdXMgTW9kZSBNaXNtYXRjaCIsDQo+
+IC0gICAgICAgLyogMDcgKi8gIlBvd2VyIEZhdWx0IiwNCj4gLSAgICAgICAvKiAwOCAqLyAiQ2Fw
+YWJpbGl0aWVzIENoZWNrIiwNCj4gLSAgICAgICAvKiAwOSAqLyAiRGV2aWNlIFBMRCBDaGVjayIs
+DQo+IC0gICAgICAgLyogMEEgKi8gIlJlc2VydmVkIiwNCj4gLSAgICAgICAvKiAwQiAqLyAiU3lz
+dGVtIExvY2FsaXR5IFVwZGF0ZSIsDQo+IC0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAvKiAwQyAqLyAiUmVzZXJ2ZWQgKHdhcyBw
+cmV2aW91c2x5IFNodXRkb3duIFJlcXVlc3QpIiwNCj4gLSAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC8qIFJlc2VydmVkIGluIEFD
+UEkgNi4wICovDQo+IC0gICAgICAgLyogMEQgKi8gIlN5c3RlbSBSZXNvdXJjZSBBZmZpbml0eSBV
+cGRhdGUiLA0KPiAtICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgLyogMEUgKi8gIkhldGVyb2dlbmVvdXMgTWVtb3J5IEF0dHJpYnV0
+ZXMgVXBkYXRlIiwNCj4gLSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgIC8qIEFDUEkgNi4yICovDQo+IC0gICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC8qIDBGICovICJFcnJvciBEaXNjb25uZWN0
+IFJlY292ZXIiDQo+IC0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgIC8qIEFDUEkgNi4zICovDQo+ICsgICAgICAgWzBdICA9ICJCdXMgQ2hlY2siLA0KPiArICAg
+ICAgIFsxXSAgPSAiRGV2aWNlIENoZWNrIiwNCj4gKyAgICAgICBbMl0gID0gIkRldmljZSBXYWtl
+IiwNCj4gKyAgICAgICBbM10gID0gIkVqZWN0IFJlcXVlc3QiLA0KPiArICAgICAgIFs0XSAgPSAi
+RGV2aWNlIENoZWNrIExpZ2h0IiwNCj4gKyAgICAgICBbNV0gID0gIkZyZXF1ZW5jeSBNaXNtYXRj
+aCIsDQo+ICsgICAgICAgWzZdICA9ICJCdXMgTW9kZSBNaXNtYXRjaCIsDQo+ICsgICAgICAgWzdd
+ICA9ICJQb3dlciBGYXVsdCIsDQo+ICsgICAgICAgWzhdICA9ICJDYXBhYmlsaXRpZXMgQ2hlY2si
+LA0KPiArICAgICAgIFs5XSAgPSAiRGV2aWNlIFBMRCBDaGVjayIsDQo+ICsgICAgICAgWzEwXSA9
+ICJSZXNlcnZlZCIsDQo+ICsgICAgICAgWzExXSA9ICJTeXN0ZW0gTG9jYWxpdHkgVXBkYXRlIiwN
+Cj4gKyAgICAgICBbMTJdID0gIlJlc2VydmVkICh3YXMgcHJldmlvdXNseSBTaHV0ZG93biBSZXF1
+ZXN0KSIsICAvKiBSZXNlcnZlZCBpbiBBQ1BJIDYuMCAqLw0KPiArICAgICAgIFsxM10gPSAiU3lz
+dGVtIFJlc291cmNlIEFmZmluaXR5IFVwZGF0ZSIsDQo+ICsgICAgICAgWzE0XSA9ICJIZXRlcm9n
+ZW5lb3VzIE1lbW9yeSBBdHRyaWJ1dGVzIFVwZGF0ZSIsICAgICAgLyogQUNQSSA2LjIgKi8NCj4g
+KyAgICAgICBbMTVdID0gIkVycm9yIERpc2Nvbm5lY3QgUmVjb3ZlciIgICAgICAgICAgICAgICAg
+ICAgICAvKiBBQ1BJIDYuMyAqLw0KPiAgfTsNCj4NCj4gIHN0YXRpYyBjb25zdCBjaGFyICphY3Bp
+X2dibF9kZXZpY2Vfbm90aWZ5WzVdID0gew0KPiBAQCAtNTIxLDI2ICs1MTgsMjYgQEAgY29uc3Qg
+Y2hhciAqYWNwaV91dF9nZXRfbm90aWZ5X25hbWUodTMyIG5vdGlmeV92YWx1ZSwgYWNwaV9vYmpl
+Y3RfdHlwZSB0eXBlKQ0KPiAgICoqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioq
+KioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKi8NCj4NCj4gIHN0YXRpYyBj
+b25zdCBjaGFyICphY3BpX2dibF9hcmd1bWVudF90eXBlWzIwXSA9IHsNCj4gLSAgICAgICAvKiAw
+MCAqLyAiVW5rbm93biBBUkdQIiwNCj4gLSAgICAgICAvKiAwMSAqLyAiQnl0ZURhdGEiLA0KPiAt
+ICAgICAgIC8qIDAyICovICJCeXRlTGlzdCIsDQo+IC0gICAgICAgLyogMDMgKi8gIkNoYXJMaXN0
+IiwNCj4gLSAgICAgICAvKiAwNCAqLyAiRGF0YU9iamVjdCIsDQo+IC0gICAgICAgLyogMDUgKi8g
+IkRhdGFPYmplY3RMaXN0IiwNCj4gLSAgICAgICAvKiAwNiAqLyAiRFdvcmREYXRhIiwNCj4gLSAg
+ICAgICAvKiAwNyAqLyAiRmllbGRMaXN0IiwNCj4gLSAgICAgICAvKiAwOCAqLyAiTmFtZSIsDQo+
+IC0gICAgICAgLyogMDkgKi8gIk5hbWVTdHJpbmciLA0KPiAtICAgICAgIC8qIDBBICovICJPYmpl
+Y3RMaXN0IiwNCj4gLSAgICAgICAvKiAwQiAqLyAiUGFja2FnZUxlbmd0aCIsDQo+IC0gICAgICAg
+LyogMEMgKi8gIlN1cGVyTmFtZSIsDQo+IC0gICAgICAgLyogMEQgKi8gIlRhcmdldCIsDQo+IC0g
+ICAgICAgLyogMEUgKi8gIlRlcm1BcmciLA0KPiAtICAgICAgIC8qIDBGICovICJUZXJtTGlzdCIs
+DQo+IC0gICAgICAgLyogMTAgKi8gIldvcmREYXRhIiwNCj4gLSAgICAgICAvKiAxMSAqLyAiUVdv
+cmREYXRhIiwNCj4gLSAgICAgICAvKiAxMiAqLyAiU2ltcGxlTmFtZSIsDQo+IC0gICAgICAgLyog
+MTMgKi8gIk5hbWVPclJlZiINCj4gKyAgICAgICBbMHgwMF0gPSAiVW5rbm93biBBUkdQIiwNCj4g
+KyAgICAgICBbMHgwMV0gPSAiQnl0ZURhdGEiLA0KPiArICAgICAgIFsweDAyXSA9ICJCeXRlTGlz
+dCIsDQo+ICsgICAgICAgWzB4MDNdID0gIkNoYXJMaXN0IiwNCj4gKyAgICAgICBbMHgwNF0gPSAi
+RGF0YU9iamVjdCIsDQo+ICsgICAgICAgWzB4MDVdID0gIkRhdGFPYmplY3RMaXN0IiwNCj4gKyAg
+ICAgICBbMHgwNl0gPSAiRFdvcmREYXRhIiwNCj4gKyAgICAgICBbMHgwN10gPSAiRmllbGRMaXN0
+IiwNCj4gKyAgICAgICBbMHgwOF0gPSAiTmFtZSIsDQo+ICsgICAgICAgWzB4MDldID0gIk5hbWVT
+dHJpbmciLA0KPiArICAgICAgIFsweDBBXSA9ICJPYmplY3RMaXN0IiwNCj4gKyAgICAgICBbMHgw
+Ql0gPSAiUGFja2FnZUxlbmd0aCIsDQo+ICsgICAgICAgWzB4MENdID0gIlN1cGVyTmFtZSIsDQo+
+ICsgICAgICAgWzB4MERdID0gIlRhcmdldCIsDQo+ICsgICAgICAgWzB4MEVdID0gIlRlcm1Bcmci
+LA0KPiArICAgICAgIFsweDBGXSA9ICJUZXJtTGlzdCIsDQo+ICsgICAgICAgWzB4MTBdID0gIldv
+cmREYXRhIiwNCj4gKyAgICAgICBbMHgxMV0gPSAiUVdvcmREYXRhIiwNCj4gKyAgICAgICBbMHgx
+Ml0gPSAiU2ltcGxlTmFtZSIsDQo+ICsgICAgICAgWzB4MTNdID0gIk5hbWVPclJlZiINCj4gIH07
+DQo+DQo+ICBjb25zdCBjaGFyICphY3BpX3V0X2dldF9hcmd1bWVudF90eXBlX25hbWUodTMyIGFy
+Z190eXBlKQ0KPiAtLQ0KPiAyLjM1LjENCj4KX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX18KRGV2ZWwgbWFpbGluZyBsaXN0IC0tIGRldmVsQGFjcGljYS5vcmcK
+VG8gdW5zdWJzY3JpYmUgc2VuZCBhbiBlbWFpbCB0byBkZXZlbC1sZWF2ZUBhY3BpY2Eub3JnCiUo
+d2ViX3BhZ2VfdXJsKXNsaXN0aW5mbyUoY2dpZXh0KXMvJShfaW50ZXJuYWxfbmFtZSlz
