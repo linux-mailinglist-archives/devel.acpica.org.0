@@ -1,62 +1,107 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B2005031F7
-	for <lists+devel-acpica@lfdr.de>; Sat, 16 Apr 2022 02:04:48 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D8D3D507B5F
+	for <lists+devel-acpica@lfdr.de>; Tue, 19 Apr 2022 22:56:13 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 15F60100F3FA0;
-	Fri, 15 Apr 2022 17:04:46 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.24; helo=mga09.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+	by ml01.01.org (Postfix) with ESMTP id 93B90100EA903;
+	Tue, 19 Apr 2022 13:56:11 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2a01:111:f400:7eab::61b; helo=nam11-co1-obe.outbound.protection.outlook.com; envelope-from=bwicaksono@nvidia.com; receiver=<UNKNOWN> 
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2061b.outbound.protection.outlook.com [IPv6:2a01:111:f400:7eab::61b])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id D55EB100F395D
-	for <devel@acpica.org>; Fri, 15 Apr 2022 17:04:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1650067483; x=1681603483;
-  h=date:from:to:cc:subject:message-id:mime-version:
-   content-transfer-encoding;
-  bh=HSZPWAGVL0OCHmyMupnEy3BzizzwkFnuvdX77ziaNz8=;
-  b=mUWRmKdGA4oH06tN25grT8AoXwbsPKMLczb47k9yTubLH9C6dOgrPrqA
-   GBNz0ke50y2iVNtnx+S9rN2ldoyXUNiHSrzhqyeQLPca3i4XZNDiaPM1J
-   1P08saSUeWrr2VhVTlvpWDHl1ZS5oMN+gSgh8l1+sA0IDEPKBMbXGMz4C
-   lXs6DVbjTtF2H/vsaI8wDpXeLf//Xhq/sUwCazr1bF2GdX1EAMcHGAKMT
-   W1EuG2GM6iQT7/p6S64CqpeYGRcaGPomQPWqDs0av6gRDOZRSDiE7UU/B
-   FMIGcLX3BsV6Nk9U1GDonzI3+ygzjx2Nwhcwja/Yp2G1tV0nEmAfCxgdT
-   A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10318"; a="262712082"
-X-IronPort-AV: E=Sophos;i="5.90,264,1643702400";
-   d="scan'208";a="262712082"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Apr 2022 17:04:42 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.90,264,1643702400";
-   d="scan'208";a="509115384"
-Received: from lkp-server01.sh.intel.com (HELO 3abc53900bec) ([10.239.97.150])
-  by orsmga003.jf.intel.com with ESMTP; 15 Apr 2022 17:04:40 -0700
-Received: from kbuild by 3abc53900bec with local (Exim 4.95)
-	(envelope-from <lkp@intel.com>)
-	id 1nfVvb-0002Yz-JJ;
-	Sat, 16 Apr 2022 00:04:39 +0000
-Date: Sat, 16 Apr 2022 08:04:36 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <625a0814.ppOYLNShBLe1ZHKS%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTPS id 5FEFE100EAB1F
+	for <devel@acpica.org>; Tue, 19 Apr 2022 13:56:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=SezqDAs1FgGkGiM6BOBPDLw/qaMj/AdQJq18Q1Gl73lRg01RhJ/t+Nm/6sr5JxmkCE2nve8nseJrEXqRI2zNRw/9z50N+gV6jO5FKcZCAKG46sWK6BcqoEKZgm6Rb7PYbcDfALMxIVZchyrlgJOEtH3yOa9joZ+f5BEoN4dnM7njGpQdlkxhn5yxYMKAv2dDCB8HUJI0ukVMvIsO9Zeun54iDHgBkPUeB4EXtyQOGSYLBzHotabOApqBm2rdlJ1+GStTWcwsye4Ux4vObbkvtK0KT3HejBwBfjAgPdvKRMykUvLhjnVcgtRdDSVCoKC1Zha5xCEf3MK31f4mCt8kbw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1tC31V6YYHw2Gi+T1KBXPBcvPGweJX8pP1qbk3t6X0w=;
+ b=ey2i3VFyvucxxcyVJ4RpWmcU1HVtyztIpSjkpINGAJ5pMPp8xjQFNxpqpTHOxdhMzITFIsHcuNxFHiPgjBU5jDm3utQxA+0Bx6d7pCYcmFNjT8uk2LPkZ3/cUrZMu2CygwTAZv327UyCPTkWEv7RJauy61Se9DmIlm9SFD2qY5WQA4XtwAK+zPBINcvzKbywxTkXpEUoC9+xmiwoUC99zU46iwTWQYiXV+WlrATUzFD3otSmgpP4RizUBcLLz4Hn9YSmxRCHDcLXXuXJbCsMKVo8DhPvRoPlMGp1vOWNqvgId9rHPdzpM9ixygXpb31pJ4FAyznfqlxgajs8DBrfXA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 12.22.5.238) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1tC31V6YYHw2Gi+T1KBXPBcvPGweJX8pP1qbk3t6X0w=;
+ b=HBPAPY0ftnucoVBPzCWXzsLRgimIuS3NmK4G3dmv6McsdboxP4YSxnZGYkYnWyycfGG3v0sKA0ooY6JvL1MHSd1uZk4ccvUvPVGxpwlJhDLBNe0h+ROWxznlzRb30cbq5Bb8KZIGH2tebLU/EYzbXYU9O7r6HT206J0PnCkgDQksjk8/3sc2vF564AXgC8QFs5Q5/fCblTwrKKg7r5Frh9YyPHK4IIIz6hd72DxM/h63kXQ6Pyiy1+sYvlZLllYhE2Nq65piXsOIDm97KzVTlAcdrDCmdkQSB7KxXAYR6UY0XBhzXmx6pWnpmqkoX5zvFwNtObouyHgs7MIgo3R9aA==
+Received: from BN0PR04CA0147.namprd04.prod.outlook.com (2603:10b6:408:ed::32)
+ by BY5PR12MB4965.namprd12.prod.outlook.com (2603:10b6:a03:1c4::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5164.20; Tue, 19 Apr
+ 2022 20:56:05 +0000
+Received: from BN8NAM11FT043.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:408:ed:cafe::9b) by BN0PR04CA0147.outlook.office365.com
+ (2603:10b6:408:ed::32) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5186.13 via Frontend
+ Transport; Tue, 19 Apr 2022 20:56:05 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 12.22.5.238)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 12.22.5.238 as permitted sender) receiver=protection.outlook.com;
+ client-ip=12.22.5.238; helo=mail.nvidia.com;
+Received: from mail.nvidia.com (12.22.5.238) by
+ BN8NAM11FT043.mail.protection.outlook.com (10.13.177.218) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.20.5164.19 via Frontend Transport; Tue, 19 Apr 2022 20:56:05 +0000
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by DRHQMAIL105.nvidia.com
+ (10.27.9.14) with Microsoft SMTP Server (TLS) id 15.0.1497.32; Tue, 19 Apr
+ 2022 20:55:26 +0000
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail204.nvidia.com
+ (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 19 Apr
+ 2022 13:55:25 -0700
+Received: from msst-build.nvidia.com (10.127.8.14) by mail.nvidia.com
+ (10.129.68.6) with Microsoft SMTP Server id 15.2.986.22 via Frontend
+ Transport; Tue, 19 Apr 2022 13:55:24 -0700
+From: Besar Wicaksono <bwicaksono@nvidia.com>
+To: <rafael@kernel.org>, <lenb@kernel.org>, <robert.moore@intel.com>,
+	<catalin.marinas@arm.com>, <will@kernel.org>, <lorenzo.pieralisi@arm.com>,
+	<guohanjun@huawei.com>, <sudeep.holla@arm.com>
+Date: Tue, 19 Apr 2022 15:54:30 -0500
+Message-ID: <20220419205432.46021-1-bwicaksono@nvidia.com>
+X-Mailer: git-send-email 2.17.1
+X-NVConfidentiality: public
 MIME-Version: 1.0
-Message-ID-Hash: UZKBHIATNC6MTLMRBH2C662H6N2SWD4I
-X-Message-ID-Hash: UZKBHIATNC6MTLMRBH2C662H6N2SWD4I
-X-MailFrom: lkp@intel.com
-X-Mailman-Rule-Hits: nonmember-moderation
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: a864497b-bced-42ba-1351-08da2247055f
+X-MS-TrafficTypeDiagnostic: BY5PR12MB4965:EE_
+X-Microsoft-Antispam-PRVS: 
+	<BY5PR12MB496560B2A360584A0A3FC684A0F29@BY5PR12MB4965.namprd12.prod.outlook.com>
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 
+	Vfr37aQrjEBmb7lPdoV87i/HXQsUEicVtnMm6/knUIQ54qyS2AQWeB4RyhEnns2w7xaJBipd++XHb2uiLVkl7uh+LJXXfE34LtEpCZqHgYWf8pRJ0anixsJSfEcau9kbV2/1Lv+hV1hE8CxGeh0aWwKg4weJ780aq8XJpDnBMAXHKOKFPSeGK+O5N+/+4tc6sacSkqd6lZmfHGpLatiKX9K7EHUleZnhqJ29zu3++nETjl0vQYtLidbOtpubRHib9IQjc2pUnqffyQ/Uur68ip0+uTpecsTqwQOZuFubQXU219zaMThTAcZQdz3Leg9du4ByjsRhaQpgIDQEf14Hye0OJ+3J67S2u21YVn42KwoQwyHIq0sJm1cuAVQ51o02ia3uwcVxZp2jKyDvQGDWHRdDy6CiW7sbaaU9LKDXldJKsfjbm0fBvADjM0V1ETLwhWPeRfHJTXytBquE3vHhKC5QGqfUghNQMuAvuNYrYJZmSrXsG0aEEpU8VXZ7wI9N/WNdTNKA7V3c7YY/UTfaTMIN8B7q+4DfL+hwGtbldC09UhDLU4qaKbNkmMXlOyuUUzDr2uVDUDhI+amsGcRa3gPx8rjsYxun2cWreZrV/Aq6gzOsj7eYKnmTZ573Whl56DCR1habGpJ0RSdZldZFy39VoJs8dgHNBdWYiLoR7WNihKG4j9HXlbsQIrdgGvHevUFuLBsd/wpDPQXBT52cB3RMj3fGgicoRLqp4GSilLi11fryNUYrWJbL05lW9WwB40bKnuIbBBNw7Ldfv9IqemYlWtwQRBL1ZPwbN+vMBaVjBAArsf5IqJoPdfrCUpAIhzHuxL5dJap8Gfd3ueVQbQ==
+X-Forefront-Antispam-Report: 
+	CIP:12.22.5.238;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:InfoNoRecords;CAT:NONE;SFS:(13230001)(4636009)(46966006)(40470700004)(36840700001)(8676002)(6666004)(36860700001)(70586007)(508600001)(1076003)(47076005)(36756003)(82310400005)(40460700003)(110136005)(54906003)(86362001)(7696005)(336012)(356005)(107886003)(426003)(4326008)(4744005)(70206006)(2616005)(5660300002)(2906002)(316002)(966005)(81166007)(8936002)(186003)(7416002)(26005)(36900700001);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Apr 2022 20:56:05.2610
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: a864497b-bced-42ba-1351-08da2247055f
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[12.22.5.238];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: 
+	BN8NAM11FT043.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4965
+Message-ID-Hash: Y7FZDKLVR6MOTMUQDEYOJSBE6RD6AQ2I
+X-Message-ID-Hash: Y7FZDKLVR6MOTMUQDEYOJSBE6RD6AQ2I
+X-MailFrom: bwicaksono@nvidia.com
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
+CC: linux-tegra@vger.kernel.org, treding@nvidia.com, jonathanh@nvidia.com, linux-acpi@vger.kernel.org, devel@acpica.org, linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, Besar Wicaksono <bwicaksono@nvidia.com>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [rafael-pm:bleeding-edge] BUILD SUCCESS 5675fd487f2b221a27a44f6ac78bdb2e5f235052
+Subject: [Devel] [PATCH 0/2] ACPI: ARM CoreSight Performance Monitoring Unit
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/UZKBHIATNC6MTLMRBH2C662H6N2SWD4I/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/Y7FZDKLVR6MOTMUQDEYOJSBE6RD6AQ2I/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -65,214 +110,33 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-branch HEAD: 5675fd487f2b221a27a44f6ac78bdb2e5f235052  Merge branch 'thermal-misc' into linux-next
+This patchset adds support for ARM CoreSight PMU device.
+Specifications for ARM Performance Monitoring Unit table (APMT) and
+ARM CoreSight PMU:
+ * APMT: https://developer.arm.com/documentation/den0117/latest
+ * ARM Coresight PMU:
+        https://developer.arm.com/documentation/ihi0091/latest
 
-elapsed time: 1802m
+The patchset applies on top of
+  git://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git
 
-configs tested: 185
-configs skipped: 4
+Besar Wicaksono (2):
+  ACPICA: Add support for ARM Performance Monitoring Unit Table.
+  ACPI: ARM Performance Monitoring Unit Table (APMT) initial support
 
-The following configs have been built successfully.
-More configs may be tested in the coming days.
-
-gcc tested configs:
-arm64                               defconfig
-arm64                            allyesconfig
-arm                              allmodconfig
-arm                                 defconfig
-arm                              allyesconfig
-i386                          randconfig-c001
-powerpc              randconfig-c003-20220415
-powerpc              randconfig-c003-20220414
-sh                   secureedge5410_defconfig
-powerpc                   motionpro_defconfig
-arc                     haps_hs_smp_defconfig
-arc                          axs103_defconfig
-m68k                        stmark2_defconfig
-arm                         lpc18xx_defconfig
-mips                     loongson1b_defconfig
-arm                        spear6xx_defconfig
-sh                         ecovec24_defconfig
-powerpc                 mpc837x_mds_defconfig
-powerpc                      cm5200_defconfig
-sparc                       sparc64_defconfig
-sh                          rsk7264_defconfig
-mips                           xway_defconfig
-xtensa                       common_defconfig
-powerpc                     taishan_defconfig
-arc                           tb10x_defconfig
-m68k                           sun3_defconfig
-arm                       imx_v6_v7_defconfig
-sh                               j2_defconfig
-powerpc64                           defconfig
-powerpc                      bamboo_defconfig
-microblaze                          defconfig
-sparc                            allyesconfig
-arm                          pxa910_defconfig
-arm                         lubbock_defconfig
-arm                           tegra_defconfig
-ia64                                defconfig
-powerpc                         wii_defconfig
-arc                        vdk_hs38_defconfig
-mips                           jazz_defconfig
-sh                           se7724_defconfig
-arm                           imxrt_defconfig
-arm                            mps2_defconfig
-arm                             rpc_defconfig
-sh                   sh7770_generic_defconfig
-powerpc                 mpc834x_mds_defconfig
-arm                          lpd270_defconfig
-powerpc                        warp_defconfig
-i386                                defconfig
-powerpc                       eiger_defconfig
-arm                       multi_v4t_defconfig
-powerpc                     mpc83xx_defconfig
-sh                        sh7757lcr_defconfig
-mips                      maltasmvp_defconfig
-sh                                  defconfig
-alpha                            allyesconfig
-mips                            gpr_defconfig
-riscv             nommu_k210_sdcard_defconfig
-powerpc64                        alldefconfig
-arm                     eseries_pxa_defconfig
-sh                   sh7724_generic_defconfig
-powerpc                 mpc85xx_cds_defconfig
-sh                           se7722_defconfig
-i386                             alldefconfig
-powerpc                      ppc6xx_defconfig
-x86_64                              defconfig
-arm                         axm55xx_defconfig
-arm                          pxa3xx_defconfig
-alpha                            alldefconfig
-powerpc                     ep8248e_defconfig
-arc                        nsim_700_defconfig
-xtensa                  cadence_csp_defconfig
-xtensa                  nommu_kc705_defconfig
-sh                         microdev_defconfig
-mips                         bigsur_defconfig
-m68k                          atari_defconfig
-sh                           se7712_defconfig
-mips                     decstation_defconfig
-s390                          debug_defconfig
-um                                  defconfig
-powerpc                     tqm8555_defconfig
-s390                                defconfig
-sh                           se7343_defconfig
-sh                          rsk7269_defconfig
-arm                  randconfig-c002-20220414
-x86_64                        randconfig-c001
-arm                  randconfig-c002-20220415
-ia64                             allmodconfig
-ia64                             allyesconfig
-m68k                             allyesconfig
-m68k                             allmodconfig
-m68k                                defconfig
-nios2                               defconfig
-arc                              allyesconfig
-alpha                               defconfig
-csky                                defconfig
-nios2                            allyesconfig
-h8300                            allyesconfig
-xtensa                           allyesconfig
-arc                                 defconfig
-sh                               allmodconfig
-s390                             allmodconfig
-parisc                              defconfig
-parisc64                            defconfig
-parisc                           allyesconfig
-s390                             allyesconfig
-sparc                               defconfig
-i386                             allyesconfig
-i386                   debian-10.3-kselftests
-i386                              debian-10.3
-mips                             allyesconfig
-mips                             allmodconfig
-powerpc                           allnoconfig
-powerpc                          allmodconfig
-powerpc                          allyesconfig
-x86_64                        randconfig-a006
-x86_64                        randconfig-a004
-x86_64                        randconfig-a002
-i386                          randconfig-a001
-i386                          randconfig-a003
-i386                          randconfig-a005
-x86_64                        randconfig-a011
-x86_64                        randconfig-a013
-x86_64                        randconfig-a015
-i386                          randconfig-a012
-i386                          randconfig-a014
-i386                          randconfig-a016
-riscv                randconfig-r042-20220415
-arc                  randconfig-r043-20220415
-s390                 randconfig-r044-20220415
-arc                  randconfig-r043-20220414
-riscv                               defconfig
-riscv                    nommu_virt_defconfig
-riscv                          rv32_defconfig
-riscv                    nommu_k210_defconfig
-riscv                             allnoconfig
-riscv                            allmodconfig
-riscv                            allyesconfig
-x86_64                    rhel-8.3-kselftests
-um                             i386_defconfig
-um                           x86_64_defconfig
-x86_64                          rhel-8.3-func
-x86_64                                  kexec
-x86_64                           allyesconfig
-x86_64                         rhel-8.3-kunit
-x86_64                               rhel-8.3
-
-clang tested configs:
-x86_64                        randconfig-c007
-powerpc              randconfig-c003-20220414
-arm                  randconfig-c002-20220414
-i386                          randconfig-c001
-riscv                randconfig-c006-20220414
-mips                      malta_kvm_defconfig
-powerpc                    gamecube_defconfig
-hexagon                             defconfig
-mips                         tb0287_defconfig
-x86_64                           allyesconfig
-mips                           ip28_defconfig
-arm                           omap1_defconfig
-arm                            dove_defconfig
-powerpc                      acadia_defconfig
-powerpc                 mpc8313_rdb_defconfig
-riscv                             allnoconfig
-powerpc                     kmeter1_defconfig
-arm                       mainstone_defconfig
-mips                       rbtx49xx_defconfig
-arm                      tct_hammer_defconfig
-powerpc                     tqm5200_defconfig
-arm                        multi_v5_defconfig
-mips                           mtx1_defconfig
-arm                        spear3xx_defconfig
-arm                       aspeed_g4_defconfig
-powerpc                    ge_imp3a_defconfig
-powerpc                      obs600_defconfig
-arm                        vexpress_defconfig
-arm                          collie_defconfig
-i386                          randconfig-a002
-i386                          randconfig-a006
-i386                          randconfig-a004
-x86_64                        randconfig-a012
-x86_64                        randconfig-a014
-x86_64                        randconfig-a016
-x86_64                        randconfig-a005
-x86_64                        randconfig-a003
-x86_64                        randconfig-a001
-i386                          randconfig-a013
-i386                          randconfig-a011
-i386                          randconfig-a015
-riscv                randconfig-r042-20220414
-hexagon              randconfig-r041-20220414
-hexagon              randconfig-r045-20220414
-s390                 randconfig-r044-20220414
+ arch/arm64/Kconfig          |   1 +
+ drivers/acpi/arm64/Kconfig  |   3 +
+ drivers/acpi/arm64/Makefile |   1 +
+ drivers/acpi/arm64/apmt.c   | 176 ++++++++++++++++++++++++++++++++++++
+ drivers/acpi/bus.c          |   2 +
+ include/acpi/actbl2.h       |  81 +++++++++++++++++
+ include/linux/acpi_apmt.h   |  19 ++++
+ 7 files changed, 283 insertions(+)
+ create mode 100644 drivers/acpi/arm64/apmt.c
+ create mode 100644 include/linux/acpi_apmt.h
 
 -- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+2.17.1
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
