@@ -2,61 +2,54 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F689508022
-	for <lists+devel-acpica@lfdr.de>; Wed, 20 Apr 2022 06:33:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E25D508C24
+	for <lists+devel-acpica@lfdr.de>; Wed, 20 Apr 2022 17:31:58 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 77DDE100EA927;
-	Tue, 19 Apr 2022 21:33:07 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.88; helo=mga01.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	by ml01.01.org (Postfix) with ESMTP id 05C44100EB829;
+	Wed, 20 Apr 2022 08:31:57 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.128.171; helo=mail-yw1-f171.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 40342100EA922
-	for <devel@acpica.org>; Tue, 19 Apr 2022 21:33:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1650429185; x=1681965185;
-  h=date:from:to:cc:subject:message-id:mime-version:
-   content-transfer-encoding;
-  bh=0Swg8Fj5tNL0EuUxxXtCxT3rXCvYjGGLFsk/WfnqY8Q=;
-  b=G6b3b0NCEJ1BjBEUR7aB+zM/Q6LFJTx+7XtNwkiBDmjhCC8GmgoFciV6
-   s8gECbvpELFDiHnA/9LzR1rQo5NljdbN08y5cw1XjtB9hzwhPLqBPiHTR
-   8kiGdtYZ2n+IY4leU4y1Cy4TnKo3N5rpM23ijfH6ildicfj2h39o4a+wO
-   FYpDVzHo7QiA4M8xGvbU65vV8kd+fA4RYn+yiQBqfhO2li4N1L5NxVWI9
-   BZLr/SoP309AV06WsSeGLgPO0ISoxzDHQcyGjd/EdqUsNv9e+Smjz+io6
-   yExqcyyycoG6qK8Dj9xWcxhU1JodT1Txc/m8FoKYfAp6bF0oub/ynZNdk
-   A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10322"; a="289039323"
-X-IronPort-AV: E=Sophos;i="5.90,274,1643702400";
-   d="scan'208";a="289039323"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Apr 2022 21:33:04 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.90,274,1643702400";
-   d="scan'208";a="667709800"
-Received: from lkp-server01.sh.intel.com (HELO 3abc53900bec) ([10.239.97.150])
-  by orsmga004.jf.intel.com with ESMTP; 19 Apr 2022 21:33:02 -0700
-Received: from kbuild by 3abc53900bec with local (Exim 4.95)
-	(envelope-from <lkp@intel.com>)
-	id 1nh21V-0006YO-OK;
-	Wed, 20 Apr 2022 04:33:01 +0000
-Date: Wed, 20 Apr 2022 12:32:04 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <625f8cc4.yxYXrt09ppdZa9T2%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTPS id 0F071100EBB97
+	for <devel@acpica.org>; Wed, 20 Apr 2022 08:31:54 -0700 (PDT)
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-2ec0bb4b715so22217807b3.5
+        for <devel@acpica.org>; Wed, 20 Apr 2022 08:31:54 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=BX4DYIsh9shdL0wVWNesEbyhwwCB5uGYwoFJu/5ZDOA=;
+        b=uZkQ+CLCS9W3fXK1EWBt4lJG9u6r0AOJAOsuCfxs59UeghXV0hLYOg5LqTB6o0bjgW
+         TBCFoVJZl/oeK7opmrJLn3xUTRXgoZnS05N6+xVajn3ujY8ULg/qnX34j6Ekr7twi6dV
+         N50mvTzyO4Haue9lcXhv01G9xHvksEItAkA/5pOxuE/Zs+ZTD0iogtBZOxf6mcrpcnHI
+         Q5jnyzl6A8GH2vqnK5oaNf9nudEsbkQv9V/3CKd0slsplUsPhw3eu3/Vdd6bbw5jalv9
+         6qB6PHWmOMtUwAf0a0DfP/MWJeNjmXx78TPOvhl7yLu2lrwYDs1eBRdoIrx2tP5bx0Gz
+         d+ig==
+X-Gm-Message-State: AOAM530+NPB2HNOKF7qPIJMZQCLaVGnna/X76yBfEoK/7k5s9B+543Ot
+	nwWrMfcaFzeoVBsAyFZvYmJRXlPRvvPWhuwz3lQ=
+X-Google-Smtp-Source: ABdhPJx/esx+nly4Faz952uAqt/+ztWg0bemjimUpNFF9AVlh6yAb7iPTGu7hoW4PeNdbXsPUA7GPhieyCZyDrNQu/s=
+X-Received: by 2002:a81:b89:0:b0:2eb:e9e6:470a with SMTP id
+ 131-20020a810b89000000b002ebe9e6470amr21757661ywl.7.1650468713921; Wed, 20
+ Apr 2022 08:31:53 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID-Hash: NPMSG4F6GLF4KB3KSFNYTZNGJTC2XDFG
-X-Message-ID-Hash: NPMSG4F6GLF4KB3KSFNYTZNGJTC2XDFG
-X-MailFrom: lkp@intel.com
+References: <20220419205432.46021-1-bwicaksono@nvidia.com> <20220419205432.46021-2-bwicaksono@nvidia.com>
+In-Reply-To: <20220419205432.46021-2-bwicaksono@nvidia.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Wed, 20 Apr 2022 17:31:43 +0200
+Message-ID: <CAJZ5v0jUZSSvMGYhu44rSnEXmVve-wKXkUf-U_qy0ojn4v6kXA@mail.gmail.com>
+To: Besar Wicaksono <bwicaksono@nvidia.com>
+Message-ID-Hash: DEPACYV3QSTLSYTVLGVTBEU6KB6EGCWZ
+X-Message-ID-Hash: DEPACYV3QSTLSYTVLGVTBEU6KB6EGCWZ
+X-MailFrom: rjwysocki@gmail.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+CC: "Rafael J. Wysocki" <rafael@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>, linux-tegra <linux-tegra@vger.kernel.org>, Thierry Reding <treding@nvidia.com>, Jon Hunter <jonathanh@nvidia.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Linux ARM <linux-arm-kernel@lists.infradead.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [rafael-pm:bleeding-edge] BUILD SUCCESS a8a4f8e63bdfeac9fafe43dcafabc27d8f2e8b8e
+Subject: [Devel] Re: [PATCH 1/2] ACPICA: Add support for ARM Performance Monitoring Unit Table.
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/NPMSG4F6GLF4KB3KSFNYTZNGJTC2XDFG/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/DEPACYV3QSTLSYTVLGVTBEU6KB6EGCWZ/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -65,159 +58,137 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-branch HEAD: a8a4f8e63bdfeac9fafe43dcafabc27d8f2e8b8e  Merge branch 'pm-tools' into linux-next
+On Tue, Apr 19, 2022 at 10:55 PM Besar Wicaksono <bwicaksono@nvidia.com> wrote:
+>
+> ACPICA commit 002165ecc0a3dc703bb24c789aaa02fdada01675
+>
+> The specification of this table is described in
+> "ARM Performance Monitoring Unit Architecture 1.0 Platform Design Document"
+> ARM DEN0117.
+>
+> This patch adds the necessary types and support for
+> compiling/disassembling APMT.
+>
+> Link: https://github.com/acpica/acpica/commit/002165ec
+> Signed-off-by: Besar Wicaksono <bwicaksono@nvidia.com>
 
-elapsed time: 724m
+It should be equivalent to this patch:
 
-configs tested: 133
-configs skipped: 3
+https://patchwork.kernel.org/project/linux-acpi/patch/3370028.QJadu78ljV@kreacher/
 
-The following configs have been built successfully.
-More configs may be tested in the coming days.
+present in linux-next.
 
-gcc tested configs:
-arm64                               defconfig
-arm64                            allyesconfig
-arm                              allmodconfig
-arm                                 defconfig
-arm                              allyesconfig
-i386                          randconfig-c001
-powerpc                       eiger_defconfig
-nios2                         10m50_defconfig
-arm                          pxa910_defconfig
-arm                        cerfcube_defconfig
-arm                         at91_dt_defconfig
-sh                          sdk7786_defconfig
-powerpc                 mpc834x_itx_defconfig
-powerpc                 linkstation_defconfig
-sh                            hp6xx_defconfig
-mips                           jazz_defconfig
-arc                           tb10x_defconfig
-arm                          gemini_defconfig
-mips                         cobalt_defconfig
-microblaze                          defconfig
-sh                           se7722_defconfig
-mips                            ar7_defconfig
-i386                                defconfig
-xtensa                       common_defconfig
-sh                            titan_defconfig
-sh                             shx3_defconfig
-sh                        sh7757lcr_defconfig
-csky                                defconfig
-sh                        apsh4ad0a_defconfig
-ia64                             alldefconfig
-sh                          r7785rp_defconfig
-arm                        shmobile_defconfig
-m68k                        m5307c3_defconfig
-arm                         axm55xx_defconfig
-arm                        mvebu_v7_defconfig
-powerpc                       holly_defconfig
-s390                          debug_defconfig
-x86_64                        randconfig-c001
-arm                  randconfig-c002-20220419
-arm                  randconfig-c002-20220420
-ia64                             allmodconfig
-ia64                             allyesconfig
-ia64                                defconfig
-m68k                             allyesconfig
-m68k                             allmodconfig
-m68k                                defconfig
-nios2                            allyesconfig
-alpha                               defconfig
-alpha                            allyesconfig
-h8300                            allyesconfig
-xtensa                           allyesconfig
-arc                                 defconfig
-sh                               allmodconfig
-s390                                defconfig
-s390                             allmodconfig
-parisc                              defconfig
-parisc64                            defconfig
-parisc                           allyesconfig
-s390                             allyesconfig
-sparc                               defconfig
-i386                             allyesconfig
-sparc                            allyesconfig
-i386                   debian-10.3-kselftests
-i386                              debian-10.3
-nios2                               defconfig
-arc                              allyesconfig
-mips                             allyesconfig
-mips                             allmodconfig
-powerpc                          allyesconfig
-powerpc                           allnoconfig
-powerpc                          allmodconfig
-x86_64                        randconfig-a002
-x86_64                        randconfig-a006
-x86_64                        randconfig-a004
-i386                          randconfig-a001
-i386                          randconfig-a003
-i386                          randconfig-a005
-x86_64                        randconfig-a013
-x86_64                        randconfig-a011
-x86_64                        randconfig-a015
-i386                          randconfig-a012
-i386                          randconfig-a014
-i386                          randconfig-a016
-riscv                randconfig-r042-20220419
-s390                 randconfig-r044-20220419
-arc                  randconfig-r043-20220419
-riscv                               defconfig
-riscv                    nommu_virt_defconfig
-riscv                          rv32_defconfig
-riscv                    nommu_k210_defconfig
-riscv                             allnoconfig
-riscv                            allmodconfig
-riscv                            allyesconfig
-x86_64                    rhel-8.3-kselftests
-um                           x86_64_defconfig
-um                             i386_defconfig
-x86_64                         rhel-8.3-kunit
-x86_64                          rhel-8.3-func
-x86_64                                  kexec
-x86_64                              defconfig
-x86_64                           allyesconfig
-x86_64                               rhel-8.3
+If the other patch in the series is ACKed by the ARM64 ACPi people, I
+can take it too.
 
-clang tested configs:
-x86_64                        randconfig-c007
-powerpc              randconfig-c003-20220419
-arm                  randconfig-c002-20220419
-i386                          randconfig-c001
-riscv                randconfig-c006-20220419
-mips                 randconfig-c004-20220419
-s390                 randconfig-c005-20220419
-mips                           ip28_defconfig
-arm                       netwinder_defconfig
-arm                     davinci_all_defconfig
-mips                       lemote2f_defconfig
-powerpc                     ksi8560_defconfig
-arm                       mainstone_defconfig
-powerpc                 mpc832x_mds_defconfig
-powerpc                      ppc64e_defconfig
-arm                         bcm2835_defconfig
-x86_64                        randconfig-a001
-x86_64                        randconfig-a003
-x86_64                        randconfig-a005
-i386                          randconfig-a002
-i386                          randconfig-a004
-i386                          randconfig-a006
-x86_64                        randconfig-a012
-x86_64                        randconfig-a014
-x86_64                        randconfig-a016
-i386                          randconfig-a013
-i386                          randconfig-a011
-i386                          randconfig-a015
-hexagon              randconfig-r041-20220420
-riscv                randconfig-r042-20220420
-hexagon              randconfig-r045-20220420
-hexagon              randconfig-r041-20220419
-hexagon              randconfig-r045-20220419
+Thanks!
 
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+> ---
+>  include/acpi/actbl2.h | 81 +++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 81 insertions(+)
+>
+> diff --git a/include/acpi/actbl2.h b/include/acpi/actbl2.h
+> index 16847c8d9d5f..8fc5cf318c15 100644
+> --- a/include/acpi/actbl2.h
+> +++ b/include/acpi/actbl2.h
+> @@ -25,6 +25,7 @@
+>   * the wrong signature.
+>   */
+>  #define ACPI_SIG_AGDI           "AGDI" /* Arm Generic Diagnostic Dump and Reset Device Interface */
+> +#define ACPI_SIG_APMT           "APMT" /* Arm Performance Monitoring Unit table */
+>  #define ACPI_SIG_BDAT           "BDAT" /* BIOS Data ACPI Table */
+>  #define ACPI_SIG_IORT           "IORT" /* IO Remapping Table */
+>  #define ACPI_SIG_IVRS           "IVRS" /* I/O Virtualization Reporting Structure */
+> @@ -258,6 +259,86 @@ struct acpi_table_agdi {
+>
+>  #define ACPI_AGDI_SIGNALING_MODE (1)
+>
+> +/*******************************************************************************
+> + *
+> + * APMT - ARM Performance Monitoring Unit Table
+> + *
+> + * Conforms to:
+> + * ARM Performance Monitoring Unit Architecture 1.0 Platform Design Document
+> + * ARM DEN0117 v1.0 November 25, 2021
+> + *
+> + ******************************************************************************/
+> +
+> +struct acpi_table_apmt {
+> +       struct acpi_table_header header;    /* Common ACPI table header */
+> +};
+> +
+> +#define ACPI_APMT_NODE_ID_LENGTH                4
+> +
+> +/*
+> + * APMT subtables
+> + */
+> +struct acpi_apmt_node {
+> +       u16                                  length;
+> +       u8                                   flags;
+> +       u8                                   type;
+> +       u32                                  id;
+> +       u64                                  inst_primary;
+> +       u32                                  inst_secondary;
+> +       u64                                  base_address0;
+> +       u64                                  base_address1;
+> +       u32                                  ovflw_irq;
+> +       u32                                  reserved;
+> +       u32                                  ovflw_irq_flags;
+> +       u32                                  proc_affinity;
+> +       u32                                  impl_id;
+> +};
+> +
+> +/* Masks for Flags field above */
+> +
+> +#define ACPI_APMT_FLAGS_DUAL_PAGE               (1<<0)
+> +#define ACPI_APMT_FLAGS_AFFINITY                (1<<1)
+> +#define ACPI_APMT_FLAGS_ATOMIC                  (1<<2)
+> +
+> +/* Values for Flags dual page field above */
+> +
+> +#define ACPI_APMT_FLAGS_DUAL_PAGE_NSUPP         (0<<0)
+> +#define ACPI_APMT_FLAGS_DUAL_PAGE_SUPP          (1<<0)
+> +
+> +/* Values for Flags processor affinity field above */
+> +#define ACPI_APMT_FLAGS_AFFINITY_PROC           (0<<1)
+> +#define ACPI_APMT_FLAGS_AFFINITY_PROC_CONTAINER (1<<1)
+> +
+> +/* Values for Flags 64-bit atomic field above */
+> +#define ACPI_APMT_FLAGS_ATOMIC_NSUPP            (0<<2)
+> +#define ACPI_APMT_FLAGS_ATOMIC_SUPP             (1<<2)
+> +
+> +/* Values for Type field above */
+> +
+> +enum acpi_apmt_node_type {
+> +       ACPI_APMT_NODE_TYPE_MC                      = 0x00,
+> +       ACPI_APMT_NODE_TYPE_SMMU                    = 0x01,
+> +       ACPI_APMT_NODE_TYPE_PCIE_ROOT               = 0x02,
+> +       ACPI_APMT_NODE_TYPE_ACPI                    = 0x03,
+> +       ACPI_APMT_NODE_TYPE_CACHE                   = 0x04,
+> +       ACPI_APMT_NODE_TYPE_COUNT
+> +};
+> +
+> +/* Masks for ovflw_irq_flags field above */
+> +
+> +#define ACPI_APMT_OVFLW_IRQ_FLAGS_MODE          (1<<0)
+> +#define ACPI_APMT_OVFLW_IRQ_FLAGS_TYPE          (1<<1)
+> +
+> +/* Values for ovflw_irq_flags mode field above */
+> +
+> +#define ACPI_APMT_OVFLW_IRQ_FLAGS_MODE_LEVEL    (0<<0)
+> +#define ACPI_APMT_OVFLW_IRQ_FLAGS_MODE_EDGE     (1<<0)
+> +
+> +/* Values for ovflw_irq_flags type field above */
+> +
+> +#define ACPI_APMT_OVFLW_IRQ_FLAGS_TYPE_WIRED    (0<<1)
+> +
+> +
+>  /*******************************************************************************
+>   *
+>   * BDAT - BIOS Data ACPI Table
+> --
+> 2.17.1
+>
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
