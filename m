@@ -1,62 +1,41 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2D035160F9
-	for <lists+devel-acpica@lfdr.de>; Sun,  1 May 2022 01:23:49 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C020251ACC6
+	for <lists+devel-acpica@lfdr.de>; Wed,  4 May 2022 20:26:46 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id AC069100EA906;
-	Sat, 30 Apr 2022 16:23:47 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.136; helo=mga12.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 73157100EB839
-	for <devel@acpica.org>; Sat, 30 Apr 2022 16:23:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1651361026; x=1682897026;
-  h=date:from:to:cc:subject:message-id:mime-version:
-   content-transfer-encoding;
-  bh=LcKoOFAObsyAD/ndPxOCPXL8Nf7equVeddrUCIIimX4=;
-  b=VyynqogTgXttL/Fs6uOvqW8g31Xn8ImU87FijOD2tNf+/tmS07iNyIGQ
-   J+igOf+H8yPZjzLMkI99cO9SGqgbNri6324kBBJ70vpY6OHEPk7VVLnjR
-   dzq7pnIN7mxeiZk50f1cCFH5NoLlzJMmcZ6qjfYxdyJw04Ebty4MAak0R
-   +YOvpuKEhl1BVFevv1CZ+lL5lU8nlTtBq+kmoMsOt/eyZ4gjUVQZ+fPVh
-   qACSQRdKNM28hLcrjLGBYujcI3XHIMtgpBjNGKATstmUf98O4tbHbtEsJ
-   Eql9NfPRKZcTVYBelAeFGq5d/Xk+10uwuU1EmUlMmGhaCYJzDaYHHj1Z1
-   g==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10333"; a="246847629"
-X-IronPort-AV: E=Sophos;i="5.91,189,1647327600";
-   d="scan'208";a="246847629"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Apr 2022 16:23:44 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.91,189,1647327600";
-   d="scan'208";a="707070898"
-Received: from lkp-server01.sh.intel.com (HELO 5056e131ad90) ([10.239.97.150])
-  by fmsmga001.fm.intel.com with ESMTP; 30 Apr 2022 16:23:43 -0700
-Received: from kbuild by 5056e131ad90 with local (Exim 4.95)
-	(envelope-from <lkp@intel.com>)
-	id 1nkwRC-0007m0-Q6;
-	Sat, 30 Apr 2022 23:23:42 +0000
-Date: Sun, 01 May 2022 07:22:49 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <626dc4c9.OQFd63oOBHa9VwE6%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTP id CA825100EAB61;
+	Wed,  4 May 2022 11:26:44 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=217.140.110.172; helo=foss.arm.com; envelope-from=sudeep.holla@arm.com; receiver=<UNKNOWN> 
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by ml01.01.org (Postfix) with ESMTP id F1531100EB341
+	for <devel@acpica.org>; Wed,  4 May 2022 11:26:42 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 794BE1042;
+	Wed,  4 May 2022 11:26:41 -0700 (PDT)
+Received: from bogus (unknown [10.57.1.45])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 22B433FA35;
+	Wed,  4 May 2022 11:26:38 -0700 (PDT)
+Date: Wed, 4 May 2022 19:26:33 +0100
+From: Sudeep Holla <sudeep.holla@arm.com>
+To: Besar Wicaksono <bwicaksono@nvidia.com>, rafael@kernel.org
+Message-ID: <20220504182633.a3mwuiohfqtjvpep@bogus>
+References: <20220419205432.46021-1-bwicaksono@nvidia.com>
+ <20220419205432.46021-3-bwicaksono@nvidia.com>
 MIME-Version: 1.0
-Message-ID-Hash: Z3GE5LCGFITBXJL6CBWJAZWQFY5QHYYO
-X-Message-ID-Hash: Z3GE5LCGFITBXJL6CBWJAZWQFY5QHYYO
-X-MailFrom: lkp@intel.com
-X-Mailman-Rule-Hits: nonmember-moderation
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20220419205432.46021-3-bwicaksono@nvidia.com>
+Message-ID-Hash: GXP2U77IBGWOPSA54BLVAWT2UBF66UJI
+X-Message-ID-Hash: GXP2U77IBGWOPSA54BLVAWT2UBF66UJI
+X-MailFrom: sudeep.holla@arm.com
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
+CC: catalin.marinas@arm.com, will@kernel.org, lorenzo.pieralisi@arm.com, linux-tegra@vger.kernel.org, treding@nvidia.com, jonathanh@nvidia.com, linux-acpi@vger.kernel.org, devel@acpica.org, linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [rafael-pm:bleeding-edge] BUILD SUCCESS f2febeef358161ef4f8055451778e19fc78d429c
+Subject: [Devel] Re: [PATCH 2/2] ACPI: ARM Performance Monitoring Unit Table (APMT) initial support
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/Z3GE5LCGFITBXJL6CBWJAZWQFY5QHYYO/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/GXP2U77IBGWOPSA54BLVAWT2UBF66UJI/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -65,135 +44,106 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-branch HEAD: f2febeef358161ef4f8055451778e19fc78d429c  Merge branch 'acpi-osl' into bleeding-edge
+Hi Besar, Rafael,
 
-elapsed time: 3473m
+Sorry for the delayed response.
 
-configs tested: 109
-configs skipped: 3
+On Tue, Apr 19, 2022 at 03:54:32PM -0500, Besar Wicaksono wrote:
+> ARM Performance Monitoring Unit Table describes the properties of PMU
+> support in ARM-based system. The APMT table contains a list of nodes,
+> each represents a PMU in the system that conforms to ARM CoreSight PMU
+> architecture. The properties of each node include information required
+> to access the PMU (e.g. MMIO base address, interrupt number) and also
+> identification. For more detailed information, please refer to the
+> specification below:
+>  * APMT: https://developer.arm.com/documentation/den0117/latest
+>  * ARM Coresight PMU:
+>         https://developer.arm.com/documentation/ihi0091/latest
+> 
+> The initial support adds the detection of APMT table and generic
+> infrastructure to create platform devices for ARM CoreSight PMUs.
+> Similar to IORT the root pointer of APMT is preserved during runtime
+> and each PMU platform device is given a pointer to the corresponding
+> APMT node.
+>
 
-The following configs have been built successfully.
-More configs may be tested in the coming days.
+Hi Besar,
 
-gcc tested configs:
-arm                              allmodconfig
-arm                              allyesconfig
-arm                                 defconfig
-arm64                               defconfig
-arm64                            allyesconfig
-i386                          randconfig-c001
-mips                           ci20_defconfig
-sh                        sh7763rdp_defconfig
-powerpc                        cell_defconfig
-parisc                generic-64bit_defconfig
-arm                         cm_x300_defconfig
-arm                         nhk8815_defconfig
-mips                         cobalt_defconfig
-ia64                             alldefconfig
-parisc                              defconfig
-sh                          lboxre2_defconfig
-arc                              alldefconfig
-sh                               j2_defconfig
-arm                        multi_v7_defconfig
-x86_64                        randconfig-c001
-arm                  randconfig-c002-20220428
-ia64                                defconfig
-ia64                             allmodconfig
-ia64                             allyesconfig
-m68k                                defconfig
-m68k                             allyesconfig
-m68k                             allmodconfig
-alpha                               defconfig
-csky                                defconfig
-alpha                            allyesconfig
-nios2                            allyesconfig
-sh                               allmodconfig
-arc                                 defconfig
-h8300                            allyesconfig
-xtensa                           allyesconfig
-s390                             allmodconfig
-parisc                           allyesconfig
-parisc64                            defconfig
-s390                                defconfig
-s390                             allyesconfig
-i386                   debian-10.3-kselftests
-i386                              debian-10.3
-i386                                defconfig
-i386                             allyesconfig
-sparc                            allyesconfig
-sparc                               defconfig
-nios2                               defconfig
-arc                              allyesconfig
-mips                             allyesconfig
-mips                             allmodconfig
-powerpc                           allnoconfig
-powerpc                          allmodconfig
-powerpc                          allyesconfig
-x86_64                        randconfig-a002
-x86_64                        randconfig-a006
-x86_64                        randconfig-a004
-i386                          randconfig-a001
-i386                          randconfig-a003
-i386                          randconfig-a005
-x86_64                        randconfig-a013
-i386                          randconfig-a014
-i386                          randconfig-a012
-i386                          randconfig-a016
-arc                  randconfig-r043-20220428
-riscv                             allnoconfig
-riscv                            allyesconfig
-riscv                            allmodconfig
-riscv                    nommu_k210_defconfig
-riscv                          rv32_defconfig
-riscv                    nommu_virt_defconfig
-riscv                               defconfig
-um                             i386_defconfig
-um                           x86_64_defconfig
-x86_64                              defconfig
-x86_64                           allyesconfig
-x86_64                                  kexec
-x86_64                          rhel-8.3-func
-x86_64                               rhel-8.3
-x86_64                         rhel-8.3-kunit
-x86_64                    rhel-8.3-kselftests
-x86_64                           rhel-8.3-syz
+This patch on its own looks fine and happy to ack. However I would like
+to know general process on such changes that add platform or any bus
+device but the driver itself is not upstream.
 
-clang tested configs:
-mips                 randconfig-c004-20220428
-x86_64                        randconfig-c007
-arm                  randconfig-c002-20220428
-i386                          randconfig-c001
-powerpc              randconfig-c003-20220428
-s390                 randconfig-c005-20220428
-riscv                randconfig-c006-20220428
-arm                       spear13xx_defconfig
-mips                        workpad_defconfig
-arm                          collie_defconfig
-mips                     loongson2k_defconfig
-powerpc                     tqm8540_defconfig
-arm                         orion5x_defconfig
-arm                         lpc32xx_defconfig
-arm                        magician_defconfig
-powerpc                 mpc8272_ads_defconfig
-x86_64                        randconfig-a001
-x86_64                        randconfig-a003
-x86_64                        randconfig-a005
-i386                          randconfig-a002
-i386                          randconfig-a004
-i386                          randconfig-a006
-x86_64                        randconfig-a014
-i386                          randconfig-a013
-i386                          randconfig-a011
-i386                          randconfig-a015
-hexagon              randconfig-r041-20220428
-hexagon              randconfig-r045-20220428
-riscv                randconfig-r042-20220428
-s390                 randconfig-r044-20220428
+Any particular reason why you would like to rush and push this without
+the actual driver to probe the device being added here ?
+
+> Signed-off-by: Besar Wicaksono <bwicaksono@nvidia.com>
+> ---
+>  arch/arm64/Kconfig          |   1 +
+>  drivers/acpi/arm64/Kconfig  |   3 +
+>  drivers/acpi/arm64/Makefile |   1 +
+>  drivers/acpi/arm64/apmt.c   | 176 ++++++++++++++++++++++++++++++++++++
+>  drivers/acpi/bus.c          |   2 +
+>  include/linux/acpi_apmt.h   |  19 ++++
+>  6 files changed, 202 insertions(+)
+>  create mode 100644 drivers/acpi/arm64/apmt.c
+>  create mode 100644 include/linux/acpi_apmt.h
+>
+
+[...]
+
+> diff --git a/drivers/acpi/arm64/apmt.c b/drivers/acpi/arm64/apmt.c
+> new file mode 100644
+> index 000000000000..8b8b9f480548
+> --- /dev/null
+> +++ b/drivers/acpi/arm64/apmt.c
+> @@ -0,0 +1,176 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * ARM APMT table support.
+> + * Design document number: ARM DEN0117.
+> + *
+> + * Copyright (c) 2022, NVIDIA CORPORATION & AFFILIATES.
+> + *
+> + */
+> +
+> +#define pr_fmt(fmt)	"ACPI: APMT: " fmt
+> +
+> +#include <linux/acpi.h>
+> +#include <linux/init.h>
+> +#include <linux/kernel.h>
+> +#include <linux/platform_device.h>
+> +
+> +#define DEV_NAME "arm-csite-pmu"
+> +
+
+I really don't prefer this name:
+1. arm-coresight-pmu is much better than "csite". I see the short form
+   used elsewhere in the kernel is just "cs" as in cs_etm,...etc
+2. Since APMT is more generic than just coresight(I understand coresight
+   was the initial motivation for the generic specification) and also
+   the type list seem to cover memory controller, SMMU,..etc, does
+   it make sense to call it "arm-generic-pmu" or something similar.
+
+Anyways, it can be part of the driver discussion as people might have
+opinion based on what and how the driver covers the variety of PMU
+types possible as described in APMT.
+
+Not sure if the same device name will be re-used or PMUs can be registered
+with different name under perf subsystem, but the name matters for the user
+space tools and decoders. They may use the name or type information to analyse
+the data samples.
+
+So it is better to wait for all those discussion as part of the driver
+upstreaming before you use this device name unless we are absolutely sure
+the PMUs can be registered with different names in the driver(which could
+be possible, I just don't know)
+
+Apart from this name, I am OK with the changes here and happy to ack if it
+is OK to merge this without any driver to probe this device yet.
 
 -- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+Regards,
+Sudeep
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
