@@ -2,121 +2,118 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91D6851BE52
-	for <lists+devel-acpica@lfdr.de>; Thu,  5 May 2022 13:42:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 95F5651E7F8
+	for <lists+devel-acpica@lfdr.de>; Sat,  7 May 2022 17:03:51 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 2E84E100EA2B7;
-	Thu,  5 May 2022 04:42:09 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=217.140.110.172; helo=foss.arm.com; envelope-from=sudeep.holla@arm.com; receiver=<UNKNOWN> 
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by ml01.01.org (Postfix) with ESMTP id 00D5E100EA2B4
-	for <devel@acpica.org>; Thu,  5 May 2022 04:42:06 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 385B7106F;
-	Thu,  5 May 2022 04:42:05 -0700 (PDT)
-Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 31B5B3FA27;
-	Thu,  5 May 2022 04:42:03 -0700 (PDT)
-Date: Thu, 5 May 2022 12:42:00 +0100
-From: Sudeep Holla <sudeep.holla@arm.com>
-To: Besar Wicaksono <bwicaksono@nvidia.com>
-Message-ID: <20220505114200.ys6ilkkcsakkbnkc@bogus>
+	by ml01.01.org (Postfix) with ESMTP id 951EE100F4847;
+	Sat,  7 May 2022 08:03:48 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=45.249.212.188; helo=szxga02-in.huawei.com; envelope-from=guohanjun@huawei.com; receiver=<UNKNOWN> 
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by ml01.01.org (Postfix) with ESMTPS id 9F4BE100EB85F
+	for <devel@acpica.org>; Sat,  7 May 2022 08:03:45 -0700 (PDT)
+Received: from dggpemm500023.china.huawei.com (unknown [172.30.72.55])
+	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4KwVxL4LtKzGpL4;
+	Sat,  7 May 2022 23:00:54 +0800 (CST)
+Received: from dggpemm500002.china.huawei.com (7.185.36.229) by
+ dggpemm500023.china.huawei.com (7.185.36.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.24; Sat, 7 May 2022 23:03:39 +0800
+Received: from [10.174.178.247] (10.174.178.247) by
+ dggpemm500002.china.huawei.com (7.185.36.229) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.24; Sat, 7 May 2022 23:03:39 +0800
+To: Besar Wicaksono <bwicaksono@nvidia.com>, <rafael@kernel.org>,
+	<lenb@kernel.org>, <robert.moore@intel.com>, <catalin.marinas@arm.com>,
+	<will@kernel.org>, <lorenzo.pieralisi@arm.com>, <sudeep.holla@arm.com>
 References: <20220419205432.46021-1-bwicaksono@nvidia.com>
  <20220419205432.46021-3-bwicaksono@nvidia.com>
- <20220504182633.a3mwuiohfqtjvpep@bogus>
- <SN6PR12MB4719E05A6BC7CAA2C00F35EFA0C39@SN6PR12MB4719.namprd12.prod.outlook.com>
+From: Hanjun Guo <guohanjun@huawei.com>
+Message-ID: <bf994eb0-0e6d-fd0b-3499-8c28d2c13cc9@huawei.com>
+Date: Sat, 7 May 2022 23:03:38 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <SN6PR12MB4719E05A6BC7CAA2C00F35EFA0C39@SN6PR12MB4719.namprd12.prod.outlook.com>
-Message-ID-Hash: W7TUHTCB33KU4LXGVNI7OIT233CGIURS
-X-Message-ID-Hash: W7TUHTCB33KU4LXGVNI7OIT233CGIURS
-X-MailFrom: sudeep.holla@arm.com
+In-Reply-To: <20220419205432.46021-3-bwicaksono@nvidia.com>
+Content-Language: en-GB
+X-Originating-IP: [10.174.178.247]
+X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
+ dggpemm500002.china.huawei.com (7.185.36.229)
+X-CFilter-Loop: Reflected
+Message-ID-Hash: WR5QGDE6WQTNQRQRHFX3W6SYCRKMTQM2
+X-Message-ID-Hash: WR5QGDE6WQTNQRQRHFX3W6SYCRKMTQM2
+X-MailFrom: guohanjun@huawei.com
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
-CC: "rafael@kernel.org" <rafael@kernel.org>, "catalin.marinas@arm.com" <catalin.marinas@arm.com>, "will@kernel.org" <will@kernel.org>, "lorenzo.pieralisi@arm.com" <lorenzo.pieralisi@arm.com>, "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>, Thierry Reding <treding@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>, "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>, "devel@acpica.org" <devel@acpica.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>
+CC: linux-tegra@vger.kernel.org, treding@nvidia.com, jonathanh@nvidia.com, linux-acpi@vger.kernel.org, devel@acpica.org, linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
 X-Mailman-Version: 3.1.1
 Precedence: list
 Subject: [Devel] Re: [PATCH 2/2] ACPI: ARM Performance Monitoring Unit Table (APMT) initial support
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/W7TUHTCB33KU4LXGVNI7OIT233CGIURS/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/WR5QGDE6WQTNQRQRHFX3W6SYCRKMTQM2/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Transfer-Encoding: 7bit
 
-T24gV2VkLCBNYXkgMDQsIDIwMjIgYXQgMTA6MDg6MzlQTSArMDAwMCwgQmVzYXIgV2ljYWtzb25v
-IHdyb3RlOg0KPiBIaSBTdWRlZXAsDQo+IA0KPiA+IEFueSBwYXJ0aWN1bGFyIHJlYXNvbiB3aHkg
-eW91IHdvdWxkIGxpa2UgdG8gcnVzaCBhbmQgcHVzaCB0aGlzIHdpdGhvdXQNCj4gPiB0aGUgYWN0
-dWFsIGRyaXZlciB0byBwcm9iZSB0aGUgZGV2aWNlIGJlaW5nIGFkZGVkIGhlcmUgPw0KPiANCj4g
-SSBwbGFuIHRvIGhhdmUgdHdvIHBhdGNoIHNlcmllcywgb25lIGZvciBBQ1BJIHBhdGNoICh0aGlz
-IHBhdGNoKSBhbmQgb25lIGZvcg0KPiBkcml2ZXIgcGF0Y2guIE15IHVuZGVyc3RhbmRpbmcgaXMg
-dGhlIGRyaXZlciBwYXRjaCB3aWxsIGRlcGVuZCBvbiB0aGlzDQo+IHBhdGNoLCBidXQgbm90IHRo
-ZSBvdGhlciB3YXkuIFNvLCBJIHRob3VnaHQgaXQgd291bGQgYmUgYmV0dGVyIHRvIGdldCB0aGlz
-DQo+IHBhdGNoIGFwcHJvdmVkIGZpcnN0LiBIb3dldmVyLCBpZiBpdCBoZWxwcyB0aGUgcmV2aWV3
-IG9mIHRoaXMgcGF0Y2gsIEkgYW0NCj4gaG9waW5nIHRvIHBvc3QgdGhlIGRyaXZlciBwYXRjaCBi
-eSBlbmQgb2YgdGhlIHdlZWsgYW5kIHdpbGwgQ0MgeW91IG9uIHRoYXQNCj4gb25lLg0KDQpTdXJl
-IHBsZWFzZSBkbyB0aGF0LiBJTU8sIHRoZSBkcml2ZXIgaXMgdXN1YWxseSB1cHN0cmVhbWVkIGZp
-cnN0IGFsb25nIHdpdGgNCnRoZSBEVCBiaW5kaW5ncyhpbiBBQ1BJIGNhc2UgZWl0aGVyIHRoZSBz
-cGVjIGNoYW5nZSBvciB0aGUgc3RkIG5hbWVzcGFjZSBub2RlKQ0KVGhlIGFjdHVhbCBhZGRpdGlv
-biBvZiB0aGUgZGV2aWNlIGhhcHBlbnMgdmlhIERULiBBQ1BJIEFQTVQgbmVlZHMgY3JlYXRpb24N
-Cm9mIGRldmljZSBoZXJlIGJ1dCBJIHByZWZlciB0byBzZWUgdGhlIGRyaXZlciBmaXJzdC4NCg0K
-PiANCj4gPiBJIHJlYWxseSBkb24ndCBwcmVmZXIgdGhpcyBuYW1lOg0KPiA+IDEuIGFybS1jb3Jl
-c2lnaHQtcG11IGlzIG11Y2ggYmV0dGVyIHRoYW4gImNzaXRlIi4gSSBzZWUgdGhlIHNob3J0IGZv
-cm0NCj4gPiAgICB1c2VkIGVsc2V3aGVyZSBpbiB0aGUga2VybmVsIGlzIGp1c3QgImNzIiBhcyBp
-biBjc19ldG0sLi4uZXRjDQo+ID4gMi4gU2luY2UgQVBNVCBpcyBtb3JlIGdlbmVyaWMgdGhhbiBq
-dXN0IGNvcmVzaWdodChJIHVuZGVyc3RhbmQgY29yZXNpZ2h0DQo+ID4gICAgd2FzIHRoZSBpbml0
-aWFsIG1vdGl2YXRpb24gZm9yIHRoZSBnZW5lcmljIHNwZWNpZmljYXRpb24pIGFuZCBhbHNvDQo+
-ID4gICAgdGhlIHR5cGUgbGlzdCBzZWVtIHRvIGNvdmVyIG1lbW9yeSBjb250cm9sbGVyLCBTTU1V
-LC4uZXRjLCBkb2VzDQo+ID4gICAgaXQgbWFrZSBzZW5zZSB0byBjYWxsIGl0ICJhcm0tZ2VuZXJp
-Yy1wbXUiIG9yIHNvbWV0aGluZyBzaW1pbGFyLg0KPiANCj4gQmV0d2VlbiB0aGVzZSB0d28sIEkg
-d291bGQgcHJlZmVyIGFybS1jb3Jlc2lnaHQtcG11IGp1c3QgdG8gYW50aWNpcGF0ZQ0KPiBhbm90
-aGVyIHN0YW5kYXJkIGluIHRoZSBmdXR1cmUgZnJvbSBBUk0uIFRoZSBBUE1ULCB0byBteSB1bmRl
-cnN0YW5kaW5nLCBpcw0KPiBhcHBsaWNhYmxlIG9ubHkgdG8gQ29yZVNpZ2h0IGJhc2VkIFBNVXMu
-IFVzaW5nICJjb3Jlc2lnaHQiIGFzIHBhcnQgb2YgdGhlDQo+IGRldmljZSBuYW1lIGlzIHJlYXNv
-bmFibGUuDQoNCkkgcmVhZCB0aGUgQVBNVCBzcGVjIGFnYWluIGFuZCBpdCBoYXMgdmVyeSBsaXR0
-bGUgcmVmZXJlbmNlIHRvIGNvcmVzaWdodA0KdGhvdWdoIGl0IGlzIHdlaXJkbHkgbGFiZWxsZWQg
-YXMgQ29yZXNpZ2h0IFBNVSBmb3Igbm8gc2FuZSByZWFzb25zKFNvcnJ5IEkNCmtub3cgaXQncyBB
-cm0gdG8gYmxhbWUgaGVyZSBhbmQgSSBiZXQgc29tZXRoaW5nIHRvIGRvIHdpdGggbWFya2V0aW5n
-KS4NCg0KQW55d2F5cyB0aGUgQVBNVCBzcGVjIG9uIGl0cyBvd24gY292ZXJzIGFsbCB0eXBlcyBv
-ZiBQTVVzIGFzIEkgc3RhdGVkIGVhcmxpZXIuDQpTbyBJIHByZWZlciAiYXJtLWdlbmVyaWMtcG11
-IiBvciBzb21ldGhpbmcgYmV0dGVyIGlmIHlvdSBjYW4gY29tZSB1cCB3aXRoLiBJDQphbSBmaW5l
-IGlmIHlvdSB3b3VsZCBsaWtlIHRvIHJldGFpbiBhcm0tY29yZXNpZ2h0LXBtdSB3aGVuIHlvdSBw
-b3N0IGRyaXZlciBhcw0KdGhhdCdzIHdoYXQgdGhlIHNwZWMgaXMgbGFiZWxsZWQgYXMuDQoNCk9u
-Y2UgeW91IHBvc3QgdGhlIGRyaXZlciB3ZSBjYW4gZGViYXRlIG9uIHRoYXQgYW5kIGNvbWUgdXAg
-d2l0aCBiZXR0ZXIgbmFtZQ0Kd2l0aCBhbGwgdGhlIGNvbmNlcm5lZCBwYXJ0aWVzIGludm9sdmVk
-Lg0KDQo+IA0KPiA+IE5vdCBzdXJlIGlmIHRoZSBzYW1lIGRldmljZSBuYW1lIHdpbGwgYmUgcmUt
-dXNlZCBvciBQTVVzIGNhbiBiZSByZWdpc3RlcmVkDQo+ID4gd2l0aCBkaWZmZXJlbnQgbmFtZSB1
-bmRlciBwZXJmIHN1YnN5c3RlbSwgYnV0IHRoZSBuYW1lIG1hdHRlcnMgZm9yIHRoZSB1c2VyDQo+
-ID4gc3BhY2UgdG9vbHMgYW5kIGRlY29kZXJzLiBUaGV5IG1heSB1c2UgdGhlIG5hbWUgb3IgdHlw
-ZSBpbmZvcm1hdGlvbiB0byBhbmFseXNlDQo+ID4gdGhlIGRhdGEgc2FtcGxlcy4NCj4gPg0KPiA+
-IFNvIGl0IGlzIGJldHRlciB0byB3YWl0IGZvciBhbGwgdGhvc2UgZGlzY3Vzc2lvbiBhcyBwYXJ0
-IG9mIHRoZSBkcml2ZXINCj4gPiB1cHN0cmVhbWluZyBiZWZvcmUgeW91IHVzZSB0aGlzIGRldmlj
-ZSBuYW1lIHVubGVzcyB3ZSBhcmUgYWJzb2x1dGVseSBzdXJlDQo+ID4gdGhlIFBNVXMgY2FuIGJl
-IHJlZ2lzdGVyZWQgd2l0aCBkaWZmZXJlbnQgbmFtZXMgaW4gdGhlIGRyaXZlcih3aGljaCBjb3Vs
-ZA0KPiA+IGJlIHBvc3NpYmxlLCBJIGp1c3QgZG9uJ3Qga25vdykNCj4gPg0KPiA+IEFwYXJ0IGZy
-b20gdGhpcyBuYW1lLCBJIGFtIE9LIHdpdGggdGhlIGNoYW5nZXMgaGVyZSBhbmQgaGFwcHkgdG8g
-YWNrIGlmIGl0DQo+ID4gaXMgT0sgdG8gbWVyZ2UgdGhpcyB3aXRob3V0IGFueSBkcml2ZXIgdG8g
-cHJvYmUgdGhpcyBkZXZpY2UgeWV0Lg0KPiANCj4gSSBiZWxpZXZlIHVzaW5nIGEgZGlmZmVyZW50
-IG5hbWUgdG8gcmVnaXN0ZXIgdGhlIFBNVSBpcyBwb3NzaWJsZS4NCj4gSW4gdGhlIGN1cnJlbnQg
-ZHJpdmVyIHBhdGNoLCB3ZSB1c2UgYSBkaWZmZXJlbnQgbmFtZSBmb3JtYXQgdG8gcmVnaXN0ZXIg
-dGhlDQo+IFBNVTogYXJtX2NzaXRlX3BtdTxudW1lcmljIGlkPi4gQ2VydGFpbmx5IHRoZSAiY3Np
-dGUiIG5lZWRzIHRvIGNoYW5nZSBhcw0KPiB3ZWxsIPCfmIouIEFub3RoZXIgZXhhbXBsZSBsaWtl
-IEFSTSBDQ0kgUE1VIHVzZXMgZGV2aWNlIG5hbWUgIkFSTS1DQ0kgUE1VIiwNCj4gYnV0IGl0IGlz
-IHJlZ2lzdGVyZWQgdG8gcGVyZiBzdWJzeXN0ZW0gYXMgIkNDSV80MDAiIG9yICJDQ0lfNTAwIi4N
-Cj4NCg0KQWdyZWVkLCB0aG9zZSBhcmUgZGV0YWlscyB3ZSBjYW4gZGlzY3VzcyBvbmNlIHlvdSBw
-b3N0IHdpdGggYWxsIHRoZQ0KbWFpbnRhaW5lcnMgaW52b2x2ZWQuDQoNCj4gSWYgdGhlcmUgaXMg
-bm8gb2JqZWN0aW9uLCBJIGNhbiBwb3N0IHVwZGF0ZSB0byB0aGlzIHBhdGNoIGFuZCBnbyBhaGVh
-ZCB3aXRoDQo+ICJhcm0tY29yZXNpZ2h0LXBtdSIgZm9yIHRoZSBkZXZpY2UgbmFtZS4NCg0KU3Vy
-ZSBhcyBJIG1lbnRpb25lZCBhYm92ZSB0aGF0IHNob3VsZCBiZSBmaW5lLiBJIHdpbGwgdGhlbiBy
-YWlzZSBpdCB3aXRoDQp0aGUgbWFpbnRhaW5lcnMgaG93IHdlIG1hbmFnZWQgdG8gbGFiZWxsZWQg
-dGhlIHNwZWMgdG8gY29uZnVzZSBpdCB3aXRoIG90aGVyDQpjb21wb25lbnRzLiBJIHByZWZlciB3
-aGF0ZXZlciB3ZSBhZGQgbXVzdCBiZSBlYXN5IHRvIGlkZW50aWZ5IGFuZCBkb2Vzbid0DQpjb25m
-bGljdCB3aXRoIGV4aXN0aW5nIFBNVXMobGlrZSBBUk0gQ1BVIFBNVXMsIG9yIHRoZSBjb3Jlc2ln
-aHQgRVRNIFBNVXMsDQouLmV0YykNCg0KSW4gc2hvcnQsIGp1c3QgcG9zdCB0aGUgZHJpdmVyIHRo
-ZSB3YXkgeW91IHByZWZlciBhbmQgbGV0IHVzIHN0YXJ0IHRoZQ0KZGlzY3Vzc2lvbiB0aGVyZS4N
-Cg0KLS0gDQpSZWdhcmRzLA0KU3VkZWVwCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fCkRldmVsIG1haWxpbmcgbGlzdCAtLSBkZXZlbEBhY3BpY2Eub3JnClRv
-IHVuc3Vic2NyaWJlIHNlbmQgYW4gZW1haWwgdG8gZGV2ZWwtbGVhdmVAYWNwaWNhLm9yZwolKHdl
-Yl9wYWdlX3VybClzbGlzdGluZm8lKGNnaWV4dClzLyUoX2ludGVybmFsX25hbWUpcw==
+On 2022/4/20 4:54, Besar Wicaksono wrote:
+> ARM Performance Monitoring Unit Table describes the properties of PMU
+> support in ARM-based system. The APMT table contains a list of nodes,
+> each represents a PMU in the system that conforms to ARM CoreSight PMU
+> architecture. The properties of each node include information required
+> to access the PMU (e.g. MMIO base address, interrupt number) and also
+> identification. For more detailed information, please refer to the
+> specification below:
+>   * APMT: https://developer.arm.com/documentation/den0117/latest
+>   * ARM Coresight PMU:
+>          https://developer.arm.com/documentation/ihi0091/latest
+> 
+> The initial support adds the detection of APMT table and generic
+> infrastructure to create platform devices for ARM CoreSight PMUs.
+> Similar to IORT the root pointer of APMT is preserved during runtime
+> and each PMU platform device is given a pointer to the corresponding
+> APMT node.
+> 
+> Signed-off-by: Besar Wicaksono <bwicaksono@nvidia.com>
+> ---
+>   arch/arm64/Kconfig          |   1 +
+>   drivers/acpi/arm64/Kconfig  |   3 +
+>   drivers/acpi/arm64/Makefile |   1 +
+>   drivers/acpi/arm64/apmt.c   | 176 ++++++++++++++++++++++++++++++++++++
+>   drivers/acpi/bus.c          |   2 +
+>   include/linux/acpi_apmt.h   |  19 ++++
+>   6 files changed, 202 insertions(+)
+>   create mode 100644 drivers/acpi/arm64/apmt.c
+>   create mode 100644 include/linux/acpi_apmt.h
+> 
+> +++ b/drivers/acpi/arm64/apmt.c
+> @@ -0,0 +1,176 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * ARM APMT table support.
+> + * Design document number: ARM DEN0117.
+> + *
+> + * Copyright (c) 2022, NVIDIA CORPORATION & AFFILIATES.
+> + *
+> + */
+> +
+> +#define pr_fmt(fmt)	"ACPI: APMT: " fmt
+> +
+> +#include <linux/acpi.h>
+> +#include <linux/init.h>
+> +#include <linux/kernel.h>
+> +#include <linux/platform_device.h>
+
+Please include <linux/acpi_apmt.h>, here is the similar patch:
+
+https://lore.kernel.org/lkml/CAJZ5v0gqr97AFuk855UZkcVpDnmj1Q6B2PE32zWmx4eKxbNvCw@mail.gmail.com/T/
+
+Thanks
+Hanjun
+_______________________________________________
+Devel mailing list -- devel@acpica.org
+To unsubscribe send an email to devel-leave@acpica.org
+%(web_page_url)slistinfo%(cgiext)s/%(_internal_name)s
