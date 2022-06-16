@@ -2,56 +2,57 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD49A54D3C6
-	for <lists+devel-acpica@lfdr.de>; Wed, 15 Jun 2022 23:32:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9351354E003
+	for <lists+devel-acpica@lfdr.de>; Thu, 16 Jun 2022 13:28:09 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 5EC9F100EA10E;
-	Wed, 15 Jun 2022 14:32:05 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2a00:1450:4864:20::531; helo=mail-ed1-x531.google.com; envelope-from=andy.shevchenko@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+	by ml01.01.org (Postfix) with ESMTP id 3059F100EAB45;
+	Thu, 16 Jun 2022 04:28:07 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2a00:1450:4864:20::52b; helo=mail-ed1-x52b.google.com; envelope-from=andy.shevchenko@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 8E34C100EB34F
-	for <devel@acpica.org>; Wed, 15 Jun 2022 14:32:03 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id x62so17995519ede.10
-        for <devel@acpica.org>; Wed, 15 Jun 2022 14:32:03 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTPS id A62E9100EB33B
+	for <devel@acpica.org>; Thu, 16 Jun 2022 04:28:04 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id g7so1763006eda.3
+        for <devel@acpica.org>; Thu, 16 Jun 2022 04:28:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=odvCzLSKKuiENzizfeaGPvIgCKaPVvEk14WpPahs/w0=;
-        b=OnzhAziPMz7BHhj/klhh24Swx+QtNowWmbMd6LuDCBdP+N43Bru7ha5pDEi+zB8Wrn
-         C5LJr23DLqYvwwlmXfU5XJSqKepu5Kld6wRDFojm8YhrHA91B8VfXbHpxmtQnT78d+8M
-         sBKz1cmPGJzIE76Zqawbp47jx13Qukc/o3cujrY4VqY+++HfchJW6IdNvp3v7XcDVy47
-         Qv7m6tXQpwATaT38bi/yk6TK1OBatkIfvQ1A187WEMFcQJJRJayYu+M4OxdBFC1wGF3R
-         tlL3n4rMjbpmMhYzoIKKVL40bQlJ8DUZcBnR7mMjAqyxKQTywAPAR+2av4zBbXzvBy8S
-         p2lg==
+        bh=hFhFRye+5B1ecjABNv2SUQC9YqXo8LQgZLjvUMJN4oQ=;
+        b=LbM0QY6J/BZ9YYbZArpSAPXapNOQYzV/BzscPWPjtyp2FePAhSoGTMfGz54nAIrgm/
+         O49wgCC5PoQl780T/sCeIHlZLh1cTt/oIpJlH5SGF1uKUiKSRYYYvdTT1oA+67Q+SvLb
+         R/IhhUFcTDugXtobIfgHGhKXbaHMWC48nWrHOQUORnWNxW0Xa/H2oAAFb+R/fddYxKxm
+         JAZCNNUXKsB4aESeuHx6HSNH6t0ZeJUnhSsPrZcvThzfj6DXWs9nOjK36CdH0cmiBXSL
+         i1oJKK/vOUqAZcxjJFg5r1ziozl7qvYSID2xpMb6zL5qweloaBmctLHBu3axGa+TqbMs
+         JaAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=odvCzLSKKuiENzizfeaGPvIgCKaPVvEk14WpPahs/w0=;
-        b=P/4SeOTpu4WATHInMzAJjsGusmK7SNanN9csJlCuzJaVGFrbKcZDMEY6FL8EWisoFI
-         2A1Cpts4tH6G1YV6rUMlCLSDM29jz+BE9J5M3SKPqHYWiykb8bSQwvcRsBuk+JEVM5OW
-         0y+x6vobVk1bHCa2RkphKI7yEjkyH6oIIXyZuoCDFbRiaOIf3tWZo56+8483kleulGcb
-         4fOHutoSpYdmSZDnmQFB7CIAZ6If4oSDf6pIgPVLcqdrcFHfnMf7rGu4Ou5fw3F/mFtK
-         +5xDq//aoyKIVff02X3OS0P0C2l15aZufUdTZUWR5g/Aqrs63Atf20kUrsA91bcvhAMi
-         qFCw==
-X-Gm-Message-State: AJIora+u57gZ81molm1HuZhdPaMSYm3pdbI9vfAVrFQzWPUwmkP+qiiI
-	FkVht3aa59gD4BLFXqiUsFNaC0PTThforpq5tM8=
-X-Google-Smtp-Source: AGRyM1tTcMur2c22XOrIYhYZpjD/tj2dl8cIS+3H0YGB/UpWbCUfUHZePvyqd7sDIfyssr64VznjuvMDXBNDbIPABAs=
-X-Received: by 2002:a05:6402:249e:b0:42d:bb88:865b with SMTP id
- q30-20020a056402249e00b0042dbb88865bmr2263152eda.141.1655328721215; Wed, 15
- Jun 2022 14:32:01 -0700 (PDT)
+        bh=hFhFRye+5B1ecjABNv2SUQC9YqXo8LQgZLjvUMJN4oQ=;
+        b=SjAnLAfRNqrqz1jzPLKaIY60Xc4XFBtowHXC8FYSbggLQDvSt0oVJxfWDCqOB7F68/
+         aBU9JN4HvZfthkTgsepNVUyt/C9d6a/FWBD1Kpv+C4wZoVf0NF9FIiXL7xxKIUbo9OPi
+         3S5p1u7CRxJ/kSfm0PWtVTq+glIEoHrbaUbOkTQKF1lpx4QYUeA5V/gb3CrAmZfnkHW+
+         FipG/wY0+Sb4z8BeBvnmnzOAf9QzBtexjUkBgF/SWUh8y4O1MchVCVyS5VY0pDhhK9Rp
+         47ea6qD/aix4ndwq6XjWcFIgIlom36WKQw7wwhxQk1wybP4yghvvG1twl4c/d/Okjuh4
+         UZkw==
+X-Gm-Message-State: AJIora/oXYl3Hkkei7Nqsx6jI92r+F73tl1rtmCl/H9RAqzC2wY13/1J
+	+IkhGMXgB74dnVIQyd93lmcD4xkDJnZXBeJrCeo=
+X-Google-Smtp-Source: AGRyM1t1nhtaAw4n7rhbGj5ULOwso59znXtxJabimDdAJxacqeZfjJdADYUqDZkUepacTbs/DYQJVYzbXUXtEtMYzgA=
+X-Received: by 2002:aa7:d481:0:b0:42d:d5fd:f963 with SMTP id
+ b1-20020aa7d481000000b0042dd5fdf963mr5890235edr.209.1655378882039; Thu, 16
+ Jun 2022 04:28:02 -0700 (PDT)
 MIME-Version: 1.0
 References: <20220615195643.12608-1-hdegoede@redhat.com> <20220615195643.12608-3-hdegoede@redhat.com>
-In-Reply-To: <20220615195643.12608-3-hdegoede@redhat.com>
+ <CAHp75VcPEw93_3dZvKCadnAqrJCVvdVcKh+DodgBC68xkmJ7VQ@mail.gmail.com> <e1647dae-cde2-868d-458d-ffe969203566@redhat.com>
+In-Reply-To: <e1647dae-cde2-868d-458d-ffe969203566@redhat.com>
 From: Andy Shevchenko <andy.shevchenko@gmail.com>
-Date: Wed, 15 Jun 2022 23:31:24 +0200
-Message-ID: <CAHp75VcPEw93_3dZvKCadnAqrJCVvdVcKh+DodgBC68xkmJ7VQ@mail.gmail.com>
+Date: Thu, 16 Jun 2022 13:27:25 +0200
+Message-ID: <CAHp75VeD5Ej3jvV=MtAB9fNxgyd8V8Wr+MZZnvbgzy2v3+eJmQ@mail.gmail.com>
 To: Hans de Goede <hdegoede@redhat.com>
-Message-ID-Hash: EZ2F2CHWV2AVBGX33N45WVM7LMDEQBT5
-X-Message-ID-Hash: EZ2F2CHWV2AVBGX33N45WVM7LMDEQBT5
+Message-ID-Hash: 2ZLK6B3PTERXK6O6POL3LP3ORKLUO2DD
+X-Message-ID-Hash: 2ZLK6B3PTERXK6O6POL3LP3ORKLUO2DD
 X-MailFrom: andy.shevchenko@gmail.com
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
 CC: "Rafael J . Wysocki" <rafael@kernel.org>, Mika Westerberg <mika.westerberg@linux.intel.com>, Andy Shevchenko <andy@kernel.org>, Kai-Heng Feng <kai.heng.feng@canonical.com>, =?UTF-8?Q?Johannes_Pen=C3=9Fel?= <johannespenssel@posteo.net>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>
@@ -59,7 +60,7 @@ X-Mailman-Version: 3.1.1
 Precedence: list
 Subject: [Devel] Re: [RFC 2/4] ACPICA: Add \_SB.PC00, \SB.PCI0 to acpi_ns_early_initialize_devices()
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/EZ2F2CHWV2AVBGX33N45WVM7LMDEQBT5/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/2ZLK6B3PTERXK6O6POL3LP3ORKLUO2DD/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -68,79 +69,41 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Wed, Jun 15, 2022 at 9:57 PM Hans de Goede <hdegoede@redhat.com> wrote:
->
-> Since ACPICA commit f005ee6b90d1 / Linux commit 2d3349de8072
-> ("ACPICA: Namespace: Reorder \_SB._INI to make sure it is evaluated
-> before _REG evaluations") acpi_initialize_objects() calls \_SB._INI
-> before executing _REG OpRegion methods, because the _REG methods may
-> rely on initialization done by this _INI method.
->
-> In many DSDTs the \_SB.PC00._INI / \_SB.PCI0._INI methods set an OSYS
-> global variable based on _OSI evaluations.
->
-> In some cases there are _REG methods which depend on the OSYS value and
-> before this change ACPICA would run these _REG methods before running
-> _SB.PC00._INI / \_SB.PCI0._INI causing issues.
->
-> 2 examples of problems caused by running _REG methods before these
-> _INI methods are:
->
-> 1. on a "Lenovo IdeaPad 5 15ITL05" \_SB.PC00.LPCB.EC0._REG gets
-> evaluated before \_SB.PC00._INI and that _REG contains:
->
->     If ((OSYS == 0x07DF))
->     {
->         Local0 = 0x06
->     }
->
->     If ((Acquire (LFCM, 0xA000) == Zero))
->     {
->         OSTY = Local0
->         ...
->
-> With OSTY being a SystemMemory OpRegion field, due to the _INI running
-> too late, Local0 stays at 0. Causing OSTY to be set to 0 instead of 6,
-> which causes the brightness up/down keys to not work:
-> https://bugzilla.kernel.org/show_bug.cgi?id=214899
->
-> 2. On a "Lenovo Thinkbook 14-ILL" \\_SB_.PCI0.I2C0._REG gets
-> evaluated before \_SB.PCI0._INI and that _REG contains:
->
->     If ((OSYS == 0x07DF))
->     {
->         ...
->         LNUX = Zero
->         TPID = 0x4E
->     }
->     else
->     {
->         LNUX = One
->         TPID = 0xBB
->     }
->
-> And then later on the TPID value gets used to decide for which of multiple
-> devices describing the touchpad _STA should return 0xF and the one which
-> gets enabled by TPID=0xBB is broken, causing to the touchpad to not work:
-> https://bugzilla.redhat.com/show_bug.cgi?id=1842039
->
-> Fix these issues by adding \_SB.PC00._INI / \_SB.PCI0._INI to the list of
-> _INI methods to run early (before executing _REG methods).
+On Thu, Jun 16, 2022 at 11:13 AM Hans de Goede <hdegoede@redhat.com> wrote:
+> On 6/15/22 23:31, Andy Shevchenko wrote:
+> > On Wed, Jun 15, 2022 at 9:57 PM Hans de Goede <hdegoede@redhat.com> wrote:
 
 ...
 
-> -       char path[ACPI_PATH_SEGMENT_LENGTH + 2];
-> +       char path[ACPI_PATH_SEGMENT_LENGTH * 2 + 2];
+> >> -       char path[ACPI_PATH_SEGMENT_LENGTH + 2];
+> >> +       char path[ACPI_PATH_SEGMENT_LENGTH * 2 + 2];
+> >
+> > Strictly speaking this should be, IIUC,
+> >
+> > 1 + ACPI_PATH_SEGMENT_LENGTH + ACPI_NAMESEG_SIZE + 1
+> >
+> > \\ + path segment length (with a separator) + name + \0
+> >
+> > That said, it seems the original code adds 1 unneeded byte.
+>
+> Right I already knew I needed the " * 2" when writing the
+> original code, so I decided to do things this way for KISS
+> reasons.
 
-Strictly speaking this should be, IIUC,
+Yeah, but then you don't need + 2, it should be +1.
+I believe the initial use of ACPI_PATH_SEGMENT_LENGTH vs.
+ACPI_NAMESEG_SIZE is a bit misleading.
 
-1 + ACPI_PATH_SEGMENT_LENGTH + ACPI_NAMESEG_SIZE + 1
+> > Perhaps a comment in the code?
+>
+> I've added a comment to my local version now.
+>
+> After this thread has had some more time to gather feedback
+> I will turn the ACPICA patches into a acpica github pull-req
+> with the comment added.
+>
+> (or if necessary rework the entire series)
 
-\\ + path segment length (with a separator) + name + \0
-
-That said, it seems the original code adds 1 unneeded byte.
-
-Perhaps a comment in the code?
 
 -- 
 With Best Regards,
