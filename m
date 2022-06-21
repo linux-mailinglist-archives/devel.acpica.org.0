@@ -2,65 +2,60 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9351354E003
-	for <lists+devel-acpica@lfdr.de>; Thu, 16 Jun 2022 13:28:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5EDB0552CB1
+	for <lists+devel-acpica@lfdr.de>; Tue, 21 Jun 2022 10:19:17 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 3059F100EAB45;
-	Thu, 16 Jun 2022 04:28:07 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=2a00:1450:4864:20::52b; helo=mail-ed1-x52b.google.com; envelope-from=andy.shevchenko@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	by ml01.01.org (Postfix) with ESMTP id B2521100EA10E;
+	Tue, 21 Jun 2022 01:19:14 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.43; helo=mga05.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id A62E9100EB33B
-	for <devel@acpica.org>; Thu, 16 Jun 2022 04:28:04 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id g7so1763006eda.3
-        for <devel@acpica.org>; Thu, 16 Jun 2022 04:28:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=hFhFRye+5B1ecjABNv2SUQC9YqXo8LQgZLjvUMJN4oQ=;
-        b=LbM0QY6J/BZ9YYbZArpSAPXapNOQYzV/BzscPWPjtyp2FePAhSoGTMfGz54nAIrgm/
-         O49wgCC5PoQl780T/sCeIHlZLh1cTt/oIpJlH5SGF1uKUiKSRYYYvdTT1oA+67Q+SvLb
-         R/IhhUFcTDugXtobIfgHGhKXbaHMWC48nWrHOQUORnWNxW0Xa/H2oAAFb+R/fddYxKxm
-         JAZCNNUXKsB4aESeuHx6HSNH6t0ZeJUnhSsPrZcvThzfj6DXWs9nOjK36CdH0cmiBXSL
-         i1oJKK/vOUqAZcxjJFg5r1ziozl7qvYSID2xpMb6zL5qweloaBmctLHBu3axGa+TqbMs
-         JaAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=hFhFRye+5B1ecjABNv2SUQC9YqXo8LQgZLjvUMJN4oQ=;
-        b=SjAnLAfRNqrqz1jzPLKaIY60Xc4XFBtowHXC8FYSbggLQDvSt0oVJxfWDCqOB7F68/
-         aBU9JN4HvZfthkTgsepNVUyt/C9d6a/FWBD1Kpv+C4wZoVf0NF9FIiXL7xxKIUbo9OPi
-         3S5p1u7CRxJ/kSfm0PWtVTq+glIEoHrbaUbOkTQKF1lpx4QYUeA5V/gb3CrAmZfnkHW+
-         FipG/wY0+Sb4z8BeBvnmnzOAf9QzBtexjUkBgF/SWUh8y4O1MchVCVyS5VY0pDhhK9Rp
-         47ea6qD/aix4ndwq6XjWcFIgIlom36WKQw7wwhxQk1wybP4yghvvG1twl4c/d/Okjuh4
-         UZkw==
-X-Gm-Message-State: AJIora/oXYl3Hkkei7Nqsx6jI92r+F73tl1rtmCl/H9RAqzC2wY13/1J
-	+IkhGMXgB74dnVIQyd93lmcD4xkDJnZXBeJrCeo=
-X-Google-Smtp-Source: AGRyM1t1nhtaAw4n7rhbGj5ULOwso59znXtxJabimDdAJxacqeZfjJdADYUqDZkUepacTbs/DYQJVYzbXUXtEtMYzgA=
-X-Received: by 2002:aa7:d481:0:b0:42d:d5fd:f963 with SMTP id
- b1-20020aa7d481000000b0042dd5fdf963mr5890235edr.209.1655378882039; Thu, 16
- Jun 2022 04:28:02 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTPS id 8027C100F2248
+	for <devel@acpica.org>; Tue, 21 Jun 2022 01:19:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1655799553; x=1687335553;
+  h=date:from:to:cc:subject:message-id:mime-version;
+  bh=VnOb25EE+Xbwm3fJVJkXzX3ptStChGTjWuHiXzYZZDY=;
+  b=QB7lOHkzWuOEZ+iaupmbrNbPzv6b1y1EhZjA6SokBDPzv3VpkhXzI3fm
+   LKPp62uSbAVon4IwQjj2GTo+7EfddRlNECpdUU/Wlm/7H2e4Y8SwTiHqm
+   iWGFhf48Po0fIGzYz3zJIVCDXaK3gqkNyjZHzzJVcU2B/JWghGjqcm/lK
+   GnNYexfSlRbR+/30ylxZFSGQaAwheSkPkCdVGpetnzIMdfUA6dHAMyPdd
+   bd8ctU/30uyOxxF5hkhx/nNk0r5/K/WDu5rWh56Y3//Nez43gPD6LcV+K
+   g/zC+2LfgGg1xgQlY4NvxfZDB9URwP3kchHTgZK26LMCyffImSIEYw6rt
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10384"; a="366385245"
+X-IronPort-AV: E=Sophos;i="5.92,209,1650956400";
+   d="scan'208";a="366385245"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jun 2022 01:19:11 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.92,209,1650956400";
+   d="scan'208";a="676894865"
+Received: from lkp-server01.sh.intel.com (HELO e0735e231192) ([10.239.97.150])
+  by FMSMGA003.fm.intel.com with ESMTP; 21 Jun 2022 01:19:09 -0700
+Received: from kbuild by e0735e231192 with local (Exim 4.95)
+	(envelope-from <lkp@intel.com>)
+	id 1o3Z6L-00004d-1e;
+	Tue, 21 Jun 2022 08:19:09 +0000
+Date: Tue, 21 Jun 2022 16:18:43 +0800
+From: kernel test robot <lkp@intel.com>
+To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Message-ID: <202206211629.ncqadywd-lkp@intel.com>
 MIME-Version: 1.0
-References: <20220615195643.12608-1-hdegoede@redhat.com> <20220615195643.12608-3-hdegoede@redhat.com>
- <CAHp75VcPEw93_3dZvKCadnAqrJCVvdVcKh+DodgBC68xkmJ7VQ@mail.gmail.com> <e1647dae-cde2-868d-458d-ffe969203566@redhat.com>
-In-Reply-To: <e1647dae-cde2-868d-458d-ffe969203566@redhat.com>
-From: Andy Shevchenko <andy.shevchenko@gmail.com>
-Date: Thu, 16 Jun 2022 13:27:25 +0200
-Message-ID: <CAHp75VeD5Ej3jvV=MtAB9fNxgyd8V8Wr+MZZnvbgzy2v3+eJmQ@mail.gmail.com>
-To: Hans de Goede <hdegoede@redhat.com>
-Message-ID-Hash: 2ZLK6B3PTERXK6O6POL3LP3ORKLUO2DD
-X-Message-ID-Hash: 2ZLK6B3PTERXK6O6POL3LP3ORKLUO2DD
-X-MailFrom: andy.shevchenko@gmail.com
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
-CC: "Rafael J . Wysocki" <rafael@kernel.org>, Mika Westerberg <mika.westerberg@linux.intel.com>, Andy Shevchenko <andy@kernel.org>, Kai-Heng Feng <kai.heng.feng@canonical.com>, =?UTF-8?Q?Johannes_Pen=C3=9Fel?= <johannespenssel@posteo.net>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>
+Content-Disposition: inline
+Message-ID-Hash: 65EJDMMMF2KTPAFCKY2K4X4NDJJQTBXR
+X-Message-ID-Hash: 65EJDMMMF2KTPAFCKY2K4X4NDJJQTBXR
+X-MailFrom: lkp@intel.com
+X-Mailman-Rule-Hits: nonmember-moderation
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
+CC: llvm@lists.linux.dev, kbuild-all@lists.01.org, linux-acpi@vger.kernel.org, devel@acpica.org, linux-pm@vger.kernel.org, Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [RFC 2/4] ACPICA: Add \_SB.PC00, \SB.PCI0 to acpi_ns_early_initialize_devices()
+Subject: [Devel] [rafael-pm:bleeding-edge 20/24] drivers/acpi/scan.c:2449:5: warning: no previous prototype for function 'acpi_bus_trim_one'
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/2ZLK6B3PTERXK6O6POL3LP3ORKLUO2DD/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/65EJDMMMF2KTPAFCKY2K4X4NDJJQTBXR/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -69,45 +64,70 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Thu, Jun 16, 2022 at 11:13 AM Hans de Goede <hdegoede@redhat.com> wrote:
-> On 6/15/22 23:31, Andy Shevchenko wrote:
-> > On Wed, Jun 15, 2022 at 9:57 PM Hans de Goede <hdegoede@redhat.com> wrote:
+tree:   https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
+head:   ef9088c776e0c49411bfb413ad43d110a9de1519
+commit: e511ff6b4174fa81ca7ee16f8c17f7362c08fadf [20/24] ACPI: scan: Walk ACPI device's children using driver core
+config: x86_64-randconfig-a013-20220620 (https://download.01.org/0day-ci/archive/20220621/202206211629.ncqadywd-lkp@intel.com/config)
+compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project af6d2a0b6825e71965f3e2701a63c239fa0ad70f)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git/commit/?id=e511ff6b4174fa81ca7ee16f8c17f7362c08fadf
+        git remote add rafael-pm https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git
+        git fetch --no-tags rafael-pm bleeding-edge
+        git checkout e511ff6b4174fa81ca7ee16f8c17f7362c08fadf
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=x86_64 SHELL=/bin/bash drivers/acpi/
 
-...
+If you fix the issue, kindly add following tag where applicable
+Reported-by: kernel test robot <lkp@intel.com>
 
-> >> -       char path[ACPI_PATH_SEGMENT_LENGTH + 2];
-> >> +       char path[ACPI_PATH_SEGMENT_LENGTH * 2 + 2];
-> >
-> > Strictly speaking this should be, IIUC,
-> >
-> > 1 + ACPI_PATH_SEGMENT_LENGTH + ACPI_NAMESEG_SIZE + 1
-> >
-> > \\ + path segment length (with a separator) + name + \0
-> >
-> > That said, it seems the original code adds 1 unneeded byte.
->
-> Right I already knew I needed the " * 2" when writing the
-> original code, so I decided to do things this way for KISS
-> reasons.
+All warnings (new ones prefixed by >>):
 
-Yeah, but then you don't need + 2, it should be +1.
-I believe the initial use of ACPI_PATH_SEGMENT_LENGTH vs.
-ACPI_NAMESEG_SIZE is a bit misleading.
+>> drivers/acpi/scan.c:2449:5: warning: no previous prototype for function 'acpi_bus_trim_one' [-Wmissing-prototypes]
+   int acpi_bus_trim_one(struct acpi_device *adev, void *not_used)
+       ^
+   drivers/acpi/scan.c:2449:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+   int acpi_bus_trim_one(struct acpi_device *adev, void *not_used)
+   ^
+   static 
+   1 warning generated.
 
-> > Perhaps a comment in the code?
->
-> I've added a comment to my local version now.
->
-> After this thread has had some more time to gather feedback
-> I will turn the ACPICA patches into a acpica github pull-req
-> with the comment added.
->
-> (or if necessary rework the entire series)
 
+vim +/acpi_bus_trim_one +2449 drivers/acpi/scan.c
+
+  2448	
+> 2449	int acpi_bus_trim_one(struct acpi_device *adev, void *not_used)
+  2450	{
+  2451		struct acpi_scan_handler *handler = adev->handler;
+  2452	
+  2453		acpi_dev_for_each_child_reverse(adev, acpi_bus_trim_one, NULL);
+  2454	
+  2455		adev->flags.match_driver = false;
+  2456		if (handler) {
+  2457			if (handler->detach)
+  2458				handler->detach(adev);
+  2459	
+  2460			adev->handler = NULL;
+  2461		} else {
+  2462			device_release_driver(&adev->dev);
+  2463		}
+  2464		/*
+  2465		 * Most likely, the device is going away, so put it into D3cold before
+  2466		 * that.
+  2467		 */
+  2468		acpi_device_set_power(adev, ACPI_STATE_D3_COLD);
+  2469		adev->flags.initialized = false;
+  2470		acpi_device_clear_enumerated(adev);
+  2471	
+  2472		return 0;
+  2473	}
+  2474	
 
 -- 
-With Best Regards,
-Andy Shevchenko
+0-DAY CI Kernel Test Service
+https://01.org/lkp
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
