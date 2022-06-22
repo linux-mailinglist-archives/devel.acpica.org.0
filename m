@@ -2,60 +2,61 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5EDB0552CB1
-	for <lists+devel-acpica@lfdr.de>; Tue, 21 Jun 2022 10:19:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 33E3D5549DB
+	for <lists+devel-acpica@lfdr.de>; Wed, 22 Jun 2022 14:18:53 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id B2521100EA10E;
-	Tue, 21 Jun 2022 01:19:14 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.43; helo=mga05.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+	by ml01.01.org (Postfix) with ESMTP id F27CC100F3948;
+	Wed, 22 Jun 2022 05:18:50 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.93; helo=mga11.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 8027C100F2248
-	for <devel@acpica.org>; Tue, 21 Jun 2022 01:19:13 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTPS id 9F140100EB32A
+	for <devel@acpica.org>; Wed, 22 Jun 2022 05:18:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1655799553; x=1687335553;
-  h=date:from:to:cc:subject:message-id:mime-version;
-  bh=VnOb25EE+Xbwm3fJVJkXzX3ptStChGTjWuHiXzYZZDY=;
-  b=QB7lOHkzWuOEZ+iaupmbrNbPzv6b1y1EhZjA6SokBDPzv3VpkhXzI3fm
-   LKPp62uSbAVon4IwQjj2GTo+7EfddRlNECpdUU/Wlm/7H2e4Y8SwTiHqm
-   iWGFhf48Po0fIGzYz3zJIVCDXaK3gqkNyjZHzzJVcU2B/JWghGjqcm/lK
-   GnNYexfSlRbR+/30ylxZFSGQaAwheSkPkCdVGpetnzIMdfUA6dHAMyPdd
-   bd8ctU/30uyOxxF5hkhx/nNk0r5/K/WDu5rWh56Y3//Nez43gPD6LcV+K
-   g/zC+2LfgGg1xgQlY4NvxfZDB9URwP3kchHTgZK26LMCyffImSIEYw6rt
-   A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10384"; a="366385245"
-X-IronPort-AV: E=Sophos;i="5.92,209,1650956400";
-   d="scan'208";a="366385245"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Jun 2022 01:19:11 -0700
+  t=1655900328; x=1687436328;
+  h=date:from:to:cc:subject:message-id:mime-version:
+   content-transfer-encoding;
+  bh=mR40RNTUMjCQ478CK8Zd1sWFPAqPydu8In9LHm/65dY=;
+  b=ZGlJH5YsQofq26S+iqDgIj/ICf5ug8tDlbCVTwG+1Go+NH6Uh+kdS6BS
+   XRZSoUgceyiAZ6zi+fi29UE6e3D+3NwdOWSEWBEQV3ER/AqeMbP/D0euv
+   8X+kJ7Z36CrYY1xY/GH8Cnwc7ahJFlSaYGTmwKf2QRs2kUUq8u6JmBfWO
+   1p/RqbkiHg79/Ta/LvODemMS7gPO3A9jfiq2sOt+DxJr0p/xFNTwSXQk/
+   Uk/D8AzDynZNGDloXw4dRVjRObayQ9UkTIdEd5FhLtODdEhVOc9T5LQ6s
+   SuGfMz4oaPUmydyQVQp1GNCnalXGkQle5F2R+l77PTmKRJ85YkSBNyoyj
+   Q==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10385"; a="277948201"
+X-IronPort-AV: E=Sophos;i="5.92,212,1650956400";
+   d="scan'208";a="277948201"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jun 2022 05:18:47 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.92,209,1650956400";
-   d="scan'208";a="676894865"
-Received: from lkp-server01.sh.intel.com (HELO e0735e231192) ([10.239.97.150])
-  by FMSMGA003.fm.intel.com with ESMTP; 21 Jun 2022 01:19:09 -0700
-Received: from kbuild by e0735e231192 with local (Exim 4.95)
+X-IronPort-AV: E=Sophos;i="5.92,212,1650956400";
+   d="scan'208";a="690472618"
+Received: from lkp-server02.sh.intel.com (HELO a67cc04a5eeb) ([10.239.97.151])
+  by fmsmga002.fm.intel.com with ESMTP; 22 Jun 2022 05:18:46 -0700
+Received: from kbuild by a67cc04a5eeb with local (Exim 4.95)
 	(envelope-from <lkp@intel.com>)
-	id 1o3Z6L-00004d-1e;
-	Tue, 21 Jun 2022 08:19:09 +0000
-Date: Tue, 21 Jun 2022 16:18:43 +0800
+	id 1o3zJl-0001FT-RA;
+	Wed, 22 Jun 2022 12:18:45 +0000
+Date: Wed, 22 Jun 2022 20:17:49 +0800
 From: kernel test robot <lkp@intel.com>
 To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <202206211629.ncqadywd-lkp@intel.com>
+Message-ID: <62b3086d.odJv5l8iAlTSexUE%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-Content-Disposition: inline
-Message-ID-Hash: 65EJDMMMF2KTPAFCKY2K4X4NDJJQTBXR
-X-Message-ID-Hash: 65EJDMMMF2KTPAFCKY2K4X4NDJJQTBXR
+Message-ID-Hash: EUZBCAQLWUVVFCLGMDJOJ27BQQH5BGR6
+X-Message-ID-Hash: EUZBCAQLWUVVFCLGMDJOJ27BQQH5BGR6
 X-MailFrom: lkp@intel.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: llvm@lists.linux.dev, kbuild-all@lists.01.org, linux-acpi@vger.kernel.org, devel@acpica.org, linux-pm@vger.kernel.org, Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [rafael-pm:bleeding-edge 20/24] drivers/acpi/scan.c:2449:5: warning: no previous prototype for function 'acpi_bus_trim_one'
+Subject: [Devel] [rafael-pm:bleeding-edge] BUILD SUCCESS e99b82b65ff24df6e5c2d1403251e82ef9971ec6
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/65EJDMMMF2KTPAFCKY2K4X4NDJJQTBXR/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/EUZBCAQLWUVVFCLGMDJOJ27BQQH5BGR6/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -64,66 +65,93 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree:   https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-head:   ef9088c776e0c49411bfb413ad43d110a9de1519
-commit: e511ff6b4174fa81ca7ee16f8c17f7362c08fadf [20/24] ACPI: scan: Walk ACPI device's children using driver core
-config: x86_64-randconfig-a013-20220620 (https://download.01.org/0day-ci/archive/20220621/202206211629.ncqadywd-lkp@intel.com/config)
-compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project af6d2a0b6825e71965f3e2701a63c239fa0ad70f)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git/commit/?id=e511ff6b4174fa81ca7ee16f8c17f7362c08fadf
-        git remote add rafael-pm https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git
-        git fetch --no-tags rafael-pm bleeding-edge
-        git checkout e511ff6b4174fa81ca7ee16f8c17f7362c08fadf
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=x86_64 SHELL=/bin/bash drivers/acpi/
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
+branch HEAD: e99b82b65ff24df6e5c2d1403251e82ef9971ec6  Merge branch 'pm-sleep' into bleeding-edge
 
-If you fix the issue, kindly add following tag where applicable
-Reported-by: kernel test robot <lkp@intel.com>
+elapsed time: 990m
 
-All warnings (new ones prefixed by >>):
+configs tested: 73
+configs skipped: 2
 
->> drivers/acpi/scan.c:2449:5: warning: no previous prototype for function 'acpi_bus_trim_one' [-Wmissing-prototypes]
-   int acpi_bus_trim_one(struct acpi_device *adev, void *not_used)
-       ^
-   drivers/acpi/scan.c:2449:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
-   int acpi_bus_trim_one(struct acpi_device *adev, void *not_used)
-   ^
-   static 
-   1 warning generated.
+The following configs have been built successfully.
+More configs may be tested in the coming days.
 
+gcc tested configs:
+arm                                 defconfig
+arm                              allyesconfig
+arm64                            allyesconfig
+m68k                       m5249evb_defconfig
+ia64                         bigsur_defconfig
+openrisc                 simple_smp_defconfig
+powerpc                      bamboo_defconfig
+arm                           stm32_defconfig
+mips                            ar7_defconfig
+ia64                      gensparse_defconfig
+powerpc                      ppc6xx_defconfig
+riscv                               defconfig
+ia64                             allmodconfig
+m68k                             allmodconfig
+m68k                             allyesconfig
+arc                              allyesconfig
+alpha                            allyesconfig
+powerpc                           allnoconfig
+mips                             allyesconfig
+powerpc                          allmodconfig
+sh                               allmodconfig
+i386                              debian-10.3
+i386                             allyesconfig
+i386                                defconfig
+i386                   debian-10.3-kselftests
+x86_64                        randconfig-a004
+x86_64                        randconfig-a002
+x86_64                        randconfig-a006
+i386                          randconfig-a001
+i386                          randconfig-a003
+i386                          randconfig-a005
+x86_64                        randconfig-a013
+x86_64                        randconfig-a011
+x86_64                        randconfig-a015
+i386                          randconfig-a012
+i386                          randconfig-a014
+i386                          randconfig-a016
+arc                  randconfig-r043-20220622
+riscv                             allnoconfig
+riscv                    nommu_k210_defconfig
+riscv                    nommu_virt_defconfig
+riscv                          rv32_defconfig
+um                             i386_defconfig
+um                           x86_64_defconfig
+x86_64                              defconfig
+x86_64                               rhel-8.3
+x86_64                           allyesconfig
+x86_64                          rhel-8.3-func
+x86_64                         rhel-8.3-kunit
+x86_64                    rhel-8.3-kselftests
+x86_64                           rhel-8.3-syz
 
-vim +/acpi_bus_trim_one +2449 drivers/acpi/scan.c
-
-  2448	
-> 2449	int acpi_bus_trim_one(struct acpi_device *adev, void *not_used)
-  2450	{
-  2451		struct acpi_scan_handler *handler = adev->handler;
-  2452	
-  2453		acpi_dev_for_each_child_reverse(adev, acpi_bus_trim_one, NULL);
-  2454	
-  2455		adev->flags.match_driver = false;
-  2456		if (handler) {
-  2457			if (handler->detach)
-  2458				handler->detach(adev);
-  2459	
-  2460			adev->handler = NULL;
-  2461		} else {
-  2462			device_release_driver(&adev->dev);
-  2463		}
-  2464		/*
-  2465		 * Most likely, the device is going away, so put it into D3cold before
-  2466		 * that.
-  2467		 */
-  2468		acpi_device_set_power(adev, ACPI_STATE_D3_COLD);
-  2469		adev->flags.initialized = false;
-  2470		acpi_device_clear_enumerated(adev);
-  2471	
-  2472		return 0;
-  2473	}
-  2474	
+clang tested configs:
+arm                       cns3420vb_defconfig
+s390                             alldefconfig
+arm                           sama7_defconfig
+arm                          moxart_defconfig
+powerpc                  mpc885_ads_defconfig
+powerpc                      acadia_defconfig
+x86_64                        randconfig-a005
+x86_64                        randconfig-a001
+x86_64                        randconfig-a003
+i386                          randconfig-a002
+i386                          randconfig-a004
+i386                          randconfig-a006
+x86_64                        randconfig-a012
+x86_64                        randconfig-a016
+x86_64                        randconfig-a014
+i386                          randconfig-a013
+i386                          randconfig-a011
+i386                          randconfig-a015
+hexagon              randconfig-r041-20220622
+hexagon              randconfig-r045-20220622
+riscv                randconfig-r042-20220622
+s390                 randconfig-r044-20220622
 
 -- 
 0-DAY CI Kernel Test Service
