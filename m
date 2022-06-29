@@ -1,117 +1,90 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 402A35606C7
-	for <lists+devel-acpica@lfdr.de>; Wed, 29 Jun 2022 18:56:53 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9771F5606E7
+	for <lists+devel-acpica@lfdr.de>; Wed, 29 Jun 2022 19:03:34 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id DAF75100EA92F;
-	Wed, 29 Jun 2022 09:56:51 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.128.170; helo=mail-yw1-f170.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+	by ml01.01.org (Postfix) with ESMTP id 6FB18100EA2B1;
+	Wed, 29 Jun 2022 10:03:32 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.219.173; helo=mail-yb1-f173.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id A5D6C100F227A
-	for <devel@acpica.org>; Wed, 29 Jun 2022 09:56:49 -0700 (PDT)
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-31c1d580e4bso22022187b3.3
-        for <devel@acpica.org>; Wed, 29 Jun 2022 09:56:49 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTPS id 6A1FB100F227A
+	for <devel@acpica.org>; Wed, 29 Jun 2022 10:03:30 -0700 (PDT)
+Received: by mail-yb1-f173.google.com with SMTP id d5so29078193yba.5
+        for <devel@acpica.org>; Wed, 29 Jun 2022 10:03:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ZkIej0UJ7PuUWn58IixeF0LRQS/u6RyIKeOWZv4NbdA=;
-        b=ieYGSFcAyN3bulUAfy9Q2uujh8/yOvQ0q22lHyj20CBOZt/FBW5Rf8x6BlrGILQp16
-         cToVK9I3pcvgFDGr2eXv1oYCEBjBkMk5Vf0GtPQe/5FYX0YQWPL5lmX36ICQXN4x9V6b
-         7Wv+2JN36CciRaD8OgfzCHbwwdcw1BbDiv59TZeG5tLGHFoCoZ5Et1v48z0XMd6oMCNU
-         A8E5msrlXcTsaR12Us/U18wz5qg1vzV6dFsfnfO3pPsWfnIsXRyuuGirndPBwlGIAjvv
-         1JnRh454p8cSB2zECWH4FbJCbZDzFnbMNP/maSF4+CMz3grPfSKrdZCpYwnYGaf3Sx0r
-         DBrQ==
-X-Gm-Message-State: AJIora/LJcGWhURoaXDLVWmMCQNsm6ZSk1OaQVKmCrxvRCq0PWeqwQRI
-	zOzkToHfpaT1nnAxcLvEvc+48wYUTF0L9eAxtL0=
-X-Google-Smtp-Source: AGRyM1s2CbxkModmI/0O7hOvmw6DE7xd5G7FVUCy9hKt/wft6RsAcDx/TDDEpy8faKzufOPehWVJII78xYd5Usg/KAk=
-X-Received: by 2002:a0d:d811:0:b0:31b:ddc4:c0ac with SMTP id
- a17-20020a0dd811000000b0031bddc4c0acmr5025839ywe.149.1656521808695; Wed, 29
- Jun 2022 09:56:48 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Aqm4FC89DWarFJMROs925TeGjJpuRjPm9/zQL+5jjQE=;
+        b=zcH1jULXND8DdSsmZkAyK7t7YrmTLsow/7oyrkynnjr7YjACHyc/FGVp/cL9u6DOsW
+         K7BmfIOBUybmn5W06ES98D+HNNHisPu5C5wOSikXgQD28ZCD2ZY2lNvVBqBxbfMgHmH2
+         13Dh3hHJ56Vh0SSthV4xRsqAz72L2O+hmX3b3kwBrZ1T7QukeTh2zQ7sqvhwVEV4bKU0
+         RFfd+nH5Wo5ODSlxq45AkmZXdyRBdQa96MO/0oZsn9vQoOtSR6zFW9rww11LSi/vR1aQ
+         ZUFwAre0VpM2VdVlbnDv7x4h0A6gj14sMw/PNdP8NMUCQlOVm/Ol91oglDiIkW4YjCEK
+         oCeQ==
+X-Gm-Message-State: AJIora/TywniJf/BVD2UhzA3rFUpLeFGOm2FEf7o+2r6myINveZR+inf
+	LKwAw1n+66tOqsOs+gSYk59k58h56U9dhc5yjHTicLGc
+X-Google-Smtp-Source: AGRyM1totlxXjvK3OXv8JitH90a/+eghX8CaC1a/ln47tRlBn1zPE3Y6wq3ucmu8X9MfmmhLC/RXwQ0HXGtuP918OL0=
+X-Received: by 2002:a25:664f:0:b0:66c:d0f4:36cc with SMTP id
+ z15-20020a25664f000000b0066cd0f436ccmr4328210ybm.482.1656522209222; Wed, 29
+ Jun 2022 10:03:29 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220617025152.1908638-1-luriwen@hotmail.com> <TYWP286MB2601A75D517AE71EE569CE15B1AF9@TYWP286MB2601.JPNP286.PROD.OUTLOOK.COM>
- <87v8szoccp.fsf@stealth>
-In-Reply-To: <87v8szoccp.fsf@stealth>
+References: <20220618112311.14661-1-u.kleine-koenig@pengutronix.de>
+In-Reply-To: <20220618112311.14661-1-u.kleine-koenig@pengutronix.de>
 From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Wed, 29 Jun 2022 18:56:37 +0200
-Message-ID: <CAJZ5v0gAJSfWmEJjawSHWnYB-rsBxcMyUQjAf4F3jpMhnjx+-Q@mail.gmail.com>
-To: Punit Agrawal <punit.agrawal@bytedance.com>
-Message-ID-Hash: YLKGC5W4N2GIWFNFAYYLXXBWT25GNUND
-X-Message-ID-Hash: YLKGC5W4N2GIWFNFAYYLXXBWT25GNUND
+Date: Wed, 29 Jun 2022 19:03:18 +0200
+Message-ID: <CAJZ5v0hgPwRHyU6cG-gqtRM4wLaKGRoL3z1nS_FiTybLAcvgGA@mail.gmail.com>
+To: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+Message-ID-Hash: 6TOIL5ZXTW62CSUDPP7ECEBLPPXHCLO4
+X-Message-ID-Hash: 6TOIL5ZXTW62CSUDPP7ECEBLPPXHCLO4
 X-MailFrom: rjwysocki@gmail.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: Riwen Lu <luriwen@hotmail.com>, "Rafael J. Wysocki" <rafael@kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Riwen Lu <luriwen@kylinos.cn>
+CC: "Rafael J. Wysocki" <rafael@kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Sascha Hauer <kernel@pengutronix.de>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH v2] ACPI/processor: Remove unused function acpi_processor_get_limit_info()
+Subject: [Devel] Re: [PATCH 1/2] ACPI: Drop redundant check in acpi_device_remove()
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/YLKGC5W4N2GIWFNFAYYLXXBWT25GNUND/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/6TOIL5ZXTW62CSUDPP7ECEBLPPXHCLO4/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-On Fri, Jun 17, 2022 at 11:42 AM Punit Agrawal
-<punit.agrawal@bytedance.com> wrote:
->
-> Riwen Lu <luriwen@hotmail.com> writes:
->
-> > From: Riwen Lu <luriwen@kylinos.cn>
-> >
-> > Commit 22e7551eb6fd ("ACPI / processor: Remove acpi_processor_get_limit_info()"),
-> > left behind this, remove it.
-> >
-> > Signed-off-by: Riwen Lu <luriwen@kylinos.cn>
-> >
-> > ---
-> > v1 -> v2:
-> >  - Make this patch base on ("ACPI: Split out processor thermal register
-> >    from ACPI PSS").
->
-> For such changes, it is better to send all the related patches as a
-> series so it's easy to see the dependencies . In a series the easy /
-> obvious fixes should be earlier so it's easier for them to be merged
-> while the more significant changes are still being discussed.
->
-> Hopefully in this case Rafael too agrees with the dependency patch -
-> otherwise, it's just extra churn on the lists.
->
-> But don't resend just yet - give some time for others to add their
-> feedback.
->
-> > ---
-> >  include/acpi/processor.h | 1 -
-> >  1 file changed, 1 deletion(-)
-> >
-> > diff --git a/include/acpi/processor.h b/include/acpi/processor.h
-> > index ba1e3ed98d3d..9fa49686957a 100644
-> > --- a/include/acpi/processor.h
-> > +++ b/include/acpi/processor.h
-> > @@ -441,7 +441,6 @@ static inline int acpi_processor_hotplug(struct acpi_processor *pr)
-> >  #endif /* CONFIG_ACPI_PROCESSOR_IDLE */
-> >
-> >  /* in processor_thermal.c */
-> > -int acpi_processor_get_limit_info(struct acpi_processor *pr);
-> >  int acpi_processor_thermal_init(struct acpi_processor *pr,
-> >                               struct acpi_device *device);
-> >  void acpi_processor_thermal_exit(struct acpi_processor *pr,
->
-> Fwiw,
->
-> Reviewed-by: Punit Agrawal <punit.agrawal@bytedance.com>
-
-Applied as 5.20 material with some edits in the subject and changelog.
-
-Thanks!
-_______________________________________________
-Devel mailing list -- devel@acpica.org
-To unsubscribe send an email to devel-leave@acpica.org
-%(web_page_url)slistinfo%(cgiext)s/%(_internal_name)s
+T24gU2F0LCBKdW4gMTgsIDIwMjIgYXQgMToyMyBQTSBVd2UgS2xlaW5lLUvDtm5pZw0KPHUua2xl
+aW5lLWtvZW5pZ0BwZW5ndXRyb25peC5kZT4gd3JvdGU6DQo+DQo+IEEgYnVzIHJlbW92ZSBjYWxs
+YmFjayBpcyBvbmx5IGV2ZXIgY2FsbGVkIGJ5IHRoZSBkZXZpY2UgY29yZSB3aXRoIGENCj4gYm91
+bmQgZHJpdmVyLiBTbyB0aGVyZSBpcyBubyBuZWVkIHRvIGNoZWNrIGlmIHRoZSBkcml2ZXIgaXMg
+bm9uLU5VTEwuDQo+DQo+IFNpZ25lZC1vZmYtYnk6IFV3ZSBLbGVpbmUtS8O2bmlnIDx1LmtsZWlu
+ZS1rb2VuaWdAcGVuZ3V0cm9uaXguZGU+DQo+IC0tLQ0KPiAgZHJpdmVycy9hY3BpL2J1cy5jIHwg
+MTEgKysrKystLS0tLS0NCj4gIDEgZmlsZSBjaGFuZ2VkLCA1IGluc2VydGlvbnMoKyksIDYgZGVs
+ZXRpb25zKC0pDQo+DQo+IGRpZmYgLS1naXQgYS9kcml2ZXJzL2FjcGkvYnVzLmMgYi9kcml2ZXJz
+L2FjcGkvYnVzLmMNCj4gaW5kZXggODZmYTYxYTIxODI2Li42N2EzZjhjZjQyZjkgMTAwNjQ0DQo+
+IC0tLSBhL2RyaXZlcnMvYWNwaS9idXMuYw0KPiArKysgYi9kcml2ZXJzL2FjcGkvYnVzLmMNCj4g
+QEAgLTEwNjIsMTIgKzEwNjIsMTEgQEAgc3RhdGljIHZvaWQgYWNwaV9kZXZpY2VfcmVtb3ZlKHN0
+cnVjdCBkZXZpY2UgKmRldikNCj4gICAgICAgICBzdHJ1Y3QgYWNwaV9kZXZpY2UgKmFjcGlfZGV2
+ID0gdG9fYWNwaV9kZXZpY2UoZGV2KTsNCj4gICAgICAgICBzdHJ1Y3QgYWNwaV9kcml2ZXIgKmFj
+cGlfZHJ2ID0gYWNwaV9kZXYtPmRyaXZlcjsNCj4NCj4gLSAgICAgICBpZiAoYWNwaV9kcnYpIHsN
+Cj4gLSAgICAgICAgICAgICAgIGlmIChhY3BpX2Rydi0+b3BzLm5vdGlmeSkNCj4gLSAgICAgICAg
+ICAgICAgICAgICAgICAgYWNwaV9kZXZpY2VfcmVtb3ZlX25vdGlmeV9oYW5kbGVyKGFjcGlfZGV2
+KTsNCj4gLSAgICAgICAgICAgICAgIGlmIChhY3BpX2Rydi0+b3BzLnJlbW92ZSkNCj4gLSAgICAg
+ICAgICAgICAgICAgICAgICAgYWNwaV9kcnYtPm9wcy5yZW1vdmUoYWNwaV9kZXYpOw0KPiAtICAg
+ICAgIH0NCj4gKyAgICAgICBpZiAoYWNwaV9kcnYtPm9wcy5ub3RpZnkpDQo+ICsgICAgICAgICAg
+ICAgICBhY3BpX2RldmljZV9yZW1vdmVfbm90aWZ5X2hhbmRsZXIoYWNwaV9kZXYpOw0KPiArICAg
+ICAgIGlmIChhY3BpX2Rydi0+b3BzLnJlbW92ZSkNCj4gKyAgICAgICAgICAgICAgIGFjcGlfZHJ2
+LT5vcHMucmVtb3ZlKGFjcGlfZGV2KTsNCj4gKw0KPiAgICAgICAgIGFjcGlfZGV2LT5kcml2ZXIg
+PSBOVUxMOw0KPiAgICAgICAgIGFjcGlfZGV2LT5kcml2ZXJfZGF0YSA9IE5VTEw7DQo+DQo+DQo+
+IGJhc2UtY29tbWl0OiBmMjkwNmFhODYzMzgxYWZiMDAxNWE5ZWI3ZmVmYWQ4ODVkNGU1YTU2DQo+
+IC0tDQoNCkFwcGxpZWQgKHdpdGggbWlub3IgbW9kaWZpY2F0aW9ucykgYXMgNS4yMCBtYXRlcmlh
+bCBhbG9uZyB3aXRoIHRoZSBbMi8yXS4NCg0KVGhhbmtzIQpfX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fXwpEZXZlbCBtYWlsaW5nIGxpc3QgLS0gZGV2ZWxAYWNw
+aWNhLm9yZwpUbyB1bnN1YnNjcmliZSBzZW5kIGFuIGVtYWlsIHRvIGRldmVsLWxlYXZlQGFjcGlj
+YS5vcmcKJSh3ZWJfcGFnZV91cmwpc2xpc3RpbmZvJShjZ2lleHQpcy8lKF9pbnRlcm5hbF9uYW1l
+KXM=
