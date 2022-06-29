@@ -2,89 +2,98 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9771F5606E7
-	for <lists+devel-acpica@lfdr.de>; Wed, 29 Jun 2022 19:03:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7F583560781
+	for <lists+devel-acpica@lfdr.de>; Wed, 29 Jun 2022 19:42:37 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 6FB18100EA2B1;
-	Wed, 29 Jun 2022 10:03:32 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.219.173; helo=mail-yb1-f173.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
+	by ml01.01.org (Postfix) with ESMTP id 14831100F227A;
+	Wed, 29 Jun 2022 10:42:35 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.219.169; helo=mail-yb1-f169.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 6A1FB100F227A
-	for <devel@acpica.org>; Wed, 29 Jun 2022 10:03:30 -0700 (PDT)
-Received: by mail-yb1-f173.google.com with SMTP id d5so29078193yba.5
-        for <devel@acpica.org>; Wed, 29 Jun 2022 10:03:30 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTPS id A40A7100EB857
+	for <devel@acpica.org>; Wed, 29 Jun 2022 10:42:33 -0700 (PDT)
+Received: by mail-yb1-f169.google.com with SMTP id x184so26525354ybg.12
+        for <devel@acpica.org>; Wed, 29 Jun 2022 10:42:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Aqm4FC89DWarFJMROs925TeGjJpuRjPm9/zQL+5jjQE=;
-        b=zcH1jULXND8DdSsmZkAyK7t7YrmTLsow/7oyrkynnjr7YjACHyc/FGVp/cL9u6DOsW
-         K7BmfIOBUybmn5W06ES98D+HNNHisPu5C5wOSikXgQD28ZCD2ZY2lNvVBqBxbfMgHmH2
-         13Dh3hHJ56Vh0SSthV4xRsqAz72L2O+hmX3b3kwBrZ1T7QukeTh2zQ7sqvhwVEV4bKU0
-         RFfd+nH5Wo5ODSlxq45AkmZXdyRBdQa96MO/0oZsn9vQoOtSR6zFW9rww11LSi/vR1aQ
-         ZUFwAre0VpM2VdVlbnDv7x4h0A6gj14sMw/PNdP8NMUCQlOVm/Ol91oglDiIkW4YjCEK
-         oCeQ==
-X-Gm-Message-State: AJIora/TywniJf/BVD2UhzA3rFUpLeFGOm2FEf7o+2r6myINveZR+inf
-	LKwAw1n+66tOqsOs+gSYk59k58h56U9dhc5yjHTicLGc
-X-Google-Smtp-Source: AGRyM1totlxXjvK3OXv8JitH90a/+eghX8CaC1a/ln47tRlBn1zPE3Y6wq3ucmu8X9MfmmhLC/RXwQ0HXGtuP918OL0=
-X-Received: by 2002:a25:664f:0:b0:66c:d0f4:36cc with SMTP id
- z15-20020a25664f000000b0066cd0f436ccmr4328210ybm.482.1656522209222; Wed, 29
- Jun 2022 10:03:29 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=pUMwPBaoEzZXR1TnAOeXdEHa/2Y772IY4opAxZndNg8=;
+        b=YJm8sQmxrExmHaa5E35Nj8fr12vClfzD5cBtRxNLEWupfYtQnleBK9HYpwmveDnppr
+         VPW2AI68r1Hgyq8daGrW5vRedPaj1m+YesVyXlADsDO806qHIR8x1ofzC0YiUNM0gW4T
+         UHlZkRzpWHIorj8Elomajxe+GpIzdIDJd1mUhs3lSqxpL+Z+yGfl69+1Qm2Sp8Y4+vMy
+         K3VKprErWMRbvXrKzDtteSjWVLcd8gj7vEWP8iYLAfjtAJ5GJTW5uDjFQd0covO1IOp1
+         rRgNmJuUe87WmM48NC6Fk3o9dxsOEoDfHu3WjQTZ6ziK0BI/H4e6uogjz69wNF03r8sd
+         pv5A==
+X-Gm-Message-State: AJIora8Nc8K4J4bg7TZT8OEdymBxFCKEjANdNusqWo7466SHjw4h7avQ
+	JtvQ5QtAJn4RW8Jprs6f1pX6tyUsTBt5UMpwEo0=
+X-Google-Smtp-Source: AGRyM1t8LC1Ep9fcsH+VbM/9n93Ms2dFPn2OJ9K0fw/bmK8kPR+5++pkGbDYz8NsjgUENeImKRO4zsv36WqfLJn8qQo=
+X-Received: by 2002:a25:ae26:0:b0:66d:1fdc:263c with SMTP id
+ a38-20020a25ae26000000b0066d1fdc263cmr4783018ybj.137.1656524552557; Wed, 29
+ Jun 2022 10:42:32 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220618112311.14661-1-u.kleine-koenig@pengutronix.de>
-In-Reply-To: <20220618112311.14661-1-u.kleine-koenig@pengutronix.de>
+References: <20220620092546.8298-1-hdegoede@redhat.com>
+In-Reply-To: <20220620092546.8298-1-hdegoede@redhat.com>
 From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Wed, 29 Jun 2022 19:03:18 +0200
-Message-ID: <CAJZ5v0hgPwRHyU6cG-gqtRM4wLaKGRoL3z1nS_FiTybLAcvgGA@mail.gmail.com>
-To: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Message-ID-Hash: 6TOIL5ZXTW62CSUDPP7ECEBLPPXHCLO4
-X-Message-ID-Hash: 6TOIL5ZXTW62CSUDPP7ECEBLPPXHCLO4
+Date: Wed, 29 Jun 2022 19:42:21 +0200
+Message-ID: <CAJZ5v0i08vYPyDFY3KeK9vxbgfND4HUD7qMjpmK8dHQaURy-tg@mail.gmail.com>
+To: Hans de Goede <hdegoede@redhat.com>
+Message-ID-Hash: YW22B7VT27OHV2GP5SPVVSYGCKQIA2JN
+X-Message-ID-Hash: YW22B7VT27OHV2GP5SPVVSYGCKQIA2JN
 X-MailFrom: rjwysocki@gmail.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: "Rafael J. Wysocki" <rafael@kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Sascha Hauer <kernel@pengutronix.de>
+CC: "Rafael J . Wysocki" <rafael@kernel.org>, Mika Westerberg <mika.westerberg@linux.intel.com>, Andy Shevchenko <andy@kernel.org>, Kai-Heng Feng <kai.heng.feng@canonical.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH 1/2] ACPI: Drop redundant check in acpi_device_remove()
+Subject: [Devel] Re: [PATCH 0/4] ACPI: EC: Various cleanups
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/6TOIL5ZXTW62CSUDPP7ECEBLPPXHCLO4/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/YW22B7VT27OHV2GP5SPVVSYGCKQIA2JN/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 
-T24gU2F0LCBKdW4gMTgsIDIwMjIgYXQgMToyMyBQTSBVd2UgS2xlaW5lLUvDtm5pZw0KPHUua2xl
-aW5lLWtvZW5pZ0BwZW5ndXRyb25peC5kZT4gd3JvdGU6DQo+DQo+IEEgYnVzIHJlbW92ZSBjYWxs
-YmFjayBpcyBvbmx5IGV2ZXIgY2FsbGVkIGJ5IHRoZSBkZXZpY2UgY29yZSB3aXRoIGENCj4gYm91
-bmQgZHJpdmVyLiBTbyB0aGVyZSBpcyBubyBuZWVkIHRvIGNoZWNrIGlmIHRoZSBkcml2ZXIgaXMg
-bm9uLU5VTEwuDQo+DQo+IFNpZ25lZC1vZmYtYnk6IFV3ZSBLbGVpbmUtS8O2bmlnIDx1LmtsZWlu
-ZS1rb2VuaWdAcGVuZ3V0cm9uaXguZGU+DQo+IC0tLQ0KPiAgZHJpdmVycy9hY3BpL2J1cy5jIHwg
-MTEgKysrKystLS0tLS0NCj4gIDEgZmlsZSBjaGFuZ2VkLCA1IGluc2VydGlvbnMoKyksIDYgZGVs
-ZXRpb25zKC0pDQo+DQo+IGRpZmYgLS1naXQgYS9kcml2ZXJzL2FjcGkvYnVzLmMgYi9kcml2ZXJz
-L2FjcGkvYnVzLmMNCj4gaW5kZXggODZmYTYxYTIxODI2Li42N2EzZjhjZjQyZjkgMTAwNjQ0DQo+
-IC0tLSBhL2RyaXZlcnMvYWNwaS9idXMuYw0KPiArKysgYi9kcml2ZXJzL2FjcGkvYnVzLmMNCj4g
-QEAgLTEwNjIsMTIgKzEwNjIsMTEgQEAgc3RhdGljIHZvaWQgYWNwaV9kZXZpY2VfcmVtb3ZlKHN0
-cnVjdCBkZXZpY2UgKmRldikNCj4gICAgICAgICBzdHJ1Y3QgYWNwaV9kZXZpY2UgKmFjcGlfZGV2
-ID0gdG9fYWNwaV9kZXZpY2UoZGV2KTsNCj4gICAgICAgICBzdHJ1Y3QgYWNwaV9kcml2ZXIgKmFj
-cGlfZHJ2ID0gYWNwaV9kZXYtPmRyaXZlcjsNCj4NCj4gLSAgICAgICBpZiAoYWNwaV9kcnYpIHsN
-Cj4gLSAgICAgICAgICAgICAgIGlmIChhY3BpX2Rydi0+b3BzLm5vdGlmeSkNCj4gLSAgICAgICAg
-ICAgICAgICAgICAgICAgYWNwaV9kZXZpY2VfcmVtb3ZlX25vdGlmeV9oYW5kbGVyKGFjcGlfZGV2
-KTsNCj4gLSAgICAgICAgICAgICAgIGlmIChhY3BpX2Rydi0+b3BzLnJlbW92ZSkNCj4gLSAgICAg
-ICAgICAgICAgICAgICAgICAgYWNwaV9kcnYtPm9wcy5yZW1vdmUoYWNwaV9kZXYpOw0KPiAtICAg
-ICAgIH0NCj4gKyAgICAgICBpZiAoYWNwaV9kcnYtPm9wcy5ub3RpZnkpDQo+ICsgICAgICAgICAg
-ICAgICBhY3BpX2RldmljZV9yZW1vdmVfbm90aWZ5X2hhbmRsZXIoYWNwaV9kZXYpOw0KPiArICAg
-ICAgIGlmIChhY3BpX2Rydi0+b3BzLnJlbW92ZSkNCj4gKyAgICAgICAgICAgICAgIGFjcGlfZHJ2
-LT5vcHMucmVtb3ZlKGFjcGlfZGV2KTsNCj4gKw0KPiAgICAgICAgIGFjcGlfZGV2LT5kcml2ZXIg
-PSBOVUxMOw0KPiAgICAgICAgIGFjcGlfZGV2LT5kcml2ZXJfZGF0YSA9IE5VTEw7DQo+DQo+DQo+
-IGJhc2UtY29tbWl0OiBmMjkwNmFhODYzMzgxYWZiMDAxNWE5ZWI3ZmVmYWQ4ODVkNGU1YTU2DQo+
-IC0tDQoNCkFwcGxpZWQgKHdpdGggbWlub3IgbW9kaWZpY2F0aW9ucykgYXMgNS4yMCBtYXRlcmlh
-bCBhbG9uZyB3aXRoIHRoZSBbMi8yXS4NCg0KVGhhbmtzIQpfX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fXwpEZXZlbCBtYWlsaW5nIGxpc3QgLS0gZGV2ZWxAYWNw
-aWNhLm9yZwpUbyB1bnN1YnNjcmliZSBzZW5kIGFuIGVtYWlsIHRvIGRldmVsLWxlYXZlQGFjcGlj
-YS5vcmcKJSh3ZWJfcGFnZV91cmwpc2xpc3RpbmZvJShjZ2lleHQpcy8lKF9pbnRlcm5hbF9uYW1l
-KXM=
+On Mon, Jun 20, 2022 at 11:26 AM Hans de Goede <hdegoede@redhat.com> wrote:
+>
+> Hi All,
+>
+> Here is a set of cleanups / removal of no longer necessary
+> quirks (or so I believe please review carefully). These are all
+> things which I noticed while working on my:
+> "[RFC 0/4] ACPI[CA]: fix ECDT EC probe ordering issues" series.
+>
+> Regards,
+>
+> Hans
+>
+> p.s.
+> Talking about my "[RFC 0/4] ACPI[CA]: fix ECDT EC probe ordering issues"
+> series, it would be great if someone can take a look at this and let me
+> know if that series seems sane. Then I can convert the ACPICA changes
+> from kernel patches to upstream github acpica patches and submit a
+> pull-req for those at github.
+>
+>
+> Hans de Goede (4):
+>   ACPI: EC: Remove duplicate ThinkPad X1 Carbon 6th entry from DMI
+>     quirks
+>   ACPI: EC: Drop the EC_FLAGS_IGNORE_DSDT_GPE quirk
+>   ACPI: EC: Re-use boot_ec when possible even when
+>     EC_FLAGS_TRUST_DSDT_GPE is set
+>   ACPI: EC: Drop unused ident initializers from dmi_system_id tables
+>
+>  drivers/acpi/ec.c | 140 ++++++++++++++++------------------------------
+>  1 file changed, 48 insertions(+), 92 deletions(-)
+>
+> --
+
+All four patches applied as 5.20 material, thanks!
+_______________________________________________
+Devel mailing list -- devel@acpica.org
+To unsubscribe send an email to devel-leave@acpica.org
+%(web_page_url)slistinfo%(cgiext)s/%(_internal_name)s
