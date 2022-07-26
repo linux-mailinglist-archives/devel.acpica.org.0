@@ -2,61 +2,54 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF1EF58166F
-	for <lists+devel-acpica@lfdr.de>; Tue, 26 Jul 2022 17:31:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EC6C05819BE
+	for <lists+devel-acpica@lfdr.de>; Tue, 26 Jul 2022 20:31:26 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id F1557100EA917;
-	Tue, 26 Jul 2022 08:31:36 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.151; helo=mga17.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	by ml01.01.org (Postfix) with ESMTP id 5AE58100EAB68;
+	Tue, 26 Jul 2022 11:31:24 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.128.179; helo=mail-yw1-f179.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id B8960100EF27E
-	for <devel@acpica.org>; Tue, 26 Jul 2022 08:31:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1658849489; x=1690385489;
-  h=date:from:to:cc:subject:message-id:mime-version:
-   content-transfer-encoding;
-  bh=hl+u7USFyWlFOxUxd5I+dkiqpw0PVDQT5ymfIrpcXZU=;
-  b=L1071/d6lvqiHLNyFwwGg/+rXhAbeggQ68bHATwS2STwK6SgDkCYXKCc
-   mcqmwSwU9XrGfxcfXQUp1UgPprItz3fQSVH1waoMyZJDq/Gzwxvvzxnij
-   Qh+uY031mt4cl6PQ41eC/p3b7ZssMwy0I8tlodpxtEnCTRHsulPbHsaKG
-   sS89vLlsJFXpZ6T919R3mv81aXBKfL/VU6EvUQRbZrq/uCS7P5COmLhUR
-   iRWNHik6HPmXcKWkoMuEvSVAHNBmiHfa+A9nllB1HMII/oWdApdhbs/77
-   N+Okj6eEAE4A+gnjt7MRaolvPBvJMLglAtxUZe6+2W4O7o9H6hi++x+1o
-   A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10420"; a="268371093"
-X-IronPort-AV: E=Sophos;i="5.93,193,1654585200";
-   d="scan'208";a="268371093"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jul 2022 08:31:28 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.93,193,1654585200";
-   d="scan'208";a="927377453"
-Received: from lkp-server01.sh.intel.com (HELO e0eace57cfef) ([10.239.97.150])
-  by fmsmga005.fm.intel.com with ESMTP; 26 Jul 2022 08:31:27 -0700
-Received: from kbuild by e0eace57cfef with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1oGMWs-00073o-2g;
-	Tue, 26 Jul 2022 15:31:26 +0000
-Date: Tue, 26 Jul 2022 23:30:50 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <62e008aa.hGXu5TSEWwXQkLxD%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTPS id E03C3100EB85F
+	for <devel@acpica.org>; Tue, 26 Jul 2022 11:31:22 -0700 (PDT)
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-31f1d1c82c8so58995857b3.8
+        for <devel@acpica.org>; Tue, 26 Jul 2022 11:31:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=n82DhlXUmmRWDBn1/90hG07HM42XaSvaAWKdxGdiSA8=;
+        b=qQJqXMv6W6CGr0hivRzRb1X0OrpnX8wlLiOvn8v2EGDd2IBwszSpQ/u+eFqSnPOjSw
+         AIpY+aWNLwGfa48kb3e4vdXpxaC/aIWYfagQxxD1WvadaoxX1Yg7m8h26ThEvFjz7HOP
+         FsVrp47GPDnQw1Dnb9RyREfMp8qjFtuTm+3zwX3UJZR7rdLLQydvj4HDdi+ydhmqw9/F
+         YIjEE+VQm/A3bTk+INtplqKjJnOeGesgYIwBRM9ADdPK5Cwmi4voEGdVRKjAt+Pns54Y
+         seplN+Zs3Kahz70N2fvxwSnCADWKRyHdzuWS8pJRHbhqv63sLmgKD3uP1aJgUMaZFRqQ
+         6IQw==
+X-Gm-Message-State: AJIora8xhD13Ym8P64bXE1f3jltzSv3sPkjDlbZdzm/uojLphlWNj0Id
+	xzWTbLBXgK1Oa89i1ZhuibqIoc3btZBM0TdUJqU=
+X-Google-Smtp-Source: AGRyM1uqp5TiGgWPGpfJgth/RPy+WmH1BNU71XEuqnN0R9mspF9qNQtcS5mytBoJRoiS8F7w9kqb7y0aZRyHz6yivpM=
+X-Received: by 2002:a81:1b97:0:b0:2db:640f:49d8 with SMTP id
+ b145-20020a811b97000000b002db640f49d8mr15600692ywb.326.1658860281180; Tue, 26
+ Jul 2022 11:31:21 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID-Hash: BND6NLEZP7CBXZPMEOHKQWV2QJAZPB2R
-X-Message-ID-Hash: BND6NLEZP7CBXZPMEOHKQWV2QJAZPB2R
-X-MailFrom: lkp@intel.com
+References: <20220726145948.2194684-1-jeremy.linton@arm.com>
+In-Reply-To: <20220726145948.2194684-1-jeremy.linton@arm.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Tue, 26 Jul 2022 20:31:10 +0200
+Message-ID: <CAJZ5v0i-bCi0=FN=rMWCWCyKYQ6-upOhXteu9p6xAaf5=m93+w@mail.gmail.com>
+To: Jeremy Linton <jeremy.linton@arm.com>
+Message-ID-Hash: O7J36ZDV37NWYBZUOUU2KLLF2R4W2OG6
+X-Message-ID-Hash: O7J36ZDV37NWYBZUOUU2KLLF2R4W2OG6
+X-MailFrom: rjwysocki@gmail.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+CC: Linux PM <linux-pm@vger.kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, Viresh Kumar <viresh.kumar@linaro.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [rafael-pm:bleeding-edge] BUILD SUCCESS e399ae3422730fa46abf97b3563c23274ecb8ceb
+Subject: [Devel] Re: [PATCH] ACPI: CPPC: Disable FIE if registers in PCC regions
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/BND6NLEZP7CBXZPMEOHKQWV2QJAZPB2R/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/O7J36ZDV37NWYBZUOUU2KLLF2R4W2OG6/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -65,85 +58,184 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-branch HEAD: e399ae3422730fa46abf97b3563c23274ecb8ceb  Merge branch 'pm-cpuidle' into bleeding-edge
+On Tue, Jul 26, 2022 at 5:00 PM Jeremy Linton <jeremy.linton@arm.com> wrote:
+>
+> PCC regions utilize a mailbox to set/retrieve register values used by
+> the CPPC code. This is fine as long as the operations are
+> infrequent. With the FIE code enabled though the overhead can range
+> from 2-11% of system CPU overhead (ex: as measured by top) on Arm
+> based machines.
+>
+> So, before enabling FIE assure none of the registers used by
+> cppc_get_perf_ctrs() are in the PCC region. Furthermore lets also
+> enable a module parameter which can also disable it at boot or module
+> reload.
+>
+> Signed-off-by: Jeremy Linton <jeremy.linton@arm.com>
+> ---
+>  drivers/acpi/cppc_acpi.c       | 31 +++++++++++++++++++++++++++++++
+>  drivers/cpufreq/cppc_cpufreq.c | 19 +++++++++++++++----
+>  include/acpi/cppc_acpi.h       |  5 +++++
+>  3 files changed, 51 insertions(+), 4 deletions(-)
+>
+> diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
+> index 3c6d4ef87be0..ad84c55b6409 100644
+> --- a/drivers/acpi/cppc_acpi.c
+> +++ b/drivers/acpi/cppc_acpi.c
+> @@ -1246,6 +1246,37 @@ int cppc_get_perf_caps(int cpunum, struct cppc_perf_caps *perf_caps)
+>  }
+>  EXPORT_SYMBOL_GPL(cppc_get_perf_caps);
+>
 
-elapsed time: 1191m
+A kerneldoc, please.
 
-configs tested: 61
-configs skipped: 2
+> +int cppc_perf_ctrs_in_pcc(void)
 
-The following configs have been built successfully.
-More configs may be tested in the coming days.
+Why int and not bool?
 
-gcc tested configs:
-arm                                 defconfig
-arm64                            allyesconfig
-arm                              allyesconfig
-sh                        sh7763rdp_defconfig
-mips                     loongson1b_defconfig
-powerpc                     ep8248e_defconfig
-ia64                             allmodconfig
-csky                              allnoconfig
-arc                               allnoconfig
-alpha                             allnoconfig
-riscv                             allnoconfig
-arc                              allyesconfig
-alpha                            allyesconfig
-m68k                             allyesconfig
-powerpc                           allnoconfig
-powerpc                          allmodconfig
-mips                             allyesconfig
-sh                               allmodconfig
-m68k                             allmodconfig
-i386                                defconfig
-i386                             allyesconfig
-x86_64                        randconfig-a004
-x86_64                        randconfig-a002
-x86_64                        randconfig-a006
-i386                          randconfig-a001
-i386                          randconfig-a003
-i386                          randconfig-a005
-x86_64                        randconfig-a013
-x86_64                        randconfig-a011
-x86_64                        randconfig-a015
-i386                          randconfig-a014
-i386                          randconfig-a012
-i386                          randconfig-a016
-s390                 randconfig-r044-20220724
-arc                  randconfig-r043-20220724
-riscv                randconfig-r042-20220724
-um                             i386_defconfig
-um                           x86_64_defconfig
-x86_64                          rhel-8.3-func
-x86_64                         rhel-8.3-kunit
-x86_64                           rhel-8.3-kvm
-x86_64                           rhel-8.3-syz
-x86_64                    rhel-8.3-kselftests
-x86_64                              defconfig
-x86_64                               rhel-8.3
-x86_64                           allyesconfig
+> +{
+> +       int cpu;
+> +       struct cpc_desc *cpc_desc;
+> +       struct cpc_register_resource *delivered_reg, *reference_reg,
+> +               *ref_perf_reg, *ctr_wrap_reg;
 
-clang tested configs:
-mips                         tb0287_defconfig
-x86_64                        randconfig-a005
-x86_64                        randconfig-a001
-x86_64                        randconfig-a003
-i386                          randconfig-a002
-i386                          randconfig-a004
-i386                          randconfig-a006
-x86_64                        randconfig-a012
-x86_64                        randconfig-a016
-x86_64                        randconfig-a014
-i386                          randconfig-a013
-i386                          randconfig-a011
-i386                          randconfig-a015
-hexagon              randconfig-r041-20220724
-hexagon              randconfig-r045-20220724
+No line wraps here, please and follow the reverse xmas tree convention.
 
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+> +
+> +       for_each_present_cpu(cpu) {
+
+Declare the variables only used in this loop here and you only need two.
+
+> +               cpc_desc = per_cpu(cpc_desc_ptr, cpu);
+> +               delivered_reg = &cpc_desc->cpc_regs[DELIVERED_CTR];
+> +               reference_reg = &cpc_desc->cpc_regs[REFERENCE_CTR];
+> +               ref_perf_reg = &cpc_desc->cpc_regs[REFERENCE_PERF];
+> +               ctr_wrap_reg = &cpc_desc->cpc_regs[CTR_WRAP_TIME];
+
+I would do
+
+if (CPC_IN_PCC(&cpc_desc->cpc_regs[DELIVERED_CTR]) ||
+    CPC_IN_PCC(&cpc_desc->cpc_regs[REFERENCE_CTR]) ||
+    CPC_IN_PCC(&cpc_desc->cpc_regs[CTR_WRAP_TIME]))
+        return true;
+
+ref_perf_reg = &cpc_desc->cpc_regs[REFERENCE_PERF];
+if (!CPC_SUPPORTED(ref_perf_reg))
+    ref_perf_reg = &cpc_desc->cpc_regs[NOMINAL_PERF];
+
+if (CPC_IN_PCC(ref_perf_reg))
+    return true;
+
+> +
+> +               /*
+> +                * If reference perf register is not supported then we should
+> +                * use the nominal perf value
+> +                */
+> +               if (!CPC_SUPPORTED(ref_perf_reg))
+> +                       ref_perf_reg = &cpc_desc->cpc_regs[NOMINAL_PERF];
+> +
+> +               /* Are any of the regs PCC ?*/
+> +               if (CPC_IN_PCC(delivered_reg) || CPC_IN_PCC(reference_reg) ||
+> +                       CPC_IN_PCC(ctr_wrap_reg) || CPC_IN_PCC(ref_perf_reg)) {
+> +                       return true;
+> +               }
+> +       }
+> +       return false;
+> +}
+> +EXPORT_SYMBOL_GPL(cppc_perf_ctrs_in_pcc);
+> +
+>  /**
+>   * cppc_get_perf_ctrs - Read a CPU's performance feedback counters.
+>   * @cpunum: CPU from which to read counters.
+> diff --git a/drivers/cpufreq/cppc_cpufreq.c b/drivers/cpufreq/cppc_cpufreq.c
+> index 24eaf0ec344d..a66d3013d0f8 100644
+> --- a/drivers/cpufreq/cppc_cpufreq.c
+> +++ b/drivers/cpufreq/cppc_cpufreq.c
+> @@ -63,6 +63,10 @@ static struct cppc_workaround_oem_info wa_info[] = {
+>
+>  static struct cpufreq_driver cppc_cpufreq_driver;
+>
+> +static bool fie_disabled;
+> +module_param(fie_disabled, bool, 0444);
+> +MODULE_PARM_DESC(fie_disabled, "Disable Frequency Invariance Engine (FIE)");
+> +
+>  #ifdef CONFIG_ACPI_CPPC_CPUFREQ_FIE
+>
+>  /* Frequency invariance support */
+> @@ -158,7 +162,7 @@ static void cppc_cpufreq_cpu_fie_init(struct cpufreq_policy *policy)
+>         struct cppc_freq_invariance *cppc_fi;
+>         int cpu, ret;
+>
+> -       if (cppc_cpufreq_driver.get == hisi_cppc_cpufreq_get_rate)
+> +       if (fie_disabled)
+>                 return;
+>
+>         for_each_cpu(cpu, policy->cpus) {
+> @@ -199,7 +203,7 @@ static void cppc_cpufreq_cpu_fie_exit(struct cpufreq_policy *policy)
+>         struct cppc_freq_invariance *cppc_fi;
+>         int cpu;
+>
+> -       if (cppc_cpufreq_driver.get == hisi_cppc_cpufreq_get_rate)
+> +       if (fie_disabled)
+>                 return;
+>
+>         /* policy->cpus will be empty here, use related_cpus instead */
+> @@ -229,7 +233,12 @@ static void __init cppc_freq_invariance_init(void)
+>         };
+>         int ret;
+>
+> -       if (cppc_cpufreq_driver.get == hisi_cppc_cpufreq_get_rate)
+> +       if (cppc_perf_ctrs_in_pcc()) {
+> +               pr_debug("FIE not enabled on systems with registers in PCC\n");
+> +               fie_disabled = true;
+> +       }
+> +
+> +       if (fie_disabled)
+>                 return;
+>
+>         kworker_fie = kthread_create_worker(0, "cppc_fie");
+> @@ -247,7 +256,7 @@ static void __init cppc_freq_invariance_init(void)
+>
+>  static void cppc_freq_invariance_exit(void)
+>  {
+> -       if (cppc_cpufreq_driver.get == hisi_cppc_cpufreq_get_rate)
+> +       if (fie_disabled)
+>                 return;
+>
+>         kthread_destroy_worker(kworker_fie);
+> @@ -940,6 +949,8 @@ static void cppc_check_hisi_workaround(void)
+>                 }
+>         }
+>
+> +       fie_disabled = true;
+> +
+>         acpi_put_table(tbl);
+>  }
+>
+> diff --git a/include/acpi/cppc_acpi.h b/include/acpi/cppc_acpi.h
+> index d389bab54241..f4ff571fcdcb 100644
+> --- a/include/acpi/cppc_acpi.h
+> +++ b/include/acpi/cppc_acpi.h
+> @@ -140,6 +140,7 @@ extern int cppc_get_perf_ctrs(int cpu, struct cppc_perf_fb_ctrs *perf_fb_ctrs);
+>  extern int cppc_set_perf(int cpu, struct cppc_perf_ctrls *perf_ctrls);
+>  extern int cppc_set_enable(int cpu, bool enable);
+>  extern int cppc_get_perf_caps(int cpu, struct cppc_perf_caps *caps);
+> +extern int cppc_perf_ctrs_in_pcc(void);
+>  extern bool acpi_cpc_valid(void);
+>  extern bool cppc_allow_fast_switch(void);
+>  extern int acpi_get_psd_map(unsigned int cpu, struct cppc_cpudata *cpu_data);
+> @@ -173,6 +174,10 @@ static inline int cppc_get_perf_caps(int cpu, struct cppc_perf_caps *caps)
+>  {
+>         return -ENOTSUPP;
+>  }
+> +extern int cppc_perf_ctrs_in_pcc(void)
+> +{
+> +       return false;
+> +}
+>  static inline bool acpi_cpc_valid(void)
+>  {
+>         return false;
+> --
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
