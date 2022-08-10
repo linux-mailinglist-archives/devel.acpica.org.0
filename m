@@ -2,61 +2,61 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B69A58D3FF
-	for <lists+devel-acpica@lfdr.de>; Tue,  9 Aug 2022 08:44:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7651C58E767
+	for <lists+devel-acpica@lfdr.de>; Wed, 10 Aug 2022 08:49:51 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 9313E100EB842;
-	Mon,  8 Aug 2022 23:44:56 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.93; helo=mga11.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+	by ml01.01.org (Postfix) with ESMTP id D7A0F100EB323;
+	Tue,  9 Aug 2022 23:49:48 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.126; helo=mga18.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id B38D7100EBB7F
-	for <devel@acpica.org>; Mon,  8 Aug 2022 23:44:54 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTPS id C1F1D100EB83B
+	for <devel@acpica.org>; Tue,  9 Aug 2022 23:49:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1660027494; x=1691563494;
+  t=1660114185; x=1691650185;
   h=date:from:to:cc:subject:message-id:mime-version:
    content-transfer-encoding;
-  bh=dExwSIWLQG4fAZxi/foT2PEZFM/JrpjVCycSyFAiDhc=;
-  b=G47hhP/qcCvev6LQkXtTLzwvOfp1GltHvGGUzW7HUpYwlbQLxH+F2QWy
-   bjm8YNbV7d7SsyqlNALIgxkhpcRYR2N+J2pny6/2YQ+oJROERN5xynK4i
-   /vvUcdUNlXY9kkYvK2gNpKR2A4LB7r6Cm7CEiyWI/lF35xuk8a0QdCtbu
-   F2HlPKJb49KNkXFjIfymu/sxXimdVvljAxsdeNZ4j7JZ/vnGuu1aNyTFr
-   jmxQyeJ5eg0H6nxDImCshb9R5pF/T3Fdr67JYq/K14bZADGTzZIHvTAQo
-   7vdV2Abi+n8Cv1Fo0zp8XvsQweA/P1+a+B7pdClsC1juPpLzT7+53poIQ
+  bh=ng4aUm4odUinFQNAnLjcT37l1NPbArZDHokfS3Y2qgo=;
+  b=CnY3yczirE47P6qijD4x+XXeyNxMsKKpNVf0rY9vcijJva0jwBeL/wfj
+   yPA70sAqP9B9yizXSTgfLWupY9NA693/rexjJPGdQupYwlUoIFd/2yqU+
+   EOXO3bsuWOAkJdbub0HmDYLgClC5I7OgXDzhxfsz0+mlhu5VmbDiG6EV0
+   h/dGfTqqzDJPQjCO3XsellNqd7ueuG8IEhFCw/ZFdaHcvfQLPXZGzXSCk
+   swGEi2O4YsDgpsKmJobfQP99RU24m6VrJtJv5x8suNQTx6uKQLlWEn5qY
+   FVqtuNEG+R+aTugHABHv3Ri1IoQPnb5ngnDtKja0+/tPXLHgPu9GMrv/t
    w==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10433"; a="288332568"
-X-IronPort-AV: E=Sophos;i="5.93,223,1654585200";
-   d="scan'208";a="288332568"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Aug 2022 23:44:45 -0700
+X-IronPort-AV: E=McAfee;i="6400,9594,10434"; a="274065572"
+X-IronPort-AV: E=Sophos;i="5.93,226,1654585200";
+   d="scan'208";a="274065572"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Aug 2022 23:49:44 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.93,223,1654585200";
-   d="scan'208";a="731029611"
-Received: from lkp-server01.sh.intel.com (HELO e0eace57cfef) ([10.239.97.150])
-  by orsmga004.jf.intel.com with ESMTP; 08 Aug 2022 23:44:43 -0700
-Received: from kbuild by e0eace57cfef with local (Exim 4.96)
+X-IronPort-AV: E=Sophos;i="5.93,226,1654585200";
+   d="scan'208";a="932777087"
+Received: from lkp-server02.sh.intel.com (HELO 5d6b42aa80b8) ([10.239.97.151])
+  by fmsmga005.fm.intel.com with ESMTP; 09 Aug 2022 23:49:42 -0700
+Received: from kbuild by 5d6b42aa80b8 with local (Exim 4.96)
 	(envelope-from <lkp@intel.com>)
-	id 1oLIyo-000Mo9-1g;
-	Tue, 09 Aug 2022 06:44:42 +0000
-Date: Tue, 09 Aug 2022 14:43:57 +0800
+	id 1oLfXC-00001P-03;
+	Wed, 10 Aug 2022 06:49:42 +0000
+Date: Wed, 10 Aug 2022 14:49:09 +0800
 From: kernel test robot <lkp@intel.com>
 To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <62f2022d.h43xFjfErjTiFA43%lkp@intel.com>
+Message-ID: <62f354e5.j4wVK1ptuDBGM6vU%lkp@intel.com>
 User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-Message-ID-Hash: NFKQQATI6BFQZIOWB7RIR6WRHK7GD4CT
-X-Message-ID-Hash: NFKQQATI6BFQZIOWB7RIR6WRHK7GD4CT
+Message-ID-Hash: GN6N6QEGZWEHAJJFAN33AES2UDSMHJMG
+X-Message-ID-Hash: GN6N6QEGZWEHAJJFAN33AES2UDSMHJMG
 X-MailFrom: lkp@intel.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
 CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [rafael-pm:bleeding-edge] BUILD SUCCESS 2c461d8f205740fbdcbb8f7c72ea3468d89c7b1e
+Subject: [Devel] [rafael-pm:bleeding-edge] BUILD SUCCESS ad393690b235f40d3b4dc72d84e6fab3960edf9f
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/NFKQQATI6BFQZIOWB7RIR6WRHK7GD4CT/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/GN6N6QEGZWEHAJJFAN33AES2UDSMHJMG/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -66,11 +66,11 @@ Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
 tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-branch HEAD: 2c461d8f205740fbdcbb8f7c72ea3468d89c7b1e  Merge branch 'acpi-tables' into bleeding-edge
+branch HEAD: ad393690b235f40d3b4dc72d84e6fab3960edf9f  Merge branch 'acpi-properties' into linux-next
 
-elapsed time: 721m
+elapsed time: 729m
 
-configs tested: 53
+configs tested: 27
 configs skipped: 2
 
 The following configs have been built successfully.
@@ -79,59 +79,33 @@ More configs may be tested in the coming days.
 gcc tested configs:
 um                             i386_defconfig
 um                           x86_64_defconfig
-i386                 randconfig-a001-20220808
-i386                 randconfig-a002-20220808
-i386                 randconfig-a003-20220808
-i386                 randconfig-a004-20220808
-i386                 randconfig-a005-20220808
-i386                 randconfig-a006-20220808
+i386                          randconfig-a014
+i386                          randconfig-a012
+i386                          randconfig-a016
 x86_64                              defconfig
-i386                                defconfig
-x86_64                               rhel-8.3
-x86_64                           allyesconfig
-powerpc                           allnoconfig
-i386                             allyesconfig
-mips                             allyesconfig
-powerpc                          allmodconfig
-arm                                 defconfig
-sh                               allmodconfig
-m68k                             allyesconfig
-m68k                             allmodconfig
-x86_64               randconfig-a003-20220808
-arc                              allyesconfig
-x86_64               randconfig-a004-20220808
-x86_64                    rhel-8.3-kselftests
-arc                  randconfig-r043-20220808
-alpha                            allyesconfig
-x86_64               randconfig-a001-20220808
 x86_64                           rhel-8.3-syz
-x86_64               randconfig-a005-20220808
-x86_64               randconfig-a002-20220808
-x86_64               randconfig-a006-20220808
-x86_64                          rhel-8.3-func
-x86_64                         rhel-8.3-kunit
-x86_64                           rhel-8.3-kvm
-arm                              allyesconfig
-ia64                             allmodconfig
-arm64                            allyesconfig
+x86_64                        randconfig-a006
+x86_64                           allyesconfig
+x86_64                               rhel-8.3
+arc                  randconfig-r043-20220810
+riscv                randconfig-r042-20220810
+s390                 randconfig-r044-20220810
+powerpc                           allnoconfig
+powerpc                          allmodconfig
+sh                               allmodconfig
+mips                             allyesconfig
+m68k                             allmodconfig
+arc                              allyesconfig
+alpha                            allyesconfig
+m68k                             allyesconfig
 
 clang tested configs:
-hexagon              randconfig-r045-20220808
-riscv                randconfig-r042-20220808
-hexagon              randconfig-r041-20220808
-s390                 randconfig-r044-20220808
-x86_64               randconfig-a013-20220808
-x86_64               randconfig-a015-20220808
-x86_64               randconfig-a016-20220808
-x86_64               randconfig-a012-20220808
-x86_64               randconfig-a011-20220808
-x86_64               randconfig-a014-20220808
-i386                 randconfig-a013-20220808
-i386                 randconfig-a012-20220808
-i386                 randconfig-a014-20220808
-i386                 randconfig-a011-20220808
-i386                 randconfig-a016-20220808
-i386                 randconfig-a015-20220808
+i386                          randconfig-a013
+i386                          randconfig-a011
+i386                          randconfig-a015
+x86_64                        randconfig-a005
+hexagon              randconfig-r041-20220810
+hexagon              randconfig-r045-20220810
 
 -- 
 0-DAY CI Kernel Test Service
