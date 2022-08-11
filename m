@@ -2,135 +2,94 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C52E458F215
-	for <lists+devel-acpica@lfdr.de>; Wed, 10 Aug 2022 20:04:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DC2259036D
+	for <lists+devel-acpica@lfdr.de>; Thu, 11 Aug 2022 18:25:26 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 92112100EAAEE;
-	Wed, 10 Aug 2022 11:04:24 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=217.140.110.172; helo=foss.arm.com; envelope-from=jeremy.linton@arm.com; receiver=<UNKNOWN> 
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by ml01.01.org (Postfix) with ESMTP id 9480E100EAAE5
-	for <devel@acpica.org>; Wed, 10 Aug 2022 11:04:21 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CE9BA11FB;
-	Wed, 10 Aug 2022 11:04:21 -0700 (PDT)
-Received: from [192.168.122.164] (U203867.austin.arm.com [10.118.30.29])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DBC0E3F5A1;
-	Wed, 10 Aug 2022 11:04:20 -0700 (PDT)
-Message-ID: <151b17e9-5342-69e0-aea3-ec5b14bf5d83@arm.com>
-Date: Wed, 10 Aug 2022 13:04:20 -0500
+	by ml01.01.org (Postfix) with ESMTP id D0CE8100EA900;
+	Thu, 11 Aug 2022 09:25:22 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.128.181; helo=mail-yw1-f181.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	(No client certificate requested)
+	by ml01.01.org (Postfix) with ESMTPS id AF433100EAB1F
+	for <devel@acpica.org>; Thu, 11 Aug 2022 09:25:20 -0700 (PDT)
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-31f661b3f89so177679367b3.11
+        for <devel@acpica.org>; Thu, 11 Aug 2022 09:25:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=JGzD77U2Oto0Aqe+gV/4YCX3SgodzAwICFq6gJm9KqQ=;
+        b=Hbmj7JgLKFP4sj7CVbeEvMe5J3sFbCayZ51yKlnEGcW7xolrojZAyv14RuUFntBQ33
+         qX9Yn0C9jIGQPMvHUI83XhalHJdUnT0fZiP4ryjKI4FYh+YD886hf4rMdyvmDtIveZDY
+         JkK7R3z7ffTKU9TYstwChUnXtKWT2wp3gF/T0ogJUDEYQeLUAEcM6uH0zewelUppukzh
+         YP263rpKGt2qtCusvr1SPv5RQPOmmXntIOoVnKLIrcqhDUd8F5gPJo7ze0uGXeiuv0Fg
+         9dsfEuQVjR8CyUIGYDR1I+WNprd2xWwlhWB4kIviBYazB/+HVyVONTaflu63Dj4ppZnn
+         1dBQ==
+X-Gm-Message-State: ACgBeo0mUgIeOf06UuMWD48Jx/hi9AWWEJFrhMLOO3syaGC8ys2nc/nK
+	J90/vYISz0zP5B2mOOQejr9zSjJOSwH6kpbh+YM=
+X-Google-Smtp-Source: AA6agR7xQjC2PfNKM8PnGugI3psJeIEWfvzwZah5ZiCgr9LZ9PxKFGb9Z0NdfE7pGOMoE9xaZ+b4si/z8AoIkxnSrz4=
+X-Received: by 2002:a81:ae0a:0:b0:324:59ab:feec with SMTP id
+ m10-20020a81ae0a000000b0032459abfeecmr34997601ywh.7.1660235118995; Thu, 11
+ Aug 2022 09:25:18 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Content-Language: en-US
-To: Lukasz Luba <lukasz.luba@arm.com>
-References: <20220728221043.4161903-1-jeremy.linton@arm.com>
- <20220728221043.4161903-2-jeremy.linton@arm.com>
- <3a5e7abd-9361-11ba-978d-8e8bae00ea31@arm.com>
- <6f565c2d-e7cb-f5a2-0b38-995c9cd2deec@arm.com>
- <64ba1dfb-a475-e667-b59d-57e5d1e5ff1f@arm.com>
-From: Jeremy Linton <jeremy.linton@arm.com>
-In-Reply-To: <64ba1dfb-a475-e667-b59d-57e5d1e5ff1f@arm.com>
-Message-ID-Hash: UCJZYS3YPEZYXA4Y6TZ2UCE6NONCQKC2
-X-Message-ID-Hash: UCJZYS3YPEZYXA4Y6TZ2UCE6NONCQKC2
-X-MailFrom: jeremy.linton@arm.com
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
-CC: rafael@kernel.org, viresh.kumar@linaro.org, devel@acpica.org, linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, vschneid@redhat.com, Ionela Voinescu <ionela.voinescu@arm.com>, Dietmar Eggemann <dietmar.eggemann@arm.com>
+References: <20220811154357.18674-1-dengshaomin@cdjrlc.com>
+In-Reply-To: <20220811154357.18674-1-dengshaomin@cdjrlc.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Thu, 11 Aug 2022 18:25:08 +0200
+Message-ID: <CAJZ5v0gRUmMu7zGgH3F32C8DB6RsOqnNPw+L8023A89Tiqy-qw@mail.gmail.com>
+To: Shaomin Deng <dengshaomin@cdjrlc.com>
+Message-ID-Hash: WQCWFDUHDW3WA6NAXMNDESMHON3BUBWU
+X-Message-ID-Hash: WQCWFDUHDW3WA6NAXMNDESMHON3BUBWU
+X-MailFrom: rjwysocki@gmail.com
+X-Mailman-Rule-Hits: nonmember-moderation
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
+CC: Rafael Wysocki <rafael.j.wysocki@intel.com>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH v2 1/1] ACPI: CPPC: Disable FIE if registers in PCC regions
+Subject: [Devel] Re: [PATCH] ACPICA: Fix typo in comments
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/UCJZYS3YPEZYXA4Y6TZ2UCE6NONCQKC2/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/WQCWFDUHDW3WA6NAXMNDESMHON3BUBWU/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 
-SGksDQoNCk9uIDgvMTAvMjIgMDk6MzIsIEx1a2FzeiBMdWJhIHdyb3RlOg0KPiANCj4gDQo+IE9u
-IDgvMTAvMjIgMTU6MDgsIEplcmVteSBMaW50b24gd3JvdGU6DQo+PiBIaSwNCj4+DQo+PiBPbiA4
-LzEwLzIyIDA3OjI5LCBMdWthc3ogTHViYSB3cm90ZToNCj4+PiBIaSBKZXJlbXksDQo+Pj4NCj4+
-PiArQ0MgVmFsZW50aW4gc2luY2UgaGUgbWlnaHQgYmUgaW50ZXJlc3RlZCBpbiB0aGlzIGZpbmRp
-bmcNCj4+PiArQ0MgSW9uZWxhLCBEaWV0bWFyDQo+Pj4NCj4+PiBJIGhhdmUgYSBmZXcgY29tbWVu
-dHMgZm9yIHRoaXMgcGF0Y2guDQo+Pj4NCj4+Pg0KPj4+IE9uIDcvMjgvMjIgMjM6MTAsIEplcmVt
-eSBMaW50b24gd3JvdGU6DQo+Pj4+IFBDQyByZWdpb25zIHV0aWxpemUgYSBtYWlsYm94IHRvIHNl
-dC9yZXRyaWV2ZSByZWdpc3RlciB2YWx1ZXMgdXNlZCBieQ0KPj4+PiB0aGUgQ1BQQyBjb2RlLiBU
-aGlzIGlzIGZpbmUgYXMgbG9uZyBhcyB0aGUgb3BlcmF0aW9ucyBhcmUNCj4+Pj4gaW5mcmVxdWVu
-dC4gV2l0aCB0aGUgRklFIGNvZGUgZW5hYmxlZCB0aG91Z2ggdGhlIG92ZXJoZWFkIGNhbiByYW5n
-ZQ0KPj4+PiBmcm9tIDItMTElIG9mIHN5c3RlbSBDUFUgb3ZlcmhlYWQgKGV4OiBhcyBtZWFzdXJl
-ZCBieSB0b3ApIG9uIEFybQ0KPj4+PiBiYXNlZCBtYWNoaW5lcy4NCj4+Pj4NCj4+Pj4gU28sIGJl
-Zm9yZSBlbmFibGluZyBGSUUgYXNzdXJlIG5vbmUgb2YgdGhlIHJlZ2lzdGVycyB1c2VkIGJ5DQo+
-Pj4+IGNwcGNfZ2V0X3BlcmZfY3RycygpIGFyZSBpbiB0aGUgUENDIHJlZ2lvbi4gRnVydGhlcm1v
-cmUgbGV0cyBhbHNvDQo+Pj4+IGVuYWJsZSBhIG1vZHVsZSBwYXJhbWV0ZXIgd2hpY2ggY2FuIGFs
-c28gZGlzYWJsZSBpdCBhdCBib290IG9yIG1vZHVsZQ0KPj4+PiByZWxvYWQuDQo+Pj4+DQo+Pj4+
-IFNpZ25lZC1vZmYtYnk6IEplcmVteSBMaW50b24gPGplcmVteS5saW50b25AYXJtLmNvbT4NCj4+
-Pj4gLS0tDQo+Pj4+IMKgIGRyaXZlcnMvYWNwaS9jcHBjX2FjcGkuY8KgwqDCoMKgwqDCoCB8IDQx
-IA0KPj4+PiArKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrDQo+Pj4+IMKgIGRyaXZl
-cnMvY3B1ZnJlcS9jcHBjX2NwdWZyZXEuYyB8IDE5ICsrKysrKysrKysrKy0tLS0NCj4+Pj4gwqAg
-aW5jbHVkZS9hY3BpL2NwcGNfYWNwaS5owqDCoMKgwqDCoMKgIHzCoCA1ICsrKysrDQo+Pj4+IMKg
-IDMgZmlsZXMgY2hhbmdlZCwgNjEgaW5zZXJ0aW9ucygrKSwgNCBkZWxldGlvbnMoLSkNCj4+Pg0K
-Pj4+DQo+Pj4gMS4gWW91IGFzc3VtZSB0aGF0IGFsbCBwbGF0Zm9ybXMgd291bGQgaGF2ZSB0aGlz
-IGJpZyBvdmVyaGVhZCB3aGVuDQo+Pj4gwqDCoMKgIHRoZXkgaGF2ZSB0aGUgUENDIHJlZ2lvbnMg
-Zm9yIHRoaXMgcHVycG9zZS4NCj4+PiDCoMKgwqAgRG8gd2Uga25vdyB3aGljaCB2ZXJzaW9uIG9m
-IEhXIG1haWxib3ggaGF2ZSBiZWVuIGltcGxlbWVudGVkDQo+Pj4gwqDCoMKgIGFuZCB1c2VkIHRo
-YXQgaGF2ZSB0aGlzIDItMTElIG92ZXJoZWFkIGluIGEgcGxhdGZvcm0/DQo+Pj4gwqDCoMKgIERv
-IGFsc28gbW9yZSByZWNlbnQgTUhVIGhhdmUgc3VjaCBpc3N1ZXMsIHNvIHdlIGNvdWxkIGJsb2Nr
-DQo+Pj4gwqDCoMKgIHRoZW0gYnkgZGVmYXVsdCAobGlrZSBpbiB5b3VyIGNvZGUpPw0KPj4NCj4+
-IFdlbGwsIHRoZSBtYWlsYm94IG5hdHVyZSBvZiBQQ0MgcHJldHR5IG11Y2ggYXNzdXJlcyBpdHMg
-InNsb3ciLCANCj4+IHJlbGF0aXZlIHRoZSBhbHRlcm5hdGl2ZSBvZiBwcm92aWRpbmcgYW4gYWN0
-dWFsIHJlZ2lzdGVyLsKgIElmIGEgDQo+PiBwbGF0Zm9ybSBwcm92aWRlcyBkaXJlY3QgYWNjZXNz
-IHRvIHNheSBNSFUgcmVnaXN0ZXJzLCB0aGVuIG9mIGNvdXJzZSANCj4+IHRoZXkgd29uJ3QgYWN0
-dWFsbHkgYmUgaW4gYSBQQ0MgcmVnaW9uIGFuZCB0aGUgRklFIHdpbGwgcmVtYWluIG9uLg0KPj4N
-Cj4+DQo+Pj4NCj4+PiAyLiBJIHdvdWxkIHByZWZlciB0byBzaW1wbHkgY2hhbmdlIHRoZSBkZWZh
-dWx0IEtjb25maWcgdmFsdWUgdG8gJ24nIGZvcg0KPj4+IMKgwqDCoCB0aGUgQUNQSV9DUFBDX0NQ
-VUZSRVFfRklFLCBpbnN0ZWFkIG9mIGNyZWF0aW5nIGEgcnVudGltZQ0KPj4+IMKgwqDCoCBjaGVj
-ayBjb2RlIHdoaWNoIGRpc2FibGVzIGl0Lg0KPj4+IMKgwqDCoCBXZSBoYXZlIHByb2JhYmx5IGlu
-dHJvZHVjZSB0aGlzIG92ZXJoZWFkIGZvciBvbGRlciBwbGF0Zm9ybXMgd2l0aA0KPj4+IMKgwqDC
-oCB0aGlzIGNvbW1pdDoNCj4+DQo+PiBUaGUgcHJvYmxlbSBoZXJlIGlzIHRoYXQgdGhlc2UgQUNQ
-SSBrZXJuZWxzIGFyZSBiZWluZyBzaGlwcGVkIGFzIA0KPj4gc2luZ2xlIGltYWdlcyBpbiBkaXN0
-cm8ncyB3aGljaCBleHBlY3QgdGhlbSB0byBydW4gb24gYSB3aWRlIHJhbmdlIG9mIA0KPj4gcGxh
-dGZvcm1zIChpbmNsdWRpbmcgeDg2L2FtZCBpbiB0aGlzIGNhc2UpLCBhbmQgcHJlZm9ybSBvcHRp
-bWFsbHkgb24gDQo+PiBhbGwgb2YgdGhlbS4NCj4+DQo+PiBTbyB0aGUgJ24nIG9wdGlvbiBiYXNp
-Y2FsbHkgaXMgc2F5aW5nIHRoYXQgdGhlIGxhdGVzdCBGSUUgY29kZSBkb2Vzbid0IA0KPj4gcHJv
-dmlkZSBhIGJlZml0IGFueXdoZXJlPw0KPiANCj4gSG93IHdlIGRlZmluZSB0aGUgJ2JlbmVmaXQn
-IGhlcmUgLSBpdCdzIGEgYmV0dGVyIHRhc2sgdXRpbGl6YXRpb24uDQo+IEhvdyBtdWNoIGJldHRl
-ciBpdCB3b3VsZCBiZSB2cy4gcHJldmlvdXMgYXBwcm9hY2ggd2l0aCBvbGQtc3R5bGUgRklFPw0K
-PiANCj4gVEJILCBJIGhhdmVuJ3QgZm91bmQgYW55IHRlc3QgcmVzdWx0cyBmcm9tIHRoZSBkZXZl
-bG9wbWVudCBvZiB0aGUgcGF0Y2gNCj4gc2V0LiBNYXliZSBzb21lb25lIGNvdWxkIHBvaW50IG1l
-IHRvIHRoZSB0ZXN0IHJlc3VsdHMgd2hpY2ggYnJpbmcNCj4gdGhpcyBiZW5lZml0IG9mIGJldHRl
-ciB1dGlsaXphdGlvbi4NCj4gDQo+IEluIHRoZSBSRkMgSSBjb3VsZCBmaW5kIHRoYXQgc3RhdGVt
-ZW50IFsxXToNCj4gDQo+ICJUaGlzIGlzIHRlc3RlZCB3aXRoIHNvbWUgaGFja3MsIGFzIEkgZGlk
-bid0IGhhdmUgYWNjZXNzIHRvIHRoZSByaWdodA0KPiBoYXJkd2FyZSwgb24gdGhlIEFSTTY0IGhp
-a2V5IGJvYXJkIHRvIGNoZWNrIHRoZSBvdmVyYWxsIGZ1bmN0aW9uYWxpdHkNCj4gYW5kIHRoYXQg
-d29ya3MgZmluZS4iDQo+IA0KPiBUaGVyZSBzaG91bGQgYmUgYSBydWxlIHRoYXQgc3VjaCBjb2Rl
-IGlzIHRlc3RlZCBvbiBhIHJlYWwgc2VydmVyIHdpdGgNCj4gbWFueSBDUFVzIHVuZGVyIHNvbWUg
-c3RyZXNzLXRlc3QuDQo+IA0KPiBJb25lbGEgZG8geW91IGhhdmUgc29tZSB0ZXN0IHJlc3VsdHMg
-d2hlcmUgdGhpcyBuZXcgRklFIGZlYXR1cmUNCj4gaW50cm9kdWNlcyBzb21lIGJldHRlciAmIG1l
-YW5pbmdmdWwgYWNjdXJhY3kgaW1wcm92ZW1lbnQgdG8gdGhlDQo+IHRhc2tzIHV0aWxpemF0aW9u
-Pw0KPiANCj4gV2l0aCB0aGlzIG92ZXJoZWFkIG1lYXN1cmVkIG9uIGEgcmVhbCBzZXJ2ZXIgcGxh
-dGZvcm0gSSB0aGluaw0KPiBpdCdzIG5vdCB3b3J0aCB0byBrZWVwIGl0ICd5JyBpbiBkZWZhdWx0
-Lg0KPiANCj4gVGhlIGRlc2lnbiBpcyBoZWF2eSwgYXMgc3RhdGVkIGluIHRoZSBjb21taXQgbWVz
-c2FnZToNCj4gIsKgwqDCoCBPbiBhbiBpbnZvY2F0aW9uIG9mIGNwcGNfc2NhbGVfZnJlcV90aWNr
-KCksIHdlIHNjaGVkdWxlIGFuIGlycSB3b3JrDQo+ICDCoMKgwqAgKHNpbmNlIHdlIHJlYWNoIGhl
-cmUgZnJvbSBoYXJkLWlycSBjb250ZXh0KSwgd2hpY2ggdGhlbiBzY2hlZHVsZXMgYQ0KPiAgwqDC
-oMKgIG5vcm1hbCB3b3JrIGl0ZW0gYW5kIGNwcGNfc2NhbGVfZnJlcV93b3JrZm4oKSB1cGRhdGVz
-IHRoZSBwZXJfY3B1DQo+ICDCoMKgwqAgYXJjaF9mcmVxX3NjYWxlIHZhcmlhYmxlIGJhc2VkIG9u
-IHRoZSBjb3VudGVyIHVwZGF0ZXMgc2luY2UgdGhlIGxhc3QNCj4gIMKgwqDCoCB0aWNrLg0KPiAi
-DQo+IA0KPiBBcyB5b3Ugc2FpZCBKZXJlbXksIHRoaXMgbWFpbGJveCB3b3VsZCBhbHdheXMgYmUg
-d2l0aCBvdmVyaGVhZC4gSU1PDQo+IHVudGlsbCB3ZSBjYW5ub3QgYmUgc3VyZSB3ZSBoYXZlIHNv
-bWUgcG93ZXJmdWwgbmV3IEhXIG1haWxib3gsIHRoaXMNCj4gZmVhdHVyZSBzaG91bGQgYmUgZGlz
-YWJsZWQuDQoNCg0KUmlnaHQsIHRoZSBkZXNpZ24gb2YgdGhlIGZlYXR1cmUgd291bGQgYmUgY29t
-cGxldGVseSBkaWZmZXJlbnQgaWYgaXQgDQp3ZXJlIGEgc2ltcGxlIHJlZ2lzdGVyIHJlYWQgdG8g
-Z2V0IHRoZSBkZWxpdmVyZWQgcGVyZiBhdm9pZGluZyBhbGwgdGhlIA0KanVtcGluZyBhcm91bmQg
-eW91IHF1b3RlZC4NCg0KV2hpY2ggc29ydGEgaW1wbGllcyB0aGF0IGl0cyBub3QgcmVhbGx5IGZp
-eGFibGUgYXMgaXMsIHdoaWNoIElNSE8gbWVhbnMgDQp0aGF0ICduJyBpc24ndCByZWFsbHkgc3Ry
-b25nIGVub3VnaCwgaXQgc2hvdWxkIHByb2JhYmx5IGJlIHVuZGVyIA0KQ09ORklHX0VYUEVSVCBh
-cyB3ZWxsIGlmIHN1Y2ggYSBjaGFuZ2Ugd2VyZSBtYWRlIHRvIGRpc2NvdXJhZ2UgaXRzIHVzZS4N
-Cg0KPiANCj4gWzFdIA0KPiBodHRwczovL2xvcmUua2VybmVsLm9yZy9sa21sL2NvdmVyLjE1OTQy
-ODkwMDkuZ2l0LnZpcmVzaC5rdW1hckBsaW5hcm8ub3JnLw0KX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX18KRGV2ZWwgbWFpbGluZyBsaXN0IC0tIGRldmVsQGFj
-cGljYS5vcmcKVG8gdW5zdWJzY3JpYmUgc2VuZCBhbiBlbWFpbCB0byBkZXZlbC1sZWF2ZUBhY3Bp
-Y2Eub3JnCiUod2ViX3BhZ2VfdXJsKXNsaXN0aW5mbyUoY2dpZXh0KXMvJShfaW50ZXJuYWxfbmFt
-ZSlz
+On Thu, Aug 11, 2022 at 5:53 PM Shaomin Deng <dengshaomin@cdjrlc.com> wrote:
+>
+> Delete the repeated word "method" in comments.
+>
+> Signed-off-by: Shaomin Deng <dengshaomin@cdjrlc.com>
+
+Please note that the ACPICA changes need to be submitted to the
+upstream ACPICA project on github.  If your change is applicable to
+that code base, please consider submitting a pull request for it on
+github.
+
+> ---
+>  drivers/acpi/acpica/psparse.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/acpi/acpica/psparse.c b/drivers/acpi/acpica/psparse.c
+> index ba93f359760a..b0faab1e6d3f 100644
+> --- a/drivers/acpi/acpica/psparse.c
+> +++ b/drivers/acpi/acpica/psparse.c
+> @@ -508,7 +508,7 @@ acpi_status acpi_ps_parse_aml(struct acpi_walk_state *walk_state)
+>                         }
+>
+>                         /*
+> -                        * If the transfer to the new method method call worked,
+> +                        * If the transfer to the new method call worked,
+>                          * a new walk state was created -- get it
+>                          */
+>                         walk_state = acpi_ds_get_current_walk_state(thread);
+> --
+> 2.35.1
+>
+_______________________________________________
+Devel mailing list -- devel@acpica.org
+To unsubscribe send an email to devel-leave@acpica.org
+%(web_page_url)slistinfo%(cgiext)s/%(_internal_name)s
