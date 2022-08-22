@@ -1,416 +1,142 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 292D459ADDD
-	for <lists+devel-acpica@lfdr.de>; Sat, 20 Aug 2022 14:21:05 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3DDC359BF6B
+	for <lists+devel-acpica@lfdr.de>; Mon, 22 Aug 2022 14:25:41 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 93991100EB33F;
-	Sat, 20 Aug 2022 05:21:00 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.128.172; helo=mail-yw1-f172.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+	by ml01.01.org (Postfix) with ESMTP id 69549100F47B9;
+	Mon, 22 Aug 2022 05:25:38 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.128.175; helo=mail-yw1-f175.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 816C6100EB331
-	for <devel@acpica.org>; Sat, 20 Aug 2022 05:20:58 -0700 (PDT)
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-324ec5a9e97so183427137b3.7
-        for <devel@acpica.org>; Sat, 20 Aug 2022 05:20:58 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTPS id 91987100F47B8
+	for <devel@acpica.org>; Mon, 22 Aug 2022 05:25:36 -0700 (PDT)
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-32a09b909f6so288467867b3.0
+        for <devel@acpica.org>; Mon, 22 Aug 2022 05:25:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=Qd3b1djKFtVn9Y67UYq0L15YeD0LNq0Z/gjNRn27B8I=;
-        b=uWW8XhWhY0DVeB7n4kf2rFU/ZJlZ0hEswfkOikOWbMfcl8ANk26+JNNocLL4yPQYJW
-         lK73kdK0APr7xX+toXe20dsDEm1avMXMQT7E5rgpSXpTpvwkdpdcZE1Rvv/vaxzmSi99
-         yRQ/DgtHIyNs2QINz8Tpf7DmrT2g+vdBbaMJerCOUpLNmMMNhf3+zxW9sakkjLkaGqsO
-         8e5cd3HzbiuyX41UUA3ewMo8EHxVJ5CNXLpiGycAqMKRBnsOYBs2CUa7k6WEdtjcobRl
-         cx5iaJIXolgLT3QSM2n0324SEVvJMtW0CpTvKEwW3rGa0MTXBHyvPvw32SXoyesyYayu
-         3Bxw==
-X-Gm-Message-State: ACgBeo2Cy1R5D6k1bW/VUb2quWP1toFCcL4GtX9UA0ZM97KPJtkpjTgX
-	rFrNA8oz3uMpqkjwQu+Pd5ENHonBY2hUsONFUTE=
-X-Google-Smtp-Source: AA6agR4DmQaiur4npa6kKa4E6+XIw7FwRyLXK/rmmfCl7pL0N4kd1626K58VStwrCbWqW0t/QFdd/B2dLvu5BAYftS4=
-X-Received: by 2002:a25:b749:0:b0:68f:171f:96bd with SMTP id
- e9-20020a25b749000000b0068f171f96bdmr11765148ybm.137.1660998056910; Sat, 20
- Aug 2022 05:20:56 -0700 (PDT)
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc;
+        bh=QPzyf8ACF2mU/RMpnunAcyZ/cE8404mglMmv3lsANTE=;
+        b=M3U8+OqTcKS3QWNEBWx56sz1mbESwk/7pP+/8+p9Ag5L0FAHKz9zYeEWE/x3s1+ZZr
+         h2PDaxGyQXQKly/jGr4LUgC/H5DHAQOgRYPBBoXUzX9GXOTfvA7C5aBF2YcypqoA/+Cb
+         b0vTsWud8GXzNuigpFbxr9QIi9W5L6nDrUlpXHRJNweArIjIsJbCHsjuEgiKflspDjHJ
+         In0fJBiKF+BKaSsKvS7IxihOVQ2vSNGpmMZ+wzxKhOq2GJUFJokVLXT4OYcS4/W+qYPa
+         rTRHbJez3aVkDvV1tt6O85WlvWRaNJr4L5tsjDa5bzuUrvDqKmRzvKKHuDn6EX8lwU6S
+         BJpQ==
+X-Gm-Message-State: ACgBeo0U15VK+ZSsYKjiNtlefED2yiXKWdBRgyc6+nCZ+SSRsfHuUHGX
+	Knh5p3IZd6Bq7luQPiEjFRSGFajYcoxPazC0oco=
+X-Google-Smtp-Source: AA6agR6FKb/3gQ2rBol8SvxtrVsZ3rA5BQcD4+r7CcaXAVRUDz4ZYl6vdzv75ok/zEBaq5w4lRHg0CJhSRMvH9NuvOY=
+X-Received: by 2002:a25:782:0:b0:677:2e92:5154 with SMTP id
+ 124-20020a250782000000b006772e925154mr19717265ybh.153.1661171135367; Mon, 22
+ Aug 2022 05:25:35 -0700 (PDT)
 MIME-Version: 1.0
 References: <TYWP286MB2601965DDE4D251807F70415B1AF9@TYWP286MB2601.JPNP286.PROD.OUTLOOK.COM>
- <6e61d429-9020-53f3-458e-bb265d47b8f4@arm.com>
-In-Reply-To: <6e61d429-9020-53f3-458e-bb265d47b8f4@arm.com>
+ <6e61d429-9020-53f3-458e-bb265d47b8f4@arm.com> <TYWP286MB26016A8EF8040BE37DE9A27BB1719@TYWP286MB2601.JPNP286.PROD.OUTLOOK.COM>
+In-Reply-To: <TYWP286MB26016A8EF8040BE37DE9A27BB1719@TYWP286MB2601.JPNP286.PROD.OUTLOOK.COM>
 From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Sat, 20 Aug 2022 14:20:45 +0200
-Message-ID: <CAJZ5v0hzYbZR0p_O3u1d6BA05Zmkm-QvB+mjSCub6MMc6hqWJQ@mail.gmail.com>
-To: Jeremy Linton <jeremy.linton@arm.com>
-Message-ID-Hash: USQW2CR6TAQSISMPYX6ZNQM7DHWW37HK
-X-Message-ID-Hash: USQW2CR6TAQSISMPYX6ZNQM7DHWW37HK
+Date: Mon, 22 Aug 2022 14:25:24 +0200
+Message-ID: <CAJZ5v0gx+eY-wOHmVip4VTCwjco=_yeSX5t76q39dUKyB7vBiw@mail.gmail.com>
+To: Riwen Lu <luriwen@hotmail.com>
+Message-ID-Hash: 5M6IF4PKP34CQQAP4SAPHXVI44IDDMAK
+X-Message-ID-Hash: 5M6IF4PKP34CQQAP4SAPHXVI44IDDMAK
 X-MailFrom: rjwysocki@gmail.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: Riwen Lu <luriwen@hotmail.com>, "Rafael J. Wysocki" <rafael@kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Punit Agrawal <punit.agrawal@bytedance.com>, Riwen Lu <luriwen@kylinos.cn>
+CC: "Rafael J. Wysocki" <rafael@kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, Punit Agrawal <punit.agrawal@bytedance.com>, Riwen Lu <luriwen@kylinos.cn>
 X-Mailman-Version: 3.1.1
 Precedence: list
 Subject: [Devel] Re: Bug: Re: [PATCH v3] ACPI: Split out processor thermal register from ACPI PSS
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/USQW2CR6TAQSISMPYX6ZNQM7DHWW37HK/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/5M6IF4PKP34CQQAP4SAPHXVI44IDDMAK/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-On Thu, Aug 18, 2022 at 10:23 PM Jeremy Linton <jeremy.linton@arm.com> wrote:
->
-> Hi,
->
-> On 6/16/22 21:51, Riwen Lu wrote:
-> > From: Riwen Lu <luriwen@kylinos.cn>
-> >
-> > Commit 239708a3af44 ("ACPI: Split out ACPI PSS from ACPI Processor
-> > driver"), moves processor thermal registration to acpi_pss_perf_init(),
-> > which doesn't get executed if ACPI_CPU_FREQ_PSS is not enabled.
-> >
-> > As ARM64 supports P-states using CPPC, it should be possible to also
-> > support processor passive cooling even if PSS is not enabled. Split
-> > out the processor thermal cooling register from ACPI PSS to support
-> > this, and move it into a separate function in processor_thermal.c.
->
-> It appears this commit 7fdc74da940d ACPI: processor: Split out thermal
-> initialization from ACPI PSS
-
-I've just reverted the above commit, thanks for the report!
-
-> Is causing the following:
->     41.341659] ------------[ cut here ]------------
-> [   41.346280] freq_qos_remove_request() called for unknown object
-> [   41.352251] WARNING: CPU: 3 PID: 1089 at kernel/power/qos.c:597
-> freq_qos_remove_request+0xa4/0xc4
-> [   41.361152] Modules linked in: nf_nat_tftp nft_objref
-> nf_conntrack_tftp nft_fib_inet nft_fib_ipv4 nft_fib_ipv6 nft_fib
-> nft_reject_inet nf_reject_ipv4 nf_reject_ipv6 nft_reject nft_ct
-> nft_chain_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 ip_set
-> nf_tables nfnetlink qrtr bnep sunrpc vfat fat btsdio brcmfmac hci_uart
-> btqca cfg80211 bs
-> [   41.413245] CPU: 3 PID: 1089 Comm: rmmod Not tainted 6.0.0-rc1MINI+ #237
-> [   41.419951] Hardware name: Raspberry Pi Foundation Raspberry Pi 4
-> Model B/Raspberry Pi 4 Model B, BIOS EDK2-DEV 07/18/2022
-> [   41.430990] pstate: 40400005 (nZcv daif +PAN -UAO -TCO -DIT -SSBS
-> BTYPE=--)
-> [   41.437955] pc : freq_qos_remove_request+0xa4/0xc4
-> [   41.442752] lr : freq_qos_remove_request+0xa4/0xc4
-> [   41.447550] sp : ffff80000a4bbb60
-> [   41.450862] x29: ffff80000a4bbb60 x28: ffff07858798a1c0 x27:
-> 0000000000000000
-> [   41.458012] x26: 0000000000000000 x25: ffffdf6ade80f850 x24:
-> ffff07858b07d200
-> [   41.465158] x23: ffffdf6ade812cb0 x22: ffff07858b07d000 x21:
-> ffffdf6ade80f850
-> [   41.472303] x20: ffffdf6ade26b998 x19: ffff0785809ba5a8 x18:
-> ffffffffffffffff
-> [   41.479447] x17: 0000000000000000 x16: ffffdf6adcc25320 x15:
-> 0000000000000006
-> [   41.486592] x14: 0000000000000000 x13: 7463656a626f206e x12:
-> 776f6e6b6e752072
-> [   41.493736] x11: 00000000ffffdfff x10: ffffdf6ade8fd520 x9 :
-> ffffdf6adcae53ac
-> [   41.500881] x8 : 000000000002ffe8 x7 : c0000000ffffdfff x6 :
-> 0000000000000001
-> [   41.508026] x5 : 0000000000000000 x4 : ffff07863b7ac450 x3 :
-> ffff07863b7b8bb0
-> [   41.515170] x2 : 0000000000000001 x1 : ffff281b5d54f000 x0 :
-> 0000000000000033
-> [   41.522315] Call trace:
-> [   41.524759]  freq_qos_remove_request+0xa4/0xc4
-> [   41.529210]  acpi_thermal_cpufreq_exit+0x90/0xb0
-> [   41.533834]  acpi_processor_notifier+0x74/0x90
-> [   41.538281]  blocking_notifier_call_chain+0x78/0xb0
-> [   41.543161]  cpufreq_policy_free+0x154/0x1e0
-> [   41.547438]  cpufreq_remove_dev+0xc0/0x10c
-> [   41.551538]  subsys_interface_unregister+0xf0/0xfc
-> [   41.556335]  cpufreq_unregister_driver+0x54/0x120
-> [   41.561043]  cppc_cpufreq_exit+0x28/0xd2c [cppc_cpufreq]
-> [   41.566370]  __do_sys_delete_module.constprop.0+0x150/0x2bc
-> [   41.571947]  __arm64_sys_delete_module+0x20/0x30
-> [   41.576567]  invoke_syscall+0x50/0x120
-> [   41.580318]  el0_svc_common.constprop.0+0x4c/0xf4
-> [   41.585023]  do_el0_svc+0x38/0x4c
-> [   41.588338]  el0_svc+0x34/0xdc
-> [   41.591394]  el0t_64_sync_handler+0x11c/0x150
-> [   41.595752]  el0t_64_sync+0x190/0x194
-> [   41.599416] ---[ end trace 0000000000000000 ]---
->
-> When the cppc_cpufreq driver is rmmod'ed from a running machine that has
-> both CPPC and a thermal zone. I reverted and bisected it, and in both
-> cases the splat above goes away.
->
->
-> Thanks,
->
-> >
-> > Signed-off-by: Riwen Lu <luriwen@kylinos.cn>
-> >
-> > ---
-> > v1 -> v2:
-> >   - Reword the commit message.
-> >   - Update the signature of acpi_pss_perf_init() to void, and remove the
-> >     acpi_device parameter.
-> >   - Move the processor thermal register/remove into a separate function in
-> >     processor_thermal.c.
-> >
-> > v2 -> v3:
-> >   - Remove the "pr" NULL check in processor thermal init/exit fuction.
-> >   - Pass the acpi_device into processor thermal init/exit, and remove the
-> >     convert in it.
-> > ---
-> >   drivers/acpi/Kconfig             |  2 +-
-> >   drivers/acpi/Makefile            |  5 +--
-> >   drivers/acpi/processor_driver.c  | 72 ++++----------------------------
-> >   drivers/acpi/processor_thermal.c | 54 ++++++++++++++++++++++++
-> >   include/acpi/processor.h         |  8 +++-
-> >   5 files changed, 71 insertions(+), 70 deletions(-)
-> >
-> > diff --git a/drivers/acpi/Kconfig b/drivers/acpi/Kconfig
-> > index 1e34f846508f..2457ade3f82d 100644
-> > --- a/drivers/acpi/Kconfig
-> > +++ b/drivers/acpi/Kconfig
-> > @@ -255,7 +255,6 @@ config ACPI_DOCK
-> >
-> >   config ACPI_CPU_FREQ_PSS
-> >       bool
-> > -     select THERMAL
-> >
-> >   config ACPI_PROCESSOR_CSTATE
-> >       def_bool y
-> > @@ -287,6 +286,7 @@ config ACPI_PROCESSOR
-> >       depends on X86 || IA64 || ARM64 || LOONGARCH
-> >       select ACPI_PROCESSOR_IDLE
-> >       select ACPI_CPU_FREQ_PSS if X86 || IA64 || LOONGARCH
-> > +     select THERMAL
-> >       default y
-> >       help
-> >         This driver adds support for the ACPI Processor package. It is required
-> > diff --git a/drivers/acpi/Makefile b/drivers/acpi/Makefile
-> > index b5a8d3e00a52..0002eecbf870 100644
-> > --- a/drivers/acpi/Makefile
-> > +++ b/drivers/acpi/Makefile
-> > @@ -109,10 +109,9 @@ obj-$(CONFIG_ACPI_PPTT)  += pptt.o
-> >   obj-$(CONFIG_ACPI_PFRUT)    += pfr_update.o pfr_telemetry.o
-> >
-> >   # processor has its own "processor." module_param namespace
-> > -processor-y                  := processor_driver.o
-> > +processor-y                  := processor_driver.o processor_thermal.o
-> >   processor-$(CONFIG_ACPI_PROCESSOR_IDLE) += processor_idle.o
-> > -processor-$(CONFIG_ACPI_CPU_FREQ_PSS)        += processor_throttling.o       \
-> > -     processor_thermal.o
-> > +processor-$(CONFIG_ACPI_CPU_FREQ_PSS)        += processor_throttling.o
-> >   processor-$(CONFIG_CPU_FREQ)        += processor_perflib.o
-> >
-> >   obj-$(CONFIG_ACPI_PROCESSOR_AGGREGATOR) += acpi_pad.o
-> > diff --git a/drivers/acpi/processor_driver.c b/drivers/acpi/processor_driver.c
-> > index 368a9edefd0c..1278969eec1f 100644
-> > --- a/drivers/acpi/processor_driver.c
-> > +++ b/drivers/acpi/processor_driver.c
-> > @@ -139,75 +139,17 @@ static int acpi_soft_cpu_dead(unsigned int cpu)
-> >   }
-> >
-> >   #ifdef CONFIG_ACPI_CPU_FREQ_PSS
-> > -static int acpi_pss_perf_init(struct acpi_processor *pr,
-> > -             struct acpi_device *device)
-> > +static void acpi_pss_perf_init(struct acpi_processor *pr)
-> >   {
-> > -     int result = 0;
-> > -
-> >       acpi_processor_ppc_has_changed(pr, 0);
-> >
-> >       acpi_processor_get_throttling_info(pr);
-> >
-> >       if (pr->flags.throttling)
-> >               pr->flags.limit = 1;
-> > -
-> > -     pr->cdev = thermal_cooling_device_register("Processor", device,
-> > -                                                &processor_cooling_ops);
-> > -     if (IS_ERR(pr->cdev)) {
-> > -             result = PTR_ERR(pr->cdev);
-> > -             return result;
-> > -     }
-> > -
-> > -     dev_dbg(&device->dev, "registered as cooling_device%d\n",
-> > -             pr->cdev->id);
-> > -
-> > -     result = sysfs_create_link(&device->dev.kobj,
-> > -                                &pr->cdev->device.kobj,
-> > -                                "thermal_cooling");
-> > -     if (result) {
-> > -             dev_err(&device->dev,
-> > -                     "Failed to create sysfs link 'thermal_cooling'\n");
-> > -             goto err_thermal_unregister;
-> > -     }
-> > -
-> > -     result = sysfs_create_link(&pr->cdev->device.kobj,
-> > -                                &device->dev.kobj,
-> > -                                "device");
-> > -     if (result) {
-> > -             dev_err(&pr->cdev->device,
-> > -                     "Failed to create sysfs link 'device'\n");
-> > -             goto err_remove_sysfs_thermal;
-> > -     }
-> > -
-> > -     return 0;
-> > -
-> > - err_remove_sysfs_thermal:
-> > -     sysfs_remove_link(&device->dev.kobj, "thermal_cooling");
-> > - err_thermal_unregister:
-> > -     thermal_cooling_device_unregister(pr->cdev);
-> > -
-> > -     return result;
-> > -}
-> > -
-> > -static void acpi_pss_perf_exit(struct acpi_processor *pr,
-> > -             struct acpi_device *device)
-> > -{
-> > -     if (pr->cdev) {
-> > -             sysfs_remove_link(&device->dev.kobj, "thermal_cooling");
-> > -             sysfs_remove_link(&pr->cdev->device.kobj, "device");
-> > -             thermal_cooling_device_unregister(pr->cdev);
-> > -             pr->cdev = NULL;
-> > -     }
-> >   }
-> >   #else
-> > -static inline int acpi_pss_perf_init(struct acpi_processor *pr,
-> > -             struct acpi_device *device)
-> > -{
-> > -     return 0;
-> > -}
-> > -
-> > -static inline void acpi_pss_perf_exit(struct acpi_processor *pr,
-> > -             struct acpi_device *device) {}
-> > +static inline void acpi_pss_perf_init(struct acpi_processor *pr) {}
-> >   #endif /* CONFIG_ACPI_CPU_FREQ_PSS */
-> >
-> >   static int __acpi_processor_start(struct acpi_device *device)
-> > @@ -229,7 +171,9 @@ static int __acpi_processor_start(struct acpi_device *device)
-> >       if (!cpuidle_get_driver() || cpuidle_get_driver() == &acpi_idle_driver)
-> >               acpi_processor_power_init(pr);
-> >
-> > -     result = acpi_pss_perf_init(pr, device);
-> > +     acpi_pss_perf_init(pr);
-> > +
-> > +     result = acpi_processor_thermal_init(pr, device);
-> >       if (result)
-> >               goto err_power_exit;
-> >
-> > @@ -239,7 +183,7 @@ static int __acpi_processor_start(struct acpi_device *device)
-> >               return 0;
-> >
-> >       result = -ENODEV;
-> > -     acpi_pss_perf_exit(pr, device);
-> > +     acpi_processor_thermal_exit(pr, device);
-> >
-> >   err_power_exit:
-> >       acpi_processor_power_exit(pr);
-> > @@ -277,10 +221,10 @@ static int acpi_processor_stop(struct device *dev)
-> >               return 0;
-> >       acpi_processor_power_exit(pr);
-> >
-> > -     acpi_pss_perf_exit(pr, device);
-> > -
-> >       acpi_cppc_processor_exit(pr);
-> >
-> > +     acpi_processor_thermal_exit(pr, device);
-> > +
-> >       return 0;
-> >   }
-> >
-> > diff --git a/drivers/acpi/processor_thermal.c b/drivers/acpi/processor_thermal.c
-> > index d8b2dfcd59b5..db6ac540e924 100644
-> > --- a/drivers/acpi/processor_thermal.c
-> > +++ b/drivers/acpi/processor_thermal.c
-> > @@ -266,3 +266,57 @@ const struct thermal_cooling_device_ops processor_cooling_ops = {
-> >       .get_cur_state = processor_get_cur_state,
-> >       .set_cur_state = processor_set_cur_state,
-> >   };
-> > +
-> > +int acpi_processor_thermal_init(struct acpi_processor *pr,
-> > +                             struct acpi_device *device)
-> > +{
-> > +     int result = 0;
-> > +
-> > +     pr->cdev = thermal_cooling_device_register("Processor", device,
-> > +                                                &processor_cooling_ops);
-> > +     if (IS_ERR(pr->cdev)) {
-> > +             result = PTR_ERR(pr->cdev);
-> > +             return result;
-> > +     }
-> > +
-> > +     dev_dbg(&device->dev, "registered as cooling_device%d\n",
-> > +             pr->cdev->id);
-> > +
-> > +     result = sysfs_create_link(&device->dev.kobj,
-> > +                                &pr->cdev->device.kobj,
-> > +                                "thermal_cooling");
-> > +     if (result) {
-> > +             dev_err(&device->dev,
-> > +                     "Failed to create sysfs link 'thermal_cooling'\n");
-> > +             goto err_thermal_unregister;
-> > +     }
-> > +
-> > +     result = sysfs_create_link(&pr->cdev->device.kobj,
-> > +                                &device->dev.kobj,
-> > +                                "device");
-> > +     if (result) {
-> > +             dev_err(&pr->cdev->device,
-> > +                     "Failed to create sysfs link 'device'\n");
-> > +             goto err_remove_sysfs_thermal;
-> > +     }
-> > +
-> > +     return 0;
-> > +
-> > +err_remove_sysfs_thermal:
-> > +     sysfs_remove_link(&device->dev.kobj, "thermal_cooling");
-> > +err_thermal_unregister:
-> > +     thermal_cooling_device_unregister(pr->cdev);
-> > +
-> > +     return result;
-> > +}
-> > +
-> > +void acpi_processor_thermal_exit(struct acpi_processor *pr,
-> > +                              struct acpi_device *device)
-> > +{
-> > +     if (pr->cdev) {
-> > +             sysfs_remove_link(&device->dev.kobj, "thermal_cooling");
-> > +             sysfs_remove_link(&pr->cdev->device.kobj, "device");
-> > +             thermal_cooling_device_unregister(pr->cdev);
-> > +             pr->cdev = NULL;
-> > +     }
-> > +}
-> > diff --git a/include/acpi/processor.h b/include/acpi/processor.h
-> > index 194027371928..ba1e3ed98d3d 100644
-> > --- a/include/acpi/processor.h
-> > +++ b/include/acpi/processor.h
-> > @@ -442,8 +442,12 @@ static inline int acpi_processor_hotplug(struct acpi_processor *pr)
-> >
-> >   /* in processor_thermal.c */
-> >   int acpi_processor_get_limit_info(struct acpi_processor *pr);
-> > +int acpi_processor_thermal_init(struct acpi_processor *pr,
-> > +                             struct acpi_device *device);
-> > +void acpi_processor_thermal_exit(struct acpi_processor *pr,
-> > +                              struct acpi_device *device);
-> >   extern const struct thermal_cooling_device_ops processor_cooling_ops;
-> > -#if defined(CONFIG_ACPI_CPU_FREQ_PSS) & defined(CONFIG_CPU_FREQ)
-> > +#ifdef CONFIG_CPU_FREQ
-> >   void acpi_thermal_cpufreq_init(struct cpufreq_policy *policy);
-> >   void acpi_thermal_cpufreq_exit(struct cpufreq_policy *policy);
-> >   #else
-> > @@ -455,6 +459,6 @@ static inline void acpi_thermal_cpufreq_exit(struct cpufreq_policy *policy)
-> >   {
-> >       return;
-> >   }
-> > -#endif       /* CONFIG_ACPI_CPU_FREQ_PSS */
-> > +#endif       /* CONFIG_CPU_FREQ */
-> >
-> >   #endif
->
-_______________________________________________
-Devel mailing list -- devel@acpica.org
-To unsubscribe send an email to devel-leave@acpica.org
-%(web_page_url)slistinfo%(cgiext)s/%(_internal_name)s
+T24gTW9uLCBBdWcgMjIsIDIwMjIgYXQgMTA6MTkgQU0gUml3ZW4gTHUgPGx1cml3ZW5AaG90bWFp
+bC5jb20+IHdyb3RlOg0KPg0KPiDlnKggMjAyMi84LzE5IDA0OjIzLCBKZXJlbXkgTGludG9uIOWG
+memBkzoNCj4gPiBIaSwNCj4gPg0KPiA+IE9uIDYvMTYvMjIgMjE6NTEsIFJpd2VuIEx1IHdyb3Rl
+Og0KPiA+PiBGcm9tOiBSaXdlbiBMdSA8bHVyaXdlbkBreWxpbm9zLmNuPg0KPiA+Pg0KPiA+PiBD
+b21taXQgMjM5NzA4YTNhZjQ0ICgiQUNQSTogU3BsaXQgb3V0IEFDUEkgUFNTIGZyb20gQUNQSSBQ
+cm9jZXNzb3INCj4gPj4gZHJpdmVyIiksIG1vdmVzIHByb2Nlc3NvciB0aGVybWFsIHJlZ2lzdHJh
+dGlvbiB0byBhY3BpX3Bzc19wZXJmX2luaXQoKSwNCj4gPj4gd2hpY2ggZG9lc24ndCBnZXQgZXhl
+Y3V0ZWQgaWYgQUNQSV9DUFVfRlJFUV9QU1MgaXMgbm90IGVuYWJsZWQuDQo+ID4+DQo+ID4+IEFz
+IEFSTTY0IHN1cHBvcnRzIFAtc3RhdGVzIHVzaW5nIENQUEMsIGl0IHNob3VsZCBiZSBwb3NzaWJs
+ZSB0byBhbHNvDQo+ID4+IHN1cHBvcnQgcHJvY2Vzc29yIHBhc3NpdmUgY29vbGluZyBldmVuIGlm
+IFBTUyBpcyBub3QgZW5hYmxlZC4gU3BsaXQNCj4gPj4gb3V0IHRoZSBwcm9jZXNzb3IgdGhlcm1h
+bCBjb29saW5nIHJlZ2lzdGVyIGZyb20gQUNQSSBQU1MgdG8gc3VwcG9ydA0KPiA+PiB0aGlzLCBh
+bmQgbW92ZSBpdCBpbnRvIGEgc2VwYXJhdGUgZnVuY3Rpb24gaW4gcHJvY2Vzc29yX3RoZXJtYWwu
+Yy4NCj4gPg0KPiA+IEl0IGFwcGVhcnMgdGhpcyBjb21taXQgN2ZkYzc0ZGE5NDBkIEFDUEk6IHBy
+b2Nlc3NvcjogU3BsaXQgb3V0IHRoZXJtYWwNCj4gPiBpbml0aWFsaXphdGlvbiBmcm9tIEFDUEkg
+UFNTDQo+ID4NCj4gPiBJcyBjYXVzaW5nIHRoZSBmb2xsb3dpbmc6DQo+ID4gICAgIDQxLjM0MTY1
+OV0gLS0tLS0tLS0tLS0tWyBjdXQgaGVyZSBdLS0tLS0tLS0tLS0tDQo+ID4gWyAgIDQxLjM0NjI4
+MF0gZnJlcV9xb3NfcmVtb3ZlX3JlcXVlc3QoKSBjYWxsZWQgZm9yIHVua25vd24gb2JqZWN0DQo+
+ID4gWyAgIDQxLjM1MjI1MV0gV0FSTklORzogQ1BVOiAzIFBJRDogMTA4OSBhdCBrZXJuZWwvcG93
+ZXIvcW9zLmM6NTk3DQo+ID4gZnJlcV9xb3NfcmVtb3ZlX3JlcXVlc3QrMHhhNC8weGM0DQo+ID4g
+WyAgIDQxLjM2MTE1Ml0gTW9kdWxlcyBsaW5rZWQgaW46IG5mX25hdF90ZnRwIG5mdF9vYmpyZWYN
+Cj4gPiBuZl9jb25udHJhY2tfdGZ0cCBuZnRfZmliX2luZXQgbmZ0X2ZpYl9pcHY0IG5mdF9maWJf
+aXB2NiBuZnRfZmliDQo+ID4gbmZ0X3JlamVjdF9pbmV0IG5mX3JlamVjdF9pcHY0IG5mX3JlamVj
+dF9pcHY2IG5mdF9yZWplY3QgbmZ0X2N0DQo+ID4gbmZ0X2NoYWluX25hdCBuZl9uYXQgbmZfY29u
+bnRyYWNrIG5mX2RlZnJhZ19pcHY2IG5mX2RlZnJhZ19pcHY0IGlwX3NldA0KPiA+IG5mX3RhYmxl
+cyBuZm5ldGxpbmsgcXJ0ciBibmVwIHN1bnJwYyB2ZmF0IGZhdCBidHNkaW8gYnJjbWZtYWMgaGNp
+X3VhcnQNCj4gPiBidHFjYSBjZmc4MDIxMSBicw0KPiA+IFsgICA0MS40MTMyNDVdIENQVTogMyBQ
+SUQ6IDEwODkgQ29tbTogcm1tb2QgTm90IHRhaW50ZWQgNi4wLjAtcmMxTUlOSSsgIzIzNw0KPiA+
+IFsgICA0MS40MTk5NTFdIEhhcmR3YXJlIG5hbWU6IFJhc3BiZXJyeSBQaSBGb3VuZGF0aW9uIFJh
+c3BiZXJyeSBQaSA0DQo+ID4gTW9kZWwgQi9SYXNwYmVycnkgUGkgNCBNb2RlbCBCLCBCSU9TIEVE
+SzItREVWIDA3LzE4LzIwMjINCj4gPiBbICAgNDEuNDMwOTkwXSBwc3RhdGU6IDQwNDAwMDA1IChu
+WmN2IGRhaWYgK1BBTiAtVUFPIC1UQ08gLURJVCAtU1NCUw0KPiA+IEJUWVBFPS0tKQ0KPiA+IFsg
+ICA0MS40Mzc5NTVdIHBjIDogZnJlcV9xb3NfcmVtb3ZlX3JlcXVlc3QrMHhhNC8weGM0DQo+ID4g
+WyAgIDQxLjQ0Mjc1Ml0gbHIgOiBmcmVxX3Fvc19yZW1vdmVfcmVxdWVzdCsweGE0LzB4YzQNCj4g
+PiBbICAgNDEuNDQ3NTUwXSBzcCA6IGZmZmY4MDAwMGE0YmJiNjANCj4gPiBbICAgNDEuNDUwODYy
+XSB4Mjk6IGZmZmY4MDAwMGE0YmJiNjAgeDI4OiBmZmZmMDc4NTg3OThhMWMwIHgyNzoNCj4gPiAw
+MDAwMDAwMDAwMDAwMDAwDQo+ID4gWyAgIDQxLjQ1ODAxMl0geDI2OiAwMDAwMDAwMDAwMDAwMDAw
+IHgyNTogZmZmZmRmNmFkZTgwZjg1MCB4MjQ6DQo+ID4gZmZmZjA3ODU4YjA3ZDIwMA0KPiA+IFsg
+ICA0MS40NjUxNThdIHgyMzogZmZmZmRmNmFkZTgxMmNiMCB4MjI6IGZmZmYwNzg1OGIwN2QwMDAg
+eDIxOg0KPiA+IGZmZmZkZjZhZGU4MGY4NTANCj4gPiBbICAgNDEuNDcyMzAzXSB4MjA6IGZmZmZk
+ZjZhZGUyNmI5OTggeDE5OiBmZmZmMDc4NTgwOWJhNWE4IHgxODoNCj4gPiBmZmZmZmZmZmZmZmZm
+ZmZmDQo+ID4gWyAgIDQxLjQ3OTQ0N10geDE3OiAwMDAwMDAwMDAwMDAwMDAwIHgxNjogZmZmZmRm
+NmFkY2MyNTMyMCB4MTU6DQo+ID4gMDAwMDAwMDAwMDAwMDAwNg0KPiA+IFsgICA0MS40ODY1OTJd
+IHgxNDogMDAwMDAwMDAwMDAwMDAwMCB4MTM6IDc0NjM2NTZhNjI2ZjIwNmUgeDEyOg0KPiA+IDc3
+NmY2ZTZiNmU3NTIwNzINCj4gPiBbICAgNDEuNDkzNzM2XSB4MTE6IDAwMDAwMDAwZmZmZmRmZmYg
+eDEwOiBmZmZmZGY2YWRlOGZkNTIwIHg5IDoNCj4gPiBmZmZmZGY2YWRjYWU1M2FjDQo+ID4gWyAg
+IDQxLjUwMDg4MV0geDggOiAwMDAwMDAwMDAwMDJmZmU4IHg3IDogYzAwMDAwMDBmZmZmZGZmZiB4
+NiA6DQo+ID4gMDAwMDAwMDAwMDAwMDAwMQ0KPiA+IFsgICA0MS41MDgwMjZdIHg1IDogMDAwMDAw
+MDAwMDAwMDAwMCB4NCA6IGZmZmYwNzg2M2I3YWM0NTAgeDMgOg0KPiA+IGZmZmYwNzg2M2I3Yjhi
+YjANCj4gPiBbICAgNDEuNTE1MTcwXSB4MiA6IDAwMDAwMDAwMDAwMDAwMDEgeDEgOiBmZmZmMjgx
+YjVkNTRmMDAwIHgwIDoNCj4gPiAwMDAwMDAwMDAwMDAwMDMzDQo+ID4gWyAgIDQxLjUyMjMxNV0g
+Q2FsbCB0cmFjZToNCj4gPiBbICAgNDEuNTI0NzU5XSAgZnJlcV9xb3NfcmVtb3ZlX3JlcXVlc3Qr
+MHhhNC8weGM0DQo+ID4gWyAgIDQxLjUyOTIxMF0gIGFjcGlfdGhlcm1hbF9jcHVmcmVxX2V4aXQr
+MHg5MC8weGIwDQo+ID4gWyAgIDQxLjUzMzgzNF0gIGFjcGlfcHJvY2Vzc29yX25vdGlmaWVyKzB4
+NzQvMHg5MA0KPiA+IFsgICA0MS41MzgyODFdICBibG9ja2luZ19ub3RpZmllcl9jYWxsX2NoYWlu
+KzB4NzgvMHhiMA0KPiA+IFsgICA0MS41NDMxNjFdICBjcHVmcmVxX3BvbGljeV9mcmVlKzB4MTU0
+LzB4MWUwDQo+ID4gWyAgIDQxLjU0NzQzOF0gIGNwdWZyZXFfcmVtb3ZlX2RldisweGMwLzB4MTBj
+DQo+ID4gWyAgIDQxLjU1MTUzOF0gIHN1YnN5c19pbnRlcmZhY2VfdW5yZWdpc3RlcisweGYwLzB4
+ZmMNCj4gPiBbICAgNDEuNTU2MzM1XSAgY3B1ZnJlcV91bnJlZ2lzdGVyX2RyaXZlcisweDU0LzB4
+MTIwDQo+ID4gWyAgIDQxLjU2MTA0M10gIGNwcGNfY3B1ZnJlcV9leGl0KzB4MjgvMHhkMmMgW2Nw
+cGNfY3B1ZnJlcV0NCj4gPiBbICAgNDEuNTY2MzcwXSAgX19kb19zeXNfZGVsZXRlX21vZHVsZS5j
+b25zdHByb3AuMCsweDE1MC8weDJiYw0KPiA+IFsgICA0MS41NzE5NDddICBfX2FybTY0X3N5c19k
+ZWxldGVfbW9kdWxlKzB4MjAvMHgzMA0KPiA+IFsgICA0MS41NzY1NjddICBpbnZva2Vfc3lzY2Fs
+bCsweDUwLzB4MTIwDQo+ID4gWyAgIDQxLjU4MDMxOF0gIGVsMF9zdmNfY29tbW9uLmNvbnN0cHJv
+cC4wKzB4NGMvMHhmNA0KPiA+IFsgICA0MS41ODUwMjNdICBkb19lbDBfc3ZjKzB4MzgvMHg0Yw0K
+PiA+IFsgICA0MS41ODgzMzhdICBlbDBfc3ZjKzB4MzQvMHhkYw0KPiA+IFsgICA0MS41OTEzOTRd
+ICBlbDB0XzY0X3N5bmNfaGFuZGxlcisweDExYy8weDE1MA0KPiA+IFsgICA0MS41OTU3NTJdICBl
+bDB0XzY0X3N5bmMrMHgxOTAvMHgxOTQNCj4gPiBbICAgNDEuNTk5NDE2XSAtLS1bIGVuZCB0cmFj
+ZSAwMDAwMDAwMDAwMDAwMDAwIF0tLS0NCj4gPg0KPiA+IFdoZW4gdGhlIGNwcGNfY3B1ZnJlcSBk
+cml2ZXIgaXMgcm1tb2QnZWQgZnJvbSBhIHJ1bm5pbmcgbWFjaGluZSB0aGF0IGhhcw0KPiA+IGJv
+dGggQ1BQQyBhbmQgYSB0aGVybWFsIHpvbmUuIEkgcmV2ZXJ0ZWQgYW5kIGJpc2VjdGVkIGl0LCBh
+bmQgaW4gYm90aA0KPiA+IGNhc2VzIHRoZSBzcGxhdCBhYm92ZSBnb2VzIGF3YXkuDQo+DQo+IERp
+ZCB5b3UgZW5hYmxlIHRoZSBvcHRpb24gQUNQSV9DUFVfRlJFUV9QU1MgPyBXaGVuIEkgcmV2ZXJ0
+ZWQgdGhlIGNvbW1pdA0KPiA3ZmRjNzRkYTk0MGQgYW5kIGVuYWJsZSBBQ1BJX0NQVV9GUkVRX1BT
+UywgdGhlIHdhcm5pbmcgYWJvdmUgYWxzbyBhcHBlYXJzLg0KDQpBRkFJQ1MsIHRoaXMgb3B0aW9u
+IGlzIGVuYWJsZWQgYXV0b21hdGljYWxseSBvbiBhbGwgYXJjaGl0ZWN0dXJlcw0Kb3RoZXIgdGhh
+biBBUk02NCB3aGVuIHRoZSBBQ1BJIHByb2Nlc3NvciBkcml2ZXIgaXMgZW5hYmxlZCwgc28gSSdt
+IG5vdA0Kc3VyZSB3aGF0IHlvdSBtZWFuLgpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fXwpEZXZlbCBtYWlsaW5nIGxpc3QgLS0gZGV2ZWxAYWNwaWNhLm9yZwpU
+byB1bnN1YnNjcmliZSBzZW5kIGFuIGVtYWlsIHRvIGRldmVsLWxlYXZlQGFjcGljYS5vcmcKJSh3
+ZWJfcGFnZV91cmwpc2xpc3RpbmZvJShjZ2lleHQpcy8lKF9pbnRlcm5hbF9uYW1lKXM=
