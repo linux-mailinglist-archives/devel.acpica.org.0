@@ -1,62 +1,55 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 503305A09B6
-	for <lists+devel-acpica@lfdr.de>; Thu, 25 Aug 2022 09:16:38 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [198.145.21.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7CB9F5A0EEF
+	for <lists+devel-acpica@lfdr.de>; Thu, 25 Aug 2022 13:22:59 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id A798F100EB32A;
-	Thu, 25 Aug 2022 00:16:34 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=134.134.136.31; helo=mga06.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	by ml01.01.org (Postfix) with ESMTP id E607C100E5DB4;
+	Thu, 25 Aug 2022 04:22:56 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.128.171; helo=mail-yw1-f171.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 3C22D100EB85C
-	for <devel@acpica.org>; Thu, 25 Aug 2022 00:16:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1661411792; x=1692947792;
-  h=date:from:to:cc:subject:message-id:mime-version:
-   content-transfer-encoding;
-  bh=Nwp6Cji46dnwi4Sj4t8zoF/G6jVn4T/F1m727vVwp3g=;
-  b=TZajrgNfOhhASr6eOMOuWUefuiz1v3ks2n89NZr1o0OT/KJSNfUyIcwh
-   c7yjZjIY/oiBygXYmC9g5E44ld9vTjFQNDkKePtqCx/yGI+fQqcCye5/0
-   7qcxuqM9s2twXU2cENfGZYoaVX/eGjr/OOKgTV1Q+8GstbDge70T/M7gK
-   Xew6XfUty5waYmkFu/OBG0WlZxcmMll4arRCa/Pb6ygifP4ty0YuA8OtF
-   FxBV9kKqIzOKICuClsMPBmxnlSxR2vvffABZJnWxPmpEk5cFoSqrXty24
-   ljuS5oRt/UhrINQCv4aR6Ec/lSv6s4SPYCPG3L26YRZ9f30hJo3/w/DSW
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10449"; a="355892447"
-X-IronPort-AV: E=Sophos;i="5.93,262,1654585200";
-   d="scan'208";a="355892447"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Aug 2022 00:16:31 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.93,262,1654585200";
-   d="scan'208";a="938218217"
-Received: from lkp-server02.sh.intel.com (HELO 34e741d32628) ([10.239.97.151])
-  by fmsmga005.fm.intel.com with ESMTP; 25 Aug 2022 00:16:30 -0700
-Received: from kbuild by 34e741d32628 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1oR76L-0001rq-2O;
-	Thu, 25 Aug 2022 07:16:29 +0000
-Date: Thu, 25 Aug 2022 15:15:47 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <630721a3.Ckrtddp0YFN/Y6zl%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTPS id 50662100EB341
+	for <devel@acpica.org>; Thu, 25 Aug 2022 04:22:54 -0700 (PDT)
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-32a09b909f6so532616767b3.0
+        for <devel@acpica.org>; Thu, 25 Aug 2022 04:22:54 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=zBAuYd6aZRMYP844dVDfOezCZkLQikm7pyO5BZEXKKI=;
+        b=odDotds2hySO9Carw2Lez6w78waiprtecYR3L4vHflY7AV7sRnNuLxbjqu+qVBNeLB
+         FyKVsa3ahU3dnTACZcqcECvkin/60J4kFtiKv0RdCo4YbEAxxeDPr8N/uMeAqTD3T2IX
+         MOAhWJL92412Le3UsrQTj/FuudbLa4KiPiTW89EztUBpOZe16BgyRIOCN9JBudx4QKCZ
+         dwOGWxkWubKwktbOs5r5EAXIjiKq3fGMqeWN5t7qolafBYX/fCZCWc+2Ho5k7K/6/9YI
+         RLucJVNBSWk2Pajg1N7yVLKzB9aQAJfu7H2MMhn5VVSHeR4UmqZzvuPeArWgAbSUWUPN
+         bM4g==
+X-Gm-Message-State: ACgBeo3xrU56yZZjd4UK0Pl+EoBO6PCHIpXg9JcmdOLnm14nnPLJPJrZ
+	9CSoJJIsWOsXe9SHUod4lvN6DddNu1IlswPw9VE=
+X-Google-Smtp-Source: AA6agR6RKiwnjg0hA/QPVGn7rIdPTz+QbBVSW+tdchz15JNQtcfsiMul8ktR7HFomkZ7s43z4KN+FNjEXqFI7U1eWds=
+X-Received: by 2002:a25:8d84:0:b0:695:836a:fcaf with SMTP id
+ o4-20020a258d84000000b00695836afcafmr2755715ybl.633.1661426572692; Thu, 25
+ Aug 2022 04:22:52 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID-Hash: CDUBFPEOTIYP2FSFAWI2QG4TS4R6MCET
-X-Message-ID-Hash: CDUBFPEOTIYP2FSFAWI2QG4TS4R6MCET
-X-MailFrom: lkp@intel.com
+References: <20220825090347.30555-1-junming@nfschina.com>
+In-Reply-To: <20220825090347.30555-1-junming@nfschina.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Thu, 25 Aug 2022 13:22:41 +0200
+Message-ID: <CAJZ5v0jVpCiwscgVQqS3yEwGaHUCPzR9pNDjt6qY6U4jJubt_A@mail.gmail.com>
+To: shijm <junming@nfschina.com>
+Message-ID-Hash: WPWLDQGHNIKCDVZIDCY4AORGPBRSF5SZ
+X-Message-ID-Hash: WPWLDQGHNIKCDVZIDCY4AORGPBRSF5SZ
+X-MailFrom: rjwysocki@gmail.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+CC: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [rafael-pm:bleeding-edge] BUILD SUCCESS 47c90d37e626efa4e7925e8e306993b9cbdada30
+Subject: [Devel] Re: [PATCH] tools: Delete the initialization value
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/CDUBFPEOTIYP2FSFAWI2QG4TS4R6MCET/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/WPWLDQGHNIKCDVZIDCY4AORGPBRSF5SZ/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -65,88 +58,39 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-branch HEAD: 47c90d37e626efa4e7925e8e306993b9cbdada30  Merge branch 'acpi-dev' into bleeding-edge
+On Thu, Aug 25, 2022 at 11:04 AM shijm <junming@nfschina.com> wrote:
+>
+> From: Shi junming <junming@nfschina.com>
+>
+> From the perspective of commpier,delete the initialization value
 
-elapsed time: 722m
+I'm not sure what this means.
 
-configs tested: 64
-configs skipped: 2
+The initialization is unnecessary, because the variable in question is
+always assigned a new value before reading it.  Is that what you
+wanted to say?
 
-The following configs have been built successfully.
-More configs may be tested in the coming days.
-
-gcc tested configs:
-um                             i386_defconfig
-um                           x86_64_defconfig
-x86_64                              defconfig
-arc                              allyesconfig
-alpha                            allyesconfig
-i386                                defconfig
-i386                          randconfig-a001
-arc                  randconfig-r043-20220824
-x86_64                               rhel-8.3
-x86_64                           allyesconfig
-i386                          randconfig-a003
-i386                          randconfig-a014
-riscv                randconfig-r042-20220824
-x86_64                        randconfig-a013
-x86_64                        randconfig-a011
-m68k                             allmodconfig
-powerpc                           allnoconfig
-m68k                             allyesconfig
-i386                          randconfig-a005
-s390                 randconfig-r044-20220824
-i386                          randconfig-a012
-x86_64                        randconfig-a015
-i386                          randconfig-a016
-arm                                 defconfig
-x86_64                        randconfig-a004
-x86_64                        randconfig-a002
-x86_64                        randconfig-a006
-arm                              allyesconfig
-arm64                            allyesconfig
-i386                             allyesconfig
-sh                               allmodconfig
-mips                             allyesconfig
-powerpc                          allmodconfig
-x86_64                          rhel-8.3-func
-x86_64                         rhel-8.3-kunit
-x86_64                           rhel-8.3-kvm
-x86_64                           rhel-8.3-syz
-x86_64                    rhel-8.3-kselftests
-loongarch                         allnoconfig
-arc                                 defconfig
-loongarch                           defconfig
-alpha                               defconfig
-s390                                defconfig
-s390                             allmodconfig
-s390                             allyesconfig
-ia64                             allmodconfig
-arc                               allnoconfig
-alpha                             allnoconfig
-riscv                             allnoconfig
-csky                              allnoconfig
-
-clang tested configs:
-i386                          randconfig-a013
-hexagon              randconfig-r041-20220824
-i386                          randconfig-a011
-x86_64                        randconfig-a012
-i386                          randconfig-a002
-i386                          randconfig-a006
-i386                          randconfig-a004
-hexagon              randconfig-r045-20220824
-x86_64                        randconfig-a014
-x86_64                        randconfig-a016
-i386                          randconfig-a015
-x86_64                        randconfig-a005
-x86_64                        randconfig-a001
-x86_64                        randconfig-a003
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+> Signed-off-by: Shi junming <junming@nfschina.com>
+> ---
+>  tools/power/acpi/tools/pfrut/pfrut.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/tools/power/acpi/tools/pfrut/pfrut.c b/tools/power/acpi/tools/pfrut/pfrut.c
+> index d79c335594b2..52aa0351533c 100644
+> --- a/tools/power/acpi/tools/pfrut/pfrut.c
+> +++ b/tools/power/acpi/tools/pfrut/pfrut.c
+> @@ -190,7 +190,7 @@ int main(int argc, char *argv[])
+>         void *addr_map_capsule;
+>         struct stat st;
+>         char *log_buf;
+> -       int ret = 0;
+> +       int ret;
+>
+>         if (getuid() != 0) {
+>                 printf("Please run the tool as root - Exiting.\n");
+> --
+> 2.18.2
+>
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
