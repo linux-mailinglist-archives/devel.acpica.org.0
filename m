@@ -1,164 +1,182 @@
 Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
-Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 50A655B0E1B
-	for <lists+devel-acpica@lfdr.de>; Wed,  7 Sep 2022 22:27:03 +0200 (CEST)
+Received: from ml01.01.org (ml01.01.org [198.145.21.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 199055B2603
+	for <lists+devel-acpica@lfdr.de>; Thu,  8 Sep 2022 20:42:19 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 540A2100F4868;
-	Wed,  7 Sep 2022 13:26:55 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.128.175; helo=mail-yw1-f175.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
-	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 72228100EA937
-	for <devel@acpica.org>; Wed,  7 Sep 2022 13:26:52 -0700 (PDT)
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-3450990b0aeso113775427b3.12
-        for <devel@acpica.org>; Wed, 07 Sep 2022 13:26:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=yA3+StCym4idXa8cG6Malox2oj6cl9PWq+XLp6mhiGs=;
-        b=2oq3f8O/ZdBIa7fkaPgSqcfToWUbykGK2Se/G972HEYkWLAwIfuNGrRg1V2Jru7MS6
-         nuBv0m/fSMbWl/UF7PBbBCBO5ndPvOV5q5zc6jxsjfJ8MgsoB4XBRArJ0DvEfYQ94MSd
-         NgS1FAviQ0eVIijzr0naavsiBqkytN/jnl8Vd6kKhD3p97uEKxV8UAAvwhzM8B79IhtP
-         VBHuCP0AGQfqWCZuxMiEG1aayBzOn0D2f/1E+ZAyjb1q+L1djAYwO6mRntJM/czIgBuP
-         ClWTUfh4+hDbwaM9ZFAlN/2gVQDMCx9y/ceOvGKUmw8GQfoErz5t+U7DWKckwDGFXpj/
-         grCw==
-X-Gm-Message-State: ACgBeo2YpduUF1OXJgnkW9VHmrUQkXD+lpe5Bt/hVfSlE5+AshTjaoVU
-	tcSd06J/eplLSHZqg+98hOaPlb0xXqNVDsE0e9w=
-X-Google-Smtp-Source: AA6agR4Qcwjy4hhDaUZN9CYS4cgcnoGtDgbyxHDAX9AxFvok4eylogLM7l9HejSeNi92ig8i3NDM8kYhd3kmCzQKGwg=
-X-Received: by 2002:a0d:da83:0:b0:329:9c04:fe6d with SMTP id
- c125-20020a0dda83000000b003299c04fe6dmr4668181ywe.196.1662582411022; Wed, 07
- Sep 2022 13:26:51 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTP id 28F5B100EA2D9;
+	Thu,  8 Sep 2022 11:42:16 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=217.140.110.172; helo=foss.arm.com; envelope-from=jeremy.linton@arm.com; receiver=<UNKNOWN> 
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by ml01.01.org (Postfix) with ESMTP id 5D927100EA2CB
+	for <devel@acpica.org>; Thu,  8 Sep 2022 11:42:13 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 25E00153B;
+	Thu,  8 Sep 2022 11:42:19 -0700 (PDT)
+Received: from [192.168.122.164] (U203867.austin.arm.com [10.118.30.29])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A55483F71A;
+	Thu,  8 Sep 2022 11:42:12 -0700 (PDT)
+Message-ID: <641496a1-86f9-6d56-c22c-a77b38a4cf7c@arm.com>
+Date: Thu, 8 Sep 2022 13:42:12 -0500
 MIME-Version: 1.0
-References: <de1cf16c-54cb-316b-3fcb-2520e6bb152f@semihalf.com>
-In-Reply-To: <de1cf16c-54cb-316b-3fcb-2520e6bb152f@semihalf.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Wed, 7 Sep 2022 22:26:39 +0200
-Message-ID: <CAJZ5v0hY05BzG=fL78BzyvxeJDZT+5D_ZeyCALt2+0JUDvHnew@mail.gmail.com>
-To: =?UTF-8?Q?Marek_Ma=C5=9Blanka?= <mm@semihalf.com>
-Message-ID-Hash: OYSRG5BPZKIDEWJVVMX6ESHZ7M7CXCIJ
-X-Message-ID-Hash: OYSRG5BPZKIDEWJVVMX6ESHZ7M7CXCIJ
-X-MailFrom: rjwysocki@gmail.com
-X-Mailman-Rule-Hits: nonmember-moderation
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: ACPI Devel Maling List <linux-acpi@vger.kernel.org>, Rafael Wysocki <rafael.j.wysocki@intel.com>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, upstream@semihalf.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Content-Language: en-US
+To: Punit Agrawal <punit.agrawal@bytedance.com>
+References: <20220819162547.141333-1-jeremy.linton@arm.com>
+ <20220819162547.141333-2-jeremy.linton@arm.com> <87pmg6arx2.fsf@stealth>
+From: Jeremy Linton <jeremy.linton@arm.com>
+In-Reply-To: <87pmg6arx2.fsf@stealth>
+Message-ID-Hash: VGS2X3J4GBIIMYIGWWTFHAKUCHDNQ5XV
+X-Message-ID-Hash: VGS2X3J4GBIIMYIGWWTFHAKUCHDNQ5XV
+X-MailFrom: jeremy.linton@arm.com
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
+CC: linux-acpi@vger.kernel.org, rafael@kernel.org, viresh.kumar@linaro.org, lukasz.luba@arm.com, ionela.voinescu@arm.com, pierre.gondois@arm.com, linux-kernel@vger.kernel.org, devel@acpica.org, linux-pm@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH] ACPI: Wait for ACPI IRQ to be processed before disable GPE
+Subject: [Devel] Re: [PATCH v4 1/2] ACPI: CPPC: Disable FIE if registers in PCC regions
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/OYSRG5BPZKIDEWJVVMX6ESHZ7M7CXCIJ/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/VGS2X3J4GBIIMYIGWWTFHAKUCHDNQ5XV/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
 List-Subscribe: <mailto:devel-join@acpica.org>
 List-Unsubscribe: <mailto:devel-leave@acpica.org>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"; format="flowed"
+Content-Transfer-Encoding: 7bit
 
-T24gV2VkLCBTZXAgNywgMjAyMiBhdCA3OjMxIEFNIE1hcmVrIE1hxZtsYW5rYSA8bW1Ac2VtaWhh
-bGYuY29tPiB3cm90ZToNCj4NCj4gT24gdGhlIHdha2UtdXAsIHRoZSBBQ1BJIEdQRSB0aGF0IGFy
-ZSBtYXJrZWQgYXMgYSB3YWtldXAgc291cmNlIGFyZQ0KPiB0dXJuZWQgb2ZmLiBCZWZvcmUgdHVy
-bmluZyBvZmYsIHRoZSBrZXJuZWwgd2FpdHMgZm9yIHRoZSBjdXJyZW50bHkNCj4gcHJvY2Vzc2lu
-ZyBJUlEgdG8gZmluaXNoIGFuZCBhc3N1bWVzIHRoYXQgdGhpcyBpcyBhbiBBQ1BJIGludGVycnVw
-dCB0aGF0DQo+IHRyaWdnZXJlZCB3YWtlLXVwLiBJbiB0aGUgY2FzZSB0aGUgZmlyc3QgaW50ZXJy
-dXB0IGFmdGVyIHdha2UtdXAgaXMgbm90DQo+IGFuIEFDUEkgaW50ZXJydXB0LCB0aGlzIG1pZ2h0
-IGNhdXNlIHRoZSBBQ1BJIEdQRSBub3QgdG8gYmUgcHJvY2Vzc2VkDQo+IGJlY2F1c2UgaXQgd2ls
-bCBiZSBkaXNhYmxlZC4NCj4NCj4gVGhlIHBhdGNoIG1ha2VzIHN1cmUgdGhhdCBhbiBBQ1BJIGlu
-dGVycnVwdCBpcyBwcm9jZXNzZWQgYmVmb3JlDQo+IGRpc2FibGluZyBHUEUgdGhhdCBhcmUgd2Fr
-ZXVwIHNvdXJjZXMuDQo+DQo+IFRoaXMgcGF0Y2ggZml4IHRoZSBpc3N1ZSB0aGF0IGlzIHNlZW4g
-b24gbG93LWVuZCBDaHJvbWVib29rcyB3aXRoIHR3bw0KPiBjb3JlcyBDUFUgd2hlbiBIUEVUIElS
-USBpcyB0cmlnZ2VyZWQgd2hpbGUgcmVzdW1pbmcgdGhlIGRldmljZSBhbmQgaXMNCj4gcHJvY2Vz
-c2VkIGJlZm9yZSB0aGUgQUNQSSBHUEUgaW50ZXJydXB0IG9uIHRoZSBzYW1lIENQVSBjb3JlLg0K
-Pg0KPiBTaWduZWQtb2ZmLWJ5OiBNYXJlayBNYXNsYW5rYSA8bW1Ac2VtaWhhbGYuY29tPg0KPiAt
-LS0NCj4gIGRyaXZlcnMvYWNwaS9pbnRlcm5hbC5oIHwgIDIgKysNCj4gIGRyaXZlcnMvYWNwaS9v
-c2wuYyAgICAgIHwgMTggKysrKysrKysrKysrKysrKysrDQo+ICBkcml2ZXJzL2FjcGkvc2xlZXAu
-YyAgICB8ICA2ICsrKysrKw0KPiAgaW5jbHVkZS9saW51eC9hY3BpLmggICAgfCAgMiArKw0KPiAg
-NCBmaWxlcyBjaGFuZ2VkLCAyOCBpbnNlcnRpb25zKCspDQo+DQo+IGRpZmYgLS1naXQgYS9kcml2
-ZXJzL2FjcGkvaW50ZXJuYWwuaCBiL2RyaXZlcnMvYWNwaS9pbnRlcm5hbC5oDQo+IGluZGV4IDIx
-OWMwMmRmOWEwOC4uZTRkZjFiZjI5NjNiIDEwMDY0NA0KPiAtLS0gYS9kcml2ZXJzL2FjcGkvaW50
-ZXJuYWwuaA0KPiArKysgYi9kcml2ZXJzL2FjcGkvaW50ZXJuYWwuaA0KPiBAQCAtMjUxLDYgKzI1
-MSw4IEBAIHN0YXRpYyBpbmxpbmUgYm9vbCBmb3JjZV9zdG9yYWdlX2QzKHZvaWQpDQo+ICB9DQo+
-ICAjZW5kaWYNCj4NCj4gK2V4dGVybiBib29sIGFjcGlfcmVzdW1lX2dwZV9pcnFfaGFuZGxlZDsN
-Cj4gKw0KPiAgLyotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KPiAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgIERldmljZSBwcm9wZXJ0aWVzDQo+ICAgIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tICovDQo+IGRp
-ZmYgLS1naXQgYS9kcml2ZXJzL2FjcGkvb3NsLmMgYi9kcml2ZXJzL2FjcGkvb3NsLmMNCj4gaW5k
-ZXggMzI2OWE4ODhmYjdhLi5lYTU4N2FjNGM2OGEgMTAwNjQ0DQo+IC0tLSBhL2RyaXZlcnMvYWNw
-aS9vc2wuYw0KPiArKysgYi9kcml2ZXJzL2FjcGkvb3NsLmMNCj4gQEAgLTQyLDYgKzQyLDggQEAN
-Cj4gICNkZWZpbmUgX0NPTVBPTkVOVCAgICAgICAgICAgICBBQ1BJX09TX1NFUlZJQ0VTDQo+ICBB
-Q1BJX01PRFVMRV9OQU1FKCJvc2wiKTsNCj4NCj4gKyNkZWZpbmUgQUNQSV9XQUlUX0ZPUl9SRVNV
-TUVfR1BFX0lSUV9NUyA1MDANCg0KVGhpcyBpcyBhIHJlbGF0aXZlbHkgbGFyZ2UgbnVtYmVyLiAg
-RG9lc24ndCBhbnl0aGluZyBzbWFsbGVyIHdvcms/DQoNCj4gKw0KPiAgc3RydWN0IGFjcGlfb3Nf
-ZHBjIHsNCj4gICAgICAgICBhY3BpX29zZF9leGVjX2NhbGxiYWNrIGZ1bmN0aW9uOw0KPiAgICAg
-ICAgIHZvaWQgKmNvbnRleHQ7DQo+IEBAIC02OSw2ICs3MSw4IEBAIHN0YXRpYyBzdHJ1Y3Qgd29y
-a3F1ZXVlX3N0cnVjdCAqa2FjcGlfaG90cGx1Z193cTsNCj4gIHN0YXRpYyBib29sIGFjcGlfb3Nf
-aW5pdGlhbGl6ZWQ7DQo+ICB1bnNpZ25lZCBpbnQgYWNwaV9zY2lfaXJxID0gSU5WQUxJRF9BQ1BJ
-X0lSUTsNCj4gIGJvb2wgYWNwaV9wZXJtYW5lbnRfbW1hcCA9IGZhbHNlOw0KPiArYm9vbCBhY3Bp
-X3Jlc3VtZV9ncGVfaXJxX2hhbmRsZWQ7DQo+ICtzdGF0aWMgREVDTEFSRV9XQUlUX1FVRVVFX0hF
-QUQoYWNwaV9pcnFfYWZ0ZXJfc3VzcGVuZF93YWl0KTsNCj4NCj4gIC8qDQo+ICAgKiBUaGlzIGxp
-c3Qgb2YgcGVybWFuZW50IG1hcHBpbmdzIGlzIGZvciBtZW1vcnkgdGhhdCBtYXkgYmUgYWNjZXNz
-ZWQgZnJvbQ0KPiBAQCAtNTQ5LDYgKzU1MywxMCBAQCBzdGF0aWMgaXJxcmV0dXJuX3QgYWNwaV9p
-cnEoaW50IGlycSwgdm9pZCAqZGV2X2lkKQ0KPiAgICAgICAgIGhhbmRsZWQgPSAoKmFjcGlfaXJx
-X2hhbmRsZXIpIChhY3BpX2lycV9jb250ZXh0KTsNCj4NCj4gICAgICAgICBpZiAoaGFuZGxlZCkg
-ew0KPiArICAgICAgICAgICAgICAgaWYgKGFjcGlfczJpZGxlX3dha2V1cCgpKSB7DQo+ICsgICAg
-ICAgICAgICAgICAgICAgICAgIGFjcGlfcmVzdW1lX2dwZV9pcnFfaGFuZGxlZCA9IHRydWU7DQo+
-ICsgICAgICAgICAgICAgICAgICAgICAgIHdha2VfdXAoJmFjcGlfaXJxX2FmdGVyX3N1c3BlbmRf
-d2FpdCk7DQo+ICsgICAgICAgICAgICAgICB9DQo+ICAgICAgICAgICAgICAgICBhY3BpX2lycV9o
-YW5kbGVkKys7DQo+ICAgICAgICAgICAgICAgICByZXR1cm4gSVJRX0hBTkRMRUQ7DQo+ICAgICAg
-ICAgfSBlbHNlIHsNCj4gQEAgLTE3NjgsMyArMTc3NiwxMyBAQCBhY3BpX3N0YXR1cyBhY3BpX29z
-X2VudGVyX3NsZWVwKHU4IHNsZWVwX3N0YXRlLA0KPiAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgIHJlZ19hX3ZhbHVlLCByZWdfYl92YWx1ZSk7DQo+ICAgICAg
-ICAgcmV0dXJuIHN0YXR1czsNCj4gIH0NCj4gKw0KPiAraW50IGFjcGlfd2FpdF9mb3JfcmVzdW1l
-X2dwZV9pcnEodm9pZCkNCj4gK3sNCj4gKyAgICAgICBpbnQgd2FpdF9tcyA9IG1zZWNzX3RvX2pp
-ZmZpZXMoQUNQSV9XQUlUX0ZPUl9SRVNVTUVfR1BFX0lSUV9NUyk7DQo+ICsgICAgICAgaW50IHRp
-bWVvdXQgPSB3YWl0X2V2ZW50X3RpbWVvdXQoYWNwaV9pcnFfYWZ0ZXJfc3VzcGVuZF93YWl0LA0K
-PiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGFjcGlfcmVzdW1lX2dw
-ZV9pcnFfaGFuZGxlZCwNCj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICB3YWl0X21zKTsNCj4gKyAgICAgICByZXR1cm4gdGltZW91dDsNCg0KU28gdGhpcyB3aWxsIHdh
-aXQgZm9yIHRoZSBmdWxsIHRpbWVvdXQgaWYgdGhlcmUgYXJlIG5vIEFDUEkgZXZlbnRzIHRvDQpw
-cm9jZXNzLCByaWdodD8NCg0KSXNuJ3QgaXQgYSBiaXQgZXhjZXNzaXZlPw0KDQpNb3Jlb3Zlciwg
-d2hhdCBpZiB0aGVyZSBpcyBhbiBBQ1BJIGV2ZW50IHJpZ2h0IGFmdGVyIHRoZSB3YWl0IGhhcyBj
-b21wbGV0ZWQ/DQoNCj4gK30NCj4gK0VYUE9SVF9TWU1CT0woYWNwaV93YWl0X2Zvcl9yZXN1bWVf
-Z3BlX2lycSk7DQo+IGRpZmYgLS1naXQgYS9kcml2ZXJzL2FjcGkvc2xlZXAuYyBiL2RyaXZlcnMv
-YWNwaS9zbGVlcC5jDQo+IGluZGV4IGFkNGIyOTg3YjNkNi4uNmRkZjI4MDY3Njg3IDEwMDY0NA0K
-PiAtLS0gYS9kcml2ZXJzL2FjcGkvc2xlZXAuYw0KPiArKysgYi9kcml2ZXJzL2FjcGkvc2xlZXAu
-Yw0KPiBAQCAtNzIxLDYgKzcyMSw3IEBAIGludCBhY3BpX3MyaWRsZV9wcmVwYXJlKHZvaWQpDQo+
-ICAgICAgICAgYWNwaV9vc193YWl0X2V2ZW50c19jb21wbGV0ZSgpOw0KPg0KPiAgICAgICAgIHMy
-aWRsZV93YWtldXAgPSB0cnVlOw0KPiArICAgICAgIGFjcGlfcmVzdW1lX2dwZV9pcnFfaGFuZGxl
-ZCA9IGZhbHNlOw0KPiAgICAgICAgIHJldHVybiAwOw0KPiAgfQ0KPg0KPiBAQCAtNzg5LDYgKzc5
-MCw3IEBAIGJvb2wgYWNwaV9zMmlkbGVfd2FrZSh2b2lkKQ0KPg0KPiAgdm9pZCBhY3BpX3MyaWRs
-ZV9yZXN0b3JlKHZvaWQpDQo+ICB7DQo+ICsgICAgICAgaW50IHRpbWVvdXQ7DQo+ICAgICAgICAg
-LyoNCj4gICAgICAgICAgKiBEcmFpbiBwZW5kaW5nIGV2ZW50cyBiZWZvcmUgcmVzdG9yaW5nIHRo
-ZSB3b3JraW5nLXN0YXRlIGNvbmZpZ3VyYXRpb24NCj4gICAgICAgICAgKiBvZiBHUEVzLg0KPiBA
-QCAtNzk3LDYgKzc5OSwxMCBAQCB2b2lkIGFjcGlfczJpZGxlX3Jlc3RvcmUodm9pZCkNCj4gICAg
-ICAgICBhY3BpX2VjX2ZsdXNoX3dvcmsoKTsgLyogZmx1c2ggdGhlIEVDIGRyaXZlcidzIHdvcmtx
-dWV1ZXMgKi8NCj4gICAgICAgICBhY3BpX29zX3dhaXRfZXZlbnRzX2NvbXBsZXRlKCk7IC8qIHN5
-bmNocm9uaXplIE5vdGlmeSBoYW5kbGluZyAqLw0KPg0KPiArICAgICAgIHRpbWVvdXQgPSBhY3Bp
-X3dhaXRfZm9yX3Jlc3VtZV9ncGVfaXJxKCk7DQo+ICsgICAgICAgaWYgKHRpbWVvdXQgPT0gMCkN
-Cj4gKyAgICAgICAgICAgICAgIHByX3dhcm4oIkZhaWxlZCB0byB3YWl0IGZvciBBQ1BJIGludGVy
-cnVwdCBhZnRlciByZXN1bWUiKTsNCg0KVGhpcyBpcyBwZXJmZWN0bHkgZmluZSwgZm9yIGV4YW1w
-bGUgaWYgdGhlIHN5c3RlbSBpcyB3b2tlbiB1cCBieSBhDQpub24tQUNQSSBJUlEgKGVnLiB0aGUg
-a2V5Ym9hcmQgb25lKS4NCg0KPiArDQo+ICAgICAgICAgczJpZGxlX3dha2V1cCA9IGZhbHNlOw0K
-Pg0KPiAgICAgICAgIGFjcGlfZW5hYmxlX2FsbF9ydW50aW1lX2dwZXMoKTsNCj4gZGlmZiAtLWdp
-dCBhL2luY2x1ZGUvbGludXgvYWNwaS5oIGIvaW5jbHVkZS9saW51eC9hY3BpLmgNCj4gaW5kZXgg
-ZWQ0YWEzOTVjYzQ5Li5lZjJhYjc5OTBmMWMgMTAwNjQ0DQo+IC0tLSBhL2luY2x1ZGUvbGludXgv
-YWNwaS5oDQo+ICsrKyBiL2luY2x1ZGUvbGludXgvYWNwaS5oDQo+IEBAIC0xNDc1LDQgKzE0NzUs
-NiBAQCBzdGF0aWMgaW5saW5lIHZvaWQgYWNwaV9kZXZpY2Vfbm90aWZ5KHN0cnVjdCBkZXZpY2Ug
-KmRldikgeyB9DQo+ICBzdGF0aWMgaW5saW5lIHZvaWQgYWNwaV9kZXZpY2Vfbm90aWZ5X3JlbW92
-ZShzdHJ1Y3QgZGV2aWNlICpkZXYpIHsgfQ0KPiAgI2VuZGlmDQo+DQo+ICtpbnQgYWNwaV93YWl0
-X2Zvcl9yZXN1bWVfZ3BlX2lycSh2b2lkKTsNCj4gKw0KPiAgI2VuZGlmIC8qX0xJTlVYX0FDUElf
-SCovDQo+IC0tDQoNCk92ZXJhbGwsIEknbSBub3QgY29udmluY2VkIGFib3V0IHRoZSBhcHByb2Fj
-aC4NCg0KSWYgdGhlIGdvYWwgaXMgdG8gcHJvY2VzcyBhbGwgb2YgdGhlIEFDUEkgd2FrZXVwIGlu
-dGVycnVwdHMsIHRoaXMNCmRvZXNuJ3QgbWVldCBpdC4NCg0KQUZBSUNTIHRoZSBvbmx5IHdheSB0
-byBkbyB0aGF0IHdoaWNoIGlzIG5vdCByYWN5IGlzIHRvIGRpc3BhdGNoIGV2ZXJ5DQp3YWtldXAg
-R1BFIGluLWxpbmUgKGZyb20gdGhlIEFDUElDQSBjb2RlKSBiZWZvcmUgZGlzYWJsaW5nIGl0IGlu
-IGNhc2UNCml0IGlzIGFjdGl2ZSBhdCB0aGF0IHBvaW50LgpfX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fXwpEZXZlbCBtYWlsaW5nIGxpc3QgLS0gZGV2ZWxAYWNw
-aWNhLm9yZwpUbyB1bnN1YnNjcmliZSBzZW5kIGFuIGVtYWlsIHRvIGRldmVsLWxlYXZlQGFjcGlj
-YS5vcmcKJSh3ZWJfcGFnZV91cmwpc2xpc3RpbmZvJShjZ2lleHQpcy8lKF9pbnRlcm5hbF9uYW1l
-KXM=
+Hi,
+
+On 9/8/22 08:59, Punit Agrawal wrote:
+> Hi Jeremy,
+> 
+> I missed the previous version (holidays) but hopefully still in time for
+> this one. A query / comment below.
+> 
+> Jeremy Linton <jeremy.linton@arm.com> writes:
+> 
+>> PCC regions utilize a mailbox to set/retrieve register values used by
+>> the CPPC code. This is fine as long as the operations are
+>> infrequent. With the FIE code enabled though the overhead can range
+>> from 2-11% of system CPU overhead (ex: as measured by top) on Arm
+>> based machines.
+>>
+>> So, before enabling FIE assure none of the registers used by
+>> cppc_get_perf_ctrs() are in the PCC region. Furthermore lets also
+>> enable a module parameter which can also disable it at boot or module
+>> reload.
+>>
+>> Signed-off-by: Jeremy Linton <jeremy.linton@arm.com>
+>> ---
+>>   drivers/acpi/cppc_acpi.c       | 41 ++++++++++++++++++++++++++++++++++
+>>   drivers/cpufreq/cppc_cpufreq.c | 31 +++++++++++++++++++++----
+>>   include/acpi/cppc_acpi.h       |  5 +++++
+>>   3 files changed, 73 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
+>> index 1e15a9f25ae9..c840bf606b30 100644
+>> --- a/drivers/acpi/cppc_acpi.c
+>> +++ b/drivers/acpi/cppc_acpi.c
+>> @@ -1240,6 +1240,47 @@ int cppc_get_perf_caps(int cpunum, struct cppc_perf_caps *perf_caps)
+>>   }
+>>   EXPORT_SYMBOL_GPL(cppc_get_perf_caps);
+>>   
+>> +/**
+>> + * cppc_perf_ctrs_in_pcc - Check if any perf counters are in a PCC region.
+>> + *
+>> + * CPPC has flexibility about how counters describing CPU perf are delivered.
+>> + * One of the choices is PCC regions, which can have a high access latency. This
+>> + * routine allows callers of cppc_get_perf_ctrs() to know this ahead of time.
+>> + *
+>> + * Return: true if any of the counters are in PCC regions, false otherwise
+>> + */
+>> +bool cppc_perf_ctrs_in_pcc(void)
+>> +{
+>> +	int cpu;
+>> +
+>> +	for_each_present_cpu(cpu) {
+>> +		struct cpc_register_resource *ref_perf_reg;
+>> +		struct cpc_desc *cpc_desc;
+>> +
+>> +		cpc_desc = per_cpu(cpc_desc_ptr, cpu);
+>> +
+>> +		if (CPC_IN_PCC(&cpc_desc->cpc_regs[DELIVERED_CTR]) ||
+>> +		    CPC_IN_PCC(&cpc_desc->cpc_regs[REFERENCE_CTR]) ||
+>> +		    CPC_IN_PCC(&cpc_desc->cpc_regs[CTR_WRAP_TIME]))
+>> +			return true;
+>> +
+>> +
+>> +		ref_perf_reg = &cpc_desc->cpc_regs[REFERENCE_PERF];
+>> +
+>> +		/*
+>> +		 * If reference perf register is not supported then we should
+>> +		 * use the nominal perf value
+>> +		 */
+>> +		if (!CPC_SUPPORTED(ref_perf_reg))
+>> +			ref_perf_reg = &cpc_desc->cpc_regs[NOMINAL_PERF];
+>> +
+>> +		if (CPC_IN_PCC(ref_perf_reg))
+>> +			return true;
+>> +	}
+>> +	return false;
+>> +}
+>> +EXPORT_SYMBOL_GPL(cppc_perf_ctrs_in_pcc);
+>> +
+>>   /**
+>>    * cppc_get_perf_ctrs - Read a CPU's performance feedback counters.
+>>    * @cpunum: CPU from which to read counters.
+>> diff --git a/drivers/cpufreq/cppc_cpufreq.c b/drivers/cpufreq/cppc_cpufreq.c
+>> index 24eaf0ec344d..32fcb0bf74a4 100644
+>> --- a/drivers/cpufreq/cppc_cpufreq.c
+>> +++ b/drivers/cpufreq/cppc_cpufreq.c
+>> @@ -63,7 +63,15 @@ static struct cppc_workaround_oem_info wa_info[] = {
+>>   
+>>   static struct cpufreq_driver cppc_cpufreq_driver;
+>>   
+>> +static enum {
+>> +	FIE_UNSET = -1,
+>> +	FIE_ENABLED,
+>> +	FIE_DISABLED
+>> +} fie_disabled = FIE_UNSET;
+>> +
+>>   #ifdef CONFIG_ACPI_CPPC_CPUFREQ_FIE
+>> +module_param(fie_disabled, int, 0444);
+>> +MODULE_PARM_DESC(fie_disabled, "Disable Frequency Invariance Engine (FIE)");
+>>   
+>>   /* Frequency invariance support */
+>>   struct cppc_freq_invariance {
+>> @@ -158,7 +166,7 @@ static void cppc_cpufreq_cpu_fie_init(struct cpufreq_policy *policy)
+>>   	struct cppc_freq_invariance *cppc_fi;
+>>   	int cpu, ret;
+>>   
+>> -	if (cppc_cpufreq_driver.get == hisi_cppc_cpufreq_get_rate)
+>> +	if (fie_disabled)
+>>   		return;
+> 
+> With this change, if FIE is enabled, the rest of the function will run
+> even if the hisi workaround is enabled. Not sure if that is an
+> intentional change. The same applies to similar other changes in the
+> patch as well.
+
+Yah, I think its intentional, unless i'm missing something. The hisi 
+quirk detection path forces this off regardless of the user attempting 
+to force it on. Which is part of why I think the enum states must be as 
+above. The other reason is that the final result of whether FIE is 
+disabled ends up in /sys/modules/cppc_cpufreq/parameters/fie_disabled 
+which in this case may not reflect what the user requested.
+
+
+I have another patch that might be worth posting that I created while 
+implementing CPPC on a machine a year or so ago that removes this quirk 
+entirely. Instead it detects counters that aren't incrementing properly 
+and NULL's out the get routine so that cpupower/etc report that the 
+frequency is being retrieved from the kernel rather than the hardware. 
+Someone else will have to test it though, because I eventually figured 
+out how to synthesize both counters in a way that is generic enough to 
+work on most machines.
+
+_______________________________________________
+Devel mailing list -- devel@acpica.org
+To unsubscribe send an email to devel-leave@acpica.org
+%(web_page_url)slistinfo%(cgiext)s/%(_internal_name)s
