@@ -2,55 +2,61 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64AA45B4782
-	for <lists+devel-acpica@lfdr.de>; Sat, 10 Sep 2022 18:32:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B39725B4C47
+	for <lists+devel-acpica@lfdr.de>; Sun, 11 Sep 2022 08:02:47 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id ACBD2100EAB53;
-	Sat, 10 Sep 2022 09:32:24 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.219.176; helo=mail-yb1-f176.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+	by ml01.01.org (Postfix) with ESMTP id 6E47A100EAAE8;
+	Sat, 10 Sep 2022 23:02:44 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.43; helo=mga05.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 05105100EAB45
-	for <devel@acpica.org>; Sat, 10 Sep 2022 09:32:22 -0700 (PDT)
-Received: by mail-yb1-f176.google.com with SMTP id a67so6919311ybb.3
-        for <devel@acpica.org>; Sat, 10 Sep 2022 09:32:22 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=GkMFjVtDr0W10OJLyjB1PHKjRI7ZFioNTd0VYLRMl94=;
-        b=ovE8L4d8bJ5vRY09JyUOpmrfUJb4OEMQR31ljvNhzLsQOYSiIpCSGRfsTajPQ+4o+6
-         iIHpeFwxDFJisUWtrLym/OgXrqrjz8Vgf9ydhtfQNH/vMZFkPoecBY6hj22SieBZMWnp
-         Z/JdHll+y9YiQ52AnR/lYEk2tOC8I2gD/+lgnIpuNee3/93MufKOkY15BCMMk1/U2T3j
-         Ohy0zd9t3MbbcQSqjyy3GRXgzBNP3FJKSyxSsaPUS+hJNWsN7dsQIBCP0DD5UUwxwyGn
-         B60Vknq8jtspnEGLuWy+v5npV9FFnDp3CHnazWX72nplSH3f+uIhKDBaVc9hSMvQeZ6j
-         uucQ==
-X-Gm-Message-State: ACgBeo2ZwvvikvmjybxTtxGL8+spf1X8SXp87DJBpQXimL41NswokOQz
-	tp5gmul2ksPe9b/VwLc27AzeB/q0MYpQT/iRLiQ=
-X-Google-Smtp-Source: AA6agR4n7pXTzaWGoZwbXMPbML7j3aWjxBABW4Ue2CuqwFbK1YnZzMiGo3Y8jNXuTBWAX9gMGWr6mCabLDZaslxS/Ik=
-X-Received: by 2002:a25:2f0c:0:b0:6a8:f230:12ed with SMTP id
- v12-20020a252f0c000000b006a8f23012edmr15745127ybv.633.1662827541557; Sat, 10
- Sep 2022 09:32:21 -0700 (PDT)
+	by ml01.01.org (Postfix) with ESMTPS id 2D145100EAB56
+	for <devel@acpica.org>; Sat, 10 Sep 2022 23:02:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1662876162; x=1694412162;
+  h=date:from:to:cc:subject:message-id:mime-version:
+   content-transfer-encoding;
+  bh=X3nGh2deOmHXffMmBLBZLiWJ36kF5JOTAJZQciA1cg8=;
+  b=Lakgo28FTYJYsatzHI3GJc4bHeX5fym0aiNFNrsGK8qajzNGHrBDtup8
+   KB1Z/PQYEyxRCLGrRWESANAbkhR9IIsnlg7hxT4pvNmksYOsscQuFGBr/
+   lEqavM8+yox9S9MfYIRZYnUnDdQeq0BtO0DNUCimjsutT8JwiYndDxd8G
+   Rd1ydSgdroXXgJbF3KwnlxbBlj8yclM2NazdRfcIyt7/e4iqFnNQcx6Rl
+   EImu92f5tA6otCP0PYQ9naeygBzEif55dSXQPrlQQiIY1bypSH4epGddb
+   mOqHf/pvfudaP2SmBWz9hYmqf0mEI93yIeUmwszhDxHwh40G4Kl7vVZ6c
+   g==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10466"; a="383992868"
+X-IronPort-AV: E=Sophos;i="5.93,307,1654585200";
+   d="scan'208";a="383992868"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Sep 2022 23:02:40 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.93,307,1654585200";
+   d="scan'208";a="758039261"
+Received: from lkp-server02.sh.intel.com (HELO 4011df4f4fd3) ([10.239.97.151])
+  by fmsmga001.fm.intel.com with ESMTP; 10 Sep 2022 23:02:39 -0700
+Received: from kbuild by 4011df4f4fd3 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1oXG3C-00012t-2V;
+	Sun, 11 Sep 2022 06:02:38 +0000
+Date: Sun, 11 Sep 2022 14:02:16 +0800
+From: kernel test robot <lkp@intel.com>
+To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Message-ID: <631d79e8.yiStyYaa6aEvt0eJ%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-References: <20220908132910.62122-1-andriy.shevchenko@linux.intel.com> <YxnwMLvgQAPOkeeK@smile.fi.intel.com>
-In-Reply-To: <YxnwMLvgQAPOkeeK@smile.fi.intel.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Sat, 10 Sep 2022 18:32:10 +0200
-Message-ID: <CAJZ5v0j5FO+OcX6VdiR-tuDCrHFwErquxzZGUu3ZLQ1G57T-+Q@mail.gmail.com>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Message-ID-Hash: BUQUDPPLQOJHVZXVEI32F7VARKTQWJRA
-X-Message-ID-Hash: BUQUDPPLQOJHVZXVEI32F7VARKTQWJRA
-X-MailFrom: rjwysocki@gmail.com
+Message-ID-Hash: 3UXYKWUE4PWXRBW5Q66HN6BQO7JDTUAP
+X-Message-ID-Hash: 3UXYKWUE4PWXRBW5Q66HN6BQO7JDTUAP
+X-MailFrom: lkp@intel.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: Hans de Goede <hdegoede@redhat.com>, "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>, Ard Biesheuvel <ardb@kernel.org>, Mark Brown <broonie@kernel.org>, ACPI Devel Maling List <linux-acpi@vger.kernel.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, linux-efi <linux-efi@vger.kernel.org>, linux-i2c <linux-i2c@vger.kernel.org>, linux-arm-msm <linux-arm-msm@vger.kernel.org>, Linux ARM <linux-arm-kernel@lists.infradead.org>, linux-spi <linux-spi@vger.kernel.org>, "open list:ACPI COMPONENT ARCHITECTURE (ACPICA)" <devel@acpica.org>, "Rafael J. Wysocki" <rafael@kernel.org>, Elie Morisse <syniurge@gmail.com>, Nehal Shah <nehal-bakulchandra.shah@amd.com>, Shyam Sundar S K <shyam-sundar.s-k@amd.com>, Khalil Blaiech <kblaiech@nvidia.com>, Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@somainline.org>, Will Deacon <will@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Daniel Mack <daniel@zonque.org>, Haojian Zhuang <haojia
- n.zhuang@gmail.com>, Robert Jarzmik <robert.jarzmik@free.fr>, Wolfram Sang <wsa@kernel.org>
+CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] Re: [PATCH v2 0/8] ACPI: unify _UID handling as integer
+Subject: [Devel] [rafael-pm:bleeding-edge] BUILD SUCCESS 58968b7be786652f48f712147e6f71831cfe684e
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/BUQUDPPLQOJHVZXVEI32F7VARKTQWJRA/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/3UXYKWUE4PWXRBW5Q66HN6BQO7JDTUAP/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -59,29 +65,77 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-On Thu, Sep 8, 2022 at 3:38 PM Andy Shevchenko
-<andriy.shevchenko@linux.intel.com> wrote:
->
-> On Thu, Sep 08, 2022 at 04:29:02PM +0300, Andy Shevchenko wrote:
-> > This series is about unification on how we handle ACPI _UID when
-> > it's known to be an integer-in-the-string.
-> >
-> > The idea of merging either all via ACPI tree, or taking ACPI stuff
-> > for the v6.1 while the rest may be picked up later on by respective
-> > maintainers separately
->
-> >(currently all depends on Wolfram, other
-> > patches have got the tags from the maintainers).
->
-> I stand corrected, the perf patch is not tagged yet.
->
-> > Partially compile-tested (x86-64).
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
+branch HEAD: 58968b7be786652f48f712147e6f71831cfe684e  Merge branch 'pm-cpufreq' into bleeding-edge
 
-Tentatively applied as 6.1 material.
+elapsed time: 723m
 
-If there are updates, we'll make changes as they go.
+configs tested: 53
+configs skipped: 2
 
-Thanks!
+The following configs have been built successfully.
+More configs may be tested in the coming days.
+
+gcc tested configs:
+x86_64                              defconfig
+x86_64                               rhel-8.3
+x86_64                        randconfig-a002
+i386                          randconfig-a001
+x86_64                        randconfig-a004
+i386                          randconfig-a003
+x86_64                        randconfig-a006
+i386                          randconfig-a005
+x86_64                           allyesconfig
+um                             i386_defconfig
+um                           x86_64_defconfig
+i386                                defconfig
+arc                              allyesconfig
+arc                  randconfig-r043-20220911
+alpha                            allyesconfig
+i386                          randconfig-a014
+s390                 randconfig-r044-20220911
+riscv                randconfig-r042-20220911
+i386                          randconfig-a012
+i386                          randconfig-a016
+i386                             allyesconfig
+x86_64                        randconfig-a013
+m68k                             allyesconfig
+powerpc                           allnoconfig
+x86_64                        randconfig-a011
+x86_64                          rhel-8.3-func
+x86_64                         rhel-8.3-kunit
+powerpc                          allmodconfig
+m68k                             allmodconfig
+x86_64                           rhel-8.3-kvm
+x86_64                        randconfig-a015
+x86_64                    rhel-8.3-kselftests
+arm                                 defconfig
+mips                             allyesconfig
+x86_64                           rhel-8.3-syz
+sh                               allmodconfig
+ia64                             allmodconfig
+arm                              allyesconfig
+arm64                            allyesconfig
+
+clang tested configs:
+x86_64                        randconfig-a001
+x86_64                        randconfig-a003
+i386                          randconfig-a002
+i386                          randconfig-a004
+x86_64                        randconfig-a005
+i386                          randconfig-a006
+hexagon              randconfig-r041-20220911
+i386                          randconfig-a013
+hexagon              randconfig-r045-20220911
+i386                          randconfig-a011
+i386                          randconfig-a015
+x86_64                        randconfig-a016
+x86_64                        randconfig-a012
+x86_64                        randconfig-a014
+
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
