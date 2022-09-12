@@ -2,61 +2,37 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [198.145.21.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id B39725B4C47
-	for <lists+devel-acpica@lfdr.de>; Sun, 11 Sep 2022 08:02:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 13C495B624A
+	for <lists+devel-acpica@lfdr.de>; Mon, 12 Sep 2022 22:37:39 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 6E47A100EAAE8;
-	Sat, 10 Sep 2022 23:02:44 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.43; helo=mga05.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id 2D145100EAB56
-	for <devel@acpica.org>; Sat, 10 Sep 2022 23:02:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1662876162; x=1694412162;
-  h=date:from:to:cc:subject:message-id:mime-version:
-   content-transfer-encoding;
-  bh=X3nGh2deOmHXffMmBLBZLiWJ36kF5JOTAJZQciA1cg8=;
-  b=Lakgo28FTYJYsatzHI3GJc4bHeX5fym0aiNFNrsGK8qajzNGHrBDtup8
-   KB1Z/PQYEyxRCLGrRWESANAbkhR9IIsnlg7hxT4pvNmksYOsscQuFGBr/
-   lEqavM8+yox9S9MfYIRZYnUnDdQeq0BtO0DNUCimjsutT8JwiYndDxd8G
-   Rd1ydSgdroXXgJbF3KwnlxbBlj8yclM2NazdRfcIyt7/e4iqFnNQcx6Rl
-   EImu92f5tA6otCP0PYQ9naeygBzEif55dSXQPrlQQiIY1bypSH4epGddb
-   mOqHf/pvfudaP2SmBWz9hYmqf0mEI93yIeUmwszhDxHwh40G4Kl7vVZ6c
-   g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10466"; a="383992868"
-X-IronPort-AV: E=Sophos;i="5.93,307,1654585200";
-   d="scan'208";a="383992868"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Sep 2022 23:02:40 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.93,307,1654585200";
-   d="scan'208";a="758039261"
-Received: from lkp-server02.sh.intel.com (HELO 4011df4f4fd3) ([10.239.97.151])
-  by fmsmga001.fm.intel.com with ESMTP; 10 Sep 2022 23:02:39 -0700
-Received: from kbuild by 4011df4f4fd3 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1oXG3C-00012t-2V;
-	Sun, 11 Sep 2022 06:02:38 +0000
-Date: Sun, 11 Sep 2022 14:02:16 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <631d79e8.yiStyYaa6aEvt0eJ%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTP id 3F45A100EA939;
+	Mon, 12 Sep 2022 13:37:36 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=217.140.110.172; helo=foss.arm.com; envelope-from=jeremy.linton@arm.com; receiver=<UNKNOWN> 
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by ml01.01.org (Postfix) with ESMTP id B26D3100EAB0D
+	for <devel@acpica.org>; Mon, 12 Sep 2022 13:37:34 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 11439106F;
+	Mon, 12 Sep 2022 13:37:40 -0700 (PDT)
+Received: from mammon-tx2.austin.arm.com (mammon-tx2.austin.arm.com [10.118.28.62])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 72D7C3F73B;
+	Mon, 12 Sep 2022 13:37:33 -0700 (PDT)
+From: Jeremy Linton <jeremy.linton@arm.com>
+To: linux-acpi@vger.kernel.org
+Date: Mon, 12 Sep 2022 15:37:21 -0500
+Message-Id: <20220912203722.205185-1-jeremy.linton@arm.com>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
-Message-ID-Hash: 3UXYKWUE4PWXRBW5Q66HN6BQO7JDTUAP
-X-Message-ID-Hash: 3UXYKWUE4PWXRBW5Q66HN6BQO7JDTUAP
-X-MailFrom: lkp@intel.com
-X-Mailman-Rule-Hits: nonmember-moderation
-X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+Message-ID-Hash: GQQLR6RKWRUIAAO2HWTZMT476QOM545C
+X-Message-ID-Hash: GQQLR6RKWRUIAAO2HWTZMT476QOM545C
+X-MailFrom: jeremy.linton@arm.com
+X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation; nonmember-moderation; administrivia; implicit-dest; max-recipients; max-size; news-moderation; no-subject; suspicious-header
+CC: rafael@kernel.org, viresh.kumar@linaro.org, punit.agrawal@bytedance.com, lukasz.luba@arm.com, ionela.voinescu@arm.com, pierre.gondois@arm.com, linux-kernel@vger.kernel.org, devel@acpica.org, linux-pm@vger.kernel.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [rafael-pm:bleeding-edge] BUILD SUCCESS 58968b7be786652f48f712147e6f71831cfe684e
+Subject: [Devel] [PATCH v5 0/1] Disable FIE on machines with slow counters
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/3UXYKWUE4PWXRBW5Q66HN6BQO7JDTUAP/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/GQQLR6RKWRUIAAO2HWTZMT476QOM545C/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -65,77 +41,40 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-branch HEAD: 58968b7be786652f48f712147e6f71831cfe684e  Merge branch 'pm-cpufreq' into bleeding-edge
+FIE assumes the delivered/relative perf registers are fast to read so
+it goes ahead and hits them quite frequently. On a couple of Arm
+platforms though they end up in PCC regions which require mailbox
+handshaking with other parts of the platform.
 
-elapsed time: 723m
+This results in a lot of overhead in the cppc_fie task. As such lets
+runtime disable FIE if we detect it enabled on one of those platforms.
+Lastly, allow the user to override this decision via a module parameter.
 
-configs tested: 53
-configs skipped: 2
+v1->v2:
+	Apply Rafael's review comments.
+	Move the MODULE_PARAM into the ifdef
+	Fix compiler warning when ACPI_CPPC_LIB is disabled.
+v2->v3:
+	Tristate the module param so FIE can be forced on/off
+	Bump pr_debug to pr_info if FIE is disabled due to PCC regions
+	Switch ACPI_CPPC_CPUFREQ_FIE off by default
+v3->v4:
+	No functional change, resend due to email addr issues
 
-The following configs have been built successfully.
-More configs may be tested in the coming days.
+v4->v5:
+	Minor whitespace, comment wording, if/case conversion
+	Drop the ACPI_CPPC_CPUFREQ_FIE disable config change added in v3
 
-gcc tested configs:
-x86_64                              defconfig
-x86_64                               rhel-8.3
-x86_64                        randconfig-a002
-i386                          randconfig-a001
-x86_64                        randconfig-a004
-i386                          randconfig-a003
-x86_64                        randconfig-a006
-i386                          randconfig-a005
-x86_64                           allyesconfig
-um                             i386_defconfig
-um                           x86_64_defconfig
-i386                                defconfig
-arc                              allyesconfig
-arc                  randconfig-r043-20220911
-alpha                            allyesconfig
-i386                          randconfig-a014
-s390                 randconfig-r044-20220911
-riscv                randconfig-r042-20220911
-i386                          randconfig-a012
-i386                          randconfig-a016
-i386                             allyesconfig
-x86_64                        randconfig-a013
-m68k                             allyesconfig
-powerpc                           allnoconfig
-x86_64                        randconfig-a011
-x86_64                          rhel-8.3-func
-x86_64                         rhel-8.3-kunit
-powerpc                          allmodconfig
-m68k                             allmodconfig
-x86_64                           rhel-8.3-kvm
-x86_64                        randconfig-a015
-x86_64                    rhel-8.3-kselftests
-arm                                 defconfig
-mips                             allyesconfig
-x86_64                           rhel-8.3-syz
-sh                               allmodconfig
-ia64                             allmodconfig
-arm                              allyesconfig
-arm64                            allyesconfig
+Jeremy Linton (1):
+  ACPI: CPPC: Disable FIE if registers in PCC regions
 
-clang tested configs:
-x86_64                        randconfig-a001
-x86_64                        randconfig-a003
-i386                          randconfig-a002
-i386                          randconfig-a004
-x86_64                        randconfig-a005
-i386                          randconfig-a006
-hexagon              randconfig-r041-20220911
-i386                          randconfig-a013
-hexagon              randconfig-r045-20220911
-i386                          randconfig-a011
-i386                          randconfig-a015
-x86_64                        randconfig-a016
-x86_64                        randconfig-a012
-x86_64                        randconfig-a014
+ drivers/acpi/cppc_acpi.c       | 42 ++++++++++++++++++++++++++++++++++
+ drivers/cpufreq/cppc_cpufreq.c | 25 ++++++++++++++++----
+ include/acpi/cppc_acpi.h       |  5 ++++
+ 3 files changed, 68 insertions(+), 4 deletions(-)
 
 -- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+2.37.1
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
