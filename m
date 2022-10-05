@@ -2,62 +2,55 @@ Return-Path: <devel-bounces@acpica.org>
 X-Original-To: lists+devel-acpica@lfdr.de
 Delivered-To: lists+devel-acpica@lfdr.de
 Received: from ml01.01.org (ml01.01.org [IPv6:2001:19d0:306:5::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 510815F5014
-	for <lists+devel-acpica@lfdr.de>; Wed,  5 Oct 2022 09:02:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id F3B0C5F5668
+	for <lists+devel-acpica@lfdr.de>; Wed,  5 Oct 2022 16:28:56 +0200 (CEST)
 Received: from ml01.vlan13.01.org (localhost [IPv6:::1])
-	by ml01.01.org (Postfix) with ESMTP id 81B82100F224E;
-	Wed,  5 Oct 2022 00:02:13 -0700 (PDT)
-Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=192.55.52.120; helo=mga04.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN> 
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	by ml01.01.org (Postfix) with ESMTP id EE394100EA2C8;
+	Wed,  5 Oct 2022 07:28:54 -0700 (PDT)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=209.85.219.52; helo=mail-qv1-f52.google.com; envelope-from=rjwysocki@gmail.com; receiver=<UNKNOWN> 
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
 	(No client certificate requested)
-	by ml01.01.org (Postfix) with ESMTPS id D6109100EB34A
-	for <devel@acpica.org>; Wed,  5 Oct 2022 00:02:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1664953331; x=1696489331;
-  h=date:from:to:cc:subject:message-id:mime-version:
-   content-transfer-encoding;
-  bh=AJ7ixBozYaycEaVpvF0s2Vu8NVpTQl0khy4R+AEjEcM=;
-  b=BsfTRfuAkcFA0uLwyUBzXAAPQisa6erJrhTYGgMV+HlvXyVxnKFeAWuC
-   IYrgmiY45eRLqZ9iE/ZXJUekGx+BasgdxdLzz16AoySMg2R71p3kVlVKI
-   4X0rftSmvAb6I5pDXXsyfrh+Ou/Vzm7GKB1k3kSza9VgnOpBI0QEr1uBT
-   HhBQ0MnaQlCHUYHH08BJkHopSjYhLYOEKrm3i2fQuOrfH/moYwjM4j26H
-   OWPqSgChs43ftKQne0F2uzF5p/zvTJoCXViKdUS3Mx8REW+178VsnX3HI
-   TQyGUqgW3JcTHR2dRGs49lRIXZTj0D8Yy1toT6ge7RFhibu+15b01kQ3N
-   w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10490"; a="301819076"
-X-IronPort-AV: E=Sophos;i="5.95,159,1661842800";
-   d="scan'208";a="301819076"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Oct 2022 00:02:01 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10490"; a="601928264"
-X-IronPort-AV: E=Sophos;i="5.95,159,1661842800";
-   d="scan'208";a="601928264"
-Received: from lkp-server01.sh.intel.com (HELO d4f44333118a) ([10.239.97.150])
-  by orsmga006.jf.intel.com with ESMTP; 05 Oct 2022 00:01:59 -0700
-Received: from kbuild by d4f44333118a with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1ofyPm-00010f-2l;
-	Wed, 05 Oct 2022 07:01:58 +0000
-Date: Wed, 05 Oct 2022 15:01:41 +0800
-From: kernel test robot <lkp@intel.com>
-To: "Rafael J. Wysocki" <rjw@rjwysocki.net>
-Message-ID: <633d2bd5.OuzscAmXVyRw+SIQ%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by ml01.01.org (Postfix) with ESMTPS id 7889C100F2257
+	for <devel@acpica.org>; Wed,  5 Oct 2022 07:28:53 -0700 (PDT)
+Received: by mail-qv1-f52.google.com with SMTP id i9so7050642qvu.1
+        for <devel@acpica.org>; Wed, 05 Oct 2022 07:28:53 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=N8pI7I5ab+a4QOVLrKQ1YzAPtKgXmSNDakBuY0ksuEA=;
+        b=YaFq3Qrqvm4jDpdiQTFOywbZxVw7hNAihSKblW/VmvI6A9mkVV+i2qKXqlxMzAmfmw
+         +dmd6vJJXqrUpGstG0NK3R2/Zuw9DGzDX+HqD5e2tB9+DwT9JAjhncm6Tmz4ngyJ0QYb
+         ++xkvEhG2Vke90eKFcxwuuCyZEk1rh+TcYEkQ8cq1IoFA7ETFKFCHl9LjCeF/xbUeRtm
+         cpdbe4++V1Iv5SSLPdk6V/G1u+MCxQKOQQ5QfrGTJ/RPt0nsZxTBKueaaHnlKPWw6orr
+         ijQXWxG9GsH7YXXGgWvPzPwtJOvMNLHMU/at8w1SkxnBp4Bv+ZkrLfitLSTa+HnDPyE3
+         rhrw==
+X-Gm-Message-State: ACrzQf1sd9uadUNuOCUaVa7y1SOGVObwf9EJNqMWuS/RrxaIMbEor8tV
+	J8cIA6XHOfl/hR/SztWEaLynM6XBro2n5LwAq0w=
+X-Google-Smtp-Source: AMsMyM6T4AWz57OQSM9v2w7c8FKyTzATT5fhysEUhzNONmaQ1KdUJgfpDRxCXovL52Dy02H9+OsHv1DN6o8NvZ1Hb2c=
+X-Received: by 2002:a0c:ac49:0:b0:4b1:ccd5:6bd6 with SMTP id
+ m9-20020a0cac49000000b004b1ccd56bd6mr112721qvb.130.1664980131980; Wed, 05 Oct
+ 2022 07:28:51 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID-Hash: JSBANZKY7NTIE5R3V2S4JTUG2YADNFOG
-X-Message-ID-Hash: JSBANZKY7NTIE5R3V2S4JTUG2YADNFOG
-X-MailFrom: lkp@intel.com
+References: <20221004230541.449243-1-Ashish.Kalra@amd.com>
+In-Reply-To: <20221004230541.449243-1-Ashish.Kalra@amd.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Wed, 5 Oct 2022 16:28:40 +0200
+Message-ID: <CAJZ5v0h72L+U60=fBK5LOaNr5bCj9ukwcW8Pn2CCgx0jt1e1Kw@mail.gmail.com>
+To: Ashish Kalra <Ashish.Kalra@amd.com>
+Message-ID-Hash: 4ORXU4OQNWU3BS3HFT25D53OHPRRBU3C
+X-Message-ID-Hash: 4ORXU4OQNWU3BS3HFT25D53OHPRRBU3C
+X-MailFrom: rjwysocki@gmail.com
 X-Mailman-Rule-Hits: nonmember-moderation
 X-Mailman-Rule-Misses: dmarc-mitigation; no-senders; approved; emergency; loop; banned-address; member-moderation
-CC: linux-pm@vger.kernel.org, devel@acpica.org, linux-acpi@vger.kernel.org
+CC: rafael@kernel.org, tony.luck@intel.com, bp@alien8.de, linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org, devel@acpica.org
 X-Mailman-Version: 3.1.1
 Precedence: list
-Subject: [Devel] [rafael-pm:bleeding-edge] BUILD SUCCESS 5bf0ef249e8750233e1a19c5d45724a7fcbed2e7
+Subject: [Devel] Re: [PATCH] ACPI: APEI: Fix num_ghes to unsigned int
 List-Id: ACPICA Developer Mailing List <devel.acpica.org>
-Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/JSBANZKY7NTIE5R3V2S4JTUG2YADNFOG/>
+Archived-At: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/message/4ORXU4OQNWU3BS3HFT25D53OHPRRBU3C/>
 List-Archive: <https://lists.acpica.org/hyperkitty/list/devel@acpica.org/>
 List-Help: <mailto:devel-request@acpica.org?subject=help>
 List-Post: <mailto:devel@acpica.org>
@@ -66,51 +59,50 @@ List-Unsubscribe: <mailto:devel-leave@acpica.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git bleeding-edge
-branch HEAD: 5bf0ef249e8750233e1a19c5d45724a7fcbed2e7  Merge branch 'pm-core' into bleeding-edge
+On Wed, Oct 5, 2022 at 1:06 AM Ashish Kalra <Ashish.Kalra@amd.com> wrote:
+>
+> From: Ashish Kalra <ashish.kalra@amd.com>
+>
+> Change num_ghes from int to unsigned int, preventing an overflow
+> and causing subsequent vmalloc to fail.
 
-elapsed time: 725m
+So do you have a system where int is not sufficient?
 
-configs tested: 29
-configs skipped: 2
-
-The following configs have been built successfully.
-More configs may be tested in the coming days.
-
-gcc tested configs:
-um                             i386_defconfig
-um                           x86_64_defconfig
-x86_64                              defconfig
-x86_64                               rhel-8.3
-arc                                 defconfig
-s390                             allmodconfig
-alpha                               defconfig
-s390                                defconfig
-x86_64                           allyesconfig
-s390                             allyesconfig
-x86_64                          rhel-8.3-func
-x86_64                    rhel-8.3-kselftests
-m68k                             allmodconfig
-arc                              allyesconfig
-alpha                            allyesconfig
-m68k                             allyesconfig
-powerpc                          allmodconfig
-mips                             allyesconfig
-powerpc                           allnoconfig
-x86_64                           rhel-8.3-syz
-x86_64                         rhel-8.3-kunit
-i386                                defconfig
-x86_64                           rhel-8.3-kvm
-sh                               allmodconfig
-ia64                             allmodconfig
-i386                             allyesconfig
-arm                                 defconfig
-arm64                            allyesconfig
-arm                              allyesconfig
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+> Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
+> ---
+>  drivers/acpi/apei/ghes.c | 2 +-
+>  include/acpi/ghes.h      | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
+> index d91ad378c00d..6d7c202142a6 100644
+> --- a/drivers/acpi/apei/ghes.c
+> +++ b/drivers/acpi/apei/ghes.c
+> @@ -163,7 +163,7 @@ static void ghes_unmap(void __iomem *vaddr, enum fixed_addresses fixmap_idx)
+>         clear_fixmap(fixmap_idx);
+>  }
+>
+> -int ghes_estatus_pool_init(int num_ghes)
+> +int ghes_estatus_pool_init(unsigned int num_ghes)
+>  {
+>         unsigned long addr, len;
+>         int rc;
+> diff --git a/include/acpi/ghes.h b/include/acpi/ghes.h
+> index 34fb3431a8f3..292a5c40bd0c 100644
+> --- a/include/acpi/ghes.h
+> +++ b/include/acpi/ghes.h
+> @@ -71,7 +71,7 @@ int ghes_register_vendor_record_notifier(struct notifier_block *nb);
+>  void ghes_unregister_vendor_record_notifier(struct notifier_block *nb);
+>  #endif
+>
+> -int ghes_estatus_pool_init(int num_ghes);
+> +int ghes_estatus_pool_init(unsigned int num_ghes);
+>
+>  /* From drivers/edac/ghes_edac.c */
+>
+> --
+> 2.25.1
+>
 _______________________________________________
 Devel mailing list -- devel@acpica.org
 To unsubscribe send an email to devel-leave@acpica.org
